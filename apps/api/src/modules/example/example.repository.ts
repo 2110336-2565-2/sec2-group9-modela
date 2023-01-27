@@ -12,6 +12,12 @@ export class ExampleRepository {
     return this.prisma.example.create({ data })
   }
 
+  async getExampleById(id: number): Promise<Example> {
+    return this.prisma.example.findUnique({
+      where: { id },
+    })
+  }
+
   async getExample(params: {
     skip?: number
     take?: number
@@ -19,7 +25,7 @@ export class ExampleRepository {
     where?: Prisma.ExampleWhereInput
     orderBy?: Prisma.ExampleOrderByWithRelationInput
   }): Promise<Example[]> {
-    return this.prisma.example.findMany()
+    return this.prisma.example.findMany(params)
   }
 
   async updateExample(params: {
@@ -30,10 +36,7 @@ export class ExampleRepository {
     return this.prisma.example.update({ where, data })
   }
 
-  async deleteExample(params: {
-    where: Prisma.ExampleWhereUniqueInput
-  }): Promise<Example> {
-    const { where } = params
-    return this.prisma.example.delete({ where })
+  async deleteExample(id: number): Promise<Example> {
+    return this.prisma.example.delete({ where: { id } })
   }
 }

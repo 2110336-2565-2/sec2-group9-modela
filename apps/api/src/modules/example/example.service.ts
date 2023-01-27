@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 
 import { CreateExampleDto, UpdateExampleDto } from './example.dto'
 import { ExampleRepository } from './example.repository'
@@ -20,5 +20,37 @@ export class ExampleService {
   async getAllExample() {
     const examples = await this.repository.getExample({})
     return examples
+  }
+
+  async getExampleById(id: number) {
+    const example = await this.repository.getExampleById(id)
+    if (!example) throw new NotFoundException()
+
+    return example
+  }
+
+  async updateExample(id: number, updateExampleDto: UpdateExampleDto) {
+    const { name } = updateExampleDto
+
+    if (!(await this.repository.getExampleById(id)))
+      throw new NotFoundException()
+
+    const example = await this.repository.updateExample({
+      where: { id },
+      data: {
+        name,
+      },
+    })
+
+    return example
+  }
+
+  async deleteExample(id: number) {
+    if (!(await this.repository.getExampleById(id)))
+      throw new NotFoundException()
+
+    const example = await this.repository.deleteExample(id)
+
+    return example
   }
 }
