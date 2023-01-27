@@ -5,12 +5,11 @@ const prisma = new PrismaClient()
 const NUMBER_OF_EXAMPLE = 10
 
 async function seedExample() {
-  for (let i = 0; i < NUMBER_OF_EXAMPLE; ++i) {
+  for (let i = 1; i <= NUMBER_OF_EXAMPLE; ++i) {
     await prisma.example.upsert({
       where: { id: i },
       update: {},
       create: {
-        id: i,
         name: faker.name.firstName(),
       },
     })
