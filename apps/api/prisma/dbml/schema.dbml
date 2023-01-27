@@ -1,0 +1,8 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table Example {
+  id Int [pk, increment]
+  name String [not null]
+}
