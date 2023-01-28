@@ -1,7 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { Example } from '@prisma/client'
+import { getMock } from 'src/common/mocks'
+import { PrismaService } from 'src/database/prisma.service'
 
-import { PrismaService } from '../../database/prisma.service'
 import { ExampleController } from './example.controller'
 import { CreateExampleDto } from './example.dto'
 import { ExampleRepository } from './example.repository'
@@ -27,17 +28,16 @@ describe('ExampleController', () => {
 
   describe('createExample', () => {
     it('should create example', async () => {
-      const result: Example = {
-        id: 1,
-        name: 'abc',
-      }
+      const MOCK_EXAMPLE: Example = getMock('example')
       jest
         .spyOn(service, 'createExample')
         .mockImplementation(async (data: CreateExampleDto) => {
           return { id: 1, ...data }
         })
 
-      expect(await controller.createExample({ name: 'abc' })).toBe(result)
+      expect(
+        await controller.createExample({ name: MOCK_EXAMPLE.name }),
+      ).toMatchObject(MOCK_EXAMPLE)
     })
   })
 })

@@ -1,8 +1,9 @@
 import { NotFoundException } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import { Example } from '@prisma/client'
+import { getMock, getMocks } from 'src/common/mocks'
+import { PrismaService } from 'src/database/prisma.service'
 
-import { PrismaService } from '../../database/prisma.service'
 import { ExampleRepository } from './example.repository'
 import { ExampleService } from './example.service'
 
@@ -25,16 +26,7 @@ describe('ExampleService', () => {
 
   describe('getAllExample', () => {
     it('should return list of example', async () => {
-      const result: Example[] = [
-        {
-          id: 1,
-          name: 'test1',
-        },
-        {
-          id: 2,
-          name: 'test2',
-        },
-      ]
+      const result: Example[] = getMocks('example', 2)
       jest
         .spyOn(repository, 'getExample')
         .mockImplementation(async () => result)
@@ -44,10 +36,7 @@ describe('ExampleService', () => {
 
   describe('getExampleById', () => {
     it('should return example that have id', async () => {
-      const result: Example = {
-        id: 1,
-        name: 'test1',
-      }
+      const result: Example = getMock('example')
       jest
         .spyOn(repository, 'getExampleById')
         .mockImplementation(async () => result)
