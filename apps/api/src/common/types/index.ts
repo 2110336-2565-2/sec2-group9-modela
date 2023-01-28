@@ -1,0 +1,10 @@
+export type BaseModel =
+  | 'example'
+  | 'user'
+  | 'actor'
+  | 'casting'
+  | 'resume'
+  | 'job'
+  | 'application'
+  | 'report'
+  | 'notification'

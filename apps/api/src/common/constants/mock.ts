@@ -1,0 +1,7 @@
+export const NUMBER_OF_MOCK = 10
+
+export const NUMBER_OF_ADMIN = 10
+export const NUMBER_OF_ACTOR = 10
+export const NUMBER_OF_CASTING = 10
+export const NUMBER_OF_USER =
+  NUMBER_OF_ADMIN + NUMBER_OF_ACTOR + NUMBER_OF_CASTING
