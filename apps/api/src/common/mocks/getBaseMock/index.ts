@@ -132,12 +132,19 @@ export const getBaseMock = (
         ]),
         actorCount: faker.datatype.number({ min: 1, max: 10 }),
         wage: faker.datatype.number({ min: 10000, max: 1000000 }),
-        workStartDate: faker.date.future(),
-        workEndDate: faker.date.future(),
         applicationDeadline: faker.date.past(),
-        location: faker.address.secondaryAddress(),
         createdAt: faker.date.past(),
         updatedAt: faker.date.past(),
+      }
+    case 'shooting':
+      return {
+        shootingId: index,
+        jobId: getId(),
+        shootingLocation: faker.address.secondaryAddress(),
+        startDate: faker.date.soon(),
+        endDate: faker.date.soon(),
+        startTime: faker.date.soon(),
+        endTime: faker.date.soon(),
       }
     case 'application': {
       const resumeId = getId()

@@ -112,16 +112,26 @@ model Job {
   gender              Gender
   actorCount          Int
   wage                Int
-  workStartDate       DateTime
-  workEndDate         DateTime
   applicationDeadline DateTime
-  location            String
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
 
   Casting     Casting       @relation(fields: [castingId], references: [castingId])
   Application Application[]
   Report      Report[]
+  Shooting    Shooting[]
+}
+
+model Shooting {
+  shootingId       Int      @id @default(autoincrement())
+  jobId            Int
+  shootingLocation String
+  startDate        DateTime @db.Date
+  endDate          DateTime @db.Date
+  startTime        DateTime @db.Time
+  endTime          DateTime @db.Time
+
+  Job Job @relation(fields: [jobId], references: [jobId])
 }
 
 enum JobStatus {

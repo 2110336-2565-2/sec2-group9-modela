@@ -28,7 +28,12 @@ async function main() {
   await Promise.all([seed('example'), seed('user', NUMBER_OF_USER)])
   await Promise.all([seed('actor'), seed('casting')])
   await Promise.all([seed('resume'), seed('job')])
-  await Promise.all([seed('application'), seed('report'), seed('notification')])
+  await Promise.all([
+    seed('application'),
+    seed('report'),
+    seed('notification'),
+    seed('shooting'),
+  ])
 }
 
 main()

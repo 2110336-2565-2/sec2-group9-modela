@@ -8,3 +8,4 @@ export type BaseModel =
   | 'application'
   | 'report'
   | 'notification'
+  | 'shooting'
