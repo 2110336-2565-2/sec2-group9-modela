@@ -19,6 +19,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "migrate:dev": "prisma migrate dev",
+    "coverage": "open-cli coverage/lcov-report/index.html",
     "generate": "prisma generate",
     "seed": "prisma migrate reset",
     "studio": "prisma studio"
@@ -33,6 +34,7 @@
     "@prisma/client": "^4.9.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
+    "open-cli": "^7.1.0",
     "prisma-dbml-generator": "^0.10.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0"
@@ -80,9 +82,11 @@
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "collectCoverageFrom": [
-      "**/*.(t|j)s"
+      "src/**/*.(t|j)s",
+      "!src/**/*.module.(t|j)s",
+      "!src/**/*.repository.(t|j)s"
     ],
-    "coverageDirectory": "../coverage",
+    "coverageDirectory": "coverage",
     "testEnvironment": "node"
   }
 }
