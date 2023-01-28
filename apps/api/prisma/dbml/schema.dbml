@@ -65,6 +65,7 @@ Table Casting {
 
 Table Resume {
   resumeId Int [pk, increment]
+  name String [not null]
   actorId Int [not null]
   resumeUrl String [not null]
   Actor Actor [not null]

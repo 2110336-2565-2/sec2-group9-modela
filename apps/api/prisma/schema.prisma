@@ -93,6 +93,7 @@ model Casting {
 
 model Resume {
   resumeId  Int    @id @default(autoincrement())
+  name      String
   actorId   Int
   resumeUrl String
 

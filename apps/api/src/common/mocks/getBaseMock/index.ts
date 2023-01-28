@@ -106,6 +106,7 @@ export const getBaseMock = (
       return {
         resumeId: index,
         actorId,
+        name: faker.name.jobType(),
         resumeUrl: faker.internet.url(),
       }
     }
