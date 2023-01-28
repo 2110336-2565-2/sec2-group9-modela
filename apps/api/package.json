@@ -20,7 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "migrate:dev": "prisma migrate dev",
     "generate": "prisma generate",
-    "seed": "prisma db seed",
+    "seed": "prisma migrate reset",
     "studio": "prisma studio"
   },
   "dependencies": {
