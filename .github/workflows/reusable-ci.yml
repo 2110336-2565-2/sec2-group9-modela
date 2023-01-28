@@ -1,0 +1,68 @@
+name: Reusable CI
+
+on:
+  workflow_call:
+    inputs:
+      target:
+        type: string
+        required: false
+      runs-on:
+        type: string
+        required: false
+        default: ubuntu-latest
+
+jobs:
+  run:
+    runs-on: ${{ inputs.runs-on }}
+    steps:
+      - uses: actions/checkout@v2
+        name: Checkout
+
+      - uses: pnpm/action-setup@v2.0.1
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 7
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Turbo Cache
+        id: turbo-cache
+        uses: actions/cache@v2
+        with:
+          path: .turbo
+          key: turbo-${{ github.job }}-${{ github.ref_name }}-${{ github.sha }}
+          restore-keys: |
+            turbo-${{ github.job }}-${{ github.ref_name }}-
+
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --prefer-offline
+  
+      - name: Build test
+        if: ${{ inputs.target == 'build' }}
+        run: pnpm build
+    
+      - name: Run test coverage
+        if: ${{ inputs.target == 'test' }}
+        run: pnpm test:cov --cache-dir=".turbo"
+      
+      - name: Add coverage comment
+        if: ${{ inputs.target == 'test' }}
+        continue-on-error: true
+        uses: eeshdarthvader/code-coverage-assistant@master
+        with:
+            github-token: ${{ secrets.GITHUB_TOKEN }}
+            monorepo-base-path: './apps'
