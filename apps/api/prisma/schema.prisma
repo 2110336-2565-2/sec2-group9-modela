@@ -80,12 +80,14 @@ model Actor {
 enum Gender {
   MALE
   FEMALE
-  LGBTQ
+  OTHER
+  ANY
 }
 
 model Casting {
   castingId         Int    @id
   User              User   @relation(fields: [castingId], references: [userId])
+  companyName       String
   companyId         String
   employmentCertUrl String
   Job               Job[]

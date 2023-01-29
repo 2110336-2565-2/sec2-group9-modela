@@ -58,6 +58,7 @@ Table Actor {
 Table Casting {
   castingId Int [pk]
   User User [not null]
+  companyName String [not null]
   companyId String [not null]
   employmentCertUrl String [not null]
   Job Job [not null]
@@ -145,7 +146,8 @@ Enum UserType {
 Enum Gender {
   MALE
   FEMALE
-  LGBTQ
+  OTHER
+  ANY
 }
 
 Enum JobStatus {

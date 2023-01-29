@@ -1,7 +1,17 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
-import { ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import {
+  ApiCreatedResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger'
 
-import { CreateExampleDto, getExampleDto } from './example.dto'
+import {
+  CreateExampleDto,
+  GetExampleDto,
+  UpdateExampleDto,
+} from './example.dto'
 import { ExampleService } from './example.service'
 
 @ApiTags('example')
@@ -10,36 +20,42 @@ export class ExampleController {
   constructor(private readonly exampleService: ExampleService) {}
 
   @Post()
+  @ApiOperation({ summary: 'create example' })
+  @ApiCreatedResponse({ type: GetExampleDto })
   createExample(@Body() createExampleDto: CreateExampleDto) {
     return this.exampleService.createExample(createExampleDto)
   }
 
   @Get()
-  @ApiOkResponse({ type: getExampleDto, isArray: true })
+  @ApiOperation({ summary: 'get all examples' })
+  @ApiOkResponse({ type: GetExampleDto, isArray: true })
   getAllExample() {
     return this.exampleService.getAllExample()
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'get example by id' })
   @ApiNotFoundResponse({ description: 'Example not found' })
-  @ApiOkResponse({ type: getExampleDto })
+  @ApiOkResponse({ type: GetExampleDto })
   getExampleById(@Param('id') id: number) {
     return this.exampleService.getExampleById(+id)
   }
 
   @Put(':id')
+  @ApiOperation({ summary: 'update example by id' })
   @ApiNotFoundResponse({ description: 'Example not found' })
-  @ApiOkResponse({ type: getExampleDto })
+  @ApiOkResponse({ type: GetExampleDto })
   updateExample(
     @Param('id') id: number,
-    @Body() updateExampleDto: CreateExampleDto,
+    @Body() updateExampleDto: UpdateExampleDto,
   ) {
     return this.exampleService.updateExample(+id, updateExampleDto)
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'delete example by id' })
   @ApiNotFoundResponse({ description: 'Example not found' })
-  @ApiOkResponse({ type: getExampleDto })
+  @ApiOkResponse({ type: GetExampleDto })
   deleteExample(@Param('id') id: number) {
     return this.exampleService.deleteExample(+id)
   }

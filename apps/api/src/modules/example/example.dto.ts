@@ -2,7 +2,7 @@ import { ApiProperty, PartialType } from '@nestjs/swagger'
 import { Example } from '@prisma/client'
 import { IsNotEmpty, IsString } from 'class-validator'
 
-export class getExampleDto implements Partial<Example> {
+export class GetExampleDto implements Partial<Example> {
   @ApiProperty()
   id: number
 
