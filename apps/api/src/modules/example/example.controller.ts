@@ -1,5 +1,11 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
-import { ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import {
+  ApiCreatedResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger'
 
 import {
   CreateExampleDto,
@@ -14,17 +20,21 @@ export class ExampleController {
   constructor(private readonly exampleService: ExampleService) {}
 
   @Post()
+  @ApiOperation({ summary: 'create example' })
+  @ApiCreatedResponse({ type: GetExampleDto })
   createExample(@Body() createExampleDto: CreateExampleDto) {
     return this.exampleService.createExample(createExampleDto)
   }
 
   @Get()
+  @ApiOperation({ summary: 'get all examples' })
   @ApiOkResponse({ type: GetExampleDto, isArray: true })
   getAllExample() {
     return this.exampleService.getAllExample()
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'get example by id' })
   @ApiNotFoundResponse({ description: 'Example not found' })
   @ApiOkResponse({ type: GetExampleDto })
   getExampleById(@Param('id') id: number) {
@@ -32,8 +42,9 @@ export class ExampleController {
   }
 
   @Put(':id')
+  @ApiOperation({ summary: 'update example by id' })
   @ApiNotFoundResponse({ description: 'Example not found' })
-  @ApiOkResponse({ type: UpdateExampleDto })
+  @ApiOkResponse({ type: GetExampleDto })
   updateExample(
     @Param('id') id: number,
     @Body() updateExampleDto: UpdateExampleDto,
@@ -42,6 +53,7 @@ export class ExampleController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'delete example by id' })
   @ApiNotFoundResponse({ description: 'Example not found' })
   @ApiOkResponse({ type: GetExampleDto })
   deleteExample(@Param('id') id: number) {
