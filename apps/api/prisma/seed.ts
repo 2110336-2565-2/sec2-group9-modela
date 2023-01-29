@@ -11,6 +11,7 @@ const getMock = (model: BaseModel, index: number) => {
   delete mock['createdAt']
   delete mock['updatedAt']
   if (model !== 'actor' && model !== 'casting') delete mock[`${model}Id`]
+  if (model === 'example') delete mock['id']
   return mock
 }
 
