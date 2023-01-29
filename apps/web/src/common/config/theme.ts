@@ -4,9 +4,11 @@ const theme = createTheme({
   palette: {
     primary: {
       main: '#5B85AA',
+      contrastText: '#FFFFFF',
     },
     secondary: {
-      main: '#D5BF86',
+      main: '#C3DCF1',
+      contrastText: '#000000',
     },
     background: {
       default: '#FFFFFF',
@@ -14,6 +16,7 @@ const theme = createTheme({
     },
     error: {
       main: '#B00020',
+      contrastText: '#FFFFFF',
     },
     common: {
       black: '#000000',
@@ -22,4 +25,4 @@ const theme = createTheme({
   },
 })
 
-export { theme }
+export default theme
