@@ -1,0 +1,51 @@
+import { BaseModel, BaseModelType } from 'src/common/types'
+
+import { getBaseMock } from '../getBaseMock'
+
+export const mock = <T extends keyof BaseModelType>(model: T) => {
+  return new MockConstructor<BaseModelType[T], BaseModelType[T]>(model)
+}
+
+class MockConstructor<T, R> {
+  private model: BaseModel
+  private overrides: Partial<{ [key in keyof T]: any }>
+  private omitFields: (keyof T)[] = []
+
+  constructor(
+    model: BaseModel,
+    overrides?: Partial<{ [key in keyof T]: any }>,
+    omitFields?: (keyof T)[],
+  ) {
+    this.model = model
+    if (overrides) this.overrides = overrides
+    if (omitFields) this.omitFields = omitFields
+    return this
+  }
+
+  public override(overrides: Partial<{ [key in keyof T]: any }>) {
+    this.overrides = { ...this.overrides, ...overrides }
+    return this
+  }
+
+  public omit<K extends keyof T>(omitFields: K[]) {
+    return new MockConstructor<T, Omit<T, K>>(this.model, this.overrides, [
+      ...this.omitFields,
+      ...omitFields,
+    ])
+  }
+
+  public get(): R
+  public get(number: number): R[]
+
+  public get(number?: number) {
+    const MOCKS = []
+    for (let i = 1; i <= (number || 1); i++) {
+      const MOCK = getBaseMock(this.model, i, true)
+      MOCKS.push({ ...MOCK, ...this.overrides })
+    }
+
+    MOCKS.map((mock) => this.omitFields.forEach((field) => delete mock[field]))
+
+    return number ? MOCKS : MOCKS[0]
+  }
+}

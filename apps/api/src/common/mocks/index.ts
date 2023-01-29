@@ -1,3 +1,2 @@
 export * from './getBaseMock'
-export * from './getMock'
-export * from './getMocks'
+export * from './mock'
