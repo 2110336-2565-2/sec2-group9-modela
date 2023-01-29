@@ -77,7 +77,7 @@ export const getBaseMock = (
         gender: faker.helpers.arrayElement([
           Gender.MALE,
           Gender.FEMALE,
-          Gender.LGBTQ,
+          Gender.OTHER,
         ]),
         ethnicity: faker.address.country(),
         birthDate: faker.date.birthdate(),
@@ -97,6 +97,7 @@ export const getBaseMock = (
     case 'casting':
       return {
         castingId: index + NUMBER_OF_ADMIN + NUMBER_OF_ACTOR,
+        companyName: faker.company.name(),
         companyId: faker.random.numeric(13),
         employmentCertUrl: faker.internet.url(),
       }
@@ -129,7 +130,8 @@ export const getBaseMock = (
         gender: faker.helpers.arrayElement([
           Gender.MALE,
           Gender.FEMALE,
-          Gender.LGBTQ,
+          Gender.OTHER,
+          Gender.ANY,
         ]),
         actorCount: faker.datatype.number({ min: 1, max: 10 }),
         wage: faker.datatype.number({ min: 10000, max: 1000000 }),
