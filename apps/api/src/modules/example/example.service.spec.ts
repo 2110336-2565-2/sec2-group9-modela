@@ -1,7 +1,7 @@
 import { NotFoundException } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import { Example } from '@prisma/client'
-import { getMock, getMocks } from 'src/common/mocks'
+import { mock } from 'src/common/mocks'
 import { PrismaService } from 'src/database/prisma.service'
 
 import { CreateExampleDto, UpdateExampleDto } from './example.dto'
@@ -27,29 +27,29 @@ describe('ExampleService', () => {
 
   describe('createExample', () => {
     it('should create example', async () => {
-      const result: Example = getMock('example')
+      const result: Example = mock('example').get()
       const data: CreateExampleDto = {
         name: result.name,
       }
       jest.spyOn(repository, 'createExample').mockResolvedValue(result)
-      await expect(service.createExample(data)).resolves.toBe(result)
+      await expect(service.createExample(data)).resolves.toEqual(result)
       expect(repository.createExample).toBeCalledWith({ data })
     })
   })
 
   describe('getAllExample', () => {
     it('should return list of example', async () => {
-      const result: Example[] = getMocks('example', 2)
+      const result: Example[] = mock('example').get(2)
       jest.spyOn(repository, 'getExample').mockResolvedValue(result)
-      expect(service.getAllExample()).resolves.toBe(result)
+      expect(service.getAllExample()).resolves.toEqual(result)
     })
   })
 
   describe('getExampleById', () => {
     it('should return example that have id', async () => {
-      const result: Example = getMock('example')
+      const result: Example = mock('example').get()
       jest.spyOn(repository, 'getExampleById').mockResolvedValue(result)
-      await expect(service.getExampleById(1)).resolves.toBe(result)
+      await expect(service.getExampleById(1)).resolves.toEqual(result)
       expect(repository.getExampleById).toBeCalledWith(result.id)
     })
 
@@ -66,10 +66,10 @@ describe('ExampleService', () => {
 
   describe('updateExample', () => {
     it('should return updated example', async () => {
-      const mockedExample: Example = getMock('example')
+      const mockedExample: Example = mock('example').get()
       const updatedExample: Example = {
         id: mockedExample.id,
-        ...getMock('example'),
+        ...mock('example').get(),
       }
       const queryExample: UpdateExampleDto = {
         name: mockedExample.name,
@@ -79,7 +79,7 @@ describe('ExampleService', () => {
       jest.spyOn(repository, 'updateExample').mockResolvedValue(updatedExample)
       await expect(
         service.updateExample(updatedExample.id, queryExample),
-      ).resolves.toBe(updatedExample)
+      ).resolves.toEqual(updatedExample)
       expect(repository.getExampleById).toBeCalledWith(mockedExample.id)
       expect(repository.updateExample).toBeCalledWith({
         where: { id: updatedExample.id },
@@ -90,9 +90,7 @@ describe('ExampleService', () => {
     it('should throw error when cannot find id', async () => {
       const mockedExample: Example = null
       const queryID = 2
-      const queryExample: UpdateExampleDto = {
-        name: getMock('example').name,
-      }
+      const queryExample: UpdateExampleDto = mock('example').omit(['id']).get()
 
       jest.spyOn(repository, 'getExampleById').mockResolvedValue(mockedExample)
       jest.spyOn(repository, 'updateExample').mockResolvedValue(null)
@@ -106,11 +104,11 @@ describe('ExampleService', () => {
 
   describe('deleteExample', () => {
     it('should return deleted value', async () => {
-      const mockedExample: Example = getMock('example')
+      const mockedExample: Example = mock('example').get()
 
       jest.spyOn(repository, 'getExampleById').mockResolvedValue(mockedExample)
       jest.spyOn(repository, 'deleteExample').mockResolvedValue(mockedExample)
-      await expect(service.deleteExample(mockedExample.id)).resolves.toBe(
+      await expect(service.deleteExample(mockedExample.id)).resolves.toEqual(
         mockedExample,
       )
       expect(repository.getExampleById).toBeCalledWith(mockedExample.id)
