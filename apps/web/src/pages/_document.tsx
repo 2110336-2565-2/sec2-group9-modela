@@ -1,5 +1,5 @@
 import createEmotionServer from '@emotion/server/create-instance'
-import theme, { createEmotionCache } from 'common/config/theme'
+import theme, { createEmotionCache, prompt } from 'common/config/theme'
 import Document from 'next/document'
 import NextDocument, {
   DocumentContext,
@@ -50,7 +50,7 @@ export default class RootDocument extends NextDocument {
 
   render() {
     return (
-      <Html>
+      <Html lang="en" className={prompt.className}>
         <Head>
           {/* PWA primary color */}
           <meta name="theme-color" content={theme.palette.primary.main} />

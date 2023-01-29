@@ -1,8 +1,8 @@
 import createCache from '@emotion/cache'
 import { createTheme } from '@mui/material'
-import { Roboto } from '@next/font/google'
+import { Prompt } from '@next/font/google'
 
-export const roboto = Roboto({
+export const prompt = Prompt({
   weight: ['300', '400', '500'],
   style: ['normal', 'italic'],
   subsets: ['latin'],
@@ -32,7 +32,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: roboto.style.fontFamily,
+    fontFamily: prompt.style.fontFamily,
   },
 })
 
