@@ -26,25 +26,41 @@ export class JobRepository {
     orderBy?: Prisma.JobOrderByWithRelationInput
   }): Promise<GetJobCardDto[]> {
     //join casting table
-    const jobs = await this.prisma.job.findMany({
+    const paramsWithInclude = {
+      ...params,
       include: {
-        Casting: true,
+        Casting: {
+          include: {
+            User: true,
+          },
+        },
       },
-    })
-    //unwind casting
+    }
+    //get data
+    const jobs = await this.prisma.job.findMany(paramsWithInclude)
+    //unwind joined tables
     const unwoundJobs = jobs.map((job) => {
       const casting = job.Casting
+      const user = casting.User
       return {
         ...job,
         ...casting,
+        ...user,
       }
     })
-    //remove Casting, companyId, employmentCertUrl out of unwoundJobs
-    unwoundJobs.forEach((job) => {
-      delete job.Casting
-      delete job.companyId
-      delete job.employmentCertUrl
-    })
-    return unwoundJobs
+    //select fields of GetJobDto
+    const selectedFields = unwoundJobs.map((job) => ({
+      jobId: job.jobId,
+      title: job.title,
+      companyName: job.companyName,
+      description: job.description,
+      status: job.status,
+      actorCount: job.actorCount,
+      gender: job.gender,
+      wage: job.wage,
+      applicationDeadline: job.applicationDeadline,
+      jobCastingImageUrl: job.profileImageUrl,
+    }))
+    return selectedFields
   }
 }

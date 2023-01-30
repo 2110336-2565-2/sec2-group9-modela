@@ -87,7 +87,6 @@ enum Gender {
 model Casting {
   castingId         Int    @id
   User              User   @relation(fields: [castingId], references: [userId])
-  //castingImageUrl   String
   companyName       String
   companyId         String
   employmentCertUrl String
