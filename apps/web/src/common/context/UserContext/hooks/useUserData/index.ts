@@ -10,6 +10,7 @@ const useUserData = () => {
   useEffect(() => {
     const getUser = async () => {
       // TODO fetch user data from API
+      // will write test for this file after API call is implemented
       setTimeout(() => {
         setUser({
           firstName: 'John',
