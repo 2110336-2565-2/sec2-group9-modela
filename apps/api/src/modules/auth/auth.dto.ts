@@ -1,9 +1,10 @@
-import { ApiProperty } from '@nestjs/swagger'
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import { Actor, Casting, Gender, User } from '@prisma/client'
 import {
   IsEmail,
   IsNotEmpty,
   IsNumberString,
+  IsOptional,
   IsString,
   IsUrl,
   Length,
@@ -60,7 +61,8 @@ export class SignupCastingDto implements Partial<Casting & User> {
   firstName: string
 
   @IsString()
-  @ApiProperty()
+  @IsOptional()
+  @ApiPropertyOptional()
   middleName: string
 
   @IsString()
@@ -73,9 +75,9 @@ export class SignupCastingDto implements Partial<Casting & User> {
   @ApiProperty()
   companyId: string
 
-  @ApiProperty()
   @IsString()
   @IsNotEmpty()
+  @ApiProperty()
   companyName: string
 
   @IsUrl()
