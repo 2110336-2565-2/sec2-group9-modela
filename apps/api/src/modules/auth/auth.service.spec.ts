@@ -58,4 +58,49 @@ describe('AuthService', () => {
       })
     })
   })
+
+  describe('createActor', () => {
+    const signupActorDto = {
+      ...mock('user')
+        .pick([
+          'email',
+          'password',
+          'firstName',
+          'middleName',
+          'lastName',
+          'phoneNumber',
+        ])
+        .get(),
+      ...mock('actor')
+        .pick(['prefix', 'nationality', 'ssn', 'gender', 'idCardImageUrl'])
+        .get(),
+    }
+
+    it('should create actor correctly', async () => {
+      jest.spyOn(repository, 'getUserByEmail').mockResolvedValue(null)
+      jest.spyOn(repository, 'createActor').mockResolvedValue()
+
+      await service.createActor(signupActorDto)
+      const { password, ...rest } = signupActorDto
+      expect(repository.createActor).toBeCalledWith(
+        expect.objectContaining(rest),
+      )
+      expect(repository.createActor).toBeCalledWith(
+        expect.not.objectContaining({ password }),
+      )
+    })
+
+    describe('email is already used', () => {
+      it('should throw confilct exeception', async () => {
+        jest
+          .spyOn(repository, 'getUserByEmail')
+          .mockResolvedValue(mock('user').get())
+        jest.spyOn(repository, 'createActor').mockResolvedValue()
+
+        await expect(service.createActor(signupActorDto)).rejects.toThrow(
+          ConflictException,
+        )
+      })
+    })
+  })
 })
