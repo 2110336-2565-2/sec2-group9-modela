@@ -23,7 +23,11 @@ export class JobService {
   }
   async findAll(searchJobDto: SearchJobDto) {
     //check searchJobDTO received
-    if (Object.keys(searchJobDto).length === 2) {
+    if (
+      searchJobDto.limit &&
+      searchJobDto.page &&
+      Object.keys(searchJobDto).length === 2
+    ) {
       //assume limit and page is always received
       //empty params return get all jobs without filter
       const limit = searchJobDto.limit
@@ -33,13 +37,12 @@ export class JobService {
       const params = this.convertRequestToParams(searchJobDto)
 
       //get jobs with params from repository
-      const jobs = await this.repository.getJob(params)
-      const jobsJoinCasting = await this.repository.getJobJoinCasting(params)
+      const jobsJoinCasting = await this.repository.getJobJoined(params)
       const result = new GetJobCardWithMaxPageDto()
       result.jobs = jobsJoinCasting
 
       //calculate maxPage
-      const allJobs = await this.repository.getJob({})
+      const allJobs = await this.repository.getJobJoined({})
       result.maxPage = Math.ceil(allJobs.length / limit)
 
       //return jobs

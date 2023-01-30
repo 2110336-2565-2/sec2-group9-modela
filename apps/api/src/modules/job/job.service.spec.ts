@@ -12,6 +12,7 @@ describe('JobService', () => {
   let repository: JobRepository
 
   beforeEach(async () => {
+    //test module
     const module: TestingModule = await Test.createTestingModule({
       providers: [JobService, JobRepository, PrismaService],
     }).compile()
@@ -23,34 +24,42 @@ describe('JobService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined()
   })
+  it('should get all job successfully', async () => {
+    const limitQueryMax = 10 //loop check all limitQuery 1-20
+    const jobDataLength = 10 //fixed mock data length in repository
 
-  describe('findAllJob', () => {
-    const limitQueryMax = 20 //loop check all limitQuery 1-20
-    const dataLength = 40 //fixed mock data length in repository
+    const itMockedJobData = await repository.getJobJoined({
+      take: jobDataLength,
+    })
+    console.log(itMockedJobData)
+
     for (let limitQuery = 1; limitQuery <= limitQueryMax; limitQuery++) {
-      it('should have correct maxPage and data', async () => {
+      for (
+        let pageQuery = 1;
+        pageQuery <= Math.ceil(jobDataLength / limitQuery) + 1;
+        pageQuery++
+      ) {
         //test environment
         const result = new GetJobCardWithMaxPageDto()
-        const stableMock = mock('job').get(dataLength)
-
-        result.jobs = stableMock
-
-        result.maxPage = Math.ceil(dataLength / limitQuery)
+        result.maxPage = Math.ceil(jobDataLength / limitQuery)
+        result.jobs = itMockedJobData
         const reqParams: SearchJobDto = {
           limit: limitQuery,
-          page: 1,
+          page: pageQuery,
         }
 
-        //build repository mock
-        jest.spyOn(repository, 'getJob').mockResolvedValue(stableMock)
+        //check repository mock
+        jest
+          .spyOn(repository, 'getJobJoined')
+          .mockResolvedValue(itMockedJobData)
 
         //check all property
         await expect(service.findAll(reqParams)).resolves.toEqual(result)
 
         //check repository called with correct params
         const prismaParams = service.convertRequestToParams(reqParams)
-        expect(repository.getJob).toBeCalledWith(prismaParams)
-      })
+        expect(repository.getJobJoined).toBeCalledWith(prismaParams)
+      }
     }
-  })
+  }) //end it
 })

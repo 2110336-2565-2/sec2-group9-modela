@@ -8,24 +8,14 @@ import { GetJobCardDto } from './job.dto'
 export class JobRepository {
   constructor(private prisma: PrismaService) {}
 
-  async getJob(params: {
-    skip?: number
-    take?: number
-    cursor?: Prisma.JobWhereUniqueInput
-    where?: Prisma.JobWhereInput
-    orderBy?: Prisma.JobOrderByWithRelationInput
-  }): Promise<Job[]> {
-    return this.prisma.job.findMany(params)
-  }
-
-  async getJobJoinCasting(params: {
+  async getJobJoined(params: {
     skip?: number
     take?: number
     cursor?: Prisma.JobWhereUniqueInput
     where?: Prisma.JobWhereInput
     orderBy?: Prisma.JobOrderByWithRelationInput
   }): Promise<GetJobCardDto[]> {
-    //join casting table
+    //join casting and user table
     const paramsWithInclude = {
       ...params,
       include: {
