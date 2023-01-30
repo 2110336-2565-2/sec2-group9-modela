@@ -1,7 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Actor, Casting, Gender, User } from '@prisma/client'
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsNumberString,
+  IsString,
+  IsUrl,
+  Length,
+} from 'class-validator'
 
-export class SignupActorDTO implements Partial<Actor & User> {
+export class SignupActorDto implements Partial<Actor & User> {
   @ApiProperty()
   email: string
 
@@ -36,33 +44,46 @@ export class SignupActorDTO implements Partial<Actor & User> {
   idCardImageUrl: string
 }
 
-export class SignupCastingDTO implements Partial<Casting & User> {
+export class SignupCastingDto implements Partial<Casting & User> {
+  @IsEmail()
   @ApiProperty()
   email: string
 
+  @IsString()
+  @IsNotEmpty()
   @ApiProperty()
   password: string
 
+  @IsString()
+  @IsNotEmpty()
   @ApiProperty()
   firstName: string
 
+  @IsString()
   @ApiProperty()
   middleName: string
 
+  @IsString()
+  @IsNotEmpty()
   @ApiProperty()
   lastName: string
 
+  @IsNumberString()
+  @Length(13, 13)
   @ApiProperty()
   companyId: string
 
   @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
   companyName: string
 
+  @IsUrl()
   @ApiProperty()
   employmentCertUrl: string
 }
 
-export class LoginDTO implements Partial<User> {
+export class LoginDto implements Partial<User> {
   @ApiProperty()
   email: string
 
