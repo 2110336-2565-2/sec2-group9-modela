@@ -39,7 +39,7 @@ export class JobController {
   @ApiUnauthorizedResponse({ description: 'User is not login' })
   @ApiBadRequestResponse({ description: 'Wrong format' })
   findAll(@Query() searchJobDTO: SearchJobDTO) {
-    return this.jobService.findAll()
+    return this.jobService.findAll(searchJobDTO)
   }
 
   @Get(':id')
