@@ -1,5 +1,12 @@
 import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger'
 import { Casting, Gender, Job, JobStatus, Shooting } from '@prisma/client'
+import {
+  IsDateString,
+  IsEnum,
+  IsNumberString,
+  IsOptional,
+  IsString,
+} from 'class-validator'
 
 export enum SearchJobStatus {
   'OPEN',
@@ -7,39 +14,63 @@ export enum SearchJobStatus {
 }
 
 export class SearchJobDTO {
+  @IsOptional()
+  @IsNumberString()
   @ApiPropertyOptional()
   limit?: number
 
+  @IsOptional()
+  @IsNumberString()
   @ApiPropertyOptional()
   page?: number
 
+  @IsOptional()
+  @IsDateString()
   @ApiPropertyOptional()
   startDate?: Date
 
+  @IsOptional()
+  @IsDateString()
   @ApiPropertyOptional()
   startTime?: Date
 
+  @IsOptional()
+  @IsDateString()
   @ApiPropertyOptional()
   endDate?: Date
 
+  @IsOptional()
+  @IsDateString()
   @ApiPropertyOptional()
   endTime?: Date
 
+  @IsOptional()
+  @IsNumberString()
   @ApiPropertyOptional()
   age?: number
 
+  @IsOptional()
+  @IsNumberString()
   @ApiPropertyOptional()
   minWage?: number
 
+  @IsOptional()
+  @IsNumberString()
   @ApiPropertyOptional()
   maxWage?: number
 
+  @IsOptional()
+  @IsEnum(SearchJobStatus, { each: true })
   @ApiPropertyOptional({ enum: SearchJobStatus, isArray: true })
   status?: SearchJobStatus[]
 
+  @IsOptional()
+  @IsEnum(Gender, { each: true })
   @ApiPropertyOptional({ enum: Gender, isArray: true })
   gender?: Gender[]
 
+  @IsOptional()
+  @IsString()
   @ApiPropertyOptional()
   castingId?: string
 }
