@@ -2,14 +2,13 @@ import { Body, Controller, Post } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
   ApiConflictResponse,
-  ApiCookieAuth,
   ApiCreatedResponse,
   ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
 
-import { LoginDTO, SignupActorDTO, SignupCastingDTO } from './auth.dto'
+import { LoginDto, SignupActorDto, SignupCastingDto } from './auth.dto'
 import { AuthService } from './auth.service'
 
 @ApiTags('auth')
@@ -22,17 +21,17 @@ export class AuthController {
   @ApiCreatedResponse({ description: 'Signup successful' })
   @ApiConflictResponse({ description: 'Already signup' })
   @ApiBadRequestResponse({ description: 'Wrong format' })
-  signupActor(@Body() signupActorDTO: SignupActorDTO) {
+  signupActor(@Body() signupActorDto: SignupActorDto) {
     return 'this will signup Actor'
   }
 
   @Post('signup/casting')
   @ApiOperation({ summary: 'signup for casting' })
   @ApiCreatedResponse({ description: 'Signup successful' })
-  @ApiConflictResponse({ description: 'Already signup' })
+  @ApiConflictResponse({ description: 'This email is already used' })
   @ApiBadRequestResponse({ description: 'Wrong format' })
-  signupCasting(@Body() signupCastingDTO: SignupCastingDTO) {
-    return 'this will signup Casting'
+  signupCasting(@Body() signupCastingDto: SignupCastingDto) {
+    return this.authService.createCasting(signupCastingDto)
   }
 
   @Post('login')
@@ -40,7 +39,7 @@ export class AuthController {
   @ApiCreatedResponse({ description: 'Login successful' })
   @ApiUnauthorizedResponse({ description: 'Wrong email or password' })
   @ApiBadRequestResponse({ description: 'Wrong format' })
-  login(@Body() loginDTO: LoginDTO) {
+  login(@Body() loginDto: LoginDto) {
     return 'this will login user'
   }
 }

@@ -52,6 +52,16 @@ describe('mock()', () => {
     })
   })
 
+  describe('pick', () => {
+    it('should pick properties correctly', () => {
+      const result = mock('resume').pick(['resumeId', 'actorId']).get()
+      expect(result).toEqual({
+        resumeId: MOCK_VALUES[0].resumeId,
+        actorId: MOCK_VALUES[0].actorId,
+      })
+    })
+  })
+
   describe('override', () => {
     it('should override properties correctly', () => {
       const result = mock('resume')

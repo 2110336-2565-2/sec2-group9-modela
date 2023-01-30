@@ -1,19 +1,61 @@
+import { ConflictException } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
+import { mock } from 'src/common/mocks'
+import { PrismaService } from 'src/database/prisma.service'
 
+import { AuthRepository } from './auth.repository'
 import { AuthService } from './auth.service'
 
 describe('AuthService', () => {
   let service: AuthService
+  let repository: AuthRepository
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AuthService],
+      providers: [AuthService, AuthRepository, PrismaService],
     }).compile()
 
     service = module.get<AuthService>(AuthService)
+    repository = module.get<AuthRepository>(AuthRepository)
   })
 
   it('should be defined', () => {
     expect(service).toBeDefined()
+  })
+
+  describe('createCasting', () => {
+    const signupCastingDto = {
+      ...mock('user')
+        .pick(['email', 'password', 'firstName', 'middleName', 'lastName'])
+        .get(),
+      ...mock('casting').get(),
+    }
+
+    it('should create casting correctly', async () => {
+      jest.spyOn(repository, 'getUserByEmail').mockResolvedValue(null)
+      jest.spyOn(repository, 'createCasting').mockResolvedValue()
+
+      await service.createCasting(signupCastingDto)
+      const { password, ...rest } = signupCastingDto
+      expect(repository.createCasting).toBeCalledWith(
+        expect.objectContaining(rest),
+      )
+      expect(repository.createCasting).toBeCalledWith(
+        expect.not.objectContaining({ password }),
+      )
+    })
+
+    describe('email is already used', () => {
+      it('should throw confilct exeception', async () => {
+        jest
+          .spyOn(repository, 'getUserByEmail')
+          .mockResolvedValue(mock('user').get())
+        jest.spyOn(repository, 'createCasting').mockResolvedValue()
+
+        await expect(service.createCasting(signupCastingDto)).rejects.toThrow(
+          ConflictException,
+        )
+      })
+    })
   })
 })
