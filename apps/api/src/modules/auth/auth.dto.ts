@@ -5,6 +5,7 @@ import {
   IsEmail,
   IsEnum,
   IsNotEmpty,
+  IsNumber,
   IsNumberString,
   IsOptional,
   IsPhoneNumber,
@@ -107,9 +108,24 @@ export class SignupCastingDto implements Partial<Casting & User> {
 }
 
 export class LoginDto implements Partial<User> {
+  @IsEmail()
   @ApiProperty()
   email: string
 
+  @IsString()
+  @IsNotEmpty()
   @ApiProperty()
   password: string
+}
+
+export class JwtDto implements Partial<User> {
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty()
+  userId: number
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  role: string
 }

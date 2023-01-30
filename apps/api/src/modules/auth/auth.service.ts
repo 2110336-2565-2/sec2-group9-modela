@@ -1,12 +1,24 @@
-import { ConflictException, Injectable } from '@nestjs/common'
-import { hash } from 'bcryptjs'
+import {
+  ConflictException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
+import { JwtService } from '@nestjs/jwt'
+import { User } from '@prisma/client'
+import { compare, hash } from 'bcryptjs'
+import { Response } from 'express'
 
-import { SignupActorDto, SignupCastingDto } from './auth.dto'
+import { LoginDto, SignupActorDto, SignupCastingDto } from './auth.dto'
 import { AuthRepository } from './auth.repository'
 
 @Injectable()
 export class AuthService {
-  constructor(private repository: AuthRepository) {}
+  constructor(
+    private repository: AuthRepository,
+    private configService: ConfigService,
+    private jwtService: JwtService,
+  ) {}
 
   async createCasting(signupCastingDto: SignupCastingDto) {
     const { password, email } = signupCastingDto
@@ -42,5 +54,24 @@ export class AuthService {
     } catch (e) {
       console.log(e)
     }
+  }
+
+  async verfyPassword(loginDto: LoginDto, res: Response) {
+    const { password, email } = loginDto
+    const user = await this.repository.getUserByEmail(email)
+    if (!user) throw new UnauthorizedException('Wrong email or password')
+    if (!(await compare(password, user.password)))
+      throw new UnauthorizedException('Wrong email or password')
+    return this.createJwtToken(user, res)
+  }
+
+  async createJwtToken(user: User, res: Response) {
+    const { userId, type } = user
+    const token: string = this.jwtService.sign({ userId, type })
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: this.configService.get<boolean>('cookie.secure'),
+    })
+    return { message: 'Login Successful' }
   }
 }
