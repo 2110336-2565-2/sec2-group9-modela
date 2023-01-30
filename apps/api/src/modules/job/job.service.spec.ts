@@ -25,13 +25,20 @@ describe('JobService', () => {
     expect(service).toBeDefined()
   })
   it('should get all job successfully', async () => {
-    const limitQueryMax = 10 //loop check all limitQuery 1-20
+    const limitQueryMax = 10 //loop check all limitQuery 1-10
     const jobDataLength = 10 //fixed mock data length in repository
 
+    //mock repository
+    jest
+      .spyOn(repository, 'getJob')
+      .mockResolvedValue(mock('job').get(jobDataLength))
+
+    //get mocked repository
     const itMockedJobData = await repository.getJobJoined({
       take: jobDataLength,
     })
 
+    //loop check all limitQuery 1-10 and pageQuery 1-10
     for (let limitQuery = 1; limitQuery <= limitQueryMax; limitQuery++) {
       for (
         let pageQuery = 1;
