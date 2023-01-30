@@ -26,10 +26,10 @@ describe('JobService', () => {
 
   describe('findAllJob', () => {
     const limitQueryMax = 20 //loop check all limitQuery 1-20
-    const dataLength = 40 //จำนวนข้อมูลที่จะ mock ใน repository
+    const dataLength = 40 //fixed mock data length in repository
     for (let limitQuery = 1; limitQuery <= limitQueryMax; limitQuery++) {
       it('should have correct maxPage and data', async () => {
-        //กำหนดค่าต่างๆ
+        //test environment
         const result = new GetJobCardWithMaxPageDto()
         const stableMock = mock('job').get(dataLength)
 
@@ -41,14 +41,14 @@ describe('JobService', () => {
           page: 1,
         }
 
-        //เป็นการจำลอง output ของ res หากไม่ใช้ repository ไม่ต้องทำ
+        //build repository mock
         jest.spyOn(repository, 'getJob').mockResolvedValue(stableMock)
 
         //check all property
         await expect(service.findAll(reqParams)).resolves.toEqual(result)
 
+        //check repository called with correct params
         const prismaParams = service.convertRequestToParams(reqParams)
-        //check parameter ที่เรียก
         expect(repository.getJob).toBeCalledWith(prismaParams)
       })
     }
