@@ -11,6 +11,16 @@ export class JobService {
     return 'This action adds a new job'
   }
 
+  convertRequestToParams(searchJobDto: SearchJobDto) {
+    const params = {}
+    if (searchJobDto.limit) {
+      params['take'] = Number(searchJobDto.limit)
+    }
+    if (searchJobDto.page) {
+      params['skip'] = (searchJobDto.page - 1) * searchJobDto.limit
+    }
+    return params
+  }
   async findAll(searchJobDto: SearchJobDto) {
     //check searchJobDTO received
     if (Object.keys(searchJobDto).length === 2) {
@@ -20,10 +30,7 @@ export class JobService {
       const page = searchJobDto.page
 
       //set params for getJob
-      const params = { take: Number(limit) }
-      if (page > 1) {
-        params['skip'] = (page - 1) * limit
-      }
+      const params = this.convertRequestToParams(searchJobDto)
 
       //get jobs with params from repository
       const jobs = await this.repository.getJob(params)
