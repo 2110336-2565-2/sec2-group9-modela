@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { ConflictException, Injectable } from '@nestjs/common'
 import { hash } from 'bcrypt'
 
 import { SignupCastingDto } from './auth.dto'
@@ -9,11 +9,20 @@ export class AuthService {
   constructor(private repository: AuthRepository) {}
 
   async createCasting(signupCastingDto: SignupCastingDto) {
-    const hashedPassword = await hash(signupCastingDto.password, 10)
+    const { password, email } = signupCastingDto
 
-    await this.repository.createCasting({
-      ...signupCastingDto,
-      password: hashedPassword,
-    })
+    if (await this.repository.getUserByEmail(email))
+      throw new ConflictException('This email is already used')
+
+    try {
+      const hashedPassword = await hash(password, 10)
+
+      await this.repository.createCasting({
+        ...signupCastingDto,
+        password: hashedPassword,
+      })
+    } catch (e) {
+      console.log(e)
+    }
   }
 }
