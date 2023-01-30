@@ -66,8 +66,8 @@ export class AuthService {
   }
 
   async createJwtToken(user: User, res: Response) {
-    const { userId, type } = user
-    const token: string = this.jwtService.sign({ userId, type })
+    const { email, type } = user
+    const token: string = this.jwtService.sign({ email, type })
     res.cookie('token', token, {
       httpOnly: true,
       secure: this.configService.get<boolean>('cookie.secure'),

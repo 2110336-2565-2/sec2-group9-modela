@@ -119,10 +119,9 @@ export class LoginDto implements Partial<User> {
 }
 
 export class JwtDto implements Partial<User> {
-  @IsNumber()
-  @IsNotEmpty()
+  @IsEmail()
   @ApiProperty()
-  userId: number
+  email: string
 
   @IsString()
   @IsNotEmpty()
