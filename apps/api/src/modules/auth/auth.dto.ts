@@ -30,8 +30,8 @@ export class SignupActorDto implements Partial<Actor & User> {
 
   @IsString()
   @IsOptional()
-  @ApiProperty()
-  middleName: string
+  @ApiPropertyOptional()
+  middleName?: string
 
   @IsString()
   @IsNotEmpty()
@@ -84,7 +84,7 @@ export class SignupCastingDto implements Partial<Casting & User> {
   @IsString()
   @IsOptional()
   @ApiPropertyOptional()
-  middleName: string
+  middleName?: string
 
   @IsString()
   @IsNotEmpty()

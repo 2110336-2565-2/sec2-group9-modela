@@ -33,7 +33,7 @@ describe('AuthService', () => {
 
     it('should create casting correctly', async () => {
       jest.spyOn(repository, 'getUserByEmail').mockResolvedValue(null)
-      jest.spyOn(repository, 'createCasting').mockResolvedValue()
+      jest.spyOn(repository, 'createCasting')
 
       await service.createCasting(signupCastingDto)
       const { password, ...rest } = signupCastingDto
@@ -46,11 +46,11 @@ describe('AuthService', () => {
     })
 
     describe('email is already used', () => {
-      it('should throw confilct exeception', async () => {
+      it('should throw conflict exeception', async () => {
         jest
           .spyOn(repository, 'getUserByEmail')
           .mockResolvedValue(mock('user').get())
-        jest.spyOn(repository, 'createCasting').mockResolvedValue()
+        jest.spyOn(repository, 'createCasting')
 
         await expect(service.createCasting(signupCastingDto)).rejects.toThrow(
           ConflictException,
@@ -78,7 +78,7 @@ describe('AuthService', () => {
 
     it('should create actor correctly', async () => {
       jest.spyOn(repository, 'getUserByEmail').mockResolvedValue(null)
-      jest.spyOn(repository, 'createActor').mockResolvedValue()
+      jest.spyOn(repository, 'createActor')
 
       await service.createActor(signupActorDto)
       const { password, ...rest } = signupActorDto
@@ -91,11 +91,11 @@ describe('AuthService', () => {
     })
 
     describe('email is already used', () => {
-      it('should throw confilct exeception', async () => {
+      it('should throw conflict exeception', async () => {
         jest
           .spyOn(repository, 'getUserByEmail')
           .mockResolvedValue(mock('user').get())
-        jest.spyOn(repository, 'createActor').mockResolvedValue()
+        jest.spyOn(repository, 'createActor')
 
         await expect(service.createActor(signupActorDto)).rejects.toThrow(
           ConflictException,
