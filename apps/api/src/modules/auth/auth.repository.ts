@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { UserType } from '@prisma/client'
 import { PrismaService } from 'src/database/prisma.service'
 
-import { SignupCastingDto } from './auth.dto'
+import { SignupActorDto, SignupCastingDto } from './auth.dto'
 
 @Injectable()
 export class AuthRepository {
@@ -20,6 +20,15 @@ export class AuthRepository {
           create: castingData,
         },
       },
+    })
+  }
+
+  async createActor(payload: SignupActorDto) {
+    const { prefix, nationality, ssn, gender, idCardImageUrl, ...userData } =
+      payload
+    const actorData = { prefix, nationality, ssn, gender, idCardImageUrl }
+    await this.prisma.user.create({
+      data: { ...userData, type: UserType.ACTOR, Actor: { create: actorData } },
     })
   }
 

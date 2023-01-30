@@ -19,10 +19,10 @@ export class AuthController {
   @Post('signup/actor')
   @ApiOperation({ summary: 'signup for actor' })
   @ApiCreatedResponse({ description: 'Signup successful' })
-  @ApiConflictResponse({ description: 'Already signup' })
+  @ApiConflictResponse({ description: 'This email is already used' })
   @ApiBadRequestResponse({ description: 'Wrong format' })
   signupActor(@Body() signupActorDto: SignupActorDto) {
-    return 'this will signup Actor'
+    return this.authService.createActor(signupActorDto)
   }
 
   @Post('signup/casting')

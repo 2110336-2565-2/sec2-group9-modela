@@ -33,7 +33,7 @@ describe('AuthService', () => {
 
     it('should create casting correctly', async () => {
       jest.spyOn(repository, 'getUserByEmail').mockResolvedValue(null)
-      jest.spyOn(repository, 'createCasting').mockResolvedValue()
+      jest.spyOn(repository, 'createCasting')
 
       await service.createCasting(signupCastingDto)
       const { password, ...rest } = signupCastingDto
@@ -46,13 +46,58 @@ describe('AuthService', () => {
     })
 
     describe('email is already used', () => {
-      it('should throw confilct exeception', async () => {
+      it('should throw conflict exeception', async () => {
         jest
           .spyOn(repository, 'getUserByEmail')
           .mockResolvedValue(mock('user').get())
-        jest.spyOn(repository, 'createCasting').mockResolvedValue()
+        jest.spyOn(repository, 'createCasting')
 
         await expect(service.createCasting(signupCastingDto)).rejects.toThrow(
+          ConflictException,
+        )
+      })
+    })
+  })
+
+  describe('createActor', () => {
+    const signupActorDto = {
+      ...mock('user')
+        .pick([
+          'email',
+          'password',
+          'firstName',
+          'middleName',
+          'lastName',
+          'phoneNumber',
+        ])
+        .get(),
+      ...mock('actor')
+        .pick(['prefix', 'nationality', 'ssn', 'gender', 'idCardImageUrl'])
+        .get(),
+    }
+
+    it('should create actor correctly', async () => {
+      jest.spyOn(repository, 'getUserByEmail').mockResolvedValue(null)
+      jest.spyOn(repository, 'createActor')
+
+      await service.createActor(signupActorDto)
+      const { password, ...rest } = signupActorDto
+      expect(repository.createActor).toBeCalledWith(
+        expect.objectContaining(rest),
+      )
+      expect(repository.createActor).toBeCalledWith(
+        expect.not.objectContaining({ password }),
+      )
+    })
+
+    describe('email is already used', () => {
+      it('should throw conflict exeception', async () => {
+        jest
+          .spyOn(repository, 'getUserByEmail')
+          .mockResolvedValue(mock('user').get())
+        jest.spyOn(repository, 'createActor')
+
+        await expect(service.createActor(signupActorDto)).rejects.toThrow(
           ConflictException,
         )
       })
