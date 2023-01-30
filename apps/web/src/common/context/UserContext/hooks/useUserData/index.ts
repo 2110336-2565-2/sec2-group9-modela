@@ -1,9 +1,11 @@
+import { UserType } from 'common/types/prisma'
 import React, { useEffect } from 'react'
 
-import { UserData, UserType } from '../../types'
+import { UserData } from '../../types'
 
 const useUserData = () => {
   const [user, setUser] = React.useState<UserData | null>(null)
+  const [isLoading, setLoading] = React.useState(true)
 
   useEffect(() => {
     const getUser = async () => {
@@ -14,12 +16,13 @@ const useUserData = () => {
           isVerified: true,
           type: UserType.ACTOR,
         })
+        setLoading(false)
       }, 1000)
     }
     getUser()
   }, [])
 
-  return user
+  return { user, isLoading }
 }
 
 export default useUserData
