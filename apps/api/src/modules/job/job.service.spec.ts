@@ -31,7 +31,6 @@ describe('JobService', () => {
     const itMockedJobData = await repository.getJobJoined({
       take: jobDataLength,
     })
-    console.log(itMockedJobData)
 
     for (let limitQuery = 1; limitQuery <= limitQueryMax; limitQuery++) {
       for (
