@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { UserType } from '@prisma/client'
 import { PrismaService } from 'src/database/prisma.service'
 
-import { SignupCastingDto } from './auth.Dto'
+import { SignupCastingDto } from './auth.dto'
 
 @Injectable()
 export class AuthRepository {
