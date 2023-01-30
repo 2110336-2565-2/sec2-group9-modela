@@ -12,7 +12,7 @@ export class AuthRepository {
     const { companyId, companyName, employmentCertUrl, ...userData } = payload
     const castingData = { companyId, companyName, employmentCertUrl }
 
-    return await this.prisma.user.create({
+    await this.prisma.user.create({
       data: {
         ...userData,
         type: UserType.CASTING,
