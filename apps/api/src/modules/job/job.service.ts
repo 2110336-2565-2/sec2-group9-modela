@@ -34,8 +34,9 @@ export class JobService {
 
       //get jobs with params from repository
       const jobs = await this.repository.getJob(params)
+      const jobsJoinCasting = await this.repository.getJobJoinCasting(params)
       const result = new GetJobCardWithMaxPageDto()
-      result.jobs = jobs
+      result.jobs = jobsJoinCasting
 
       //calculate maxPage
       const allJobs = await this.repository.getJob({})

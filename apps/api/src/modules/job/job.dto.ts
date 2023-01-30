@@ -30,7 +30,6 @@ export class SearchJobDto {
   @IsNotEmpty()
   @IsNumber()
   @Min(1)
-  //CONCERN: not yet limit max page
   @Type(() => Number)
   @ApiProperty({ required: true })
   page: number
@@ -149,11 +148,8 @@ export class GetJobCardDto extends OmitType(EditJobDto, [
   @ApiProperty()
   jobId: number
 
-  /* TEMPORARY Disable company name in job card
-  later we will add company name in database schema and uncomment this
   @ApiProperty()
   companyName: string
-  */
 }
 
 export class GetJobCardWithMaxPageDto {

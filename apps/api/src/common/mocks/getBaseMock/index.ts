@@ -99,6 +99,7 @@ export const getBaseMock = (
         castingId: index + NUMBER_OF_ADMIN + NUMBER_OF_ACTOR,
         companyName: faker.company.name(),
         companyId: faker.random.numeric(13),
+        //castingImageUrl: faker.image.image(640, 480, true),
         employmentCertUrl: faker.internet.url(),
       }
     case 'resume': {
