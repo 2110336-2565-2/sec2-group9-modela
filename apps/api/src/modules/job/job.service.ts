@@ -1,15 +1,29 @@
 import { Injectable } from '@nestjs/common'
 
-import { EditJobDto } from './job.dto'
+import { EditJobDto, SearchJobDTO } from './job.dto'
+import { JobRepository } from './job.repository'
 
 @Injectable()
 export class JobService {
+  constructor(private repository: JobRepository) {}
+
   create(createJobDto: EditJobDto) {
     return 'This action adds a new job'
   }
 
-  findAll() {
-    return `This action returns all job`
+  async findAll(searchJobDTO: SearchJobDTO) {
+    //check searchJobDTO is received
+    if (Object.keys(searchJobDTO).length === 0) {
+      //empty params return get all jobs without filter
+      const jobs = await this.repository.getJob({})
+      return jobs
+    } else {
+      //have params return get all jobs with filter
+      console.log('TODO filtering in next task : ', searchJobDTO)
+      //const jobs = await this.repository.getJob({})
+      //return jobs
+      return 'This action returns all job with filter'
+    }
   }
 
   findOne(id: number) {
