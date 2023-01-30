@@ -22,9 +22,10 @@ import {
 import {
   EditJobDto,
   GetJobCardDto,
+  GetJobCardWithMaxPageDto,
   GetJobDto,
   JobIdDTO,
-  SearchJobDTO,
+  SearchJobDto,
 } from './job.dto'
 import { JobService } from './job.service'
 
@@ -35,11 +36,11 @@ export class JobController {
 
   @Get()
   @ApiOperation({ summary: 'get all jobs with filter' })
-  @ApiOkResponse({ type: GetJobCardDto, isArray: true })
+  @ApiOkResponse({ type: GetJobCardWithMaxPageDto, isArray: true })
   @ApiUnauthorizedResponse({ description: 'User is not login' })
   @ApiBadRequestResponse({ description: 'Wrong format' })
-  findAll(@Query() searchJobDTO: SearchJobDTO) {
-    return this.jobService.findAll(searchJobDTO)
+  findAll(@Query() searchJobDto: SearchJobDto) {
+    return this.jobService.findAll(searchJobDto)
   }
 
   @Get(':id')

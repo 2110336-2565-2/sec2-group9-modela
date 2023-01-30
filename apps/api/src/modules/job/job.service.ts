@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 
-import { EditJobDto, SearchJobDTO } from './job.dto'
+import { EditJobDto, GetJobCardWithMaxPageDto, SearchJobDto } from './job.dto'
 import { JobRepository } from './job.repository'
 
 @Injectable()
@@ -11,16 +11,54 @@ export class JobService {
     return 'This action adds a new job'
   }
 
-  async findAll(searchJobDTO: SearchJobDTO) {
-    //check searchJobDTO is received
-    if (Object.keys(searchJobDTO).length === 0) {
+  async findAll(searchJobDto: SearchJobDto) {
+    //check searchJobDTO received
+    if (Object.keys(searchJobDto).length === 2) {
+      //assume limit and page is always received
       //empty params return get all jobs without filter
-      const jobs = await this.repository.getJob({})
-      return jobs
+      const limit = searchJobDto.limit
+      const page = searchJobDto.page
+
+      //set params for getJob
+      const params = { take: Number(limit) }
+      if (page > 1) {
+        params['skip'] = (page - 1) * limit
+      }
+
+      //get jobs with params from repository
+      const jobs = await this.repository.getJob(params)
+      const result = new GetJobCardWithMaxPageDto()
+      result.jobs = jobs
+
+      //calculate maxPage
+      const allJobs = await this.repository.getJob({})
+      result.maxPage = Math.ceil(allJobs.length / limit)
+
+      //return jobs
+      return result
     } else {
+      //TODO filtering in next task [24]
       //have params return get all jobs with filter
-      console.log('TODO filtering in next task : ', searchJobDTO)
-      //const jobs = await this.repository.getJob({})
+      const limit = searchJobDto.limit
+      const page = searchJobDto.page
+
+      //set params for getJob
+      const params = { take: Number(limit) }
+      if (page > 1) {
+        params['skip'] = (page - 1) * limit
+      }
+
+      //get jobs with params from repository with filter
+      //const jobs = await this.repository.getJob(params)
+      //const result = new GetJobCardWithMaxPageDto();
+      //result.jobs = jobs
+
+      //calculate maxPage
+      //const allJobs = await this.repository.getJob({})
+      //result.maxPage = Math.ceil(allJobs.length / limit)
+
+      console.log('TODO filtering in next task : ', searchJobDto)
+      //const jobs = await this.repository.getJob({params})
       //return jobs
       return 'This action returns all job with filter'
     }

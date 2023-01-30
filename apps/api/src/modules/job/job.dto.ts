@@ -1,11 +1,16 @@
 import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger'
 import { Casting, Gender, Job, JobStatus, Shooting } from '@prisma/client'
+import { Type } from 'class-transformer'
 import {
   IsDateString,
   IsEnum,
+  IsNotEmpty,
+  IsNumber,
   IsNumberString,
   IsOptional,
   IsString,
+  Max,
+  Min,
 } from 'class-validator'
 
 export enum SearchJobStatus {
@@ -13,16 +18,22 @@ export enum SearchJobStatus {
   'CLOSE',
 }
 
-export class SearchJobDTO {
-  @IsOptional()
-  @IsNumberString()
-  @ApiPropertyOptional()
-  limit?: number
+export class SearchJobDto {
+  @IsNotEmpty()
+  @IsNumber()
+  @Min(1)
+  @Max(20)
+  @Type(() => Number)
+  @ApiProperty({ required: true })
+  limit: number
 
-  @IsOptional()
-  @IsNumberString()
-  @ApiPropertyOptional()
-  page?: number
+  @IsNotEmpty()
+  @IsNumber()
+  @Min(1)
+  //CONCERN: not yet limit max page
+  @Type(() => Number)
+  @ApiProperty({ required: true })
+  page: number
 
   @IsOptional()
   @IsDateString()
@@ -75,7 +86,7 @@ export class SearchJobDTO {
   castingId?: string
 }
 
-export class ShootingDTO implements Partial<Shooting> {
+export class ShootingDto implements Partial<Shooting> {
   @ApiProperty()
   shootingLocation: string
 
@@ -92,7 +103,7 @@ export class ShootingDTO implements Partial<Shooting> {
   endTime: Date
 }
 
-type EditJobType = Partial<Job> & { shooting: ShootingDTO[] }
+type EditJobType = Partial<Job> & { shooting: ShootingDto[] }
 
 export class EditJobDto implements EditJobType {
   @ApiProperty()
@@ -125,8 +136,8 @@ export class EditJobDto implements EditJobType {
   @ApiProperty()
   applicationDeadline: Date
 
-  @ApiProperty({ type: ShootingDTO, isArray: true })
-  shooting: ShootingDTO[]
+  @ApiProperty({ type: ShootingDto, isArray: true })
+  shooting: ShootingDto[]
 }
 
 export class GetJobCardDto extends OmitType(EditJobDto, [
@@ -138,8 +149,19 @@ export class GetJobCardDto extends OmitType(EditJobDto, [
   @ApiProperty()
   jobId: number
 
+  /* TEMPORARY Disable company name in job card
+  later we will add company name in database schema and uncomment this
   @ApiProperty()
   companyName: string
+  */
+}
+
+export class GetJobCardWithMaxPageDto {
+  @ApiProperty({ type: GetJobCardDto, isArray: true })
+  jobs: GetJobCardDto[]
+
+  @ApiProperty()
+  maxPage: number
 }
 
 export class GetJobDto extends EditJobDto {
