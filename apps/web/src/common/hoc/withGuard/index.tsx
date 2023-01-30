@@ -13,8 +13,14 @@ const withGuard = (
 
     // not login
     if (!user) {
+      // TODO change path
       router.replace('/login')
       return null
+    }
+
+    if (!user.isVerified) {
+      // TODO change path
+      router.replace('/waiting')
     }
 
     // not allowed
