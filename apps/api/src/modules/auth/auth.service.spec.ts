@@ -1,4 +1,6 @@
 import { ConflictException } from '@nestjs/common'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { JwtModule } from '@nestjs/jwt'
 import { Test, TestingModule } from '@nestjs/testing'
 import { mock } from 'src/common/mocks'
 import { PrismaService } from 'src/database/prisma.service'
@@ -12,6 +14,7 @@ describe('AuthService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [ConfigModule, JwtModule],
       providers: [AuthService, AuthRepository, PrismaService],
     }).compile()
 
@@ -33,7 +36,7 @@ describe('AuthService', () => {
 
     it('should create casting correctly', async () => {
       jest.spyOn(repository, 'getUserByEmail').mockResolvedValue(null)
-      jest.spyOn(repository, 'createCasting')
+      jest.spyOn(repository, 'createCasting').mockResolvedValue()
 
       await service.createCasting(signupCastingDto)
       const { password, ...rest } = signupCastingDto
@@ -50,7 +53,7 @@ describe('AuthService', () => {
         jest
           .spyOn(repository, 'getUserByEmail')
           .mockResolvedValue(mock('user').get())
-        jest.spyOn(repository, 'createCasting')
+        jest.spyOn(repository, 'createCasting').mockResolvedValue()
 
         await expect(service.createCasting(signupCastingDto)).rejects.toThrow(
           ConflictException,
@@ -78,7 +81,7 @@ describe('AuthService', () => {
 
     it('should create actor correctly', async () => {
       jest.spyOn(repository, 'getUserByEmail').mockResolvedValue(null)
-      jest.spyOn(repository, 'createActor')
+      jest.spyOn(repository, 'createActor').mockResolvedValue()
 
       await service.createActor(signupActorDto)
       const { password, ...rest } = signupActorDto
@@ -95,7 +98,7 @@ describe('AuthService', () => {
         jest
           .spyOn(repository, 'getUserByEmail')
           .mockResolvedValue(mock('user').get())
-        jest.spyOn(repository, 'createActor')
+        jest.spyOn(repository, 'createActor').mockResolvedValue()
 
         await expect(service.createActor(signupActorDto)).rejects.toThrow(
           ConflictException,
