@@ -1,6 +1,7 @@
 import { EmotionCache } from '@emotion/cache'
 import { CacheProvider } from '@emotion/react'
 import { CssBaseline, ThemeProvider } from '@mui/material'
+import Layout from 'common/components/Layout'
 import theme, { createEmotionCache } from 'common/config/theme'
 import { UserProvider } from 'common/context/UserContext'
 import type { AppProps } from 'next/app'
@@ -19,7 +20,9 @@ function MyApp(props: AppPropsWithCache) {
       <ThemeProvider theme={theme}>
         <UserProvider>
           <CssBaseline />
-          <Component {...pageProps} style={{ flex: 1 }} />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
         </UserProvider>
       </ThemeProvider>
     </CacheProvider>

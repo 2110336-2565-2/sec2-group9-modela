@@ -110,6 +110,7 @@ importers:
       '@emotion/server': ^11.10.0
       '@emotion/styled': ^11.10.5
       '@mui/material': ^5.11.4
+      '@mui/system': ^5.11.5
       '@next/font': ^13.1.6
       '@testing-library/jest-dom': ^5.16.5
       '@testing-library/react': ^13.4.0
@@ -135,6 +136,7 @@ importers:
       '@emotion/server': 11.10.0
       '@emotion/styled': 11.10.5_jp5djshq6aqfasno3mth3hguci
       '@mui/material': 5.11.4_lskpmcsdi7ipu6qpuapyu56ihm
+      '@mui/system': 5.11.5_ogriz7mfahdh34qnfautfro5yu
       '@next/font': 13.1.6
       next: 13.1.2_pjwopsidmaokadturxaafygjp4
       open-cli: 7.1.0
@@ -1420,7 +1422,7 @@ packages:
       '@emotion/styled': 11.10.5_jp5djshq6aqfasno3mth3hguci
       '@mui/base': 5.0.0-alpha.113_ib3m5ricvtkl2cll7qpr2f6lvq
       '@mui/core-downloads-tracker': 5.11.4
-      '@mui/system': 5.11.4_ogriz7mfahdh34qnfautfro5yu
+      '@mui/system': 5.11.5_ogriz7mfahdh34qnfautfro5yu
       '@mui/types': 7.2.3_@types+react@18.0.26
       '@mui/utils': 5.11.2_react@18.2.0
       '@types/react': 18.0.26
@@ -1473,8 +1475,8 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@mui/system/5.11.4_ogriz7mfahdh34qnfautfro5yu:
-    resolution: {integrity: sha512-fE2Ts33V5zh7ouciwXgMm/a6sLvjIj9OMeojuHNYY7BStTxparC/Fp9CNUZNJwt76U6ZJC59aYScFSRQKbW08g==}
+  /@mui/system/5.11.5_ogriz7mfahdh34qnfautfro5yu:
+    resolution: {integrity: sha512-KNVsJ0sgRRp2XBqhh4wPS5aacteqjwxgiYTVwVnll2fgkgunZKo3DsDiGMrFlCg25ZHA3Ax58txWGE9w58zp0w==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
       '@emotion/react': ^11.5.0
