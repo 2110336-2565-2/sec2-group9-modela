@@ -1,3 +1,4 @@
+import { DefaultValuePipe } from '@nestjs/common'
 import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger'
 import { Casting, Gender, Job, JobStatus, Shooting } from '@prisma/client'
 import { Type } from 'class-transformer'
@@ -19,20 +20,22 @@ export enum SearchJobStatus {
 }
 
 export class SearchJobDto {
-  @IsNotEmpty()
+  @Type(() => Number)
   @IsNumber()
   @Min(1)
   @Max(20)
-  @Type(() => Number)
-  @ApiProperty({ required: true })
-  limit: number
+  @ApiPropertyOptional({
+    default: 20,
+  })
+  limit = 20
 
-  @IsNotEmpty()
+  @Type(() => Number)
   @IsNumber()
   @Min(1)
-  @Type(() => Number)
-  @ApiProperty({ required: true })
-  page: number
+  @ApiPropertyOptional({
+    default: 1,
+  })
+  page = 1
 
   @IsOptional()
   @IsDateString()

@@ -29,9 +29,9 @@ describe('JobService', () => {
     const jobDataLength = 10 //fixed mock data length in repository
 
     //mock repository
-    jest
-      .spyOn(repository, 'getJob')
-      .mockResolvedValue(mock('job').get(jobDataLength))
+    // jest
+    //   .spyOn(repository, 'getJob')
+    //   .mockResolvedValue(mock('job').get(jobDataLength))
 
     //get mocked repository
     const itMockedJobData = await repository.getJobJoined({

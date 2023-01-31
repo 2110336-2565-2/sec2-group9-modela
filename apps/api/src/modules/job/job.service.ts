@@ -12,16 +12,17 @@ export class JobService {
   }
 
   convertRequestToParams(searchJobDto: SearchJobDto) {
-    const params = {}
-    if (searchJobDto.limit) {
-      params['take'] = Number(searchJobDto.limit)
-    }
-    if (searchJobDto.page) {
-      params['skip'] = (searchJobDto.page - 1) * searchJobDto.limit
+    const params = {
+      take: Number(searchJobDto.limit),
+      skip: (searchJobDto.page - 1) * searchJobDto.limit,
     }
     return params
   }
   async findAll(searchJobDto: SearchJobDto) {
+    //set Default value for limit and page
+    searchJobDto.limit = searchJobDto.limit || 20
+    searchJobDto.page = searchJobDto.page || 1
+
     //check searchJobDTO received
     if (
       searchJobDto.limit &&
@@ -48,29 +49,8 @@ export class JobService {
       //return jobs
       return result
     } else {
-      //TODO filtering in next task [24]
-      //have params return get all jobs with filter
-      const limit = searchJobDto.limit
-      const page = searchJobDto.page
-
-      //set params for getJob
-      const params = { take: Number(limit) }
-      if (page > 1) {
-        params['skip'] = (page - 1) * limit
-      }
-
-      //get jobs with params from repository with filter
-      //const jobs = await this.repository.getJob(params)
-      //const result = new GetJobCardWithMaxPageDto();
-      //result.jobs = jobs
-
-      //calculate maxPage
-      //const allJobs = await this.repository.getJob({})
-      //result.maxPage = Math.ceil(allJobs.length / limit)
-
+      //TODO filtering in the task [24]
       console.log('TODO filtering in next task : ', searchJobDto)
-      //const jobs = await this.repository.getJob({params})
-      //return jobs
       return 'This action returns all job with filter'
     }
   }
