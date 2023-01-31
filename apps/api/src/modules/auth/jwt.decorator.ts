@@ -4,7 +4,7 @@ import {
   SetMetadata,
   UseGuards,
 } from '@nestjs/common'
-import { UserType } from '@prisma/client'
+import { UserType } from 'database'
 
 import { JwtAuthGuard } from './jwt-auth.guard'
 

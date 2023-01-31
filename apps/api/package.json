@@ -18,11 +18,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "migrate:dev": "prisma migrate dev",
-    "coverage": "open-cli coverage/lcov-report/index.html",
-    "generate": "prisma generate",
-    "seed": "prisma migrate reset",
-    "studio": "prisma studio"
+    "coverage": "open-cli coverage/lcov-report/index.html"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -32,11 +28,11 @@
     "@nestjs/passport": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/swagger": "^6.1.4",
-    "@prisma/client": "^4.9.0",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "cookie-parser": "^1.4.6",
+    "database": "workspace:*",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "reflect-metadata": "^0.1.13",
@@ -61,7 +57,6 @@
     "jest": "29.3.1",
     "open-cli": "^7.1.0",
     "prettier": "^2.3.2",
-    "prisma": "^4.9.0",
     "prisma-dbml-generator": "^0.10.0",
     "source-map-support": "^0.5.20",
     "supertest": "^6.1.3",

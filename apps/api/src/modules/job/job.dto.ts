@@ -1,6 +1,5 @@
 import { DefaultValuePipe } from '@nestjs/common'
 import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger'
-import { Casting, Gender, Job, JobStatus, Shooting } from '@prisma/client'
 import { Type } from 'class-transformer'
 import {
   IsDateString,
@@ -13,6 +12,7 @@ import {
   Max,
   Min,
 } from 'class-validator'
+import { Casting, Gender, Job, JobStatus, Shooting } from 'database'
 
 export enum SearchJobStatus {
   'OPEN',

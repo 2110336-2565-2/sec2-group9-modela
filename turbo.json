@@ -12,6 +12,14 @@
       "cache": false
     },
     "test:cov": {},
-    "generate": {}
+    "db:generate": {
+      "cache": false
+    },
+    "db:push": {
+      "cache": false
+    },
+    "db:build": {
+      "cache": true
+    }
   }
 }

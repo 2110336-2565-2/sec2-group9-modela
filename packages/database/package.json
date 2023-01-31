@@ -1,0 +1,30 @@
+{
+  "name": "database",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.js",
+  "scripts": {
+    "migrate:dev": "prisma migrate dev",
+    "db:generate": "prisma generate",
+    "db:seed": "prisma migrate reset",
+    "db:studio": "prisma studio",
+    "db:build": "tsc --build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.9.0"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
+    "prisma": "^4.9.0",
+    "prisma-dbml-generator": "^0.10.0",
+    "tsconfig": "workspace:*",
+    "typescript": "^4.7.4"
+  }
+}
