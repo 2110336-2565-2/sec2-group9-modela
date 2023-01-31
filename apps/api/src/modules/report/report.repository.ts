@@ -5,7 +5,7 @@ import { ReportPostData } from './report.type'
 export class ReportRepository {
   constructor(private prisma: PrismaService) {}
 
-  async createCasting(payload: ReportPostData) {
+  async createReport(payload: ReportPostData) {
     const { jobID, userID, reason } = payload
     await this.prisma.report.create({
       data: {
