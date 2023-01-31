@@ -1,14 +1,15 @@
 import { Injectable } from '@nestjs/common'
 
-import { AuthRepository } from '../auth/auth.repository'
+import { UserRepository } from './user.repository'
 
 @Injectable()
 export class UserService {
-  constructor(private authRepository: AuthRepository) {}
+  constructor(private repository: UserRepository) {}
 
-  async getUserData(email: string) {
-    const { firstName, isVerified, type } =
-      await this.authRepository.getUserByEmail(email)
+  async getUserData(userId: number) {
+    const { firstName, isVerified, type } = await this.repository.getUserById(
+      userId,
+    )
     return { firstName, isVerified, type }
   }
 }

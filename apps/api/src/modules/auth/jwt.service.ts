@@ -6,11 +6,10 @@ import { ExtractJwt, Strategy } from 'passport-jwt'
 import { JwtDto } from './auth.dto'
 
 const cookieExtractor = function (req) {
-  let token = null
   if (req && req.cookies) {
-    token = req.cookies['token']
+    return req.cookies['token']
   }
-  return token
+  return null
 }
 
 @Injectable()

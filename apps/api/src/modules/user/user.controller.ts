@@ -1,5 +1,4 @@
 import { Controller, Get, Req, UseGuards } from '@nestjs/common'
-import { AuthGuard } from '@nestjs/passport'
 import {
   ApiBadRequestResponse,
   ApiOkResponse,
@@ -8,7 +7,9 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
 
+import { JwtDto } from '../auth/auth.dto'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
+import { User } from '../auth/user.decorator'
 import { GetUserDto } from './user.dto'
 import { UserService } from './user.service'
 
@@ -23,7 +24,7 @@ export class UserController {
   @ApiOkResponse({ type: GetUserDto })
   @ApiUnauthorizedResponse({ description: 'User is not login' })
   @ApiBadRequestResponse({ description: 'Wrong format' })
-  getUserData(@Req() req) {
-    return this.userService.getUserData(req.user.email)
+  getUserData(@User() user: JwtDto) {
+    return this.userService.getUserData(user.userId)
   }
 }
