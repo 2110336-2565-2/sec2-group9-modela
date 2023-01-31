@@ -1,4 +1,4 @@
-import Header from 'common/components/header'
+import Header from 'common/components/Header'
 import { useRouter } from 'next/router'
 import React from 'react'
 

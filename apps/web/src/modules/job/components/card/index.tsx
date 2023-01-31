@@ -1,9 +1,9 @@
 import { Divider, Typography } from '@mui/material'
 import React from 'react'
 
-import Footer from './components/footer'
-import Header from './components/header'
-import ShootingDetail from './components/shootingDetail'
+import Footer from './components/Footer'
+import Header from './components/Header'
+import ShootingDetail from './components/ShootingDetail'
 import { CardContainer, DescriptionRow } from './styled'
 import { CardProps, Shooting } from './type'
 
