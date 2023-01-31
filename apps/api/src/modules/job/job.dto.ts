@@ -26,16 +26,16 @@ export class SearchJobDto {
   @Max(20)
   @ApiPropertyOptional({
     default: 20,
-  })
-  limit = 20
+  }) //Will set default again in job.service.ts
+  limit: number
 
   @Type(() => Number)
   @IsNumber()
   @Min(1)
   @ApiPropertyOptional({
     default: 1,
-  })
-  page = 1
+  }) //Will set default again in job.service.ts
+  page: number
 
   @IsOptional()
   @IsDateString()

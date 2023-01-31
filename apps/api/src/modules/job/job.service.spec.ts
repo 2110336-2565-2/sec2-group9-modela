@@ -54,7 +54,7 @@ describe('JobService', () => {
         pageQuery++
       ) {
         //debug loop iteration
-        console.log('limitQuery: ', limitQuery, 'pageQuery: ', pageQuery)
+        //console.log('limitQuery: ', limitQuery, 'pageQuery: ', pageQuery)
 
         //generate expected result
         const result = new GetJobCardWithMaxPageDto()
@@ -64,7 +64,8 @@ describe('JobService', () => {
           limitQuery * pageQuery,
         )
         //debug expected result
-        console.log('result: ', result)
+        //console.log('result: ', result)
+
         //input request params
         const reqParams: SearchJobDto = {
           limit: limitQuery,
