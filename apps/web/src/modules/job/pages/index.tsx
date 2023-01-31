@@ -2,7 +2,7 @@ import Header from 'common/components/Header'
 import { useRouter } from 'next/router'
 import React from 'react'
 
-import Card from '../components/card'
+import Card from '../components/Card'
 
 export default function JobDetail() {
   const router = useRouter()
