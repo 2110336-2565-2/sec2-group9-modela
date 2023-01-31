@@ -43,8 +43,8 @@ export class JobService {
       result.jobs = jobsJoinCasting
 
       //calculate maxPage
-      const allJobs = await this.repository.getJobJoined({})
-      result.maxPage = Math.ceil(allJobs.length / limit)
+      const allJobsCount = await this.repository.getJobCount()
+      result.maxPage = Math.ceil(allJobsCount / limit)
 
       //return jobs
       return result

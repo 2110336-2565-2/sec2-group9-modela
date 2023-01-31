@@ -53,6 +53,9 @@ describe('JobService', () => {
         pageQuery <= Math.ceil(jobDataLength / limitQuery) + 1;
         pageQuery++
       ) {
+        //debug loop iteration
+        console.log('limitQuery: ', limitQuery, 'pageQuery: ', pageQuery)
+
         //generate expected result
         const result = new GetJobCardWithMaxPageDto()
         result.maxPage = Math.ceil(jobDataLength / limitQuery)
@@ -60,23 +63,26 @@ describe('JobService', () => {
           limitQuery * (pageQuery - 1),
           limitQuery * pageQuery,
         )
-
+        //debug expected result
+        console.log('result: ', result)
         //input request params
         const reqParams: SearchJobDto = {
           limit: limitQuery,
           page: pageQuery,
         }
 
-        //check repository mock
+        //mock the repository
+        jest
+          .spyOn(repository, 'getJobCount')
+          .mockReturnValue(Promise.resolve(jobDataLength))
         jest
           .spyOn(repository, 'getJobJoined')
-          .mockImplementationOnce(async (reqParams) =>
+          .mockImplementation(async (reqParams) =>
             itMockedJobData.slice(
               reqParams.skip,
               reqParams.skip + reqParams.take,
             ),
           )
-          .mockImplementationOnce(async () => itMockedJobData)
 
         //check all property
         await expect(service.findAll(reqParams)).resolves.toEqual(result)
