@@ -31,7 +31,7 @@ describe('AuthService', () => {
       ...mock('user')
         .pick(['email', 'password', 'firstName', 'middleName', 'lastName'])
         .get(),
-      ...mock('casting').get(),
+      ...mock('casting').omit(['castingId']).get(),
     }
 
     it('should create casting correctly', async () => {
