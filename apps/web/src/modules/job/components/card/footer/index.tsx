@@ -2,6 +2,7 @@ import EventBusyIcon from '@mui/icons-material/EventBusy'
 import MoneyIcon from '@mui/icons-material/Money'
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined'
 import { Typography } from '@mui/material'
+import { formatDate } from 'common/utils/formatter'
 import React from 'react'
 
 import { footerProps } from '../type'
@@ -20,7 +21,7 @@ export default function Footer(prop: footerProps) {
       <MoneyIcon fontSize="small" />
       <Typography variant="subtitle1">{prop.wage}</Typography>
       <EventBusyIcon fontSize="small" color="success" />
-      <Typography variant="subtitle1">{prop.dueDate.toDateString()}</Typography>
+      <Typography variant="subtitle1">{formatDate(prop.dueDate)}</Typography>
 
       <Typography
         variant="subtitle1"
