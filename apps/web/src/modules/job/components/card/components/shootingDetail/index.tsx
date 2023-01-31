@@ -9,23 +9,25 @@ import { Shooting } from '../../type'
 import { Line } from './styled'
 
 export default function ShootingDetail(prop: { data: Shooting; idx: number }) {
+  const { data, idx } = prop
+
   return (
     <>
-      <Typography variant="subtitle1">ถ่ายครั้งที่: {prop.idx + 1}</Typography>
+      <Typography variant="subtitle1">ถ่ายครั้งที่: {idx + 1}</Typography>
       <Line>
         <LocationOnOutlinedIcon fontSize="small" />
-        <Typography variant="subtitle2">{prop.data.location}</Typography>
+        <Typography variant="subtitle2">{data.location}</Typography>
       </Line>
       <Line>
         <CalendarMonthOutlinedIcon fontSize="small" />
         <Typography variant="subtitle2">
-          {formatDate(prop.data.startDate)} - {formatDate(prop.data.endDate)}
+          {formatDate(data.startDate)} - {formatDate(data.endDate)}
         </Typography>
       </Line>
       <Line>
         <QueryBuilderOutlined fontSize="small" />
         <Typography variant="subtitle2">
-          {formatTime(prop.data.startTimes)} - {formatTime(prop.data.endTimes)}
+          {formatTime(data.startTimes)} - {formatTime(data.endTimes)}
         </Typography>
       </Line>
     </>

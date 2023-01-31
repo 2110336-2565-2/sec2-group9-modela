@@ -9,6 +9,8 @@ import { FooterRow } from './styled'
 import { FooterProps } from './type'
 
 export default function Footer(prop: FooterProps) {
+  const { actorCount, wage, dueDate } = prop
+
   const apply = () => {
     window.alert('applied')
   }
@@ -17,11 +19,11 @@ export default function Footer(prop: FooterProps) {
     <FooterRow>
       {/* TODO: change icon color according to gender */}
       <PersonOutlinedIcon fontSize="small" />
-      <Typography variant="subtitle1">{prop.actorCount}</Typography>
+      <Typography variant="subtitle1">{actorCount}</Typography>
       <MoneyIcon fontSize="small" />
-      <Typography variant="subtitle1">{prop.wage}</Typography>
+      <Typography variant="subtitle1">{wage}</Typography>
       <EventBusyIcon fontSize="small" color="success" />
-      <Typography variant="subtitle1">{formatDate(prop.dueDate)}</Typography>
+      <Typography variant="subtitle1">{formatDate(dueDate)}</Typography>
 
       <Typography
         variant="subtitle1"

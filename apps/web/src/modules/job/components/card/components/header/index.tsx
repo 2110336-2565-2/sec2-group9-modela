@@ -7,16 +7,18 @@ import { HeaderRow } from './styled'
 import { HeaderProps } from './type'
 
 export default function Header(prop: HeaderProps) {
+  const { castingImage, companyName, title } = prop
+
   const report = () => {
     window.alert('reported')
   }
 
   return (
     <HeaderRow>
-      <Image src={prop.castingImage} height={40} alt="casting pic" />
+      <Image src={castingImage} height={40} alt="casting pic" />
       <div>
-        <Typography variant="h6">{prop.title}</Typography>
-        <Typography>{prop.companyName}</Typography>
+        <Typography variant="h6">{title}</Typography>
+        <Typography>{companyName}</Typography>
       </div>
       <ReportOutlinedIcon
         fontSize="small"
