@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common'
+import { Body, Controller, Post, Res } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
   ApiConflictResponse,
@@ -7,6 +7,7 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
+import { Response } from 'express'
 
 import { LoginDto, SignupActorDto, SignupCastingDto } from './auth.dto'
 import { AuthService } from './auth.service'
@@ -39,7 +40,7 @@ export class AuthController {
   @ApiCreatedResponse({ description: 'Login successful' })
   @ApiUnauthorizedResponse({ description: 'Wrong email or password' })
   @ApiBadRequestResponse({ description: 'Wrong format' })
-  login(@Body() loginDto: LoginDto) {
-    return 'this will login user'
+  login(@Body() loginDto: LoginDto, @Res({ passthrough: true }) res: Response) {
+    return this.authService.verfyPassword(loginDto, res)
   }
 }

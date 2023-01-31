@@ -1,10 +1,11 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
-import { Actor, Casting, Gender, User } from '@prisma/client'
+import { Actor, Casting, Gender, User, UserType } from '@prisma/client'
 import {
   IsAlphanumeric,
   IsEmail,
   IsEnum,
   IsNotEmpty,
+  IsNumber,
   IsNumberString,
   IsOptional,
   IsPhoneNumber,
@@ -107,9 +108,23 @@ export class SignupCastingDto implements Partial<Casting & User> {
 }
 
 export class LoginDto implements Partial<User> {
+  @IsEmail()
   @ApiProperty()
   email: string
 
+  @IsString()
+  @IsNotEmpty()
   @ApiProperty()
   password: string
+}
+
+export class JwtDto implements Partial<User> {
+  @IsNumber()
+  @ApiProperty()
+  userId: number
+
+  @IsEnum({ enum: UserType })
+  @IsNotEmpty()
+  @ApiProperty()
+  type: UserType
 }

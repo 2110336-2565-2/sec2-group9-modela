@@ -14,6 +14,7 @@ import { AppService } from './app.service'
   imports: [
     ConfigModule.forRoot({
       load: [configuration],
+      isGlobal: true,
     }),
     ExampleModule,
     AuthModule,
