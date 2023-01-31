@@ -1,6 +1,6 @@
+import ReportOutlinedIcon from '@mui/icons-material/ReportOutlined'
 import { Typography } from '@mui/material'
 import Image from 'next/image'
-import reportBtn from 'public/report.png'
 import React from 'react'
 
 import { headerProps } from '../type'
@@ -18,10 +18,9 @@ export default function Header(prop: headerProps) {
         <Typography variant="h6">{prop.title}</Typography>
         <Typography>{prop.companyName}</Typography>
       </div>
-      <Image
-        src={reportBtn}
-        height={18}
-        alt="report"
+      <ReportOutlinedIcon
+        fontSize="small"
+        color="error"
         style={{ cursor: 'pointer', marginLeft: 'auto' }}
         onClick={() => report()}
       />

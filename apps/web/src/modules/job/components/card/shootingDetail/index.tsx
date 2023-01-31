@@ -1,8 +1,7 @@
+import { QueryBuilderOutlined } from '@mui/icons-material'
+import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined'
+import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined'
 import { Typography } from '@mui/material'
-import Image from 'next/image'
-import calendar from 'public/calendar.png'
-import clock from 'public/clock.png'
-import location from 'public/location.png'
 import React from 'react'
 
 import { shooting } from '../type'
@@ -12,7 +11,7 @@ export default function ShootingDetail(prop: { data: shooting; idx: number }) {
   const formatDate = (date: Date) => {
     const day = date.getDate()
     const month = date.getMonth() + 1
-    const year = date.getFullYear().toString().slice(2)
+    const year = (date.getFullYear() + 543).toString().slice(2)
     return `${day}/${month}/${year}`
   }
 
@@ -26,17 +25,17 @@ export default function ShootingDetail(prop: { data: shooting; idx: number }) {
     <>
       <Typography variant="subtitle1">ถ่ายครั้งที่: {prop.idx + 1}</Typography>
       <Line>
-        <Image src={location} height={18} alt="location" />
+        <LocationOnOutlinedIcon fontSize="small" />
         <Typography variant="subtitle2">{prop.data.location}</Typography>
       </Line>
       <Line>
-        <Image src={calendar} height={18} alt="location" />
+        <CalendarMonthOutlinedIcon fontSize="small" />
         <Typography variant="subtitle2">
           {formatDate(prop.data.startDate)} - {formatDate(prop.data.endDate)}
         </Typography>
       </Line>
       <Line>
-        <Image src={clock} height={18} alt="location" />
+        <QueryBuilderOutlined fontSize="small" />
         <Typography variant="subtitle2">
           {formatTime(prop.data.startTimes)} - {formatTime(prop.data.endTimes)}
         </Typography>

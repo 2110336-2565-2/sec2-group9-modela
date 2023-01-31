@@ -16,7 +16,9 @@ export default function Card(prop: cardProps) {
         castingImage={prop.castingImage}
       />
       <DescriptionRow>
-        <Typography variant="subtitle2">{prop.description}</Typography>
+        <Typography variant="subtitle2" sx={{ color: 'rgba(0,0,0,0.6)' }}>
+          {prop.description}
+        </Typography>
       </DescriptionRow>
       <Divider variant="middle" style={{ width: '90%' }} />
 

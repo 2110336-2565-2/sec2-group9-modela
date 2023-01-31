@@ -1,8 +1,7 @@
+import EventBusyIcon from '@mui/icons-material/EventBusy'
+import MoneyIcon from '@mui/icons-material/Money'
+import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined'
 import { Typography } from '@mui/material'
-import Image from 'next/image'
-import dueCalendar from 'public/dueCalendar.png'
-import female from 'public/female.png'
-import money from 'public/money.png'
 import React from 'react'
 
 import { footerProps } from '../type'
@@ -15,11 +14,12 @@ export default function Footer(prop: footerProps) {
 
   return (
     <FooterRow>
-      <Image src={female} height={18} alt="report" />
+      {/* TODO: change icon color according to gender */}
+      <PersonOutlinedIcon fontSize="small" />
       <Typography variant="subtitle1">{prop.actorCount}</Typography>
-      <Image src={money} height={18} alt="report" />
+      <MoneyIcon fontSize="small" />
       <Typography variant="subtitle1">{prop.wage}</Typography>
-      <Image src={dueCalendar} height={18} alt="report" />
+      <EventBusyIcon fontSize="small" color="success" />
       <Typography variant="subtitle1">{prop.dueDate.toDateString()}</Typography>
 
       <Typography
