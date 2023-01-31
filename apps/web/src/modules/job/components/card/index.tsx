@@ -1,13 +1,13 @@
 import { Divider, Typography } from '@mui/material'
 import React from 'react'
 
-import Footer from './footer'
-import Header from './header'
-import ShootingDetail from './shootingDetail'
+import Footer from './components/footer'
+import Header from './components/header'
+import ShootingDetail from './components/shootingDetail'
 import { CardContainer, DescriptionRow } from './styled'
-import { cardProps, shooting } from './type'
+import { CardProps, Shooting } from './type'
 
-export default function Card(prop: cardProps) {
+export default function Card(prop: CardProps) {
   return (
     <CardContainer>
       <Header
@@ -40,7 +40,7 @@ export default function Card(prop: cardProps) {
       <Typography variant="h6" color="primary">
         รายละเอียดงาน
       </Typography>
-      {prop.shootingList.map((item: shooting, idx: number) => (
+      {prop.shootingList.map((item: Shooting, idx: number) => (
         <ShootingDetail data={item} idx={idx} key={idx} />
       ))}
 

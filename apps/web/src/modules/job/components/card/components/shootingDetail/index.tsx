@@ -5,10 +5,10 @@ import { Typography } from '@mui/material'
 import { formatDate, formatTime } from 'common/utils/formatter'
 import React from 'react'
 
-import { shooting } from '../type'
+import { Shooting } from '../../type'
 import { Line } from './styled'
 
-export default function ShootingDetail(prop: { data: shooting; idx: number }) {
+export default function ShootingDetail(prop: { data: Shooting; idx: number }) {
   return (
     <>
       <Typography variant="subtitle1">ถ่ายครั้งที่: {prop.idx + 1}</Typography>

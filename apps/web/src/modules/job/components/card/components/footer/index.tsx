@@ -5,10 +5,10 @@ import { Typography } from '@mui/material'
 import { formatDate } from 'common/utils/formatter'
 import React from 'react'
 
-import { footerProps } from '../type'
 import { FooterRow } from './styled'
+import { FooterProps } from './type'
 
-export default function Footer(prop: footerProps) {
+export default function Footer(prop: FooterProps) {
   const apply = () => {
     window.alert('applied')
   }

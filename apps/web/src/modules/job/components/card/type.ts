@@ -1,4 +1,4 @@
-export interface cardProps {
+export interface CardProps {
   title: string
   companyName: string
   description: string
@@ -10,23 +10,10 @@ export interface cardProps {
   actorCount: number
   wage: number
   dueDate: Date
-  shootingList: shooting[]
+  shootingList: Shooting[]
 }
 
-export interface headerProps {
-  title: string
-  companyName: string
-  castingImage: string
-}
-
-export interface footerProps {
-  gender: string
-  actorCount: number
-  wage: number
-  dueDate: Date
-}
-
-export interface shooting {
+export interface Shooting {
   startDate: Date
   endDate: Date
   location: string

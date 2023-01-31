@@ -3,10 +3,10 @@ import { Typography } from '@mui/material'
 import Image from 'next/image'
 import React from 'react'
 
-import { headerProps } from '../type'
 import { HeaderRow } from './styled'
+import { HeaderProps } from './type'
 
-export default function Header(prop: headerProps) {
+export default function Header(prop: HeaderProps) {
   const report = () => {
     window.alert('reported')
   }
