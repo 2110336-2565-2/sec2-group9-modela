@@ -1,4 +1,4 @@
-import { Controller, Get, Req, UseGuards } from '@nestjs/common'
+import { Controller, Get } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
   ApiOkResponse,
@@ -8,7 +8,7 @@ import {
 } from '@nestjs/swagger'
 
 import { JwtDto } from '../auth/auth.dto'
-import { JwtAuthGuard } from '../auth/jwt-auth.guard'
+import { UseAuthGuard } from '../auth/jwt.decorator'
 import { User } from '../auth/user.decorator'
 import { GetUserDto } from './user.dto'
 import { UserService } from './user.service'
@@ -19,7 +19,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get('me')
-  @UseGuards(JwtAuthGuard)
+  @UseAuthGuard()
   @ApiOperation({ summary: 'fetch for user data' })
   @ApiOkResponse({ type: GetUserDto })
   @ApiUnauthorizedResponse({ description: 'User is not login' })
