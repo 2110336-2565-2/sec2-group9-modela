@@ -48,7 +48,8 @@ export const getBaseMock = (
       return {
         userId: index,
         email: faker.helpers.unique(faker.internet.email),
-        password: faker.internet.password(),
+        password:
+          '$2a$10$jikY3o7Apw/.NMTQjtLC1OMLUwEM73dpWaM7T5WEmjB5lguG/wZce',
         type:
           index <= NUMBER_OF_ADMIN
             ? UserType.ADMIN
