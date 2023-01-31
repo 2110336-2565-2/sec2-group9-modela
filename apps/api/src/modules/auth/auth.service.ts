@@ -1,6 +1,7 @@
 import {
   ConflictException,
   Injectable,
+  InternalServerErrorException,
   UnauthorizedException,
 } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
@@ -35,6 +36,7 @@ export class AuthService {
       })
     } catch (e) {
       console.log(e)
+      throw new InternalServerErrorException()
     }
   }
 
@@ -53,6 +55,7 @@ export class AuthService {
       })
     } catch (e) {
       console.log(e)
+      throw new InternalServerErrorException()
     }
   }
 
