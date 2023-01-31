@@ -1,3 +1,4 @@
+import { LoginDto, SignupActorDto, SignupCastingDto } from '@modela/dtos'
 import {
   ConflictException,
   Injectable,
@@ -10,7 +11,6 @@ import { compare, hash } from 'bcryptjs'
 import { User } from 'database'
 import { Response } from 'express'
 
-import { LoginDto, SignupActorDto, SignupCastingDto } from './auth.dto'
 import { AuthRepository } from './auth.repository'
 
 @Injectable()

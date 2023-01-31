@@ -23,8 +23,7 @@
     "next": "^13.1.1",
     "open-cli": "^7.1.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "ui": "workspace:*"
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

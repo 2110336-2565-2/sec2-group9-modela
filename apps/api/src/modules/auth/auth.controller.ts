@@ -1,3 +1,4 @@
+import { LoginDto, SignupActorDto, SignupCastingDto } from '@modela/dtos'
 import { Body, Controller, Post, Res } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
@@ -9,7 +10,6 @@ import {
 } from '@nestjs/swagger'
 import { Response } from 'express'
 
-import { LoginDto, SignupActorDto, SignupCastingDto } from './auth.dto'
 import { AuthService } from './auth.service'
 
 @ApiTags('auth')

@@ -1,6 +1,6 @@
+import { CreateExampleDto, UpdateExampleDto } from '@modela/dtos'
 import { Injectable, NotFoundException } from '@nestjs/common'
 
-import { CreateExampleDto, UpdateExampleDto } from './example.dto'
 import { ExampleRepository } from './example.repository'
 
 @Injectable()

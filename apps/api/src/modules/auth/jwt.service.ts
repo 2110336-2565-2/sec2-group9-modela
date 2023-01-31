@@ -1,9 +1,8 @@
+import { JwtDto } from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { PassportStrategy } from '@nestjs/passport'
 import { ExtractJwt, Strategy } from 'passport-jwt'
-
-import { JwtDto } from './auth.dto'
 
 const cookieExtractor = function (req) {
   if (req && req.cookies) {

@@ -1,3 +1,4 @@
+import { GetUserDto, JwtDto } from '@modela/dtos'
 import { Controller, Get } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
@@ -7,10 +8,8 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
 
-import { JwtDto } from '../auth/auth.dto'
 import { UseAuthGuard } from '../auth/jwt.decorator'
 import { User } from '../auth/user.decorator'
-import { GetUserDto } from './user.dto'
 import { UserService } from './user.service'
 
 @ApiTags('user')

@@ -1,3 +1,5 @@
+import { JobIdDTO } from '@modela/dtos'
+import { PostReportDTO } from '@modela/dtos'
 import { Body, Controller, Param, Post } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
@@ -9,8 +11,6 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
 
-import { JobIdDTO } from '../job/job.dto'
-import { PostReportDTO } from './report.dto'
 import { ReportService } from './report.service'
 
 @ApiTags('report')
