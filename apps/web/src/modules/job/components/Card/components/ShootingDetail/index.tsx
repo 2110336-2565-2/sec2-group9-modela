@@ -5,10 +5,10 @@ import { Typography } from '@mui/material'
 import { formatDate, formatTime } from 'common/utils/formatter'
 import React from 'react'
 
-import { Shooting } from '../../type'
 import { Line } from './styled'
+import { ShootingDetailProps } from './type'
 
-export default function ShootingDetail(prop: { data: Shooting; idx: number }) {
+export default function ShootingDetail(prop: ShootingDetailProps) {
   const { data, idx } = prop
 
   return (
