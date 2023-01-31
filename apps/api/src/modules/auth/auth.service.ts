@@ -1,5 +1,5 @@
 import { ConflictException, Injectable } from '@nestjs/common'
-import { hash } from 'bcrypt'
+import { hash } from 'bcryptjs'
 
 import { SignupActorDto, SignupCastingDto } from './auth.dto'
 import { AuthRepository } from './auth.repository'

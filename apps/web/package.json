@@ -17,7 +17,6 @@
     "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.10.5",
     "@mui/material": "^5.11.4",
-    "@mui/system": "^5.11.5",
     "@next/font": "^13.1.6",
     "next": "^13.1.1",
     "open-cli": "^7.1.0",

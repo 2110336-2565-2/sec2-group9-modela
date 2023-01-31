@@ -5,5 +5,5 @@ export const PageContainer = styled('div')({
   justifyContent: 'center',
   alignItems: 'center',
   flexDirection: 'column',
-  height: '100vh',
+  minHeight: '100vh',
 })
