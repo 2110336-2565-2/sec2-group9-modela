@@ -92,6 +92,7 @@ describe('JobService', () => {
         const prismaParams = {
           take: limitQuery,
           skip: (pageQuery - 1) * limitQuery,
+          where: {},
         }
         expect(repository.getJobJoined).toBeCalledWith(prismaParams)
       }

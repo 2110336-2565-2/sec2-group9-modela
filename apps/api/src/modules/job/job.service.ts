@@ -13,8 +13,32 @@ export class JobService {
 
   convertRequestToParams(searchJobDto: SearchJobDto) {
     const params = {
+      //take and skip from limit and page
       take: Number(searchJobDto.limit),
       skip: (searchJobDto.page - 1) * searchJobDto.limit,
+      //filtering
+      //TODO: filtering in the task [24] drafted
+      where: {
+        //TODO: will find out how to filter range later [24]
+        // startDate: searchJobDto.startDate || undefined,
+        // startTime: searchJobDto.startTime || undefined,
+        // endDate: searchJobDto.endDate || undefined,
+        // endTime: searchJobDto.endTime || undefined,
+
+        //TODO: will find out how to filter const into range later [24]
+        // age: searchJobDto.age || undefined,
+
+        //TODO: will find out how to filter range later [24]
+        // minWage: searchJobDto.minWage || undefined,
+        // maxWage: searchJobDto.maxWage || undefined,
+
+        //TODO: will find out how to filter enum later [24]
+        //status: searchJobDto.status || undefined,
+        //gender: searchJobDto.gender || undefined,
+
+        //TODO: Draft for filtering castingId task [19]
+        castingId: Number(searchJobDto.castingId) || undefined,
+      },
     }
     return params
   }
@@ -23,36 +47,25 @@ export class JobService {
     searchJobDto.limit = searchJobDto.limit || 20
     searchJobDto.page = searchJobDto.page || 1
 
-    //check searchJobDTO received
-    if (
-      searchJobDto.limit &&
-      searchJobDto.page &&
-      Object.keys(searchJobDto).length === 2
-    ) {
-      //assume limit and page is always received
-      //empty params return get all jobs without filter
-      const limit = searchJobDto.limit
-      const page = searchJobDto.page
+    //empty params return get all jobs without filter
+    const limit = searchJobDto.limit
+    const page = searchJobDto.page
 
-      //set params for getJob
-      const params = this.convertRequestToParams(searchJobDto)
+    //set params for getJob
+    const params = this.convertRequestToParams(searchJobDto)
 
-      //get jobs with params from repository
-      const jobsJoinCasting = await this.repository.getJobJoined(params)
-      const result = new GetJobCardWithMaxPageDto()
-      result.jobs = jobsJoinCasting
+    //get jobs with params from repository
+    const jobsJoinCasting = await this.repository.getJobJoined(params)
+    const result = new GetJobCardWithMaxPageDto()
+    result.jobs = jobsJoinCasting
 
-      //calculate maxPage
-      const allJobsCount = await this.repository.getJobCount()
-      result.maxPage = Math.ceil(allJobsCount / limit)
+    //calculate maxPage
+    //TODO: will calculate maxPage with filter later [19][24]
+    const allJobsCount = await this.repository.getJobCount()
+    result.maxPage = Math.ceil(allJobsCount / limit)
 
-      //return jobs
-      return result
-    } else {
-      //TODO filtering in the task [24]
-      console.log('TODO filtering in next task : ', searchJobDto)
-      return 'This action returns all job with filter'
-    }
+    //return jobs
+    return result
   }
 
   findOne(id: number) {

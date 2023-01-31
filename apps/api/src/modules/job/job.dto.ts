@@ -82,10 +82,11 @@ export class SearchJobDto {
   @ApiPropertyOptional({ enum: Gender, isArray: true })
   gender?: Gender[]
 
+  @Type(() => Number)
+  @IsNumber()
   @IsOptional()
-  @IsString()
   @ApiPropertyOptional()
-  castingId?: string
+  castingId?: number
 }
 
 export class ShootingDto implements Partial<Shooting> {
