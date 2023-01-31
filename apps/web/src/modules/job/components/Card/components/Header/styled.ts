@@ -1,6 +1,6 @@
-import styled from '@emotion/styled'
+import { styled } from '@mui/material'
 
-export const HeaderRow = styled.div`
+export const HeaderRow = styled('div')`
   display: flex;
   width: 100%;
   align-items: center;

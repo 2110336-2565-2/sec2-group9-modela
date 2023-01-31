@@ -1,6 +1,6 @@
-import styled from '@emotion/styled'
+import { styled } from '@mui/material'
 
-export const HeaderContainer = styled.div`
+export const HeaderContainer = styled('div')`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -16,7 +16,7 @@ export const HeaderContainer = styled.div`
     0px 1px 8px rgba(0, 0, 0, 0.2);
 `
 
-export const LeftGroup = styled.div`
+export const LeftGroup = styled('div')`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -24,7 +24,7 @@ export const LeftGroup = styled.div`
   gap: 50px;
 `
 
-export const RightGroup = styled.div`
+export const RightGroup = styled('div')`
   display: flex;
   flex-direction: row;
   justify-content: space-between;

@@ -1,6 +1,6 @@
-import styled from '@emotion/styled'
+import { styled } from '@mui/material'
 
-export const Line = styled.div`
+export const Line = styled('div')`
   display: flex;
   gap: 10px;
 `

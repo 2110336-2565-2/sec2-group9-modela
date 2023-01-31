@@ -17,6 +17,7 @@ export default function JobDetail() {
           display: 'flex',
           justifyContent: 'center',
           paddingTop: '3rem',
+          width: '40vw',
         }}
       >
         {/* TODO: remove mock data */}

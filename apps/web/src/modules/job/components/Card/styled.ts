@@ -1,18 +1,18 @@
-import styled from '@emotion/styled'
+import { styled } from '@mui/material'
 
-export const CardContainer = styled.div`
+export const CardContainer = styled('div')`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 0px;
-  width: 40%;
+  width: 100%;
   background-color: white;
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 12px;
   padding: 12px;
 `
 
-export const HeaderRow = styled.div`
+export const HeaderRow = styled('div')`
   display: flex;
   width: 100%;
   align-items: center;
@@ -20,7 +20,7 @@ export const HeaderRow = styled.div`
   padding: 12px;
 `
 
-export const DescriptionRow = styled.div`
+export const DescriptionRow = styled('div')`
   display: flex;
   flex-direction: column;
   width: 100%;
