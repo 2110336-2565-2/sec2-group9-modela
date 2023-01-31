@@ -11,7 +11,7 @@
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
     "test:cov": "turbo run test:cov",
-    "generate": "turbo run generate",
+    "generate": "turbo run db:generate",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install"
   },

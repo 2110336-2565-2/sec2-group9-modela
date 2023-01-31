@@ -6,10 +6,10 @@
   "types": "dist/index.js",
   "scripts": {
     "migrate:dev": "prisma migrate dev",
-    "db:generate": "prisma generate",
+    "db:generate": "pnpm db:build",
     "db:seed": "prisma migrate reset",
     "db:studio": "prisma studio",
-    "db:build": "tsc --build"
+    "db:build": "prisma generate && tsc --build"
   },
   "keywords": [],
   "author": "",
