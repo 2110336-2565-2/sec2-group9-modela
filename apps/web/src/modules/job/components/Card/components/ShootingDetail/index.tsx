@@ -1,6 +1,8 @@
-import { QueryBuilderOutlined } from '@mui/icons-material'
-import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined'
-import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined'
+import {
+  CalendarMonthOutlined,
+  LocationOnOutlined,
+  QueryBuilderOutlined,
+} from '@mui/icons-material'
 import { Typography } from '@mui/material'
 import { formatDate, formatTime } from 'common/utils/formatter'
 import React from 'react'
@@ -15,11 +17,11 @@ export default function ShootingDetail(prop: ShootingDetailProps) {
     <>
       <Typography variant="subtitle1">ถ่ายครั้งที่: {idx + 1}</Typography>
       <Line>
-        <LocationOnOutlinedIcon fontSize="small" />
+        <LocationOnOutlined fontSize="small" />
         <Typography variant="subtitle2">{data.location}</Typography>
       </Line>
       <Line>
-        <CalendarMonthOutlinedIcon fontSize="small" />
+        <CalendarMonthOutlined fontSize="small" />
         <Typography variant="subtitle2">
           {formatDate(data.startDate)} - {formatDate(data.endDate)}
         </Typography>
