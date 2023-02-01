@@ -51,13 +51,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --prefer-offline
 
-      - name: Generate prisma schema
-        run: pnpm generate
-  
       - name: Build test
         if: ${{ inputs.target == 'build' }}
         run: pnpm build
     
+      - name: Generate prisma schema
+        if: ${{ inputs.target == 'test' }}
+        run: pnpm lib:build
+
       - name: Run test coverage
         if: ${{ inputs.target == 'test' }}
         run: pnpm test:cov --cache-dir=".turbo"
