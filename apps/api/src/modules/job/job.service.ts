@@ -47,10 +47,6 @@ export class JobService {
     searchJobDto.limit = searchJobDto.limit || 20
     searchJobDto.page = searchJobDto.page || 1
 
-    //empty params return get all jobs without filter
-    const limit = searchJobDto.limit
-    const page = searchJobDto.page
-
     //set params for getJob
     const params = this.convertRequestToParams(searchJobDto)
 
@@ -61,8 +57,8 @@ export class JobService {
 
     //calculate maxPage
     //TODO: will calculate maxPage with filter later [19][24]
-    const allJobsCount = await this.repository.getJobCount()
-    result.maxPage = Math.ceil(allJobsCount / limit)
+    const allJobsCount = await this.repository.getJobCount({})
+    result.maxPage = Math.ceil(allJobsCount / searchJobDto.limit)
 
     //return jobs
     return result

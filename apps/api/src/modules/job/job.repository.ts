@@ -8,8 +8,16 @@ import { GetJobCardDto } from './job.dto'
 export class JobRepository {
   constructor(private prisma: PrismaService) {}
 
-  async getJobCount(): Promise<number> {
-    return await this.prisma.job.count()
+  async getJobCount(params: {
+    skip?: number
+    take?: number
+    cursor?: Prisma.JobWhereUniqueInput
+    where?: Prisma.JobWhereInput
+    orderBy?: Prisma.JobOrderByWithRelationInput
+  }): Promise<number> {
+    //get count of data query be params.where
+    const count = await this.prisma.job.count(params)
+    return count
   }
 
   async getJobJoined(params: {
