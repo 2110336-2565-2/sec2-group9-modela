@@ -51,13 +51,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --prefer-offline
 
+      - name: Build shared packages
+        run: pnpm lib:build
+
       - name: Build test
         if: ${{ inputs.target == 'build' }}
         run: pnpm build
-    
-      - name: Generate prisma schema
-        if: ${{ inputs.target == 'test' }}
-        run: pnpm lib:build
 
       - name: Run test coverage
         if: ${{ inputs.target == 'test' }}
