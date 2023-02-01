@@ -1,11 +1,11 @@
+import { mock, UserType } from '@modela/dtos'
 import { render } from '@testing-library/react'
-import { UserType } from 'common/types/prisma'
 import { mockComponent } from 'common/utils/testing'
 import React from 'react'
 
 describe('withGuard', () => {
   const MOCK_USER = {
-    firstName: 'John',
+    firstName: mock('user').get().firstName,
     isVerified: true,
     type: UserType.ACTOR,
   }

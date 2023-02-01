@@ -1,11 +1,11 @@
+import { GetUserDto } from '@modela/dtos'
 import { CircularProgress } from '@mui/material'
 import { PageContainer } from 'common/components/Layout/styled'
 import React, { createContext } from 'react'
 
 import useUserData from './hooks/useUserData'
-import { UserData } from './types'
 
-const UserContext = createContext<UserData | null>({} as UserData | null)
+const UserContext = createContext<GetUserDto | null>({} as GetUserDto | null)
 
 export const useUser = () => React.useContext(UserContext)
 

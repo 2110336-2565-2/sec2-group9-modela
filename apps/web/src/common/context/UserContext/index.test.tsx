@@ -1,5 +1,5 @@
+import { mock } from '@modela/dtos'
 import { render } from '@testing-library/react'
-import { UserType } from 'common/types/prisma'
 import { mockAndSpyMany } from 'common/utils/testing'
 import React from 'react'
 
@@ -9,11 +9,7 @@ describe('UserProvider', () => {
   ])
 
   const MOCK_USER_DATA = {
-    user: {
-      firstName: 'John',
-      isVerified: true,
-      type: UserType.ACTOR,
-    },
+    user: mock('user').get(),
     isLoading: true,
   }
   const useUserDataSpy = () => MOCK_USER_DATA

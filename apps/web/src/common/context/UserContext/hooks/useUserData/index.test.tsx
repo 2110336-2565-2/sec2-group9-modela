@@ -1,15 +1,14 @@
+import { mock } from '@modela/dtos'
 import { renderHook, waitFor } from '@testing-library/react'
-import { UserType } from 'common/types/prisma'
 import { mockApiClient } from 'common/utils/testing/mockApiClient'
 
 describe('useUserData()', () => {
   const { getSpy, mockGetReturn } = mockApiClient()
 
-  const MOCK_USER_DATA = {
-    firstName: 'firstname',
-    isVerified: false,
-    type: UserType.ACTOR,
-  }
+  const MOCK_USER_DATA = mock('user')
+    .pick(['firstName', 'isVerified', 'type'])
+    .get()
+
   mockGetReturn(MOCK_USER_DATA)
 
   const { default: useUserData } = require('.') as typeof import('.')
@@ -19,11 +18,13 @@ describe('useUserData()', () => {
   })
 
   describe('normal behavior', () => {
-    it('should init value correctly', () => {
+    it('should init value correctly', async () => {
       const { result } = renderHook(useUserData)
 
       expect(result.current.isLoading).toBe(true)
       expect(result.current.user).toBe(null)
+
+      await waitFor(() => expect(result.current.isLoading).toBe(false))
     })
 
     it('should fetch user data correctly', async () => {
