@@ -1,8 +1,7 @@
+import { UserType } from '@modela/database'
+import { SignupActorDto, SignupCastingDto } from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
-import { UserType } from '@prisma/client'
 import { PrismaService } from 'src/database/prisma.service'
-
-import { SignupActorDto, SignupCastingDto } from './auth.dto'
 
 @Injectable()
 export class AuthRepository {

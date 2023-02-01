@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { User, UserType } from '@prisma/client'
+import { User, UserType } from '@modela/database'
 
 export class GetUserDto implements Partial<User> {
   @ApiProperty()

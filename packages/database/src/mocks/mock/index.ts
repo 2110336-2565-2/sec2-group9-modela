@@ -1,5 +1,4 @@
-import { BaseModel, BaseModelType } from 'src/common/types'
-
+import { BaseModel, BaseModelType } from '../../types'
 import { getBaseMock } from '../getBaseMock'
 
 export const mock = <T extends keyof BaseModelType>(model: T) => {

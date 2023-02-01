@@ -1,8 +1,8 @@
+import { mock } from '@modela/database'
 import { ConflictException } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { JwtModule } from '@nestjs/jwt'
 import { Test, TestingModule } from '@nestjs/testing'
-import { mock } from 'src/common/mocks'
 import { PrismaService } from 'src/database/prisma.service'
 
 import { AuthRepository } from './auth.repository'

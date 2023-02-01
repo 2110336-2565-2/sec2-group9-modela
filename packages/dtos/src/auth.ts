@@ -1,5 +1,4 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
-import { Actor, Casting, Gender, User, UserType } from '@prisma/client'
 import {
   IsAlphanumeric,
   IsEmail,
@@ -13,6 +12,7 @@ import {
   IsUrl,
   Length,
 } from 'class-validator'
+import { Actor, Casting, Gender, User, UserType } from '@modela/database'
 
 export class SignupActorDto implements Partial<Actor & User> {
   @IsEmail()

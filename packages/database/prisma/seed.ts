@@ -1,8 +1,8 @@
 import { PrismaClient } from '@prisma/client'
 
-import { NUMBER_OF_MOCK, NUMBER_OF_USER } from '../src/common/constants'
-import { getBaseMock } from '../src/common/mocks'
-import { BaseModel } from '../src/common/types'
+import { NUMBER_OF_MOCK, NUMBER_OF_USER } from '../src/constants'
+import { getBaseMock } from '../src/mocks'
+import { BaseModel } from '../src/types'
 
 const prisma = new PrismaClient()
 

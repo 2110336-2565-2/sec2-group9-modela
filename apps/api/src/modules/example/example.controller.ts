@@ -1,3 +1,4 @@
+import { CreateExampleDto, GetExampleDto, UpdateExampleDto } from '@modela/dtos'
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
 import {
   ApiCreatedResponse,
@@ -7,11 +8,6 @@ import {
   ApiTags,
 } from '@nestjs/swagger'
 
-import {
-  CreateExampleDto,
-  GetExampleDto,
-  UpdateExampleDto,
-} from './example.dto'
 import { ExampleService } from './example.service'
 
 @ApiTags('example')

@@ -1,5 +1,4 @@
-import { Typography } from '@mui/material'
-import { Button } from 'ui'
+import { Button, Typography } from '@mui/material'
 
 export default function Web() {
   return (

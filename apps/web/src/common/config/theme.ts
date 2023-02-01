@@ -5,7 +5,7 @@ import { Prompt } from '@next/font/google'
 export const prompt = Prompt({
   weight: ['300', '400', '500'],
   style: ['normal', 'italic'],
-  subsets: ['latin'],
+  subsets: ['latin', 'thai'],
 })
 
 const theme = createTheme({

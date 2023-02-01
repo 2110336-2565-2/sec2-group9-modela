@@ -1,6 +1,10 @@
+import {
+  EditJobDto,
+  GetJobCardWithMaxPageDto,
+  SearchJobDto,
+} from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
 
-import { EditJobDto, GetJobCardWithMaxPageDto, SearchJobDto } from './job.dto'
 import { JobRepository } from './job.repository'
 
 @Injectable()

@@ -1,8 +1,7 @@
+import { Casting, Job, Prisma } from '@modela/database'
+import { GetJobCardDto } from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
-import { Casting, Job, Prisma } from '@prisma/client'
 import { PrismaService } from 'src/database/prisma.service'
-
-import { GetJobCardDto } from './job.dto'
 
 @Injectable()
 export class JobRepository {

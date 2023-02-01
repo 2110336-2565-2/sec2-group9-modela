@@ -1,4 +1,12 @@
 import {
+  EditJobDto,
+  GetJobCardDto,
+  GetJobCardWithMaxPageDto,
+  GetJobDto,
+  JobIdDTO,
+  SearchJobDto,
+} from '@modela/dtos'
+import {
   Body,
   Controller,
   Delete,
@@ -19,14 +27,6 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
 
-import {
-  EditJobDto,
-  GetJobCardDto,
-  GetJobCardWithMaxPageDto,
-  GetJobDto,
-  JobIdDTO,
-  SearchJobDto,
-} from './job.dto'
 import { JobService } from './job.service'
 
 @ApiTags('job')

@@ -1,3 +1,5 @@
+import { User } from '@modela/database'
+import { LoginDto, SignupActorDto, SignupCastingDto } from '@modela/dtos'
 import {
   ConflictException,
   Injectable,
@@ -6,11 +8,9 @@ import {
 } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
-import { User } from '@prisma/client'
 import { compare, hash } from 'bcryptjs'
 import { Response } from 'express'
 
-import { LoginDto, SignupActorDto, SignupCastingDto } from './auth.dto'
 import { AuthRepository } from './auth.repository'
 
 @Injectable()

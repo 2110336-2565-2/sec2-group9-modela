@@ -11,14 +11,13 @@
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
     "test:cov": "turbo run test:cov",
-    "generate": "turbo run generate",
+    "lib:build": "turbo run lib:build",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.2",
     "@commitlint/config-conventional": "^17.4.2",
-    "@typescript-eslint/eslint-plugin": "^5.50.0",
     "eslint-config-custom": "workspace:*",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.0",

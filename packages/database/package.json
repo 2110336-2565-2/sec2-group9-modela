@@ -1,0 +1,33 @@
+{
+  "name": "@modela/database",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.js",
+  "scripts": {
+    "migrate:dev": "dotenv -e ../../apps/api/.env prisma migrate dev",
+    "db:seed": "dotenv -e ../../apps/api/.env prisma migrate reset",
+    "db:studio": "prisma studio",
+    "test:cov": "jest",
+    "lib:build": "prisma generate && tsc --build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.9.0",
+    "dotenv-cli": "^7.0.0"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
+    "@types/jest": "29.2.4",
+    "jest": "29.3.1",
+    "prisma": "^4.9.0",
+    "prisma-dbml-generator": "^0.10.0",
+    "tsconfig": "workspace:*",
+    "typescript": "^4.7.4"
+  }
+}
