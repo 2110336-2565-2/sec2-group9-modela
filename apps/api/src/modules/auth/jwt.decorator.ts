@@ -1,10 +1,10 @@
+import { UserType } from '@modela/database'
 import {
   applyDecorators,
   CanActivate,
   SetMetadata,
   UseGuards,
 } from '@nestjs/common'
-import { UserType } from 'database'
 
 import { JwtAuthGuard } from './jwt-auth.guard'
 

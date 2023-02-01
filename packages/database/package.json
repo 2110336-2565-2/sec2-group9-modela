@@ -1,15 +1,14 @@
 {
-  "name": "database",
+  "name": "@modela/database",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.js",
   "scripts": {
-    "migrate:dev": "prisma migrate dev",
-    "db:generate": "pnpm db:build",
-    "db:seed": "prisma migrate reset",
+    "migrate:dev": "dotenv -e ../../apps/api/.env prisma migrate dev",
+    "db:seed": "dotenv -e ../../apps/api/.env prisma migrate reset",
     "db:studio": "prisma studio",
-    "db:build": "prisma generate && tsc --build"
+    "lib:build": "prisma generate && tsc --build"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +17,8 @@
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
-    "@prisma/client": "^4.9.0"
+    "@prisma/client": "^4.9.0",
+    "dotenv-cli": "^7.0.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",

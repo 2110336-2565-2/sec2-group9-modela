@@ -1,4 +1,4 @@
-import { BaseModel, BaseModelType, getBaseMock } from 'database'
+import { BaseModel, BaseModelType, getBaseMock } from '@modela/database'
 
 export const mock = <T extends keyof BaseModelType>(model: T) => {
   return new MockConstructor<BaseModelType[T], BaseModelType[T]>(model)

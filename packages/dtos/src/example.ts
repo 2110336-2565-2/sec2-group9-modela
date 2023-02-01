@@ -1,6 +1,6 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger'
 import { IsNotEmpty, IsString } from 'class-validator'
-import { Example } from 'database'
+import { Example } from '@modela/database'
 
 export class GetExampleDto implements Partial<Example> {
   @ApiProperty()

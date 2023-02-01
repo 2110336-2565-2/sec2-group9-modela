@@ -12,7 +12,7 @@ import {
   IsUrl,
   Length,
 } from 'class-validator'
-import { Actor, Casting, Gender, User, UserType } from 'database'
+import { Actor, Casting, Gender, User, UserType } from '@modela/database'
 
 export class SignupActorDto implements Partial<Actor & User> {
   @IsEmail()

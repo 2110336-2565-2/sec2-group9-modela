@@ -1,5 +1,5 @@
+import { Example, Prisma } from '@modela/database'
 import { Injectable } from '@nestjs/common'
-import { Example, Prisma } from 'database'
 import { PrismaService } from 'src/database/prisma.service'
 
 @Injectable()

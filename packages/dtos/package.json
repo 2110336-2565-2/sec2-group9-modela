@@ -5,16 +5,16 @@
   "main": "dist/index.js",
   "types": "dist/index.js",
   "scripts": {
-    "build": "tsc --build"
+    "lib:build": "tsc --build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@nestjs/swagger": "^6.1.4",
+    "@modela/database": "workspace:*",
     "class-transformer": "^0.5.1",
-    "class-validator": "^0.14.0",
-    "database": "workspace:*"
+    "class-validator": "^0.14.0"
   },
   "devDependencies": {
     "tsconfig": "workspace:*",

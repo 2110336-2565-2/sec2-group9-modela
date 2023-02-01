@@ -12,7 +12,7 @@ import {
   Max,
   Min,
 } from 'class-validator'
-import { Casting, Gender, Job, JobStatus, Shooting } from 'database'
+import { Casting, Gender, Job, JobStatus, Shooting } from '@modela/database'
 
 export enum SearchJobStatus {
   'OPEN',

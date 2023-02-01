@@ -1,3 +1,4 @@
+import { User } from '@modela/database'
 import { LoginDto, SignupActorDto, SignupCastingDto } from '@modela/dtos'
 import {
   ConflictException,
@@ -8,7 +9,6 @@ import {
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
 import { compare, hash } from 'bcryptjs'
-import { User } from 'database'
 import { Response } from 'express'
 
 import { AuthRepository } from './auth.repository'

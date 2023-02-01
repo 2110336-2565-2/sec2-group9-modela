@@ -1,6 +1,6 @@
+import { UserType } from '@modela/database'
 import { SignupActorDto, SignupCastingDto } from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
-import { UserType } from 'database'
 import { PrismaService } from 'src/database/prisma.service'
 
 @Injectable()
