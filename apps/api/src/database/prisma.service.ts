@@ -1,4 +1,4 @@
-import { Actor, PrismaClient } from '@modela/database'
+import { PrismaClient } from '@modela/database'
 import { INestApplication, Injectable, OnModuleInit } from '@nestjs/common'
 
 @Injectable()
