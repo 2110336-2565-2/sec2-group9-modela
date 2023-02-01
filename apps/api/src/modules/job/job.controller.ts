@@ -4,7 +4,7 @@ import {
   GetJobCardWithMaxPageDto,
   GetJobDto,
   JobIdDTO,
-  SearchJobDTO,
+  SearchJobDto,
 } from '@modela/dtos'
 import {
   Body,

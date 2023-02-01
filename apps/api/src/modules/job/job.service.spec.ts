@@ -1,13 +1,13 @@
-import { Test, TestingModule } from '@nestjs/testing'
-import { Job } from '@prisma/client'
-import { mock } from 'src/common/mocks'
-import { PrismaService } from 'src/database/prisma.service'
-
+import { Job } from '@modela/database'
 import {
   GetJobCardDto,
   GetJobCardWithMaxPageDto,
   SearchJobDto,
-} from './job.dto'
+} from '@modela/dtos'
+import { Test, TestingModule } from '@nestjs/testing'
+import { mock } from 'src/common/mocks'
+import { PrismaService } from 'src/database/prisma.service'
+
 import { JobRepository } from './job.repository'
 import { JobService } from './job.service'
 

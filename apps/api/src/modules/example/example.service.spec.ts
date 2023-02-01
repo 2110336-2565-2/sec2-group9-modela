@@ -1,7 +1,7 @@
+import { Example } from '@modela/database'
 import { CreateExampleDto, UpdateExampleDto } from '@modela/dtos'
 import { NotFoundException } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
-import { Example } from '@prisma/client'
 import { mock } from 'src/common/mocks'
 import { PrismaService } from 'src/database/prisma.service'
 
