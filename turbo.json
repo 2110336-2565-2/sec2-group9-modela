@@ -12,11 +12,12 @@
       "cache": false
     },
     "test:cov": {
-      "dependsOn": ["lib:build"],
+      "dependsOn": ["^lib:build"],
       "cache": false
     },
     "lib:build": {
-      "cache": true
+      "dependsOn": ["^lib:build"],
+      "cache": false
     }
   }
 }
