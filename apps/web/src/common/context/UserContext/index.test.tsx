@@ -1,6 +1,6 @@
 import { mock } from '@modela/dtos'
 import { render } from '@testing-library/react'
-import { mockAndSpyMany } from 'common/utils/testing'
+import { mockAndSpyMany, mockComponent } from 'common/utils/testing'
 import React from 'react'
 
 describe('UserProvider', () => {
@@ -10,10 +10,12 @@ describe('UserProvider', () => {
 
   const MOCK_USER_DATA = {
     user: mock('user').get(),
-    isLoading: true,
+    isLoading: false,
   }
-  const useUserDataSpy = () => MOCK_USER_DATA
+  const useUserDataSpy = jest.fn(() => MOCK_USER_DATA)
   jest.doMock('./hooks/useUserData', () => useUserDataSpy)
+
+  const [ChildrenSpy, MockChildren] = mockComponent()
 
   const { UserProvider } = require('.') as typeof import('.')
 
@@ -21,15 +23,29 @@ describe('UserProvider', () => {
     jest.clearAllMocks()
   })
 
-  describe('user data is loading', () => {
-    it('should render loading page', () => {
+  describe('normal behavior', () => {
+    it('should render children correctly', () => {
       render(
         <UserProvider>
-          <div>children</div>
+          <MockChildren />
+        </UserProvider>,
+      )
+
+      expect(ChildrenSpy).toBeCalledTimes(1)
+    })
+  })
+
+  describe('user data is loading', () => {
+    it('should render loading page', () => {
+      useUserDataSpy.mockReturnValue({ ...MOCK_USER_DATA, isLoading: true })
+      render(
+        <UserProvider>
+          <MockChildren />
         </UserProvider>,
       )
 
       expect(CircularProgressSpy).toBeCalledTimes(1)
+      expect(ChildrenSpy).not.toBeCalled()
     })
   })
 })
