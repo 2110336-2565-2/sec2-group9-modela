@@ -8,12 +8,12 @@ import {
 } from 'common/utils/testing'
 import React from 'react'
 
-describe('<Header />', () => {
+describe('<Navbar />', () => {
   const MOCK_FOCUS = 'jobs'
   const FOCUS = ['jobs', 'notification', 'profile']
 
-  const [HeaderItemSpy] = mockAndSpyMany('common/components/Header/styled', [
-    'HeaderItem',
+  const [NavbarItemSpy] = mockAndSpyMany('common/components/Navbar/styled', [
+    'NavbarItem',
   ])
   const ImageSpy = mockAndSpy('next/image')
 
@@ -25,7 +25,7 @@ describe('<Header />', () => {
   const useRouterSpy = jest.fn(() => ({ push: pushSpy }))
   jest.doMock('next/router', () => ({ useRouter: useRouterSpy }))
 
-  const { default: Header } = require('.') as typeof import('.')
+  const { default: Navbar } = require('.') as typeof import('.')
 
   afterEach(() => {
     jest.clearAllMocks()
@@ -33,14 +33,14 @@ describe('<Header />', () => {
 
   describe('normal behavior', () => {
     describe('display', () => {
-      it('should render Header correctly', () => {
-        const { getByText } = render(<Header focus={MOCK_FOCUS} />)
+      it('should render Navbar correctly', () => {
+        const { getByText } = render(<Navbar focus={MOCK_FOCUS} />)
 
         expect(ImageSpy).toBeCalledTimes(1)
-        expect(HeaderItemSpy).toBeCalledTimes(5)
+        expect(NavbarItemSpy).toBeCalledTimes(5)
         FOCUS.forEach((focus, index) =>
           expectToBeCalledWith(
-            HeaderItemSpy,
+            NavbarItemSpy,
             { focus: focus == MOCK_FOCUS },
             index,
           ),
@@ -53,12 +53,12 @@ describe('<Header />', () => {
 
   describe('user is not logged in', () => {
     describe('display', () => {
-      it('should render Header correctly', () => {
+      it('should render Navbar correctly', () => {
         useUserSpy.mockReturnValue(null)
 
-        render(<Header focus={MOCK_FOCUS} />)
+        render(<Navbar focus={MOCK_FOCUS} />)
 
-        expect(HeaderItemSpy).toBeCalledTimes(1)
+        expect(NavbarItemSpy).toBeCalledTimes(1)
       })
     })
 
@@ -66,9 +66,9 @@ describe('<Header />', () => {
       it('should perform login button click correctly', () => {
         useUserSpy.mockReturnValue(null)
 
-        render(<Header focus={MOCK_FOCUS} />)
+        render(<Navbar focus={MOCK_FOCUS} />)
 
-        callPropsFunction(HeaderItemSpy, 'onClick')
+        callPropsFunction(NavbarItemSpy, 'onClick')
         expect(pushSpy).toBeCalledWith('/login')
       })
     })

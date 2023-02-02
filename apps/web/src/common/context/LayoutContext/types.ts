@@ -1,8 +1,8 @@
 export interface ILayoutContext {
-  headerFocus: HeaderFocus
-  setHeaderFocus: (focus: HeaderFocus) => void
-  isHideHeader: boolean
-  setHideHeader: (isHideHeader: boolean) => void
+  navbarFocus: NavbarFocus
+  setNavbarFocus: (focus: NavbarFocus) => void
+  isHideNavbar: boolean
+  setHideNavbar: (isHideNavbar: boolean) => void
 }
 
-export type HeaderFocus = 'jobs' | 'profile' | 'notification' | null
+export type NavbarFocus = 'jobs' | 'profile' | 'notification' | null

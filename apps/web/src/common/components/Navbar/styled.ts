@@ -1,6 +1,6 @@
 import { styled, Typography } from '@mui/material'
 
-export const HeaderContainer = styled('div')`
+export const NavbarContainer = styled('div')`
   padding: 5px 66px;
   position: sticky;
   top: 0;
@@ -12,7 +12,7 @@ export const HeaderContainer = styled('div')`
   gap: 50px;
 `
 
-export const HeaderItem = styled(Typography, {
+export const NavbarItem = styled(Typography, {
   shouldForwardProp: (prop) => prop !== 'focus',
 })<{ focus?: boolean }>`
   color: ${({ theme }) => theme.palette.primary.contrastText};
