@@ -10,13 +10,16 @@ import { Configuration } from './config/configuration'
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
   app.useGlobalPipes(new ValidationPipe())
-  app.use(cookieParser())
-  app.enableCors({
-    credentials: true,
-    origin: true,
-  })
 
   const config = app.get<ConfigService<Configuration>>(ConfigService)
+
+  app.use(cookieParser())
+
+  if (config.get('enableCors'))
+    app.enableCors({
+      credentials: true,
+      origin: true,
+    })
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Modela API')

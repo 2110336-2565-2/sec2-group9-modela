@@ -7,6 +7,7 @@ export interface Configuration {
   cookie: {
     secure: boolean
   }
+  enableCors: boolean
 }
 
 export const configuration = (): Configuration => {
@@ -19,5 +20,6 @@ export const configuration = (): Configuration => {
     cookie: {
       secure: process.env.COOKIE_SECURE === 'true',
     },
+    enableCors: process.env.ENABLE_CORS === 'true',
   }
 }
