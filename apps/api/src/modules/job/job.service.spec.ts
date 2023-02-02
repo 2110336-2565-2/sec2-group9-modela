@@ -1,9 +1,10 @@
-import { mock } from '@modela/database'
+import { mock, UserType } from '@modela/database'
 import {
   GetJobCardDto,
   GetJobCardWithMaxPageDto,
   SearchJobDto,
 } from '@modela/dtos'
+import { ForbiddenException, NotFoundException } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import { PrismaService } from 'src/database/prisma.service'
 
@@ -91,4 +92,57 @@ describe('JobService', () => {
       }
     }
   }) //end it
+
+  describe('findOne', () => {
+    const MOCK_CASTING_ID = 1
+    const MOCK_JOB_ID = 1
+    const MOCK_JOB = {
+      ...mock('job').omit(['castingId', 'createdAt', 'updatedAt']).get(),
+      castingId: MOCK_CASTING_ID,
+      shooting: mock('shooting').get(3),
+      companyName: mock('casting').get().companyName,
+      jobCastingImageUrl: mock('user').get().profileImageUrl,
+    }
+
+    const MOCK_USER = {
+      userId: 2,
+      type: UserType.ACTOR,
+    }
+    describe('normal behavior', () => {
+      it('should get job by id successfully', async () => {
+        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_JOB)
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { castingId, ...result } = MOCK_JOB
+
+        await expect(service.findOne(MOCK_JOB_ID, MOCK_USER)).resolves.toEqual(
+          result,
+        )
+        expect(repository.getJobById).toBeCalledWith(MOCK_JOB_ID)
+      })
+    })
+
+    describe('job not found', () => {
+      it('should throw not found exception', async () => {
+        jest.spyOn(repository, 'getJobById').mockResolvedValue(null)
+
+        await expect(service.findOne(MOCK_JOB_ID, MOCK_USER)).rejects.toThrow(
+          NotFoundException,
+        )
+      })
+    })
+
+    describe('user is casting but not the owner of the job', () => {
+      it('should throw forbidden exception', () => {
+        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_JOB)
+
+        expect(
+          service.findOne(MOCK_JOB_ID, {
+            ...MOCK_USER,
+            type: UserType.CASTING,
+          }),
+        ).rejects.toThrow(ForbiddenException)
+      })
+    })
+  })
 })

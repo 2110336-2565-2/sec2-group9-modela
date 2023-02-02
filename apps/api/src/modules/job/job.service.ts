@@ -1,9 +1,12 @@
 import {
   EditJobDto,
   GetJobCardWithMaxPageDto,
+  JwtDto,
   SearchJobDto,
+  UserType,
 } from '@modela/dtos'
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
+import { ForbiddenException } from '@nestjs/common/exceptions'
 
 import { JobRepository } from './job.repository'
 
@@ -68,8 +71,16 @@ export class JobService {
     return result
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} job`
+  async findOne(id: number, user: JwtDto) {
+    const job = await this.repository.getJobById(id)
+
+    if (!job) throw new NotFoundException()
+
+    const { castingId, ...jobDetail } = job
+    if (user.type == UserType.CASTING && user.userId != castingId)
+      throw new ForbiddenException()
+
+    return jobDetail
   }
 
   update(id: number, updateJobDto: EditJobDto) {

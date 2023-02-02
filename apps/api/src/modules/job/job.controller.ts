@@ -1,21 +1,12 @@
 import {
   EditJobDto,
-  GetJobCardDto,
   GetJobCardWithMaxPageDto,
   GetJobDto,
   JobIdDTO,
+  JwtDto,
   SearchJobDto,
 } from '@modela/dtos'
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-  Query,
-} from '@nestjs/common'
+import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
@@ -27,6 +18,8 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
 
+import { UseAuthGuard } from '../auth/jwt.decorator'
+import { User } from '../auth/user.decorator'
 import { JobService } from './job.service'
 
 @ApiTags('job')
@@ -44,14 +37,15 @@ export class JobController {
   }
 
   @Get(':id')
+  @UseAuthGuard()
   @ApiOperation({ summary: 'get job by id' })
   @ApiOkResponse({ type: GetJobDto })
   @ApiUnauthorizedResponse({ description: 'User is not login' })
   @ApiForbiddenResponse({ description: 'User is casting that not the owner' })
   @ApiBadRequestResponse({ description: 'Wrong format' })
   @ApiNotFoundResponse({ description: 'Job not found' })
-  findOne(@Param('id') id: string) {
-    return this.jobService.findOne(+id)
+  findOne(@Param('id') id: string, @User() user: JwtDto) {
+    return this.jobService.findOne(+id, user)
   }
 
   @Post()
