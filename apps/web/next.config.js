@@ -1,4 +1,9 @@
 module.exports = {
   reactStrictMode: true,
-  transpilePackages: ['ui', '@modela/dtos'],
+  transpilePackages: ['@mui/system', '@mui/material', '@mui/icons-material'],
+  modularizeImports: {
+    '@mui/icons-material/?(((\\w*)?/?)*)': {
+      transform: '@mui/icons-material/{{ matches.[1] }}/{{member}}',
+    },
+  },
 }
