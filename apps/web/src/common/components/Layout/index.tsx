@@ -1,14 +1,15 @@
+import { useLayout } from 'common/context/LayoutContext'
 import React from 'react'
 
+import Navbar from '../Navbar'
 import { PageContainer } from './styled'
 
 const Layout = ({ children }: React.PropsWithChildren<{}>) => {
-  // TODO implement header (and footer if there is one)
+  const { isHideNavbar, navbarFocus } = useLayout()
   return (
     <PageContainer>
-      Header
+      {!isHideNavbar && <Navbar focus={navbarFocus} />}
       <div style={{ flex: 1 }}>{children}</div>
-      Footer
     </PageContainer>
   )
 }

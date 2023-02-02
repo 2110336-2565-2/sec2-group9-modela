@@ -1,5 +1,5 @@
+import { UserType } from '@modela/dtos'
 import { useUser } from 'common/context/UserContext'
-import { UserType } from 'common/types/prisma'
 import { useRouter } from 'next/router'
 import React from 'react'
 
@@ -23,7 +23,7 @@ const withGuard = (
       router.replace('/waiting')
     }
 
-    // not allowed
+    // TODO implement error page
     if (!allowedType.includes(user.type)) {
       return <>Not allowed (will implement after this)</>
     }
