@@ -1,24 +1,39 @@
-import { Typography } from '@mui/material'
+import { useUser } from 'common/context/UserContext'
 import Image from 'next/image'
-import logo from 'public/logo.png'
+import { useRouter } from 'next/router'
+import logo from 'public/logo.svg'
 import React from 'react'
 
-import { HeaderContainer, LeftGroup, RightGroup } from './styled'
+import { HeaderContainer, HeaderItem } from './styled'
+import { HeaderProps } from './types'
 
-export default function Header() {
-  const username = 'username'
+const Header = ({ focus }: HeaderProps) => {
+  const user = useUser()
+  const router = useRouter()
   return (
     <HeaderContainer>
-      <LeftGroup>
-        <Image src={logo} alt="logo" width={108} height={48} />
-        <Typography color="white">งานของฉัน</Typography>
-        <Typography color="white">การแจ้งเตือน</Typography>
-      </LeftGroup>
-      <RightGroup>
-        <Typography color="white">โปรไฟล์</Typography>
-        <Typography color="white">สวัสดี คุณ {username}</Typography>
-        <Typography color="white">ออกจากระบบ</Typography>
-      </RightGroup>
+      <Image src={logo} alt="logo" width={108} height={48} />
+      {user ? (
+        <>
+          <HeaderItem focus={focus == 'jobs'}>งานของฉัน</HeaderItem>
+          <HeaderItem focus={focus == 'notification'}>การแจ้งเตือน</HeaderItem>
+          <div style={{ flexGrow: 1 }} />
+          <HeaderItem focus={focus == 'profile'}>โปรไฟล์</HeaderItem>
+          <HeaderItem sx={{ pointerEvents: 'none' }}>
+            สวัสดี คุณ {user?.firstName}
+          </HeaderItem>
+          <HeaderItem>ออกจากระบบ</HeaderItem>
+        </>
+      ) : (
+        <>
+          <div style={{ flexGrow: 1 }} />
+          <HeaderItem onClick={() => router.push('/login')}>
+            เข้าสู่ระบบ
+          </HeaderItem>
+        </>
+      )}
     </HeaderContainer>
   )
 }
+
+export default Header
