@@ -55,7 +55,7 @@ export class JobRepository {
     return selectedFields
   }
 
-  async getJobById(id: number): Promise<GetJobDto> {
+  async getJobById(id: number): Promise<GetJobDto & { castingId: number }> {
     const job = await this.prisma.job.findUnique({
       where: { jobId: id },
       include: {
@@ -71,7 +71,7 @@ export class JobRepository {
     if (!job) return null
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { Casting, Shooting, createdAt, updatedAt, castingId, ...rest } = job
+    const { Casting, Shooting, createdAt, updatedAt, ...rest } = job
 
     return {
       ...rest,

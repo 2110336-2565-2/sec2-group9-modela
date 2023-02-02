@@ -7,7 +7,7 @@
   "scripts": {
     "migrate:dev": "dotenv -e ../../apps/api/.env prisma migrate dev",
     "db:seed": "dotenv -e ../../apps/api/.env prisma migrate reset",
-    "db:studio": "prisma studio",
+    "db:studio": "dotenv -e ../../apps/api/.env prisma studio",
     "test:cov": "jest",
     "lib:build": "prisma generate && tsc --build"
   },
