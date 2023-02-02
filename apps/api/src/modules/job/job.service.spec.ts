@@ -110,9 +110,7 @@ describe('JobService', () => {
     }
     describe('normal behavior', () => {
       it('should get job by id successfully', async () => {
-        jest
-          .spyOn(repository, 'getJobById')
-          .mockImplementation(async () => MOCK_JOB)
+        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_JOB)
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { castingId, ...result } = MOCK_JOB
@@ -126,9 +124,7 @@ describe('JobService', () => {
 
     describe('job not found', () => {
       it('should throw not found exception', async () => {
-        jest
-          .spyOn(repository, 'getJobById')
-          .mockImplementation(async () => null)
+        jest.spyOn(repository, 'getJobById').mockResolvedValue(null)
 
         await expect(service.findOne(MOCK_JOB_ID, MOCK_USER)).rejects.toThrow(
           NotFoundException,
@@ -138,9 +134,7 @@ describe('JobService', () => {
 
     describe('user is casting but not the owner of the job', () => {
       it('should throw forbidden exception', () => {
-        jest
-          .spyOn(repository, 'getJobById')
-          .mockImplementation(async () => MOCK_JOB)
+        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_JOB)
 
         expect(
           service.findOne(MOCK_JOB_ID, {
