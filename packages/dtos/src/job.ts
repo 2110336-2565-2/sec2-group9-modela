@@ -1,14 +1,11 @@
-import { DefaultValuePipe } from '@nestjs/common'
 import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger'
 import { Type } from 'class-transformer'
 import {
   IsDateString,
   IsEnum,
-  IsNotEmpty,
   IsNumber,
   IsNumberString,
   IsOptional,
-  IsString,
   Max,
   Min,
 } from 'class-validator'
@@ -173,6 +170,9 @@ export class GetJobDto extends EditJobDto {
 
   @ApiProperty()
   companyName: string
+
+  @ApiProperty()
+  jobCastingImageUrl: string
 }
 
 export class JobIdDTO {

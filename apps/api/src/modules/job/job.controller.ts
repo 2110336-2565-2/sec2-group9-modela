@@ -1,21 +1,11 @@
 import {
   EditJobDto,
-  GetJobCardDto,
   GetJobCardWithMaxPageDto,
   GetJobDto,
   JobIdDTO,
   SearchJobDto,
 } from '@modela/dtos'
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-  Query,
-} from '@nestjs/common'
+import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,

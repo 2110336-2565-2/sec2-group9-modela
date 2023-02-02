@@ -3,7 +3,7 @@ import {
   GetJobCardWithMaxPageDto,
   SearchJobDto,
 } from '@modela/dtos'
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 
 import { JobRepository } from './job.repository'
 
@@ -68,8 +68,11 @@ export class JobService {
     return result
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} job`
+  async findOne(id: number) {
+    const job = await this.repository.getJobById(id)
+
+    if (!job) throw new NotFoundException()
+    return job
   }
 
   update(id: number, updateJobDto: EditJobDto) {

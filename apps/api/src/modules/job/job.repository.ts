@@ -1,5 +1,5 @@
-import { Casting, Job, Prisma } from '@modela/database'
-import { GetJobCardDto } from '@modela/dtos'
+import { Prisma } from '@modela/database'
+import { GetJobCardDto, GetJobDto } from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
 
@@ -53,5 +53,31 @@ export class JobRepository {
       jobCastingImageUrl: job.Casting.User.profileImageUrl,
     }))
     return selectedFields
+  }
+
+  async getJobById(id: number): Promise<GetJobDto> {
+    const job = await this.prisma.job.findUnique({
+      where: { jobId: id },
+      include: {
+        Casting: {
+          include: {
+            User: true,
+          },
+        },
+        Shooting: true,
+      },
+    })
+
+    if (!job) return null
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { Casting, Shooting, createdAt, updatedAt, castingId, ...rest } = job
+
+    return {
+      ...rest,
+      shooting: Shooting,
+      companyName: Casting.companyName,
+      jobCastingImageUrl: Casting.User.profileImageUrl,
+    }
   }
 }
