@@ -1,4 +1,3 @@
-import Header from 'common/components/Header'
 import { useRouter } from 'next/router'
 import React from 'react'
 
@@ -10,7 +9,6 @@ export default function JobDetail() {
 
   return (
     <>
-      <Header />
       <p>test: {jid}</p>
       <div
         style={{

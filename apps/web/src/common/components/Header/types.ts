@@ -1,3 +1,5 @@
+import { HeaderFocus } from 'common/context/LayoutContext/types'
+
 export interface HeaderProps {
-  focus?: 'jobs' | 'profile' | 'notification'
+  focus?: HeaderFocus
 }

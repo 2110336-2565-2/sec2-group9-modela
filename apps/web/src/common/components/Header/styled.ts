@@ -16,7 +16,7 @@ export const HeaderItem = styled(Typography, {
   shouldForwardProp: (prop) => prop !== 'focus',
 })<{ focus?: boolean }>`
   color: ${({ theme }) => theme.palette.primary.contrastText};
-  font-weight: ${(props) => (props.focus ? 400 : 300)};
+  font-weight: ${(props) => (props.focus ? 500 : 300)};
 
   &:hover {
     cursor: pointer;
