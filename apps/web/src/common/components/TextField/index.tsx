@@ -1,7 +1,7 @@
 import { TextField as TextFieldMUI, TextFieldProps } from '@mui/material'
 import { FC } from 'react'
 
-export const TextField: FC<TextFieldProps> = (props) => {
+const TextField: FC<TextFieldProps> = (props) => {
   return (
     <TextFieldMUI
       size="small"
@@ -13,6 +13,12 @@ export const TextField: FC<TextFieldProps> = (props) => {
           borderRadius: '10px',
           '& .MuiOutlinedInput-notchedOutline': {
             borderColor: 'transparent',
+          },
+          '& ::-ms-reveal': {
+            display: 'none',
+          },
+          '& ::-ms-clear': {
+            display: 'none',
           },
         },
       }}
@@ -30,3 +36,5 @@ export const TextField: FC<TextFieldProps> = (props) => {
     />
   )
 }
+
+export default TextField

@@ -1,32 +1,18 @@
-import {
-  Box,
-  Button,
-  Card,
-  Divider,
-  Grid,
-  MenuItem,
-  Typography,
-} from '@mui/material'
-import { TextField } from 'common/components/TextField'
+import { Box, Button, Divider, Grid, MenuItem, Typography } from '@mui/material'
+import PasswordTextField from 'common/components/PasswordTextField'
+import TextField from 'common/components/TextField'
+import React from 'react'
 
-import { formContainerStyle } from './styled'
+import { GENDER_CHOICE } from './constants'
+import { FormContainer, RootContainer } from './styled'
 
 const ActorSignUp = () => {
   return (
-    <Box
-      display="flex"
-      minHeight="100vh"
-      justifyContent="center"
-      alignItems="center"
-      flexDirection="column"
-      gap={2}
-      // This will temporary use until layout is implemented
-      margin="24px"
-    >
+    <RootContainer>
       <Typography color="primary" variant="h3">
         Modela
       </Typography>
-      <Card variant="outlined" sx={formContainerStyle}>
+      <FormContainer variant="outlined">
         <Grid container spacing={2} sx={{ padding: '12px' }}>
           <Grid item xs={12} sm={12}>
             <Typography variant="h5" sx={{ textAlign: 'center' }}>
@@ -53,9 +39,9 @@ const ActorSignUp = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField select required fullWidth label="เพศ">
-              <MenuItem>ชาย</MenuItem>
-              <MenuItem>หญิง</MenuItem>
-              <MenuItem>อื่น ๆ</MenuItem>
+              {GENDER_CHOICE.map((props) => (
+                <MenuItem {...props} key={props.value} />
+              ))}
             </TextField>
           </Grid>
           <Grid item xs={12} sm={12}>
@@ -78,10 +64,10 @@ const ActorSignUp = () => {
             <TextField required fullWidth label="อีเมล" />
           </Grid>
           <Grid item xs={12} sm={12}>
-            <TextField required fullWidth label="รหัสผ่าน" />
+            <PasswordTextField required fullWidth label="รหัสผ่าน" />
           </Grid>
           <Grid item xs={12} sm={12}>
-            <TextField required fullWidth label="ยืนยันรหัสผ่าน" />
+            <PasswordTextField required fullWidth label="ยืนยันรหัสผ่าน" />
           </Grid>
           <Grid item xs={12} sm={12}>
             <Box display="flex" justifyContent="center">
@@ -89,14 +75,15 @@ const ActorSignUp = () => {
                 sx={{ borderRadius: '12px' }}
                 size="large"
                 variant="contained"
+                type="submit"
               >
                 สมัครสมาชิก
               </Button>
             </Box>
           </Grid>
         </Grid>
-      </Card>
-    </Box>
+      </FormContainer>
+    </RootContainer>
   )
 }
 
