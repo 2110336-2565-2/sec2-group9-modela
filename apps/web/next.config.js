@@ -6,4 +6,11 @@ module.exports = {
       transform: '@mui/icons-material/{{ matches.[1] }}/{{member}}',
     },
   },
+  webpack: (config) => {
+    Object.assign(config.resolve.alias, {
+      '@nestjs/swagger': '@modela/swagger-utils',
+    })
+
+    return config
+  },
 }
