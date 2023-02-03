@@ -1,6 +1,6 @@
-import { Shooting } from '../../type'
+import { ShootingDto } from '@modela/dtos'
 
 export interface ShootingDetailProps {
-  data: Shooting
+  data: ShootingDto
   idx: number
 }

@@ -18,7 +18,7 @@ export default function ShootingDetail(prop: ShootingDetailProps) {
       <Typography variant="subtitle1">ถ่ายครั้งที่: {idx + 1}</Typography>
       <Line>
         <LocationOnOutlined fontSize="small" />
-        <Typography variant="subtitle2">{data.location}</Typography>
+        <Typography variant="subtitle2">{data.shootingLocation}</Typography>
       </Line>
       <Line>
         <CalendarMonthOutlined fontSize="small" />
@@ -29,7 +29,7 @@ export default function ShootingDetail(prop: ShootingDetailProps) {
       <Line>
         <QueryBuilderOutlined fontSize="small" />
         <Typography variant="subtitle2">
-          {formatTime(data.startTimes)} - {formatTime(data.endTimes)}
+          {formatTime(data.startTime)} - {formatTime(data.endTime)}
         </Typography>
       </Line>
     </>

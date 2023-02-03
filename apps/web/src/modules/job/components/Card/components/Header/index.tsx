@@ -15,7 +15,13 @@ export default function Header(prop: HeaderProps) {
 
   return (
     <HeaderRow>
-      <Image src={castingImage} height={40} alt="casting pic" />
+      <Image
+        loader={() => castingImage}
+        src={castingImage}
+        height={40}
+        width={40}
+        alt="casting pic"
+      />
       <div>
         <Typography variant="h6">{title}</Typography>
         <Typography>{companyName}</Typography>

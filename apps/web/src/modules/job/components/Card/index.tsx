@@ -1,3 +1,4 @@
+import { GetJobDto, ShootingDto } from '@modela/dtos'
 import { Divider, Typography } from '@mui/material'
 import React from 'react'
 
@@ -5,20 +6,19 @@ import Footer from './components/Footer'
 import Header from './components/Header'
 import ShootingDetail from './components/ShootingDetail'
 import { CardContainer, DescriptionRow } from './styled'
-import { CardProps, Shooting } from './type'
 
-export default function Card(prop: CardProps) {
+export default function Card(prop: GetJobDto) {
   const {
     actorCount,
-    castingImage,
+    jobCastingImageUrl,
     companyName,
     description,
-    dueDate,
     gender,
     minAge,
     maxAge,
+    applicationDeadline,
     role,
-    shootingList,
+    shooting,
     title,
     wage,
   } = prop
@@ -28,7 +28,7 @@ export default function Card(prop: CardProps) {
       <Header
         title={title}
         companyName={companyName}
-        castingImage={castingImage}
+        castingImage={jobCastingImageUrl}
       />
       <DescriptionRow>
         <Typography variant="subtitle2" sx={{ color: 'rgba(0,0,0,0.6)' }}>
@@ -53,13 +53,13 @@ export default function Card(prop: CardProps) {
       <Typography variant="h6" color="primary">
         รายละเอียดงาน
       </Typography>
-      {shootingList.map((item: Shooting, idx: number) => (
+      {shooting.map((item: ShootingDto, idx: number) => (
         <ShootingDetail data={item} idx={idx} key={idx} />
       ))}
 
       <Divider variant="middle" style={{ width: '90%' }} />
       <Footer
-        dueDate={dueDate}
+        dueDate={applicationDeadline}
         gender={gender}
         wage={wage}
         actorCount={actorCount}

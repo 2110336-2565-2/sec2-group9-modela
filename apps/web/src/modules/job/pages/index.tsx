@@ -1,15 +1,26 @@
+import { GetJobDto } from '@modela/dtos'
+import { apiClient } from 'common/utils/api'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Card from '../components/Card'
 
 export default function JobDetail() {
   const router = useRouter()
   const { jid } = router.query
+  const [job, setJob] = useState<GetJobDto>()
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = (await apiClient.get('/job/' + jid)).data as GetJobDto
+      console.log(res)
+      setJob(res)
+    }
+    fetchData()
+  }, [])
 
   return (
     <>
-      <p>test: {jid}</p>
       <div
         style={{
           display: 'flex',
@@ -18,29 +29,7 @@ export default function JobDetail() {
           width: '40vw',
         }}
       >
-        {/* TODO: remove mock data */}
-        <Card
-          castingImage=""
-          title="job"
-          companyName="company name"
-          description="lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
-          role="ติวเตอร์ พี่เลี้ยง"
-          gender="หญิง"
-          actorCount={5}
-          minAge={15}
-          maxAge={20}
-          wage={5000}
-          dueDate={new Date()}
-          shootingList={[
-            {
-              location: 'bangkok',
-              startDate: new Date(),
-              endDate: new Date(),
-              startTimes: new Date(),
-              endTimes: new Date(),
-            },
-          ]}
-        />
+        {job && <Card {...job} />}
       </div>
     </>
   )
