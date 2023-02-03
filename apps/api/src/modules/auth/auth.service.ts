@@ -23,13 +23,11 @@ export class AuthService {
 
   async createCasting(signupCastingDto: SignupCastingDto, res: Response) {
     const { password, email } = signupCastingDto
-    const user = await this.repository.getUserByEmail(email)
-    if (user) throw new ConflictException('This email is already used')
-
+    if (await this.repository.getUserByEmail(email))
+      throw new ConflictException('This email is already used')
     try {
       const hashedPassword = await hash(password, 10)
-
-      await this.repository.createCasting({
+      const user = await this.repository.createCasting({
         ...signupCastingDto,
         password: hashedPassword,
       })
@@ -42,13 +40,11 @@ export class AuthService {
 
   async createActor(signupActorDto: SignupActorDto, res: Response) {
     const { password, email } = signupActorDto
-    const user = await this.repository.getUserByEmail(email)
-    if (user) throw new ConflictException('This email is already used')
-
+    if (await this.repository.getUserByEmail(email))
+      throw new ConflictException('This email is already used')
     try {
       const hashedPassword = await hash(password, 10)
-
-      await this.repository.createActor({
+      const user = await this.repository.createActor({
         ...signupActorDto,
         password: hashedPassword,
       })

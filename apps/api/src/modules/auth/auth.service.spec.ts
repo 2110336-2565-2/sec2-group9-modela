@@ -36,16 +36,20 @@ describe('AuthService', () => {
   })
 
   describe('createCasting', () => {
+    const mockUser = mock('user').get()
+    const { email, password, firstName, middleName, lastName } = mockUser
     const signupCastingDto = {
-      ...mock('user')
-        .pick(['email', 'password', 'firstName', 'middleName', 'lastName'])
-        .get(),
+      email,
+      password,
+      firstName,
+      middleName,
+      lastName,
       ...mock('casting').omit(['castingId']).get(),
     }
 
     it('should create casting correctly', async () => {
       jest.spyOn(repository, 'getUserByEmail').mockResolvedValue(null)
-      jest.spyOn(repository, 'createCasting').mockResolvedValue()
+      jest.spyOn(repository, 'createCasting').mockResolvedValue(mockUser)
 
       await service.createCasting(signupCastingDto, response)
       const { password, ...rest } = signupCastingDto
@@ -62,7 +66,7 @@ describe('AuthService', () => {
         jest
           .spyOn(repository, 'getUserByEmail')
           .mockResolvedValue(mock('user').get())
-        jest.spyOn(repository, 'createCasting').mockResolvedValue()
+        jest.spyOn(repository, 'createCasting').mockResolvedValue(null)
 
         await expect(
           service.createCasting(signupCastingDto, response),
@@ -72,17 +76,16 @@ describe('AuthService', () => {
   })
 
   describe('createActor', () => {
+    const mockUser = mock('user').get()
+    const { email, password, firstName, middleName, lastName, phoneNumber } =
+      mockUser
     const signupActorDto = {
-      ...mock('user')
-        .pick([
-          'email',
-          'password',
-          'firstName',
-          'middleName',
-          'lastName',
-          'phoneNumber',
-        ])
-        .get(),
+      email,
+      password,
+      firstName,
+      middleName,
+      lastName,
+      phoneNumber,
       ...mock('actor')
         .pick(['prefix', 'nationality', 'ssn', 'gender', 'idCardImageUrl'])
         .get(),
@@ -90,7 +93,7 @@ describe('AuthService', () => {
 
     it('should create actor correctly', async () => {
       jest.spyOn(repository, 'getUserByEmail').mockResolvedValue(null)
-      jest.spyOn(repository, 'createActor').mockResolvedValue()
+      jest.spyOn(repository, 'createActor').mockResolvedValue(mockUser)
 
       await service.createActor(signupActorDto, response)
       const { password, ...rest } = signupActorDto
@@ -107,7 +110,7 @@ describe('AuthService', () => {
         jest
           .spyOn(repository, 'getUserByEmail')
           .mockResolvedValue(mock('user').get())
-        jest.spyOn(repository, 'createActor').mockResolvedValue()
+        jest.spyOn(repository, 'createActor').mockResolvedValue(null)
 
         await expect(
           service.createActor(signupActorDto, response),
