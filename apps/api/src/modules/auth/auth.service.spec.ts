@@ -1,8 +1,9 @@
 import { mock } from '@modela/database'
-import { ConflictException } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
-import { JwtModule } from '@nestjs/jwt'
+import { ConflictException, UnauthorizedException } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
+import { JwtService } from '@nestjs/jwt'
 import { Test, TestingModule } from '@nestjs/testing'
+import { response } from 'express'
 import { PrismaService } from 'src/database/prisma.service'
 
 import { AuthRepository } from './auth.repository'
@@ -14,12 +15,20 @@ describe('AuthService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [ConfigModule, JwtModule],
-      providers: [AuthService, AuthRepository, PrismaService],
+      providers: [
+        AuthService,
+        AuthRepository,
+        PrismaService,
+        JwtService,
+        ConfigService,
+      ],
     }).compile()
 
     service = module.get<AuthService>(AuthService)
     repository = module.get<AuthRepository>(AuthRepository)
+    jest
+      .spyOn(service, 'createJwtToken')
+      .mockReturnValue({ message: 'Login Successful' })
   })
 
   it('should be defined', () => {
@@ -38,7 +47,7 @@ describe('AuthService', () => {
       jest.spyOn(repository, 'getUserByEmail').mockResolvedValue(null)
       jest.spyOn(repository, 'createCasting').mockResolvedValue()
 
-      await service.createCasting(signupCastingDto)
+      await service.createCasting(signupCastingDto, response)
       const { password, ...rest } = signupCastingDto
       expect(repository.createCasting).toBeCalledWith(
         expect.objectContaining(rest),
@@ -55,9 +64,9 @@ describe('AuthService', () => {
           .mockResolvedValue(mock('user').get())
         jest.spyOn(repository, 'createCasting').mockResolvedValue()
 
-        await expect(service.createCasting(signupCastingDto)).rejects.toThrow(
-          ConflictException,
-        )
+        await expect(
+          service.createCasting(signupCastingDto, response),
+        ).rejects.toThrow(ConflictException)
       })
     })
   })
@@ -83,7 +92,7 @@ describe('AuthService', () => {
       jest.spyOn(repository, 'getUserByEmail').mockResolvedValue(null)
       jest.spyOn(repository, 'createActor').mockResolvedValue()
 
-      await service.createActor(signupActorDto)
+      await service.createActor(signupActorDto, response)
       const { password, ...rest } = signupActorDto
       expect(repository.createActor).toBeCalledWith(
         expect.objectContaining(rest),
@@ -100,9 +109,62 @@ describe('AuthService', () => {
           .mockResolvedValue(mock('user').get())
         jest.spyOn(repository, 'createActor').mockResolvedValue()
 
-        await expect(service.createActor(signupActorDto)).rejects.toThrow(
-          ConflictException,
-        )
+        await expect(
+          service.createActor(signupActorDto, response),
+        ).rejects.toThrow(ConflictException)
+      })
+    })
+  })
+
+  describe('login', () => {
+    const password = 'password'
+    const mockUser = {
+      ...mock('user').get(),
+    }
+
+    it('should login correctly', async () => {
+      jest.spyOn(repository, 'getUserByEmail').mockResolvedValue(mockUser)
+      const res = response
+      await expect(
+        service.verfyPassword(
+          {
+            email: mockUser.email,
+            password,
+          },
+          res,
+        ),
+      ).resolves.toEqual({ message: 'Login Successful' })
+    })
+
+    describe('wrong email', () => {
+      it('should throw exeception', async () => {
+        jest.spyOn(repository, 'getUserByEmail').mockResolvedValue(null)
+        const res = response
+        await expect(
+          service.verfyPassword(
+            {
+              email: mockUser.email,
+              password,
+            },
+            res,
+          ),
+        ).rejects.toThrow(UnauthorizedException)
+      })
+    })
+
+    describe('wrong password', () => {
+      it('should throw exeception', async () => {
+        jest.spyOn(repository, 'getUserByEmail').mockResolvedValue(null)
+        const res = response
+        await expect(
+          service.verfyPassword(
+            {
+              email: mockUser.email,
+              password: '12345',
+            },
+            res,
+          ),
+        ).rejects.toThrow(UnauthorizedException)
       })
     })
   })

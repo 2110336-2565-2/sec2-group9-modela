@@ -22,8 +22,11 @@ export class AuthController {
   @ApiCreatedResponse({ description: 'Signup successful' })
   @ApiConflictResponse({ description: 'This email is already used' })
   @ApiBadRequestResponse({ description: 'Wrong format' })
-  signupActor(@Body() signupActorDto: SignupActorDto) {
-    return this.authService.createActor(signupActorDto)
+  signupActor(
+    @Body() signupActorDto: SignupActorDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    return this.authService.createActor(signupActorDto, res)
   }
 
   @Post('signup/casting')
@@ -31,8 +34,11 @@ export class AuthController {
   @ApiCreatedResponse({ description: 'Signup successful' })
   @ApiConflictResponse({ description: 'This email is already used' })
   @ApiBadRequestResponse({ description: 'Wrong format' })
-  signupCasting(@Body() signupCastingDto: SignupCastingDto) {
-    return this.authService.createCasting(signupCastingDto)
+  signupCasting(
+    @Body() signupCastingDto: SignupCastingDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    return this.authService.createCasting(signupCastingDto, res)
   }
 
   @Post('login')

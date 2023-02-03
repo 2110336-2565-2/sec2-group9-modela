@@ -21,11 +21,10 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async createCasting(signupCastingDto: SignupCastingDto) {
+  async createCasting(signupCastingDto: SignupCastingDto, res: Response) {
     const { password, email } = signupCastingDto
-
-    if (await this.repository.getUserByEmail(email))
-      throw new ConflictException('This email is already used')
+    const user = await this.repository.getUserByEmail(email)
+    if (user) throw new ConflictException('This email is already used')
 
     try {
       const hashedPassword = await hash(password, 10)
@@ -34,17 +33,17 @@ export class AuthService {
         ...signupCastingDto,
         password: hashedPassword,
       })
+      return this.createJwtToken(user, res)
     } catch (e) {
       console.log(e)
       throw new InternalServerErrorException()
     }
   }
 
-  async createActor(signupActorDto: SignupActorDto) {
+  async createActor(signupActorDto: SignupActorDto, res: Response) {
     const { password, email } = signupActorDto
-
-    if (await this.repository.getUserByEmail(email))
-      throw new ConflictException('This email is already used')
+    const user = await this.repository.getUserByEmail(email)
+    if (user) throw new ConflictException('This email is already used')
 
     try {
       const hashedPassword = await hash(password, 10)
@@ -53,6 +52,7 @@ export class AuthService {
         ...signupActorDto,
         password: hashedPassword,
       })
+      return this.createJwtToken(user, res)
     } catch (e) {
       console.log(e)
       throw new InternalServerErrorException()
@@ -68,12 +68,12 @@ export class AuthService {
     return this.createJwtToken(user, res)
   }
 
-  async createJwtToken(user: User, res: Response) {
+  createJwtToken(user: User, res: Response) {
     const { userId, type } = user
     const token: string = this.jwtService.sign({ userId, type })
     res.cookie('token', token, {
       httpOnly: true,
-      secure: this.configService.get<boolean>('cookie.secure'),
+      secure: false,
     })
     return { message: 'Login Successful' }
   }
