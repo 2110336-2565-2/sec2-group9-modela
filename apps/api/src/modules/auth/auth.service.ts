@@ -73,7 +73,7 @@ export class AuthService {
     const token: string = this.jwtService.sign({ userId, type })
     res.cookie('token', token, {
       httpOnly: true,
-      secure: false,
+      secure: this.configService.get<boolean>('cookie.secure'),
     })
     return { message: 'Login Successful' }
   }
