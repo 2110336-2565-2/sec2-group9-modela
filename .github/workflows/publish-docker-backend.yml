@@ -6,9 +6,7 @@ on:
       - main
       - beta
       - dev
-    paths:
-      - 'apps/api/**'
-      - 'packages/**'
+      - earth/infra/deployment
 
 jobs:
   deploy-docker-backend:
