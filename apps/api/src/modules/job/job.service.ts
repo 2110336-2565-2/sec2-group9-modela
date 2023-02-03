@@ -18,6 +18,8 @@ export class JobService {
     return 'This action adds a new job'
   }
 
+  // @function create prisma params from request
+  // @helper for findAll function
   convertRequestToParams(searchJobDto: SearchJobDto) {
     const params = {
       //take and skip from limit and page
@@ -64,7 +66,9 @@ export class JobService {
 
     //calculate maxPage
     //TODO: will calculate maxPage with filter later [19][24]
-    const allJobsCount = await this.repository.getJobCount({})
+    const allJobsCount = await this.repository.getJobCount({
+      where: params.where,
+    })
     result.maxPage = Math.ceil(allJobsCount / searchJobDto.limit)
 
     //return jobs
