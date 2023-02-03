@@ -3,7 +3,7 @@ import { Typography } from '@mui/material'
 import Image from 'next/image'
 import React from 'react'
 
-import { HeaderRow } from './styled'
+import { HeaderRow, ProfileImageContainer } from './styled'
 import { HeaderProps } from './type'
 
 export default function Header(prop: HeaderProps) {
@@ -15,13 +15,15 @@ export default function Header(prop: HeaderProps) {
 
   return (
     <HeaderRow>
-      <Image
-        loader={() => castingImage}
-        src={castingImage}
-        height={40}
-        width={40}
-        alt="casting pic"
-      />
+      <ProfileImageContainer>
+        <Image
+          fill
+          loader={() => castingImage}
+          src={castingImage}
+          sizes={'100%'}
+          alt="casting pic"
+        />
+      </ProfileImageContainer>
       <div>
         <Typography variant="h6">{title}</Typography>
         <Typography>{companyName}</Typography>
