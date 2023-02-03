@@ -1,7 +1,7 @@
 import { Box, Button, Divider, Grid, MenuItem, Typography } from '@mui/material'
 import PasswordTextField from 'common/components/PasswordTextField'
 import TextField from 'common/components/TextField'
-import React from 'react'
+import React, { Fragment } from 'react'
 
 import { GENDER_CHOICE } from './constants'
 import { FormContainer, RootContainer } from './styled'
@@ -40,7 +40,9 @@ const ActorSignUp = () => {
           <Grid item xs={12} sm={6}>
             <TextField select required fullWidth label="เพศ">
               {GENDER_CHOICE.map((props) => (
-                <MenuItem {...props} key={props.value} />
+                <Fragment key={props.value?.toString() || `${Math.random()}`}>
+                  <MenuItem {...props} />
+                </Fragment>
               ))}
             </TextField>
           </Grid>

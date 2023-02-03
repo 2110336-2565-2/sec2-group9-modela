@@ -1,12 +1,9 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import {
-  IconButton,
-  InputAdornment,
-  TextField,
-  TextFieldProps,
-} from '@mui/material'
+import { IconButton, InputAdornment, TextFieldProps } from '@mui/material'
 import { useShowPassword } from 'common/hooks/useShowPassword'
 import { FC } from 'react'
+
+import TextField from '../TextField'
 
 const PasswordTextField: FC<TextFieldProps> = (props) => {
   const { showPassword, handleClickShowPassword, handleMouseDownPassword } =
