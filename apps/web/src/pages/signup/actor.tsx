@@ -1,1 +1,1 @@
-export { default } from 'modules/SignUp/Actor'
+export { default } from 'modules/signup/actor'
