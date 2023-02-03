@@ -28,6 +28,8 @@ describe('JobService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined()
   })
+
+  //TODO: refactor this test to describe('getJob') and sub its
   it('should get all job successfully', async () => {
     const limitQueryMax = 20 //loop check all limitQuery 1 - limitQueryMax
     const jobDataLength = 50 //fixed mock data length in repository
@@ -45,6 +47,11 @@ describe('JobService', () => {
         }
       },
     )
+    //mock user
+    const MOCK_USER = {
+      userId: 2,
+      type: UserType.ACTOR,
+    }
 
     //loop check all limitQuery 1 - limitQueryMax and all pageQuery
     for (let limitQuery = 1; limitQuery <= limitQueryMax; limitQuery++) {
@@ -80,7 +87,9 @@ describe('JobService', () => {
           )
 
         //check all property
-        await expect(service.findAll(reqParams)).resolves.toEqual(result)
+        await expect(service.findAll(reqParams, MOCK_USER)).resolves.toEqual(
+          result,
+        )
 
         //check repository called with correct params
         const prismaParams = {
@@ -92,6 +101,75 @@ describe('JobService', () => {
       }
     }
   }) //end it
+
+  //TODO: this is draft findAll only include filtered by castingId test, need more refactor from above
+  describe('findAll', () => {
+    const MOCK_CASTING_ID = 30
+
+    const jobDataLength = 50 //fixed mock data length in repository
+    const itMockedJobData = Array.from({ length: jobDataLength }, (v, i) => {
+      const userData = mock('user').pick(['profileImageUrl']).get()
+      return {
+        jobId: i + 1,
+        ...mock('job').omit(['jobId']).get(),
+        castingId: MOCK_CASTING_ID,
+        ...mock('casting').pick(['companyName']).get(),
+        jobCastingImageUrl: userData.profileImageUrl,
+      }
+    })
+    describe('get filtered by castingId use case', () => {
+      it('should get filtered job successfully when user is casting', async () => {
+        //generate expected result
+        const limitQuery = 1
+        const pageQuery = 1
+        const result = new GetJobCardWithMaxPageDto()
+
+        result.jobs = itMockedJobData
+          .filter((job) => job.castingId === MOCK_CASTING_ID)
+          .slice(limitQuery * (pageQuery - 1), limitQuery * pageQuery)
+        result.maxPage = Math.ceil(result.jobs.length / limitQuery)
+
+        //input request params
+        const reqParams: SearchJobDto = {
+          limit: limitQuery,
+          page: pageQuery,
+          castingId: MOCK_CASTING_ID,
+        }
+
+        //mock user
+        const MOCK_USER = {
+          userId: MOCK_CASTING_ID,
+          type: UserType.CASTING,
+        }
+
+        //mock the repository
+        jest
+          .spyOn(repository, 'getJobCount')
+          .mockReturnValue(Promise.resolve(result.jobs.length))
+        jest
+          .spyOn(repository, 'getJobJoined')
+          .mockImplementation(async (reqParams) =>
+            itMockedJobData.slice(
+              reqParams.skip,
+              reqParams.skip + reqParams.take,
+            ),
+          )
+
+        //check all property
+        await expect(service.findAll(reqParams, MOCK_USER)).resolves.toEqual(
+          result,
+        )
+
+        //check repository called with correct params
+        const prismaParams = {
+          take: limitQuery,
+          skip: (pageQuery - 1) * limitQuery,
+          where: { castingId: MOCK_CASTING_ID },
+        }
+        expect(repository.getJobJoined).toBeCalledWith(prismaParams)
+      })
+    })
+  })
 
   describe('findOne', () => {
     const MOCK_CASTING_ID = 1

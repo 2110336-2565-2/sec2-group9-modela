@@ -28,12 +28,13 @@ export class JobController {
   constructor(private readonly jobService: JobService) {}
 
   @Get()
+  @UseAuthGuard()
   @ApiOperation({ summary: 'get all jobs with filter' })
   @ApiOkResponse({ type: GetJobCardWithMaxPageDto, isArray: true })
   @ApiUnauthorizedResponse({ description: 'User is not login' })
   @ApiBadRequestResponse({ description: 'Wrong format' })
-  findAll(@Query() searchJobDto: SearchJobDto) {
-    return this.jobService.findAll(searchJobDto)
+  findAll(@Query() searchJobDto: SearchJobDto, @User() user: JwtDto) {
+    return this.jobService.findAll(searchJobDto, user)
   }
 
   @Get(':id')
