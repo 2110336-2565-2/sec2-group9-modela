@@ -215,6 +215,7 @@ importers:
   packages/dtos:
     specifiers:
       '@modela/database': workspace:*
+      '@nestjs/common': ^9.0.0
       '@nestjs/swagger': ^6.1.4
       class-transformer: ^0.5.1
       class-validator: ^0.14.0
@@ -222,6 +223,7 @@ importers:
       typescript: ^4.7.4
     dependencies:
       '@modela/database': link:../database
+      '@nestjs/common': 9.2.1_welcnyot5bzd5wa2aovbkxpi4i
       '@nestjs/swagger': 6.1.4_4fhhxyztwhblafku3krlstrun4
       class-transformer: 0.5.1
       class-validator: 0.14.0
