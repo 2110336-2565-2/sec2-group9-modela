@@ -1,0 +1,16 @@
+{
+  "name": "@modela/swagger-utils",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lib:build": "tsc --build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^4.9.5",
+    "tsconfig": "workspace:*"
+  }
+}
