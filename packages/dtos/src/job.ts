@@ -17,6 +17,7 @@ export enum SearchJobStatus {
 }
 
 export class SearchJobDto {
+  @IsOptional()
   @Type(() => Number)
   @IsNumber()
   @Min(1)
@@ -26,6 +27,7 @@ export class SearchJobDto {
   }) //Will set default again in job.service.ts
   limit: number
 
+  @IsOptional()
   @Type(() => Number)
   @IsNumber()
   @Min(1)
