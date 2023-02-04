@@ -27,6 +27,8 @@ ENV VERCEL_FORCE_NO_BUILD_CACHE="true"
 RUN npm install -g pnpm
 WORKDIR /app
 
+ARG stage
+
 # First install the dependencies (as they change less often)
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
@@ -38,6 +40,8 @@ RUN pnpm install --frozen-lockfile --prefer-offline --config.ignore-scripts=true
 # Build the project and its dependencies
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
+
+RUN mv ./apps/web/.env.${stage} ./apps/web/.env
 
 RUN pnpm turbo run build --scope=web
 RUN pnpm prune --prod --config.ignore-scripts=true
