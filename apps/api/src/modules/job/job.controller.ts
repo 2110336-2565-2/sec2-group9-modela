@@ -18,8 +18,8 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
 
-import { UseAuthGuard } from '../auth/jwt.decorator'
-import { User } from '../auth/user.decorator'
+import { UseAuthGuard } from '../auth/misc/jwt.decorator'
+import { User } from '../auth/misc/user.decorator'
 import { JobService } from './job.service'
 
 @ApiTags('job')

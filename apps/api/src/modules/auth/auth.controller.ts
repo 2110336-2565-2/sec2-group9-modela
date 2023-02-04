@@ -1,5 +1,5 @@
 import { LoginDto, SignupActorDto, SignupCastingDto } from '@modela/dtos'
-import { Body, Controller, Post, Res } from '@nestjs/common'
+import { Body, Controller, Get, Post, Res } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
   ApiConflictResponse,
@@ -48,5 +48,11 @@ export class AuthController {
   @ApiBadRequestResponse({ description: 'Wrong format' })
   login(@Body() loginDto: LoginDto, @Res({ passthrough: true }) res: Response) {
     return this.authService.verfyPassword(loginDto, res)
+  }
+
+  @Get('logout')
+  @ApiOperation({ summary: 'login for user' })
+  logout(@Res({ passthrough: true }) res: Response) {
+    return this.authService.removeJwtToken(res)
   }
 }
