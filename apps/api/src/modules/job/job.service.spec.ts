@@ -126,19 +126,36 @@ describe('JobService', () => {
     })
 
     const jobDataLength = 50 //fixed mock data length in repository
-    const itMockedJobData = Array.from({ length: jobDataLength }, (v, i) => {
-      const userData = mock('user').pick(['profileImageUrl']).get()
-      return {
-        jobId: i + 1,
-        ...mock('job').omit(['jobId']).get(),
-        castingId: MOCK_CASTING_ID,
-        ...mock('casting').pick(['companyName']).get(),
-        jobCastingImageUrl: userData.profileImageUrl,
-      }
-    })
+    const itMockedJobDataNotEqualCastingId = Array.from(
+      { length: Math.ceil(jobDataLength / 2) },
+      (v, i) => {
+        const userData = mock('user').pick(['profileImageUrl']).get()
+        return {
+          jobId: i + Math.floor(jobDataLength / 2) + 1,
+          ...mock('job').omit(['jobId']).get(),
+          castingId: MOCK_CASTING_ID + 1,
+          ...mock('casting').pick(['companyName']).get(),
+          jobCastingImageUrl: userData.profileImageUrl,
+        }
+      },
+    )
+    const itMockedJobData = Array.from(
+      { length: Math.floor(jobDataLength / 2) },
+      (v, i) => {
+        const userData = mock('user').pick(['profileImageUrl']).get()
+        return {
+          jobId: i + 1,
+          ...mock('job').omit(['jobId']).get(),
+          castingId: MOCK_CASTING_ID,
+          ...mock('casting').pick(['companyName']).get(),
+          jobCastingImageUrl: userData.profileImageUrl,
+        }
+      },
+    ).concat(itMockedJobDataNotEqualCastingId)
+
     describe('get filtered by castingId use case', () => {
       //generate expected result
-      const limitQuery = 1
+      const limitQuery = 20
       const pageQuery = 1
       const result = new GetJobCardWithMaxPageDto()
       result.jobs = itMockedJobData
@@ -169,11 +186,11 @@ describe('JobService', () => {
         jest
           .spyOn(repository, 'getJobJoined')
           .mockImplementation(async (reqParams) =>
-            itMockedJobData.slice(
-              reqParams.skip,
-              reqParams.skip + reqParams.take,
-            ),
+            itMockedJobData
+              .filter((job) => job.castingId === MOCK_CASTING_ID)
+              .slice(reqParams.skip, reqParams.skip + reqParams.take),
           )
+
         //check all property
         await expect(
           service.findAll(reqParams, MOCK_USER_CASTING),

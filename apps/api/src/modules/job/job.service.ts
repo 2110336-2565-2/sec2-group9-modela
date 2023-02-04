@@ -45,7 +45,6 @@ export class JobService {
         //status: searchJobDto.status || undefined,
         //gender: searchJobDto.gender || undefined,
 
-        //TODO: Draft for filtering castingId task [19]
         castingId: Number(searchJobDto.castingId) || undefined,
       },
     }
