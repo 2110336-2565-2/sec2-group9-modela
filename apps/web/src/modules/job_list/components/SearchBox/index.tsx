@@ -7,7 +7,7 @@ export default function SearchBox() {
   return (
     <TextField
       placeholder="ค้นหางานทั้งหมด"
-      InputProps={{ endAdornment: <SearchOutlinedIcon /> }}
+      InputProps={{ endAdornment: <SearchOutlinedIcon color="primary" /> }}
     />
   )
 }

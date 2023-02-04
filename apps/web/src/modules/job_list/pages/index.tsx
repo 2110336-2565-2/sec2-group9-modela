@@ -2,9 +2,9 @@
 import { Typography } from '@mui/material'
 import React from 'react'
 
+import FilterContainer from '../components/FilterContainer'
 import JobCardContainer from '../components/JobCardContainer'
 import NotiCardContainer from '../components/NotiCardContainer'
-import NotiCard from '../components/NotiCardContainer/components/NotiCard'
 import SearchBox from '../components/SearchBox'
 
 //import Card from '../components/card'
@@ -115,11 +115,10 @@ export default function JobList() {
             flexDirection: 'column',
             justifyContent: 'flex-start',
             paddingTop: '3rem',
-            width: '12vw',
+            width: '14vw',
             gap: '1rem',
           }}
         >
-          <Typography variant="body1"> ค้นหางานทั้งหมด </Typography>
           <div
             style={{
               display: 'flex',
@@ -127,18 +126,7 @@ export default function JobList() {
               gap: '1rem',
             }}
           >
-            <NotiCard
-              title="Intern offer"
-              companyName="Fridge Agile"
-              offer="100k perk year"
-              castingImage=""
-            />
-            <NotiCard
-              title="Intern offer"
-              companyName="Fridge Agile"
-              offer="200k perk year"
-              castingImage=""
-            />
+            <FilterContainer />
           </div>
         </div>
       </div>
