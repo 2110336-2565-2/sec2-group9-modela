@@ -107,6 +107,7 @@ describe('JobService', () => {
     const MOCK_USER = {
       userId: 2,
       type: UserType.ACTOR,
+      isVerified: true,
     }
     describe('normal behavior', () => {
       it('should get job by id successfully', async () => {
