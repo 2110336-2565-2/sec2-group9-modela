@@ -45,7 +45,7 @@ RUN sed -i '$d' ./packages/database/index.ts
 
 # ARG TURBO_TOKEN
 # ENV TURBO_TOKEN=$TURBO_TOKEN
-RUN pnpm turbo run build --scope=web
+RUN pnpm turbo run build --scope=api
 RUN pnpm prune --prod --config.ignore-scripts=true
 
 FROM node:alpine AS runner
