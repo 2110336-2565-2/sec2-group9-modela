@@ -6,6 +6,7 @@
   "types": "dist/index.js",
   "scripts": {
     "migrate:dev": "dotenv -e ../../apps/api/.env prisma migrate dev",
+    "migrate:prod": "prisma migrate deploy",
     "db:seed": "dotenv -e ../../apps/api/.env prisma migrate reset",
     "db:studio": "dotenv -e ../../apps/api/.env prisma studio",
     "test:cov": "jest",
@@ -18,11 +19,11 @@
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
+    "@faker-js/faker": "^7.6.0",
     "@prisma/client": "^4.9.0",
     "dotenv-cli": "^7.0.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "^7.6.0",
     "@types/jest": "29.2.4",
     "jest": "29.3.1",
     "prisma": "^4.9.0",

@@ -1,0 +1,90 @@
+name: Publish Backend Docker
+
+on:
+  push:
+    branches:
+      - main
+      - beta
+      - dev
+    paths:
+      - 'apps/api/**'
+      - 'packages/**'
+      - '!packages/swagger-utils/**'
+    
+jobs:
+  deploy-docker-backend:
+    strategy:
+      matrix:
+        node-version: [16.x]
+        platform: [ubuntu-latest]
+  
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v2
+        name: Checkout
+      
+      - uses: pnpm/action-setup@v2.0.1
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 7
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Turbo Cache
+        id: turbo-cache
+        uses: actions/cache@v2
+        with:
+          path: .turbo
+          key: turbo-${{ github.job }}-${{ github.ref_name }}-${{ github.sha }}
+          restore-keys: |
+            turbo-${{ github.job }}-${{ github.ref_name }}-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --prefer-offline
+
+      # - uses: satackey/action-docker-layer-caching@v0.0.11
+      #   name: Docker cache
+      #   continue-on-error: true
+
+      - name: Build backend Docker
+        run: docker build -f apps/api/Dockerfile -t modela-backend .
+      
+      - name: Set default env to dev
+        run: |
+          echo "TAG=dev" >> $GITHUB_ENV
+      
+      - name: Set beta api env
+        if: ${{ github.ref == 'refs/heads/beta' }}
+        run: |
+          echo "TAG=beta" >> $GITHUB_ENV
+      
+      - name: Set prod api env
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run: |
+          echo "TAG=latest" >> $GITHUB_ENV
+
+      - name: Docker login using Github Token
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: miello
+          password: ${{ secrets.GHCR_TOKEN }}
+      
+      - name: Deploy Backend Docker Image
+        run: |
+          docker tag modela-backend ghcr.io/miello/modela-backend:${{ env.TAG }}
+          docker push ghcr.io/miello/modela-backend:${{ env.TAG }}
+    

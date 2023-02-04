@@ -20,8 +20,8 @@
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.4",
     "@next/font": "^13.1.6",
-    "dayjs": "^1.11.7",
     "axios": "^1.2.6",
+    "dayjs": "^1.11.7",
     "next": "^13.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0"
@@ -29,6 +29,7 @@
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "@babel/runtime": "^7.20.13",
+    "@modela/swagger-utils": "workspace:*",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@types/jest": "29.2.4",
