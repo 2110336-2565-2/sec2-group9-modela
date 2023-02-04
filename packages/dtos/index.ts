@@ -1,3 +1,5 @@
+import 'reflect-metadata'
+
 export * from './src/auth'
 export * from './src/example'
 export * from './src/job'
@@ -8,5 +10,6 @@ export {
   ApplicationStatus,
   JobStatus,
   Gender,
+  mock,
+  getBaseMock,
 } from '@modela/database'
-export { mock, getBaseMock } from '@modela/database'

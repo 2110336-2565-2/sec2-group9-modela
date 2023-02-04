@@ -20,12 +20,11 @@
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.4",
     "@next/font": "^13.1.6",
-    "dayjs": "^1.11.7",
     "axios": "^1.2.6",
+    "dayjs": "^1.11.7",
     "next": "^13.1.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "reflect-metadata": "^0.1.13"
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

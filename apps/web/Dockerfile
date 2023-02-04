@@ -42,6 +42,8 @@ COPY turbo.json turbo.json
 RUN pnpm turbo run build --scope=web
 RUN pnpm prune --prod --config.ignore-scripts=true
 
+RUN rm -rf ./apps/web/.next/cache
+
 FROM node:alpine AS runner
 
 RUN apk add --no-cache libc6-compat

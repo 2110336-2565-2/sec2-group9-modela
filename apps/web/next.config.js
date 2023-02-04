@@ -1,3 +1,6 @@
+/**
+ * @type {import('next').NextConfig}
+ */
 module.exports = {
   reactStrictMode: true,
   transpilePackages: ['@mui/system', '@mui/material', '@mui/icons-material'],

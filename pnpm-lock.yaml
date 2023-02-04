@@ -152,7 +152,6 @@ importers:
       open-cli: ^7.1.0
       react: 18.2.0
       react-dom: 18.2.0
-      reflect-metadata: ^0.1.13
       tsconfig: workspace:*
       typescript: ^4.5.3
     dependencies:
@@ -169,7 +168,6 @@ importers:
       next: 13.1.2_pjwopsidmaokadturxaafygjp4
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      reflect-metadata: 0.1.13
     devDependencies:
       '@babel/core': 7.20.12
       '@babel/runtime': 7.20.13
@@ -219,6 +217,7 @@ importers:
       '@nestjs/swagger': ^6.1.4
       class-transformer: ^0.5.1
       class-validator: ^0.14.0
+      reflect-metadata: ^0.1.13
       tsconfig: workspace:*
       typescript: ^4.7.4
     dependencies:
@@ -227,6 +226,7 @@ importers:
       '@nestjs/swagger': 6.1.4_4fhhxyztwhblafku3krlstrun4
       class-transformer: 0.5.1
       class-validator: 0.14.0
+      reflect-metadata: 0.1.13
     devDependencies:
       tsconfig: link:../tsconfig
       typescript: 4.9.5
@@ -1648,6 +1648,38 @@ packages:
       uuid: 8.3.2
     dev: false
 
+  /@nestjs/core/9.2.1_b4pxbpa7chblgbyake5iz5rdmu:
+    resolution: {integrity: sha512-a9GkXuu8uXgNgCVW+17iI8kLCltO+HwHpU2IhR+32JKnN2WEQ1YEWU4t3GJ2MNq44YkjIw9zrKvFkjJBlYrNbQ==}
+    requiresBuild: true
+    peerDependencies:
+      '@nestjs/common': ^9.0.0
+      '@nestjs/microservices': ^9.0.0
+      '@nestjs/platform-express': ^9.0.0
+      '@nestjs/websockets': ^9.0.0
+      reflect-metadata: ^0.1.12
+      rxjs: ^7.1.0
+    peerDependenciesMeta:
+      '@nestjs/microservices':
+        optional: true
+      '@nestjs/platform-express':
+        optional: true
+      '@nestjs/websockets':
+        optional: true
+    dependencies:
+      '@nestjs/common': 9.2.1_welcnyot5bzd5wa2aovbkxpi4i
+      '@nuxtjs/opencollective': 0.3.2
+      fast-safe-stringify: 2.1.1
+      iterare: 1.2.1
+      object-hash: 3.0.0
+      path-to-regexp: 3.2.0
+      reflect-metadata: 0.1.13
+      rxjs: 7.8.0
+      tslib: 2.4.1
+      uuid: 9.0.0
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
   /@nestjs/core/9.2.1_e6la6qvsclaae2becwjnmfvsuq:
     resolution: {integrity: sha512-a9GkXuu8uXgNgCVW+17iI8kLCltO+HwHpU2IhR+32JKnN2WEQ1YEWU4t3GJ2MNq44YkjIw9zrKvFkjJBlYrNbQ==}
     requiresBuild: true
@@ -1783,7 +1815,7 @@ packages:
         optional: true
     dependencies:
       '@nestjs/common': 9.2.1_welcnyot5bzd5wa2aovbkxpi4i
-      '@nestjs/core': 9.2.1_e6la6qvsclaae2becwjnmfvsuq
+      '@nestjs/core': 9.2.1_b4pxbpa7chblgbyake5iz5rdmu
       '@nestjs/mapped-types': 1.2.0_ejjx6q7ue32bc24a7sespjpcyu
       class-transformer: 0.5.1
       class-validator: 0.14.0
