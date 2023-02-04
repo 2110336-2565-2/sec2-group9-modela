@@ -1,4 +1,4 @@
-import { GetUserDto, JwtDto, UserType } from '@modela/dtos'
+import { GetUserDto, JwtDto } from '@modela/dtos'
 import { Controller, Get, UseGuards } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
 import {
