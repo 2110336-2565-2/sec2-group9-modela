@@ -1,4 +1,9 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
+// Modified from https://github.com/nestjs/swagger/blob/master/lib/extra/swagger-shim.ts
+interface Type<T = any> extends Function {
+  new (...args: any[]): T
+}
+
 export function ApiProperty() {
   return () => {}
 }
@@ -155,12 +160,18 @@ export function SwaggerModule() {
 export function IntersectionType() {
   return () => {}
 }
-export function OmitType(x: any) {
-  return x
+export function OmitType<T, K extends keyof T>(
+  classRef: Type<T>,
+  keys: readonly K[],
+): Type<Omit<T, (typeof keys)[number]>> {
+  return classRef as Type<Omit<T, (typeof keys)[number]>>
 }
-export function PartialType(x: any) {
-  return x
+export function PartialType<T>(classRef: Type<T>): Type<Partial<T>> {
+  return classRef as Type<Partial<T>>
 }
-export function PickType(x: any) {
-  return x
+export function PickType<T, K extends keyof T>(
+  classRef: Type<T>,
+  keys: readonly K[],
+): Type<Pick<T, (typeof keys)[number]>> {
+  return classRef as Type<Pick<T, (typeof keys)[number]>>
 }
