@@ -31,6 +31,7 @@ const TextField: FC<TextFieldProps> = (props) => {
       sx={{
         borderColor: 'white',
         borderRadius: '10px',
+        backgroundColor: '#21212114',
         ...props.sx,
       }}
     />
