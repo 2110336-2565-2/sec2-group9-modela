@@ -37,9 +37,6 @@ RUN pnpm install --frozen-lockfile --prefer-offline --config.ignore-scripts=true
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
 
-RUN sed -i '$d' ./packages/database/index.ts
-RUN sed -i '$d' ./packages/dtos/index.ts
-
 # Uncomment and use build args to enable remote caching
 # ARG TURBO_TEAM
 # ENV TURBO_TEAM=$TURBO_TEAM
