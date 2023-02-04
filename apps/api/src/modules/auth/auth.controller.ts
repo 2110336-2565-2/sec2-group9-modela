@@ -49,4 +49,10 @@ export class AuthController {
   login(@Body() loginDto: LoginDto, @Res({ passthrough: true }) res: Response) {
     return this.authService.verfyPassword(loginDto, res)
   }
+
+  @Post('logout')
+  @ApiOperation({ summary: 'logout for user' })
+  logout(@Res({ passthrough: true }) res: Response) {
+    return this.authService.removeJwtToken(res)
+  }
 }

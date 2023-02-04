@@ -1,5 +1,6 @@
 import { GetUserDto, JwtDto } from '@modela/dtos'
-import { Controller, Get } from '@nestjs/common'
+import { Controller, Get, UseGuards } from '@nestjs/common'
+import { AuthGuard } from '@nestjs/passport'
 import {
   ApiBadRequestResponse,
   ApiOkResponse,
@@ -8,8 +9,7 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
 
-import { UseAuthGuard } from '../auth/jwt.decorator'
-import { User } from '../auth/user.decorator'
+import { User } from '../auth/misc/user.decorator'
 import { UserService } from './user.service'
 
 @ApiTags('user')
@@ -18,7 +18,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get('me')
-  @UseAuthGuard()
+  @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'fetch for user data' })
   @ApiOkResponse({ type: GetUserDto })
   @ApiUnauthorizedResponse({ description: 'User is not login' })

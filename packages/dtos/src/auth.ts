@@ -1,6 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import {
   IsAlphanumeric,
+  IsBoolean,
   IsEmail,
   IsEnum,
   IsNotEmpty,
@@ -122,6 +123,10 @@ export class JwtDto implements Partial<User> {
   @IsNumber()
   @ApiProperty()
   userId: number
+
+  @IsBoolean()
+  @ApiProperty()
+  isVerified: boolean
 
   @IsEnum({ enum: UserType })
   @IsNotEmpty()
