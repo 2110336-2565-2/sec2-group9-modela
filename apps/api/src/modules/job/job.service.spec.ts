@@ -102,9 +102,27 @@ describe('JobService', () => {
     }
   }) //end it
 
-  //TODO: this is draft findAll only include filtered by castingId test, need more refactor from above
   describe('findAll', () => {
-    const MOCK_CASTING_ID = 30
+    const MOCK_CASTING_ID = 22
+
+    describe('Forbidden casting search', () => {
+      //input request params
+      const reqParams: SearchJobDto = {
+        limit: 1,
+        page: 1,
+        castingId: 1,
+      }
+      //mock user
+      const MOCK_USER = {
+        userId: MOCK_CASTING_ID,
+        type: UserType.CASTING,
+      }
+      it('should throw not forbidden exception', async () => {
+        await expect(service.findAll(reqParams, MOCK_USER)).rejects.toThrow(
+          ForbiddenException,
+        )
+      })
+    })
 
     const jobDataLength = 50 //fixed mock data length in repository
     const itMockedJobData = Array.from({ length: jobDataLength }, (v, i) => {
@@ -137,9 +155,13 @@ describe('JobService', () => {
         }
 
         //mock user
-        const MOCK_USER = {
+        const MOCK_USER_CASTING = {
           userId: MOCK_CASTING_ID,
           type: UserType.CASTING,
+        }
+        const MOCK_USER_ACTOR = {
+          userId: 1,
+          type: UserType.ACTOR,
         }
 
         //mock the repository
@@ -156,9 +178,12 @@ describe('JobService', () => {
           )
 
         //check all property
-        await expect(service.findAll(reqParams, MOCK_USER)).resolves.toEqual(
-          result,
-        )
+        await expect(
+          service.findAll(reqParams, MOCK_USER_CASTING),
+        ).resolves.toEqual(result)
+        await expect(
+          service.findAll(reqParams, MOCK_USER_ACTOR),
+        ).resolves.toEqual(result)
 
         //check repository called with correct params
         const prismaParams = {
