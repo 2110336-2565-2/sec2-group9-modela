@@ -37,6 +37,8 @@ RUN pnpm install --frozen-lockfile --prefer-offline --config.ignore-scripts=true
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
 
+RUN sed -i '$d' ./packages/database/index.ts
+
 # Uncomment and use build args to enable remote caching
 # ARG TURBO_TEAM
 # ENV TURBO_TEAM=$TURBO_TEAM
@@ -62,7 +64,11 @@ RUN pnpm add -g prisma
 
 COPY --from=installer /app/node_modules ./node_modules
 COPY --from=installer --chown=nestjs:nodejs  /app/apps ./apps
+COPY --from=installer --chown=nestjs:nodejs /app/package.json ./package.json
 COPY --from=installer --chown=nestjs:nodejs /app/packages ./packages
+COPY --from=installer --chown=nestjs:nodejs /app/pnpm-lock.yaml ./pnpm-lock.yaml
+
+RUN sed -i '/generator dbml.*{/,/^}/d' ./packages/database/prisma/schema.prisma
 
 EXPOSE 8080
-CMD cd ./packages/database && pnpm migrate:prod && cd ../../apps/api && pnpm start:prod
+CMD cd ./packages/database && pnpm exec prisma generate && pnpm migrate:prod && cd ../../apps/api && pnpm start:prod
