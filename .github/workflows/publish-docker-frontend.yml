@@ -6,8 +6,10 @@ on:
       - main
       - beta
       - dev
-      - earth/infra/deployment
-
+    paths:
+      - 'apps/web/**'
+      - 'packages/**'
+      
 jobs:
   deploy-docker-frontend:
     strategy:

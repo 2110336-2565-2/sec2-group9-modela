@@ -6,8 +6,11 @@ on:
       - main
       - beta
       - dev
-      - earth/infra/deployment
-
+    paths:
+      - 'apps/api/**'
+      - 'packages/**'
+      - '!packages/swagger-utils/**'
+    
 jobs:
   deploy-docker-backend:
     strategy:
