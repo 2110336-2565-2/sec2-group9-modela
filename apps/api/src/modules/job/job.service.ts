@@ -18,6 +18,8 @@ export class JobService {
     return 'This action adds a new job'
   }
 
+  // @function create prisma params from request
+  // @helper for findAll function
   convertRequestToParams(searchJobDto: SearchJobDto) {
     const params = {
       //take and skip from limit and page
@@ -43,16 +45,22 @@ export class JobService {
         //status: searchJobDto.status || undefined,
         //gender: searchJobDto.gender || undefined,
 
-        //TODO: Draft for filtering castingId task [19]
         castingId: Number(searchJobDto.castingId) || undefined,
       },
     }
     return params
   }
-  async findAll(searchJobDto: SearchJobDto) {
+  async findAll(searchJobDto: SearchJobDto, user: JwtDto) {
     //set Default value for limit and page
     searchJobDto.limit = searchJobDto.limit || 20
     searchJobDto.page = searchJobDto.page || 1
+
+    //check if castingId is not equal to user.userId
+    if (user.type == UserType.CASTING) {
+      if (searchJobDto.castingId == undefined)
+        searchJobDto.castingId = user.userId
+      if (searchJobDto.castingId != user.userId) throw new ForbiddenException()
+    }
 
     //set params for getJob
     const params = this.convertRequestToParams(searchJobDto)
@@ -63,8 +71,10 @@ export class JobService {
     result.jobs = jobsJoinCasting
 
     //calculate maxPage
-    //TODO: will calculate maxPage with filter later [19][24]
-    const allJobsCount = await this.repository.getJobCount({})
+    //TODO: will calculate maxPage with filter later [24]
+    const allJobsCount = await this.repository.getJobCount({
+      where: params.where,
+    })
     result.maxPage = Math.ceil(allJobsCount / searchJobDto.limit)
 
     //return jobs
