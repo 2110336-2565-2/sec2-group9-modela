@@ -51,6 +51,7 @@ describe('JobService', () => {
       const MOCK_USER = {
         userId: 2,
         type: UserType.ACTOR,
+        isVerified: true,
       }
 
       //loop check all limitQuery 1 - limitQueryMax and all pageQuery
@@ -117,6 +118,7 @@ describe('JobService', () => {
       const MOCK_USER = {
         userId: MOCK_CASTING_ID,
         type: UserType.CASTING,
+        isVerified: true,
       }
       it('should throw not forbidden exception', async () => {
         await expect(service.findAll(reqParams, MOCK_USER)).rejects.toThrow(
@@ -172,10 +174,12 @@ describe('JobService', () => {
       const MOCK_USER_CASTING = {
         userId: MOCK_CASTING_ID,
         type: UserType.CASTING,
+        isVerified: true,
       }
       const MOCK_USER_ACTOR = {
         userId: 1,
         type: UserType.ACTOR,
+        isVerified: true,
       }
 
       it('should get filtered job successfully with different user', async () => {
