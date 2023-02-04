@@ -12,9 +12,13 @@ export default function JobDetail() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = (await apiClient.get('/job/' + jid)).data as GetJobDto
-      console.log(res)
-      setJob(res)
+      try {
+        const res = (await apiClient.get('/job/' + jid)).data as GetJobDto
+        setJob(res)
+      } catch (e) {
+        console.log(e)
+        router.push('/404')
+      }
     }
     fetchData()
   }, [])

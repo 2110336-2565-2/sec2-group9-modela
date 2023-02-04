@@ -19,7 +19,7 @@ export default function Footer(prop: FooterProps) {
       <PersonOutlined fontSize="small" />
       <Typography variant="subtitle1">{actorCount}</Typography>
       <Money fontSize="small" />
-      <Typography variant="subtitle1">{wage}</Typography>
+      <Typography variant="subtitle1">{wage.toLocaleString()}</Typography>
       <EventBusy fontSize="small" color="success" />
       <Typography variant="subtitle1">{formatDate(dueDate)}</Typography>
 
