@@ -16,7 +16,6 @@ export class TypesGuard implements CanActivate {
     }
     const request = context.switchToHttp().getRequest()
     const user = request.user
-    console.log(user, types)
     return this.matchType(types, user.type)
   }
 }
