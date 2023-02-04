@@ -1,14 +1,18 @@
 import { Box, Button, Divider, Grid, MenuItem, Typography } from '@mui/material'
 import PasswordTextField from 'common/components/PasswordTextField'
 import TextField from 'common/components/TextField'
-import React, { Fragment } from 'react'
+import React from 'react'
+import { Controller } from 'react-hook-form'
 
-import { GENDER_CHOICE } from './constants'
+import useActorForm from './hooks/useActorForm'
 import { FormContainer, RootContainer } from './styled'
+import { GENDER_CHOICE } from './utils/constants'
 
 const ActorSignUp = () => {
+  const { control, handleClickSubmit } = useActorForm()
+
   return (
-    <RootContainer>
+    <RootContainer onSubmit={handleClickSubmit}>
       <Typography color="primary" variant="h3">
         Modela
       </Typography>
@@ -23,37 +27,138 @@ const ActorSignUp = () => {
             <Divider />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField required fullWidth label="คำนำหน้าชื่อ" />
+            <Controller
+              name="prefix"
+              control={control}
+              render={(props) => (
+                <TextField
+                  required
+                  fullWidth
+                  label="คำนำหน้าชื่อ"
+                  {...props.field}
+                  error={props.fieldState.invalid}
+                  helperText={props.fieldState.error?.message}
+                />
+              )}
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField required fullWidth label="ชื่อจริง" />
+            <Controller
+              name="firstName"
+              control={control}
+              render={(props) => (
+                <TextField
+                  required
+                  fullWidth
+                  label="ชื่อจริง"
+                  {...props.field}
+                  error={props.fieldState.invalid}
+                  helperText={props.fieldState.error?.message}
+                />
+              )}
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label="ชื่อกลาง (ไม่จำเป็น)" />
+            <Controller
+              name="middleName"
+              control={control}
+              render={(props) => (
+                <TextField
+                  fullWidth
+                  label="ชื่อกลาง (ไม่จำเป็น)"
+                  {...props.field}
+                  error={props.fieldState.invalid}
+                  helperText={props.fieldState.error?.message}
+                />
+              )}
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField required fullWidth label="นามสกุล" />
+            <Controller
+              name="lastName"
+              control={control}
+              render={(props) => (
+                <TextField
+                  required
+                  fullWidth
+                  label="นามสกุล"
+                  {...props.field}
+                  error={props.fieldState.invalid}
+                  helperText={props.fieldState.error?.message}
+                />
+              )}
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label="สัญชาติ" />
+            <Controller
+              name="nationality"
+              control={control}
+              render={(props) => (
+                <TextField
+                  required
+                  fullWidth
+                  label="สัญชาติ"
+                  {...props.field}
+                  error={props.fieldState.invalid}
+                  helperText={props.fieldState.error?.message}
+                />
+              )}
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField select required fullWidth label="เพศ">
-              {GENDER_CHOICE.map((props) => (
-                <Fragment key={props.value?.toString() || `${Math.random()}`}>
-                  <MenuItem {...props} />
-                </Fragment>
-              ))}
-            </TextField>
+            <Controller
+              name="gender"
+              control={control}
+              render={(props) => (
+                <TextField
+                  select
+                  required
+                  fullWidth
+                  label="เพศ"
+                  {...props.field}
+                  error={props.fieldState.invalid}
+                  helperText={props.fieldState.error?.message}
+                >
+                  {GENDER_CHOICE.map((choice) => (
+                    <MenuItem
+                      {...choice}
+                      key={choice.value?.toString() || `${Math.random()}`}
+                    />
+                  ))}
+                </TextField>
+              )}
+            />
           </Grid>
           <Grid item xs={12} sm={12}>
-            <TextField required fullWidth label="เบอร์โทรศัพท์" />
+            <Controller
+              name="phoneNumber"
+              control={control}
+              render={(props) => (
+                <TextField
+                  required
+                  fullWidth
+                  label="เบอร์โทรศัพท์"
+                  {...props.field}
+                  error={props.fieldState.invalid}
+                  helperText={props.fieldState.error?.message}
+                />
+              )}
+            />
           </Grid>
           <Grid item xs={12} sm={12}>
-            <TextField
-              required
-              fullWidth
-              label="เลขบัตรประจำตัวประชาชน/เลขพาสปอร์ต"
+            <Controller
+              name="ssn"
+              control={control}
+              render={(props) => (
+                <TextField
+                  required
+                  fullWidth
+                  label="เลขบัตรประจำตัวประชาชน/เลขพาสปอร์ต"
+                  {...props.field}
+                  error={props.fieldState.invalid}
+                  helperText={props.fieldState.error?.message}
+                />
+              )}
             />
           </Grid>
           <Grid item xs={12} sm={12}>
@@ -63,13 +168,52 @@ const ActorSignUp = () => {
             <Divider />
           </Grid>
           <Grid item xs={12} sm={12}>
-            <TextField required fullWidth label="อีเมล" />
+            <Controller
+              name="email"
+              control={control}
+              render={(props) => (
+                <TextField
+                  required
+                  fullWidth
+                  label="อีเมล"
+                  {...props.field}
+                  error={props.fieldState.invalid}
+                  helperText={props.fieldState.error?.message}
+                />
+              )}
+            />
           </Grid>
           <Grid item xs={12} sm={12}>
-            <PasswordTextField required fullWidth label="รหัสผ่าน" />
+            <Controller
+              name="password"
+              control={control}
+              render={(props) => (
+                <PasswordTextField
+                  required
+                  fullWidth
+                  label="รหัสผ่าน"
+                  {...props.field}
+                  error={props.fieldState.invalid}
+                  helperText={props.fieldState.error?.message}
+                />
+              )}
+            />
           </Grid>
           <Grid item xs={12} sm={12}>
-            <PasswordTextField required fullWidth label="ยืนยันรหัสผ่าน" />
+            <Controller
+              name="confirmPassword"
+              control={control}
+              render={(props) => (
+                <PasswordTextField
+                  required
+                  fullWidth
+                  label="ยืนยันรหัสผ่าน"
+                  {...props.field}
+                  error={props.fieldState.invalid}
+                  helperText={props.fieldState.error?.message}
+                />
+              )}
+            />
           </Grid>
           <Grid item xs={12} sm={12}>
             <Box display="flex" justifyContent="center">

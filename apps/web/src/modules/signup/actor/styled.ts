@@ -1,4 +1,4 @@
-import { Box, Card, styled } from '@mui/material'
+import { Card, styled } from '@mui/material'
 
 export const FormContainer = styled(Card)`
   padding: 20px;
@@ -7,7 +7,7 @@ export const FormContainer = styled(Card)`
   border-radius: 10px;
 `
 
-export const RootContainer = styled(Box)`
+export const RootContainer = styled('form')`
   display: flex;
   flex: 1;
   align-items: center;

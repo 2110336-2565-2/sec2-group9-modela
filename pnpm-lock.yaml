@@ -130,6 +130,7 @@ importers:
       '@emotion/react': ^11.10.5
       '@emotion/server': ^11.10.0
       '@emotion/styled': ^11.10.5
+      '@hookform/resolvers': ^2.9.10
       '@modela/dtos': workspace:*
       '@modela/swagger-utils': workspace:*
       '@mui/icons-material': ^5.11.0
@@ -141,6 +142,7 @@ importers:
       '@types/node': ^17.0.12
       '@types/react': ^18.0.22
       '@types/react-dom': ^18.0.7
+      '@types/validator': ^13.7.12
       axios: ^1.2.6
       babel-plugin-import: ^1.13.6
       dayjs: ^1.11.7
@@ -156,13 +158,14 @@ importers:
       react-hook-form: ^7.43.0
       tsconfig: workspace:*
       typescript: ^4.5.3
-      ui: workspace:*
+      validator: ^13.9.0
       zod: ^3.20.2
     dependencies:
       '@emotion/cache': 11.10.5
       '@emotion/react': 11.10.5_jp5qgyg6plq757v5hojp7ls2oe
       '@emotion/server': 11.10.0
       '@emotion/styled': 11.10.5_jp5djshq6aqfasno3mth3hguci
+      '@hookform/resolvers': 2.9.10_react-hook-form@7.43.0
       '@modela/dtos': link:../../packages/dtos
       '@mui/icons-material': 5.11.0_6zueiyxsk3wwk7ardr4xipkxnu
       '@mui/material': 5.11.4_lskpmcsdi7ipu6qpuapyu56ihm
@@ -173,7 +176,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.43.0_react@18.2.0
-      ui: link:../../packages/ui
+      validator: 13.9.0
       zod: 3.20.2
     devDependencies:
       '@babel/core': 7.20.12
@@ -185,6 +188,7 @@ importers:
       '@types/node': 17.0.45
       '@types/react': 18.0.26
       '@types/react-dom': 18.0.10
+      '@types/validator': 13.7.12
       babel-plugin-import: 1.13.6
       eslint: 7.32.0
       eslint-config-custom: link:../../packages/eslint-config-custom
@@ -1037,6 +1041,14 @@ packages:
   /@faker-js/faker/7.6.0:
     resolution: {integrity: sha512-XK6BTq1NDMo9Xqw/YkYyGjSsg44fbNwYRx7QK2CuoQgyy+f1rrTDHoExVM5PsyXCtfl2vs2vVJ0MN0yN6LppRw==}
     engines: {node: '>=14.0.0', npm: '>=6.0.0'}
+
+  /@hookform/resolvers/2.9.10_react-hook-form@7.43.0:
+    resolution: {integrity: sha512-JIL1DgJIlH9yuxcNGtyhsWX/PgNltz+5Gr6+8SX9fhXc/hPbEIk6wPI82nhgvp3uUb6ZfAM5mqg/x7KR7NAb+A==}
+    peerDependencies:
+      react-hook-form: ^7.0.0
+    dependencies:
+      react-hook-form: 7.43.0_react@18.2.0
+    dev: false
 
   /@humanwhocodes/config-array/0.11.8:
     resolution: {integrity: sha512-UybHIJzJnR5Qc/MsD9Kr+RpO2h+/P1GhOwdiLPXK5TWk5sgTdu88bTD9UP+CKbPPh5Rni1u0GjAdYQLemG8g+g==}
@@ -2553,6 +2565,10 @@ packages:
 
   /@types/validator/13.7.11:
     resolution: {integrity: sha512-WqTos+CnAKN64YwyBMhgUYhb5VsTNKwUY6AuzG5qu9/pFZJar/RJFMZBXwX7VS+uzYi+lIAr3WkvuWqEI9F2eg==}
+
+  /@types/validator/13.7.12:
+    resolution: {integrity: sha512-YVtyAPqpefU+Mm/qqnOANW6IkqKpCSrarcyV269C8MA8Ux0dbkEuQwM/4CjL47kVEM2LgBef/ETfkH+c6+moFA==}
+    dev: true
 
   /@types/yargs-parser/21.0.0:
     resolution: {integrity: sha512-iO9ZQHkZxHn4mSakYV0vFHAVDyEOIJQrV2uZ06HxEPcx+mt8swXoZHIbaaJ2crJYFfErySgktuTZ3BeLz+XmFA==}
@@ -9293,6 +9309,11 @@ packages:
   /validator/13.7.0:
     resolution: {integrity: sha512-nYXQLCBkpJ8X6ltALua9dRrZDHVYxjJ1wgskNt1lH9fzGjs3tgojGSCBjmEPwkWS1y29+DrizMTW19Pr9uB2nw==}
     engines: {node: '>= 0.10'}
+
+  /validator/13.9.0:
+    resolution: {integrity: sha512-B+dGG8U3fdtM0/aNK4/X8CXq/EcxU2WPrPEkJGslb47qyHsxmbggTWK0yEA4qnYVNF+nxNlN88o14hIcPmSIEA==}
+    engines: {node: '>= 0.10'}
+    dev: false
 
   /vary/1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}

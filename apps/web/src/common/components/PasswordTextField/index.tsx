@@ -11,7 +11,7 @@ const PasswordTextField: FC<TextFieldProps> = (props) => {
 
   return (
     <TextField
-      type={showPassword ? 'password' : 'text'}
+      type={!showPassword ? 'password' : 'text'}
       label="รหัสผ่าน"
       InputProps={{
         endAdornment: (
@@ -23,7 +23,7 @@ const PasswordTextField: FC<TextFieldProps> = (props) => {
               onMouseDown={handleMouseDownPassword}
               edge="end"
             >
-              {showPassword ? <VisibilityOff /> : <Visibility />}
+              {!showPassword ? <VisibilityOff /> : <Visibility />}
             </IconButton>
           </InputAdornment>
         ),

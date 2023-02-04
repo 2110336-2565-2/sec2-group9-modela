@@ -1,16 +1,17 @@
+import { Gender } from '@modela/dtos'
 import { MenuItemProps } from '@mui/material'
 
 export const GENDER_CHOICE: MenuItemProps[] = [
   {
     children: 'ชาย',
-    value: 'MALE',
+    value: Gender.MALE,
   },
   {
     children: 'หญิง',
-    value: 'FEMALE',
+    value: Gender.FEMALE,
   },
   {
     children: 'อื่น ๆ',
-    value: 'OTHER',
+    value: Gender.OTHER,
   },
 ]
