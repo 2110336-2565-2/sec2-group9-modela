@@ -30,10 +30,10 @@ export class ReportController {
   @ApiNotFoundResponse({ description: 'Job not found' })
   @ApiOperation({ summary: 'write report' })
   postReport(
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body() postReportDTO: PostReportDTO,
     @User() user: JwtDto,
   ) {
-    return this.reportService.postReport(id, postReportDTO, user.userId)
+    return this.reportService.postReport(+id, postReportDTO, user.userId)
   }
 }

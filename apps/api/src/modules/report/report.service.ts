@@ -4,7 +4,7 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common'
 import { NotFoundException } from '@nestjs/common/exceptions'
 import { NotFoundError } from 'rxjs'
 
-import { JobService } from '../job/job.service'
+import { JobRepository } from '../job/job.repository'
 import { ReportRepository } from './report.repository'
 import { ReportPostData } from './report.type'
 
@@ -12,15 +12,13 @@ import { ReportPostData } from './report.type'
 export class ReportService {
   constructor(
     private reportRepository: ReportRepository,
-    private readonly jobService: JobService,
+    private readonly jobRepository: JobRepository,
   ) {}
 
-  async postReport(id: number, postReportDTO: PostReportDTO, user: JwtDto) {
-    const userId = user.userId
+  async postReport(id: number, postReportDTO: PostReportDTO, userId: number) {
     const reportPostData = new ReportPostData(id, userId, postReportDTO.reason)
-    try {
-      const job = await this.jobService.findOne(id, user)
-    } catch (e) {
+    const job = await this.jobRepository.getJobById(id)
+    if (!job) {
       throw new NotFoundException()
     }
 
