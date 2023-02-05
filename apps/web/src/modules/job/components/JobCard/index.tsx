@@ -1,5 +1,6 @@
 import { GetJobDto, ShootingDto } from '@modela/dtos'
 import { Divider, Typography } from '@mui/material'
+import { genderTranslationMap } from 'common/types/gender'
 import React from 'react'
 
 import JobCardFooter from './components/JobCardFooter'
@@ -24,6 +25,8 @@ const JobCard = (prop: GetJobDto) => {
     wage,
   } = prop
 
+  const genderThai = genderTranslationMap[gender]
+
   return (
     <CardContainer>
       <JobCardHeader
@@ -47,7 +50,7 @@ const JobCard = (prop: GetJobDto) => {
           รายละเอียดนักแสดงที่ต้องการ
         </Typography>
         <Typography variant="subtitle2">บทบาทที่ต้องการ: {role}</Typography>
-        <Typography variant="subtitle2">เพศ: {gender}</Typography>
+        <Typography variant="subtitle2">เพศ: {genderThai}</Typography>
         <Typography variant="subtitle2">จำนวนคนที่รับ: {actorCount}</Typography>
         <Typography variant="subtitle2">
           อายุ: {minAge}-{maxAge} ปี
