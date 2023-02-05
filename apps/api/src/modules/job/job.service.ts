@@ -78,21 +78,35 @@ export class JobService {
       },
     }
     //handle array and undefined
-    if (searchJobDto.status) {
-      //check searchJobDto.status is array or not
-      //let statusQuery = {}
-
-      // if (!Array.isArray(searchJobDto.status)) {
-      //   searchJobDto.status = [searchJobDto.status];
-      // }
-      // //check if searchJobDto.status have 'CLOSE' value
-      // if (searchJobDto.status.includes(SearchJobStatus.CLOSE)) {
-      // }
-      params.where.status = {
-        in: searchJobDto.status,
-      }
+    searchJobDto.status = searchJobDto.status || [SearchJobStatus.OPEN]
+    //check searchJobDto.status is array or not
+    if (!Array.isArray(searchJobDto.status)) {
+      searchJobDto.status = [searchJobDto.status]
     }
-    console.log('test gender input: ', searchJobDto.gender)
+    let statusQuery = {}
+    if (
+      searchJobDto.status.includes(SearchJobStatus.OPEN) &&
+      searchJobDto.status.includes(SearchJobStatus.CLOSE)
+    ) {
+      statusQuery = [
+        JobStatus.OPEN,
+        JobStatus.SELECTING,
+        JobStatus.SELECTION_ENDED,
+        JobStatus.FINISHED,
+      ]
+    } else if (searchJobDto.status.includes(SearchJobStatus.OPEN)) {
+      statusQuery = [JobStatus.OPEN]
+    } else if (searchJobDto.status.includes(SearchJobStatus.CLOSE)) {
+      statusQuery = [
+        JobStatus.SELECTING,
+        JobStatus.SELECTION_ENDED,
+        JobStatus.FINISHED,
+      ]
+    }
+    params.where.status = {
+      in: statusQuery,
+    }
+
     if (searchJobDto.gender) {
       //check searchJobDto.gender is array or not
       if (!Array.isArray(searchJobDto.gender)) {
