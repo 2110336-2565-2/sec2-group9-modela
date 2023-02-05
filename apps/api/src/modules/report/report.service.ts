@@ -14,14 +14,13 @@ export class ReportService {
   ) {}
 
   async postReport(id: number, postReportDTO: PostReportDTO, userId: number) {
-    const reportPostData = new ReportPostData(id, userId, postReportDTO.reason)
     const job = await this.jobRepository.getJobById(id)
     if (!job) {
       throw new NotFoundException()
     }
 
     try {
-      await this.reportRepository.createReport(reportPostData)
+      await this.reportRepository.createReport(id, userId, postReportDTO.reason)
     } catch (e) {
       console.log(e)
       throw new InternalServerErrorException()
