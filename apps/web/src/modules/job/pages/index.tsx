@@ -1,27 +1,10 @@
-import { GetJobDto } from '@modela/dtos'
-import { apiClient } from 'common/utils/api'
-import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 import JobCard from '../components/JobCard'
+import useJobData from './hooks/useJobData'
 
 const JobDetailPage = () => {
-  const router = useRouter()
-  const { jid } = router.query
-  const [job, setJob] = useState<GetJobDto>()
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = (await apiClient.get<GetJobDto>('/job/' + jid)).data
-        setJob(res)
-      } catch (e) {
-        console.log(e)
-        router.push('/404')
-      }
-    }
-    fetchData()
-  }, [])
+  const { job } = useJobData()
 
   return (
     <>
