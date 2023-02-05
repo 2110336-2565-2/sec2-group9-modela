@@ -5,11 +5,11 @@ import { PrismaService } from 'src/database/prisma.service'
 export class ReportRepository {
   constructor(private prisma: PrismaService) {}
 
-  async createReport(jobID: number, userID: number, reason: string) {
+  async createReport(jobId: number, userId: number, reason: string) {
     await this.prisma.report.create({
       data: {
-        jobId: jobID,
-        reporterId: userID,
+        jobId: jobId,
+        reporterId: userId,
         reason: reason,
       },
     })
