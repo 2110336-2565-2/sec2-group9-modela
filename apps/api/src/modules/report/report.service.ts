@@ -1,8 +1,6 @@
-import { User } from '@modela/database'
-import { JwtDto, PostReportDTO } from '@modela/dtos'
+import { PostReportDTO } from '@modela/dtos'
 import { Injectable, InternalServerErrorException } from '@nestjs/common'
 import { NotFoundException } from '@nestjs/common/exceptions'
-import { NotFoundError } from 'rxjs'
 
 import { JobRepository } from '../job/job.repository'
 import { ReportRepository } from './report.repository'
