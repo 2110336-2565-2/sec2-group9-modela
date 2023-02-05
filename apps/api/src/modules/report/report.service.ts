@@ -1,10 +1,12 @@
 import { PostReportDTO } from '@modela/dtos'
-import { Injectable, InternalServerErrorException } from '@nestjs/common'
-import { NotFoundException } from '@nestjs/common/exceptions'
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common'
 
 import { JobRepository } from '../job/job.repository'
 import { ReportRepository } from './report.repository'
-import { ReportPostData } from './report.type'
 
 @Injectable()
 export class ReportService {
