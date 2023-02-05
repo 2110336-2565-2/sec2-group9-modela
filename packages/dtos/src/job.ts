@@ -1,10 +1,9 @@
 import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger'
 import { Type } from 'class-transformer'
 import {
-  IsDateString,
+  IsDate,
   IsEnum,
   IsNumber,
-  IsNumberString,
   IsOptional,
   IsString,
   Max,
@@ -14,7 +13,7 @@ import { Casting, Gender, Job, JobStatus, Shooting } from '@modela/database'
 
 export enum SearchJobStatus {
   'OPEN' = 'OPEN',
-  'CLOSE' = 'CANCELLED'
+  'CLOSE' = 'CLOSE'
 }
 
 export class SearchJobDto {
@@ -38,22 +37,26 @@ export class SearchJobDto {
   page: number
 
   @IsOptional()
-  @IsDateString()
+  @Type(() => Date)
+  @IsDate()
   @ApiPropertyOptional()
   startDate?: Date
 
   @IsOptional()
-  @IsDateString()
+  @Type(() => Date)
+  @IsDate()
   @ApiPropertyOptional()
   startTime?: Date
 
   @IsOptional()
-  @IsDateString()
+  @Type(() => Date)
+  @IsDate()
   @ApiPropertyOptional()
   endDate?: Date
 
   @IsOptional()
-  @IsDateString()
+  @Type(() => Date)
+  @IsDate()
   @ApiPropertyOptional()
   endTime?: Date
 
@@ -63,17 +66,20 @@ export class SearchJobDto {
   location?: string
 
   @IsOptional()
-  @IsNumberString()
+  @Type(() => Number)
+  @IsNumber()
   @ApiPropertyOptional()
   age?: number
 
   @IsOptional()
-  @IsNumberString()
+  @Type(() => Number)
+  @IsNumber()
   @ApiPropertyOptional()
   minWage?: number
 
   @IsOptional()
-  @IsNumberString()
+  @Type(() => Number)
+  @IsNumber()
   @ApiPropertyOptional()
   maxWage?: number
 
