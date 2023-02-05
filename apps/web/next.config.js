@@ -16,4 +16,13 @@ module.exports = {
 
     return config
   },
+  async rewrites() {
+    if (process.env.NODE_ENV !== 'development') return []
+    return [
+      {
+        source: '/apiProxy/:path*',
+        destination: `${process.env.NEXT_PUBLIC_API_BASE_URL}/:path*`,
+      },
+    ]
+  },
 }
