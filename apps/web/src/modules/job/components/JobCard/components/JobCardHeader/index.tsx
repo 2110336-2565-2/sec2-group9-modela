@@ -6,7 +6,7 @@ import React from 'react'
 import { HeaderRow, ProfileImageContainer } from './styled'
 import { HeaderProps } from './type'
 
-export default function Header(prop: HeaderProps) {
+const JobCardHeader = (prop: HeaderProps) => {
   const { castingImage, companyName, title } = prop
 
   const report = () => {
@@ -37,3 +37,4 @@ export default function Header(prop: HeaderProps) {
     </HeaderRow>
   )
 }
+export default JobCardHeader

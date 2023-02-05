@@ -10,7 +10,7 @@ import React from 'react'
 import { Line } from './styled'
 import { ShootingDetailProps } from './type'
 
-export default function ShootingDetail(prop: ShootingDetailProps) {
+const ShootingDetail = (prop: ShootingDetailProps) => {
   const { data, idx } = prop
 
   return (
@@ -35,3 +35,5 @@ export default function ShootingDetail(prop: ShootingDetailProps) {
     </>
   )
 }
+
+export default ShootingDetail

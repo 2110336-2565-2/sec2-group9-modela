@@ -3,7 +3,7 @@ import { render } from '@testing-library/react'
 import { mockAndSpyMany } from 'common/utils/testing'
 import React from 'react'
 
-describe('<Footer />', () => {
+describe('<JobCardFooter />', () => {
   const MOCK_ACTOR_COUNT = mock('job').get().actorCount
   const MOCK_WAGE = mock('job').get().wage
   const MOCK_GENDER = mock('job').get().gender
@@ -22,7 +22,7 @@ describe('<Footer />', () => {
   ])
   jest.spyOn(window, 'alert').mockImplementation(() => {})
 
-  const { default: Footer } = require('./index') as typeof import('.')
+  const { default: JobCardFooter } = require('.') as typeof import('.')
 
   afterEach(() => {
     jest.clearAllMocks()
@@ -30,13 +30,14 @@ describe('<Footer />', () => {
 
   describe('normal behavior', () => {
     it('should render correctly', () => {
-      const { getByText } = render(<Footer {...footerProps} />)
+      const { getByText } = render(<JobCardFooter {...footerProps} />)
       expect(getByText(MOCK_ACTOR_COUNT)).toBeDefined()
       expect(getByText(MOCK_WAGE.toLocaleString())).toBeDefined()
       expect(getByText('สมัครงาน')).toBeDefined()
     })
     it('should call apply function corecttly', () => {
-      const { getByText } = render(<Footer {...footerProps} />)
+      //TODO: refactor this after apply function is implemented
+      const { getByText } = render(<JobCardFooter {...footerProps} />)
       getByText('สมัครงาน').click()
       expect(window.alert).toBeCalledTimes(1)
     })

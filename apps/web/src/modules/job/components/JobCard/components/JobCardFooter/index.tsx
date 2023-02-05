@@ -6,7 +6,7 @@ import React from 'react'
 import { FooterRow } from './styled'
 import { FooterProps } from './type'
 
-export default function Footer(prop: FooterProps) {
+const JobCardFooter = (prop: FooterProps) => {
   const { actorCount, wage, dueDate } = prop
 
   const apply = () => {
@@ -34,3 +34,5 @@ export default function Footer(prop: FooterProps) {
     </FooterRow>
   )
 }
+
+export default JobCardFooter

@@ -2,12 +2,12 @@ import { GetJobDto, ShootingDto } from '@modela/dtos'
 import { Divider, Typography } from '@mui/material'
 import React from 'react'
 
-import Footer from './components/Footer'
-import Header from './components/Header'
+import JobCardFooter from './components/JobCardFooter'
+import JobCardHeader from './components/JobCardHeader'
 import ShootingDetail from './components/ShootingDetail'
 import { CardContainer, DescriptionRow } from './styled'
 
-export default function Card(prop: GetJobDto) {
+const JobCard = (prop: GetJobDto) => {
   const {
     actorCount,
     jobCastingImageUrl,
@@ -25,7 +25,7 @@ export default function Card(prop: GetJobDto) {
 
   return (
     <CardContainer>
-      <Header
+      <JobCardHeader
         title={title}
         companyName={companyName}
         castingImage={jobCastingImageUrl}
@@ -58,7 +58,7 @@ export default function Card(prop: GetJobDto) {
       ))}
 
       <Divider variant="middle" style={{ width: '90%' }} />
-      <Footer
+      <JobCardFooter
         dueDate={applicationDeadline}
         gender={gender}
         wage={wage}
@@ -67,3 +67,4 @@ export default function Card(prop: GetJobDto) {
     </CardContainer>
   )
 }
+export default JobCard

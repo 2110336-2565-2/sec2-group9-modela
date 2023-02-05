@@ -3,9 +3,9 @@ import { apiClient } from 'common/utils/api'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
-import Card from '../components/Card'
+import JobCard from '../components/JobCard'
 
-export default function JobDetail() {
+const JobDetailPage = () => {
   const router = useRouter()
   const { jid } = router.query
   const [job, setJob] = useState<GetJobDto>()
@@ -13,7 +13,7 @@ export default function JobDetail() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = (await apiClient.get('/job/' + jid)).data as GetJobDto
+        const res = (await apiClient.get<GetJobDto>('/job/' + jid)).data
         setJob(res)
       } catch (e) {
         console.log(e)
@@ -33,8 +33,10 @@ export default function JobDetail() {
           width: '40vw',
         }}
       >
-        {job && <Card {...job} />}
+        {job && <JobCard {...job} />}
       </div>
     </>
   )
 }
+
+export default JobDetailPage
