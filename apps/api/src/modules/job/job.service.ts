@@ -42,23 +42,25 @@ export class JobService {
       skip: (searchJobDto.page - 1) * searchJobDto.limit,
       //filtering
       where: {
-        // Shooting: {
-        //   every: {
-        //     startDate: {
-        //       gte: searchJobDto.startDate || defaultStartDate,
-        //     },
-        //     endDate: {
-        //       lte: searchJobDto.endDate || defaultEndDate,
-        //     },
-        //     startTime: {
-        //       gte: searchJobDto.startTime || defaultStartTime,
-        //     },
-        //     endTime: {
-        //       lte: searchJobDto.endTime || defaultEndTime,
-        //     },
-        //   },
-        //   some: {},
-        // },
+        Shooting: {
+          every: {
+            startDate: {
+              gte: searchJobDto.startDate || defaultStartDate,
+            },
+            endDate: {
+              lte: searchJobDto.endDate || defaultEndDate,
+            },
+            startTime: {
+              gte: searchJobDto.startTime || defaultStartTime,
+            },
+            endTime: {
+              lte: searchJobDto.endTime || defaultEndTime,
+            },
+          },
+          some: {
+            shootingLocation: searchJobDto.location || undefined,
+          },
+        },
 
         minAge: {
           lte: Number(searchJobDto.age) || defaultminAgeLte,
@@ -136,11 +138,11 @@ export class JobService {
       }
     }
     //handle location undefined
-    // if (searchJobDto.location) {
-    //   params.where.Shooting.some = {
-    //     shootingLocation: searchJobDto.location,
-    //   }
-    // }
+    if (searchJobDto.location) {
+      params.where.Shooting.some = {
+        shootingLocation: searchJobDto.location,
+      }
+    }
 
     return params
   }
