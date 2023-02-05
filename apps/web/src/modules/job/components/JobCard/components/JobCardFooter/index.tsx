@@ -1,5 +1,6 @@
 import { EventBusy, Money, PersonOutlined } from '@mui/icons-material'
 import { Typography } from '@mui/material'
+import theme from 'common/config/theme'
 import { formatDate } from 'common/utils/formatter'
 import React from 'react'
 
@@ -20,7 +21,7 @@ const JobCardFooter = (prop: FooterProps) => {
       <Typography variant="subtitle1">{actorCount}</Typography>
       <Money fontSize="small" />
       <Typography variant="subtitle1">{wage.toLocaleString()}</Typography>
-      <EventBusy fontSize="small" color="success" />
+      <EventBusy fontSize="small" sx={{ color: theme.palette.success.main }} />
       <Typography variant="subtitle1">{formatDate(dueDate)}</Typography>
 
       <Typography

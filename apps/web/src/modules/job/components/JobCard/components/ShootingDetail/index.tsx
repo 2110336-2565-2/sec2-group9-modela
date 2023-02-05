@@ -14,7 +14,7 @@ const ShootingDetail = (prop: ShootingDetailProps) => {
   const { data, idx } = prop
 
   return (
-    <>
+    <div style={{ marginTop: '1rem' }}>
       <Typography variant="subtitle1">ถ่ายครั้งที่: {idx + 1}</Typography>
       <Line>
         <LocationOnOutlined fontSize="small" />
@@ -32,7 +32,7 @@ const ShootingDetail = (prop: ShootingDetailProps) => {
           {formatTime(data.startTime)} - {formatTime(data.endTime)}
         </Typography>
       </Line>
-    </>
+    </div>
   )
 }
 

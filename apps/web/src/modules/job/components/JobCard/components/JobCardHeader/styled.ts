@@ -5,7 +5,7 @@ export const HeaderRow = styled('div')`
   width: 100%;
   align-items: center;
   gap: 12px;
-  padding: 12px;
+  margin-bottom: 1rem;
 `
 
 export const ProfileImageContainer = styled('div')`

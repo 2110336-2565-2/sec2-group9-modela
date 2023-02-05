@@ -4,6 +4,7 @@ export const CardContainer = styled('div')`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  margin-bottom: 10vh;
   padding: 0px;
   width: 100%;
   background-color: white;
@@ -12,17 +13,17 @@ export const CardContainer = styled('div')`
   padding: 12px;
 `
 
-export const HeaderRow = styled('div')`
+export const CorporateRow = styled('div')`
   display: flex;
+  flex-direction: column;
   width: 100%;
-  align-items: center;
   gap: 12px;
-  padding: 12px;
 `
 
 export const DescriptionRow = styled('div')`
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 12px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 `

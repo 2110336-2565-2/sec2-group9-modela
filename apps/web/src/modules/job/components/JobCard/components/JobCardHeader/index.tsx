@@ -26,7 +26,7 @@ const JobCardHeader = (prop: HeaderProps) => {
       </ProfileImageContainer>
       <div>
         <Typography variant="h6">{title}</Typography>
-        <Typography>{companyName}</Typography>
+        <Typography fontWeight={400}>{companyName}</Typography>
       </div>
       <ReportOutlined
         fontSize="small"
