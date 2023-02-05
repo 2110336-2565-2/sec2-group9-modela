@@ -60,7 +60,7 @@ export class SearchJobDto {
   @IsOptional()
   @IsString()
   @ApiPropertyOptional()
-  location: string
+  location?: string
 
   @IsOptional()
   @IsNumberString()
