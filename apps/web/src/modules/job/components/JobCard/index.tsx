@@ -19,6 +19,7 @@ const JobCard = (prop: GetJobDto) => {
     applicationDeadline,
     role,
     shooting,
+    status,
     title,
     wage,
   } = prop
@@ -69,6 +70,7 @@ const JobCard = (prop: GetJobDto) => {
         gender={gender}
         wage={wage}
         actorCount={actorCount}
+        status={status}
       />
     </CardContainer>
   )

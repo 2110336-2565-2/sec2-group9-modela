@@ -1,5 +1,6 @@
 import { ReportOutlined } from '@mui/icons-material'
 import { Typography } from '@mui/material'
+import { useUser } from 'common/context/UserContext'
 import Image from 'next/image'
 import React from 'react'
 
@@ -8,6 +9,7 @@ import { HeaderProps } from './type'
 
 const JobCardHeader = (prop: HeaderProps) => {
   const { castingImage, companyName, title } = prop
+  const user = useUser()
 
   const report = () => {
     window.alert('reported')
@@ -28,12 +30,14 @@ const JobCardHeader = (prop: HeaderProps) => {
         <Typography variant="h6">{title}</Typography>
         <Typography fontWeight={400}>{companyName}</Typography>
       </div>
-      <ReportOutlined
-        fontSize="small"
-        color="error"
-        style={{ cursor: 'pointer', marginLeft: 'auto' }}
-        onClick={() => report()}
-      />
+      {user?.type == 'ACTOR' && (
+        <ReportOutlined
+          fontSize="small"
+          color="error"
+          style={{ cursor: 'pointer', marginLeft: 'auto' }}
+          onClick={() => report()}
+        />
+      )}
     </HeaderRow>
   )
 }

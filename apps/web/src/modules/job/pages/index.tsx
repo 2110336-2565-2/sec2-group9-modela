@@ -7,18 +7,16 @@ const JobDetailPage = () => {
   const { job } = useJobData()
 
   return (
-    <>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          paddingTop: '3rem',
-          width: '40vw',
-        }}
-      >
-        {job && <JobCard {...job} />}
-      </div>
-    </>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        paddingTop: '3rem',
+        width: '40vw',
+      }}
+    >
+      {job && <JobCard {...job} />}
+    </div>
   )
 }
 
