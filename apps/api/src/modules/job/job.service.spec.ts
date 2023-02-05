@@ -253,6 +253,72 @@ describe('JobService', () => {
     })
   })
 
+  describe('findAll with filter', () => {
+    it('should can be call with params', async () => {
+      const jobDataLength = 10 //fixed mock data length in repository
+      //mock repository
+      const itMockedJobData: GetJobCardDto[] = Array.from(
+        { length: jobDataLength },
+        (v, i) => {
+          const userData = mock('user').pick(['profileImageUrl']).get()
+          return {
+            jobId: i + 1,
+            ...mock('job').omit(['jobId']).get(),
+            ...mock('casting').pick(['companyName']).get(),
+            jobCastingImageUrl: userData.profileImageUrl,
+          }
+        },
+      )
+      const MOCK_CASTING_ID = 22
+      const limitQuery = 10
+      const pageQuery = 1
+
+      const reqParams: SearchJobDto = {
+        limit: limitQuery,
+        page: pageQuery,
+      }
+      const MOCK_USER_CASTING = {
+        userId: MOCK_CASTING_ID,
+        type: UserType.CASTING,
+        isVerified: true,
+      }
+      const result = new GetJobCardWithMaxPageDto()
+      result.maxPage = Math.ceil(jobDataLength / limitQuery)
+      result.jobs = itMockedJobData.slice(
+        limitQuery * (pageQuery - 1),
+        limitQuery * pageQuery,
+      )
+
+      jest
+        .spyOn(repository, 'getJobCount')
+        .mockReturnValue(Promise.resolve(result.jobs.length))
+      jest
+        .spyOn(repository, 'getJobJoined')
+        .mockImplementation(async (reqParams) =>
+          itMockedJobData.slice(
+            reqParams.skip,
+            reqParams.skip + reqParams.take,
+          ),
+        )
+
+      await expect(
+        service.findAll(reqParams, MOCK_USER_CASTING),
+      ).resolves.toEqual(result)
+
+      const thisWhere = defaultWhere
+      thisWhere.wage = {
+        gte: 0,
+        lte: 999999999,
+      }
+      thisWhere.castingId = MOCK_CASTING_ID
+      const prismaParams = {
+        take: limitQuery,
+        skip: (pageQuery - 1) * limitQuery,
+        where: thisWhere,
+      }
+      expect(repository.getJobJoined).toBeCalledWith(prismaParams)
+    })
+  })
   describe('findOne', () => {
     const MOCK_CASTING_ID = 1
     const MOCK_JOB_ID = 1
