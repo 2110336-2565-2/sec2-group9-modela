@@ -37,7 +37,7 @@ describe('ReportService', () => {
 
     const MOCK_CASTING_ID = 22
     const MOCK_JOB_ID = 1
-    const MOCK_USER_ID = 1
+    const MOCK_USER_ID = 2
 
     const MOCK_JOB = {
       ...mock('job').omit(['castingId', 'createdAt', 'updatedAt']).get(),
@@ -53,7 +53,9 @@ describe('ReportService', () => {
 
       await service.postReport(MOCK_JOB_ID, postReportDTO, MOCK_USER_ID)
       expect(repository.createReport).toBeCalledWith(
-        expect.objectContaining(postReportDTO),
+        MOCK_JOB_ID,
+        MOCK_USER_ID,
+        postReportDTO.reason,
       )
     })
   })
