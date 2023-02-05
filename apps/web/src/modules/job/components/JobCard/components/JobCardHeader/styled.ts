@@ -12,6 +12,6 @@ export const ProfileImageContainer = styled('div')`
   border-radius: 50%;
   width: 50px;
   height: 50px;
-  position: relative;
   overflow: hidden;
+  background-color: green;
 `

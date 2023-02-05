@@ -8,7 +8,7 @@ describe('<JobDetailPage />', () => {
     useRouter: jest.fn(),
   }))
   const useRouter = jest.spyOn(require('next/router'), 'useRouter')
-  const CardMock = mockAndSpy('modules/job/components/JobCard')
+  const JobCardMock = mockAndSpy('modules/job/components/JobCard')
   const { mockGetReturn } = mockApiClient()
 
   const mockData: GetJobDto = {
@@ -28,23 +28,25 @@ describe('<JobDetailPage />', () => {
     it('should render correctly when API return correct data', async () => {
       useRouter.mockImplementation(() => ({
         query: { jid: 1 },
+        isReady: true,
       }))
       mockGetReturn(mockData)
       render(<JobDetailPage />)
       await waitFor(() => {
-        expect(CardMock).toBeCalledTimes(1)
+        expect(JobCardMock).toBeCalledTimes(1)
       })
     })
 
     it('should render correctly when API not return', async () => {
       useRouter.mockImplementation(() => ({
         query: { jid: 1 },
+        isReady: true,
       }))
       mockGetReturn(undefined)
 
       render(<JobDetailPage />)
       await waitFor(() => {
-        expect(CardMock).toBeCalledTimes(0)
+        expect(JobCardMock).toBeCalledTimes(0)
       })
     })
   })

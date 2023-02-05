@@ -1,7 +1,7 @@
-import { JobStatus } from '@modela/dtos'
+import { Gender, JobStatus } from '@modela/dtos'
 
 export interface FooterProps {
-  gender: string
+  gender: Gender
   actorCount: number
   wage: number
   dueDate: Date
