@@ -23,10 +23,11 @@ export class JobService {
   convertRequestToParams(searchJobDto: SearchJobDto) {
     //const define default value for undefined params
     //declare here for easy to change
-    const defaultStartDate = '0001-01-01T00:00:00Z'
-    const defaultEndDate = '9999-12-31T23:59:59Z'
-    const defaultStartTime = '00:00:00'
-    const defaultEndTime = '23:59:59'
+    const defaultStartDate = new Date('0001-01-01T00:00:00Z')
+    const defaultEndDate = new Date('9999-12-31T23:59:59Z')
+    const defaultStartTime = new Date(`1970-01-01TT00:00:00Z`)
+    const defaultEndTime = new Date(`1970-01-01T$23:59:59Z`)
+
     const defaultminAge = 0
     const defaultMaxAge = 999
     const defaultMinWage = 0
@@ -39,17 +40,19 @@ export class JobService {
       //filtering
       where: {
         Shooting: {
-          startDate: {
-            gte: searchJobDto.startDate || defaultStartDate,
-          },
-          endDate: {
-            lte: searchJobDto.endDate || defaultEndDate,
-          },
-          startTime: {
-            gte: searchJobDto.startTime || defaultStartTime,
-          },
-          endTime: {
-            lte: searchJobDto.endTime || defaultEndTime,
+          every: {
+            startDate: {
+              gte: searchJobDto.startDate || defaultStartDate,
+            },
+            endDate: {
+              lte: searchJobDto.endDate || defaultEndDate,
+            },
+            startTime: {
+              gte: searchJobDto.startTime || defaultStartTime,
+            },
+            endTime: {
+              lte: searchJobDto.endTime || defaultEndTime,
+            },
           },
           some: {},
         },
