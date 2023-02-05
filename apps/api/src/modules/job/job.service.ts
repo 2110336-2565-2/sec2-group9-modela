@@ -28,23 +28,33 @@ export class JobService {
       //filtering
       //TODO: filtering in the task [24] drafted
       where: {
-        //TODO: will find out how to filter range later [24]
+        //TODO: will find out how to filter joined and range later [24]
         // startDate: searchJobDto.startDate || undefined,
         // startTime: searchJobDto.startTime || undefined,
         // endDate: searchJobDto.endDate || undefined,
         // endTime: searchJobDto.endTime || undefined,
 
-        //TODO: will find out how to filter const into range later [24]
-        // age: searchJobDto.age || undefined,
+        //TODO: will find out how to filter joined later [24]
+        // location: searchJobDto.location || undefined,
 
-        //TODO: will find out how to filter range later [24]
-        // minWage: searchJobDto.minWage || undefined,
-        // maxWage: searchJobDto.maxWage || undefined,
+        minAge: {
+          lte: searchJobDto.age || 0, //0 is default value for minAge when age is undefined
+        },
+        maxAge: {
+          gte: searchJobDto.age || 200, //200 is default value for maxAge when age is undefined
+        },
 
-        //TODO: will find out how to filter enum later [24]
-        //status: searchJobDto.status || undefined,
-        //gender: searchJobDto.gender || undefined,
+        wage: {
+          gte: searchJobDto.minWage || 0, //0 is default value for minWage when minWage is undefined
+          lte: searchJobDto.maxWage || 1e9, //1000000000 is default value for maxWage when maxWage is undefined
+        },
 
+        status: {
+          in: searchJobDto.status,
+        },
+        gender: {
+          in: searchJobDto.gender,
+        },
         castingId: Number(searchJobDto.castingId) || undefined,
       },
     }

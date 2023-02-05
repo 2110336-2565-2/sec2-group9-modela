@@ -6,14 +6,15 @@ import {
   IsNumber,
   IsNumberString,
   IsOptional,
+  IsString,
   Max,
   Min,
 } from 'class-validator'
 import { Casting, Gender, Job, JobStatus, Shooting } from '@modela/database'
 
 export enum SearchJobStatus {
-  'OPEN',
-  'CLOSE',
+  'OPEN' = 'OPEN',
+  'CLOSE' = 'CANCELLED'
 }
 
 export class SearchJobDto {
@@ -55,6 +56,11 @@ export class SearchJobDto {
   @IsDateString()
   @ApiPropertyOptional()
   endTime?: Date
+
+  @IsOptional()
+  @IsString()
+  @ApiPropertyOptional()
+  location: string
 
   @IsOptional()
   @IsNumberString()
