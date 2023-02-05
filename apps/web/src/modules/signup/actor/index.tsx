@@ -4,12 +4,14 @@ import TextField from 'common/components/TextField'
 import React from 'react'
 import { Controller } from 'react-hook-form'
 
+import UploadFile from './components/UploadFile'
 import useActorForm from './hooks/useActorForm'
 import { FormContainer, RootContainer } from './styled'
 import { GENDER_CHOICE } from './utils/constants'
 
 const ActorSignUp = () => {
-  const { control, handleClickSubmit } = useActorForm()
+  const { control, handleClickSubmit, handleUploadFile, setError } =
+    useActorForm()
 
   return (
     <RootContainer onSubmit={handleClickSubmit}>
@@ -162,7 +164,19 @@ const ActorSignUp = () => {
             />
           </Grid>
           <Grid item xs={12} sm={12}>
-            หกฟหก
+            <Controller
+              name="idCardImageUrl"
+              control={control}
+              render={(props) => (
+                <UploadFile
+                  handleSelectFile={handleUploadFile}
+                  error={props.fieldState.invalid}
+                  errorMessage={props.fieldState.error?.message}
+                  setError={setError}
+                  url={props.field.value}
+                />
+              )}
+            />
           </Grid>
           <Grid item xs={12} sm={12}>
             <Divider />
