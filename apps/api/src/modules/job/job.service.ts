@@ -23,7 +23,7 @@ export class JobService {
 
   // @function create prisma params from request
   // @helper for findAll function
-  convertRequestToParams(searchJobDto: SearchJobDto) {
+  convertRequestToParams(searchJobDto: SearchJobDto, user: JwtDto) {
     //const define default value for undefined params
     //declare here for easy to change
     const defaultStartDate = new Date('0001-01-01T00:00:00Z')
@@ -93,15 +93,25 @@ export class JobService {
         JobStatus.SELECTING,
         JobStatus.SELECTION_ENDED,
         JobStatus.FINISHED,
+        JobStatus.CANCELLED,
       ]
     } else if (searchJobDto.status.includes(SearchJobStatus.OPEN)) {
       statusQuery = [JobStatus.OPEN]
     } else if (searchJobDto.status.includes(SearchJobStatus.CLOSE)) {
-      statusQuery = [
-        JobStatus.SELECTING,
-        JobStatus.SELECTION_ENDED,
-        JobStatus.FINISHED,
-      ]
+      if (user.type == UserType.ACTOR) {
+        statusQuery = [
+          JobStatus.SELECTING,
+          JobStatus.SELECTION_ENDED,
+          JobStatus.FINISHED,
+        ]
+      } else {
+        statusQuery = [
+          JobStatus.SELECTING,
+          JobStatus.SELECTION_ENDED,
+          JobStatus.FINISHED,
+          JobStatus.CANCELLED,
+        ]
+      }
     }
     params.where.status = {
       in: statusQuery,
@@ -147,7 +157,7 @@ export class JobService {
     }
 
     //set params for getJob
-    const params = this.convertRequestToParams(searchJobDto)
+    const params = this.convertRequestToParams(searchJobDto, user)
 
     //get jobs with params from repository
     const jobsJoinCasting = await this.repository.getJobJoined(params)
