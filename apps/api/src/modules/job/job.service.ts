@@ -21,43 +21,74 @@ export class JobService {
   // @function create prisma params from request
   // @helper for findAll function
   convertRequestToParams(searchJobDto: SearchJobDto) {
+    //const define default value for undefined params
+    //declare here for easy to change
+    const defaultStartDate = '0001-01-01T00:00:00Z'
+    const defaultEndDate = '9999-12-31T23:59:59Z'
+    const defaultStartTime = '00:00:00'
+    const defaultEndTime = '23:59:59'
+    const defaultminAge = 0
+    const defaultMaxAge = 999
+    const defaultMinWage = 0
+    const defaultMaxWage = 999999999
+
     const params = {
       //take and skip from limit and page
       take: Number(searchJobDto.limit),
       skip: (searchJobDto.page - 1) * searchJobDto.limit,
       //filtering
-      //TODO: filtering in the task [24] drafted
       where: {
-        //TODO: will find out how to filter joined and range later [24]
-        // startDate: searchJobDto.startDate || undefined,
-        // startTime: searchJobDto.startTime || undefined,
-        // endDate: searchJobDto.endDate || undefined,
-        // endTime: searchJobDto.endTime || undefined,
-
-        //TODO: will find out how to filter joined later [24]
-        // location: searchJobDto.location || undefined,
+        shooting: {
+          startDate: {
+            gte: searchJobDto.startDate || defaultStartDate,
+          },
+          endDate: {
+            lte: searchJobDto.endDate || defaultEndDate,
+          },
+          startTime: {
+            gte: searchJobDto.startTime || defaultStartTime,
+          },
+          endTime: {
+            lte: searchJobDto.endTime || defaultEndTime,
+          },
+          some: {},
+        },
 
         minAge: {
-          lte: searchJobDto.age || 0, //0 is default value for minAge when age is undefined
+          lte: searchJobDto.age || defaultminAge,
         },
         maxAge: {
-          gte: searchJobDto.age || 200, //200 is default value for maxAge when age is undefined
+          gte: searchJobDto.age || defaultMaxAge,
         },
 
         wage: {
-          gte: searchJobDto.minWage || 0, //0 is default value for minWage when minWage is undefined
-          lte: searchJobDto.maxWage || 1e9, //1000000000 is default value for maxWage when maxWage is undefined
+          gte: searchJobDto.minWage || defaultMinWage,
+          lte: searchJobDto.maxWage || defaultMaxWage,
         },
 
-        status: {
-          in: searchJobDto.status,
-        },
-        gender: {
-          in: searchJobDto.gender,
-        },
+        status: undefined,
+        gender: undefined,
         castingId: Number(searchJobDto.castingId) || undefined,
       },
     }
+    //handle array and undefined
+    if (searchJobDto.status) {
+      params.where.status = {
+        in: searchJobDto.status,
+      }
+    }
+    if (searchJobDto.gender) {
+      params.where.gender = {
+        in: searchJobDto.gender,
+      }
+    }
+    //handle location undefined
+    if (searchJobDto.location) {
+      params.where.shooting.some = {
+        shootingLocation: searchJobDto.location,
+      }
+    }
+
     return params
   }
   async findAll(searchJobDto: SearchJobDto, user: JwtDto) {
@@ -81,7 +112,6 @@ export class JobService {
     result.jobs = jobsJoinCasting
 
     //calculate maxPage
-    //TODO: will calculate maxPage with filter later [24]
     const allJobsCount = await this.repository.getJobCount({
       where: params.where,
     })
