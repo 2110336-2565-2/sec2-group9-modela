@@ -1,10 +1,10 @@
 import { mock } from '@modela/dtos'
 import { render } from '@testing-library/react'
 import { mockAndSpy } from 'common/utils/testing'
+import { mockUser } from 'common/utils/testing'
 import React from 'react'
 
 describe('<Header />', () => {
-  const ImageSpy = mockAndSpy('next/image')
   const MOCK_TITLE = mock('job').get().title
   const MOCK_COMPANY_NAME = mock('casting').get().companyName
   const MOCK_CASTING_IMAGE = mock('user').get().profileImageUrl || ''
@@ -13,7 +13,8 @@ describe('<Header />', () => {
     companyName: MOCK_COMPANY_NAME,
     title: MOCK_TITLE,
   }
-  const reportButtonSpy = mockAndSpy('@mui/icons-material/ReportOutlined')
+  const reportButtonSpy = mockAndSpy('@mui/material/Tooltip')
+  const { mockUserType } = mockUser()
 
   const { default: Header } = require('.') as typeof import('.')
 
@@ -23,8 +24,16 @@ describe('<Header />', () => {
 
   describe('normal behavior', () => {
     it('should render Header correctly', () => {
+      mockUserType('CASTING')
       const { getByText } = render(<Header {...headerProps} />)
-      expect(ImageSpy).toBeCalledTimes(1)
+      expect(getByText(MOCK_TITLE)).toBeDefined()
+      expect(getByText(MOCK_COMPANY_NAME)).toBeDefined()
+      expect(reportButtonSpy).toBeCalledTimes(0)
+    })
+
+    it('should render correctly when user is Actor', () => {
+      mockUserType('ACTOR')
+      const { getByText } = render(<Header {...headerProps} />)
       expect(getByText(MOCK_TITLE)).toBeDefined()
       expect(getByText(MOCK_COMPANY_NAME)).toBeDefined()
       expect(reportButtonSpy).toBeCalledTimes(1)

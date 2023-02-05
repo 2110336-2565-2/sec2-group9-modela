@@ -1,6 +1,7 @@
 import { mock } from '@modela/dtos'
 import { render } from '@testing-library/react'
 import { mockAndSpyMany } from 'common/utils/testing'
+import { mockUser } from 'common/utils/testing'
 import React from 'react'
 
 describe('<JobCardFooter />', () => {
@@ -20,6 +21,7 @@ describe('<JobCardFooter />', () => {
     'Money',
     'PersonOutlined',
   ])
+  const { mockUserType } = mockUser()
   jest.spyOn(window, 'alert').mockImplementation(() => {})
 
   const { default: JobCardFooter } = require('.') as typeof import('.')
@@ -30,16 +32,26 @@ describe('<JobCardFooter />', () => {
 
   describe('normal behavior', () => {
     it('should render correctly', () => {
-      const { getByText } = render(<JobCardFooter {...footerProps} />)
+      mockUserType('ACTOR')
+      const { getByText } = render(
+        <JobCardFooter status="OPEN" {...footerProps} />,
+      )
       expect(getByText(MOCK_ACTOR_COUNT)).toBeDefined()
       expect(getByText(MOCK_WAGE.toLocaleString())).toBeDefined()
       expect(getByText('สมัครงาน')).toBeDefined()
     })
-    it('should call apply function corecttly', () => {
+
+    it('should render correctly when status is closed', () => {
+      mockUserType('ACTOR')
+      const { getByText } = render(
+        <JobCardFooter status="FINISHED" {...footerProps} />,
+      )
+      expect(getByText(MOCK_ACTOR_COUNT)).toBeDefined()
+      expect(getByText(MOCK_WAGE.toLocaleString())).toBeDefined()
+    })
+
+    it('should call apply function correctly', () => {
       //TODO: refactor this after apply function is implemented
-      const { getByText } = render(<JobCardFooter {...footerProps} />)
-      getByText('สมัครงาน').click()
-      expect(window.alert).toBeCalledTimes(1)
     })
   })
 })

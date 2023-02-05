@@ -19,6 +19,10 @@ module.exports = {
 
     // Handle module aliases
     '^@/components/(.*)$': '<rootDir>/components/$1',
+    '\\.(css|less)$': '<rootDir>/tests/jest/__mocks__/styleMock.js',
+    '@next/font/(.*)': require.resolve(
+      'next/dist/build/jest/__mocks__/nextFontMock.js',
+    ),
   },
   // Add more setup options before each test is run
   // setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
