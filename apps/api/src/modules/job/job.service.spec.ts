@@ -29,6 +29,43 @@ describe('JobService', () => {
     expect(service).toBeDefined()
   })
 
+  //generate default where query
+  const defaultWhere = {
+    Shooting: {
+      every: {
+        endDate: {
+          lte: new Date('9999-12-31T23:59:59.000Z'),
+        },
+        endTime: {
+          lte: new Date('1970-01-01T23:59:59.000Z'),
+        },
+        startDate: {
+          gte: new Date('0001-01-01T00:00:00.000Z'),
+        },
+        startTime: {
+          gte: new Date('1970-01-01T00:00:00.000Z'),
+        },
+      },
+      some: {
+        shootingLocation: undefined,
+      },
+    },
+    castingId: undefined,
+    gender: undefined,
+    maxAge: {
+      gte: 0,
+    },
+    minAge: {
+      lte: 999,
+    },
+    status: {
+      in: ['OPEN'],
+    },
+    wage: {
+      gte: 0,
+      lte: 999999999,
+    },
+  }
   describe('findAll without filter', () => {
     it('should get all job successfully', async () => {
       const limitQueryMax = 20 //loop check all limitQuery 1 - limitQueryMax
@@ -96,7 +133,7 @@ describe('JobService', () => {
           const prismaParams = {
             take: limitQuery,
             skip: (pageQuery - 1) * limitQuery,
-            where: {},
+            where: defaultWhere,
           }
           expect(repository.getJobJoined).toBeCalledWith(prismaParams)
         }
@@ -204,10 +241,12 @@ describe('JobService', () => {
         ).resolves.toEqual(result)
 
         //check repository called with correct params
+        const thisWhere = defaultWhere
+        thisWhere.castingId = MOCK_CASTING_ID
         const prismaParams = {
           take: limitQuery,
           skip: (pageQuery - 1) * limitQuery,
-          where: { castingId: MOCK_CASTING_ID },
+          where: thisWhere,
         }
         expect(repository.getJobJoined).toBeCalledWith(prismaParams)
       })
