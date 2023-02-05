@@ -38,7 +38,7 @@ export class JobService {
       skip: (searchJobDto.page - 1) * searchJobDto.limit,
       //filtering
       where: {
-        shooting: {
+        Shooting: {
           startDate: {
             gte: searchJobDto.startDate || defaultStartDate,
           },
@@ -84,7 +84,7 @@ export class JobService {
     }
     //handle location undefined
     if (searchJobDto.location) {
-      params.where.shooting.some = {
+      params.where.Shooting.some = {
         shootingLocation: searchJobDto.location,
       }
     }
