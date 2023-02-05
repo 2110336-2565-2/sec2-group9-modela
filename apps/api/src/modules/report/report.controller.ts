@@ -1,10 +1,6 @@
-<<<<<<< beta
-import { JobIdDTO } from '@modela/dtos'
+import { JobIdDTO, JwtDto } from '@modela/dtos'
 import { PostReportDTO } from '@modela/dtos'
-import { Body, Controller, Param, Post } from '@nestjs/common'
-=======
 import { Body, Controller, Get, Param, Post } from '@nestjs/common'
->>>>>>> feat: added postReport in service
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
@@ -16,14 +12,8 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
 
-<<<<<<< beta
-=======
-import { JwtDto } from '../auth/auth.dto'
-import { UseAuthGuard } from '../auth/jwt.decorator'
-import { User } from '../auth/user.decorator'
-import { JobIdDTO } from '../job/job.dto'
-import { PostReportDTO } from './report.dto'
->>>>>>> feat: added postReport in service
+import { UseAuthGuard } from '../auth/misc/jwt.decorator'
+import { User } from '../auth/misc/user.decorator'
 import { ReportService } from './report.service'
 
 @ApiTags('report')
