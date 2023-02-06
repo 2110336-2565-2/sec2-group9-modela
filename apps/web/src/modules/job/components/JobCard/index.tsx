@@ -60,9 +60,11 @@ const JobCard = (prop: GetJobDto) => {
         </Typography>
       </DescriptionRow>
 
-      <Typography variant="h6" color="primary">
-        รายละเอียดงาน
-      </Typography>
+      {shooting.length > 0 && (
+        <Typography variant="h6" color="primary">
+          รายละเอียดงาน
+        </Typography>
+      )}
       {shooting.map((item: ShootingDto, idx: number) => (
         <ShootingDetail data={item} idx={idx} key={idx} />
       ))}

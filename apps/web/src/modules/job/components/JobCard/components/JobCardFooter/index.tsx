@@ -33,7 +33,7 @@ const JobCardFooter = (prop: FooterProps) => {
           color:
             status == 'OPEN'
               ? theme.palette.success.main
-              : theme.palette.common.black,
+              : theme.palette.error.main,
         }}
       />
       <Typography variant="subtitle1">{formatDate(dueDate)}</Typography>
