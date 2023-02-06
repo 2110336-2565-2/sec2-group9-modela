@@ -42,6 +42,9 @@ COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
 
 RUN mv ./apps/web/.env.${stage} ./apps/web/.env
+RUN rm ./apps/web/.env.*
+RUN sed -i '$ d' ./packages/database/index.ts
+RUN sed -i '$ d' ./packages/dtos/index.ts
 
 RUN pnpm turbo run build --scope=web
 RUN pnpm prune --prod --config.ignore-scripts=true
