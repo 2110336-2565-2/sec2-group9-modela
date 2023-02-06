@@ -1,3 +1,4 @@
+import { UserType } from '@modela/dtos'
 import {
   AccountCircleOutlined,
   ArticleOutlined,
@@ -19,6 +20,7 @@ const useNavMenu = (isMobile: boolean) => {
       icon: <PostAddOutlined />,
       mobileOnly: true,
       focusKey: 'createJob',
+      castingOnly: true,
     },
     {
       label: 'งานของฉัน',
@@ -77,9 +79,15 @@ const useNavMenu = (isMobile: boolean) => {
     return VERIFIED_MENU.filter((item) => !item.onlyNotLoggedIn)
   }
 
+  const getMenuByRole = () => {
+    if (user?.type !== UserType.CASTING)
+      return getMenuByUser().filter((item) => !item.castingOnly)
+    return getMenuByUser()
+  }
+
   const getMenuByScreenSize = (isMobile: boolean) => {
-    if (isMobile) return getMenuByUser().filter((item) => !item.desktopOnly)
-    return getMenuByUser().filter((item) => !item.mobileOnly)
+    if (isMobile) return getMenuByRole().filter((item) => !item.desktopOnly)
+    return getMenuByRole().filter((item) => !item.mobileOnly)
   }
 
   return getMenuByScreenSize(isMobile)

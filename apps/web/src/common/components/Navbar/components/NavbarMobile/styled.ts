@@ -12,3 +12,9 @@ export const NavbarContainer = styled('div')`
   gap: 24px;
   color: white;
 `
+
+export const LoginButton = styled('div')`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`
