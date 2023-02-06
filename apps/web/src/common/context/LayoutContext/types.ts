@@ -1,12 +1,14 @@
+import { Dispatch, SetStateAction } from 'react'
+
 export interface ILayoutContext {
   navbarFocus: NavbarFocus
-  setNavbarFocus: (focus: NavbarFocus) => void
+  setNavbarFocus: Dispatch<SetStateAction<NavbarFocus>>
   isHideNavbar: boolean
-  setHideNavbar: (isHideNavbar: boolean) => void
+  setHideNavbar: Dispatch<SetStateAction<boolean>>
   onSearch: (() => void) | null
-  setOnSearch: (callback: (() => void) | null) => void
+  setOnSearch: Dispatch<SetStateAction<(() => void) | null>>
   override: NavbarOverride | null
-  setOverride: (override: NavbarOverride | null) => void
+  setOverride: Dispatch<SetStateAction<NavbarOverride | null>>
 }
 
 export interface NavbarOverride {
