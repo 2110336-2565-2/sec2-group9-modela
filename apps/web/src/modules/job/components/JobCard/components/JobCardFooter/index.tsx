@@ -32,7 +32,7 @@ const JobCardFooter = (prop: FooterProps) => {
         fontSize="small"
         sx={{
           color:
-            status == 'OPEN'
+            status == JobStatus.OPEN
               ? theme.palette.success.main
               : theme.palette.error.main,
         }}
@@ -43,7 +43,7 @@ const JobCardFooter = (prop: FooterProps) => {
         <Typography
           variant="subtitle1"
           color="primary"
-          style={{ cursor: 'pointer', marginLeft: 'auto' }}
+          sx={{ cursor: 'pointer', marginLeft: 'auto' }}
           onClick={() => apply()}
         >
           สมัครงาน
