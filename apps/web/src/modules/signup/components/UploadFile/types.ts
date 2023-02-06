@@ -1,12 +1,10 @@
-import { UseFormSetError } from 'react-hook-form'
+import { FieldValues, UseFormSetError } from 'react-hook-form'
 
-import { IActorSignupSchemaType } from '../../hooks/useActorForm/schema'
-
-export interface IUploadFileProps {
+export interface IUploadFileProps<T extends FieldValues> {
   error: boolean
   errorMessage?: string
   label: string
   handleSelectFile: (file: Blob) => void
-  setError: UseFormSetError<IActorSignupSchemaType>
+  setError: UseFormSetError<T>
   url: string
 }

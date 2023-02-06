@@ -4,7 +4,7 @@ import TextField from 'common/components/TextField'
 import React from 'react'
 import { Controller } from 'react-hook-form'
 
-import UploadFile from './components/UploadFile'
+import UploadFile from '../components/UploadFile'
 import useActorForm from './hooks/useActorForm'
 import { FormContainer, RootContainer } from './styled'
 import { GENDER_CHOICE } from './utils/constants'
@@ -169,6 +169,7 @@ const ActorSignUp = () => {
               control={control}
               render={(props) => (
                 <UploadFile
+                  label="อัปโหลดรูปถ่ายบัตรประชาชน / พาสปอร์ต"
                   handleSelectFile={handleUploadFile}
                   error={props.fieldState.invalid}
                   errorMessage={props.fieldState.error?.message}

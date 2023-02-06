@@ -1,12 +1,12 @@
 import { FileUploadOutlined } from '@mui/icons-material'
 import { Button, Link, Typography } from '@mui/material'
-import { FC } from 'react'
+import { FieldValues } from 'react-hook-form'
 
 import { useUploadFile } from './hooks/useUploadFile'
 import { UploadFileContainer } from './styled'
 import { IUploadFileProps } from './types'
 
-const UploadFile: FC<IUploadFileProps> = (props) => {
+const UploadFile = <T extends FieldValues>(props: IUploadFileProps<T>) => {
   const { error, url, errorMessage, setError, handleSelectFile, label } = props
   const { handleUploadFile, name, removeSameFile } = useUploadFile(
     handleSelectFile,
@@ -37,11 +37,10 @@ const UploadFile: FC<IUploadFileProps> = (props) => {
       )}
       {name && !error ? (
         <Typography sx={{ textAlign: 'center' }} variant="subtitle2">
-          ไฟล์{' '}
+          เลือก{' '}
           <Link href={url} variant="subtitle2" fontWeight={600} color="primary">
             {name}
           </Link>{' '}
-          อัปโหลดเสร็จสิ้น
         </Typography>
       ) : (
         <></>
