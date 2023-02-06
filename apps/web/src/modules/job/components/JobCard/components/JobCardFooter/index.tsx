@@ -1,3 +1,4 @@
+import { JobStatus, UserType } from '@modela/database'
 import { EventBusy, Money, PersonOutlined } from '@mui/icons-material'
 import { Tooltip, Typography } from '@mui/material'
 import theme from 'common/config/theme'
@@ -38,7 +39,7 @@ const JobCardFooter = (prop: FooterProps) => {
       />
       <Typography variant="subtitle1">{formatDate(dueDate)}</Typography>
 
-      {status == 'OPEN' && user?.type == 'ACTOR' && (
+      {status === JobStatus.OPEN && user?.type === UserType.ACTOR && (
         <Typography
           variant="subtitle1"
           color="primary"

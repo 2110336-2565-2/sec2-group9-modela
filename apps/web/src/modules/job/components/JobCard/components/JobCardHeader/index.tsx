@@ -1,3 +1,4 @@
+import { UserType } from '@modela/dtos'
 import { EditOutlined, ReportOutlined } from '@mui/icons-material'
 import { Tooltip, Typography } from '@mui/material'
 import { useUser } from 'common/context/UserContext'
@@ -26,7 +27,7 @@ const JobCardHeader = (prop: HeaderProps) => {
         <Typography variant="h6">{title}</Typography>
         <Typography fontWeight={400}>{companyName}</Typography>
       </div>
-      {user?.type === 'ACTOR' && (
+      {user?.type === UserType.ACTOR && (
         <Tooltip title="Report job">
           <ReportOutlined
             fontSize="small"
@@ -36,7 +37,7 @@ const JobCardHeader = (prop: HeaderProps) => {
           />
         </Tooltip>
       )}
-      {user?.type === 'CASTING' && (
+      {user?.type === UserType.CASTING && (
         <Tooltip title="Edit job">
           <EditOutlined
             fontSize="small"
