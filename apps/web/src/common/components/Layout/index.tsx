@@ -5,10 +5,10 @@ import Navbar from '../Navbar'
 import { PageContainer } from './styled'
 
 const Layout = ({ children }: React.PropsWithChildren<{}>) => {
-  const { isHideNavbar, navbarFocus } = useLayout()
+  const { isHideNavbar } = useLayout()
   return (
     <PageContainer>
-      {!isHideNavbar && <Navbar focus={navbarFocus} />}
+      {!isHideNavbar && <Navbar />}
       <div style={{ flex: 1 }}>{children}</div>
     </PageContainer>
   )
