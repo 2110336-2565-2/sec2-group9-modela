@@ -169,6 +169,7 @@ const ActorSignUp = () => {
               control={control}
               render={(props) => (
                 <UploadFile
+                  imageFieldName="idCardImageUrl"
                   label="อัปโหลดรูปถ่ายบัตรประชาชน / พาสปอร์ต"
                   handleSelectFile={handleUploadFile}
                   error={props.fieldState.invalid}

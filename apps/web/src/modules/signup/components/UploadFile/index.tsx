@@ -7,10 +7,19 @@ import { UploadFileContainer } from './styled'
 import { IUploadFileProps } from './types'
 
 const UploadFile = <T extends FieldValues>(props: IUploadFileProps<T>) => {
-  const { error, url, errorMessage, setError, handleSelectFile, label } = props
-  const { handleUploadFile, name, removeSameFile } = useUploadFile(
+  const {
+    error,
+    url,
+    errorMessage,
+    setError,
+    handleSelectFile,
+    label,
+    imageFieldName,
+  } = props
+  const { handleUploadFile, name, removeSameFile } = useUploadFile<T>(
     handleSelectFile,
     setError,
+    imageFieldName,
   )
 
   return (

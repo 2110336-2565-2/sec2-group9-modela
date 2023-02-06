@@ -1,10 +1,12 @@
 import { ChangeEvent, MouseEventHandler, useCallback, useState } from 'react'
+import { FieldValues, Path } from 'react-hook-form/dist/types'
 
 import { IUploadFileProps } from '../../types'
 
-export const useUploadFile = (
+export const useUploadFile = <T extends FieldValues>(
   setUploadFile: (file: Blob) => void,
-  setError: IUploadFileProps['setError'],
+  setError: IUploadFileProps<T>['setError'],
+  fieldName: Path<T>,
 ) => {
   const [name, setName] = useState('')
 
@@ -18,13 +20,13 @@ export const useUploadFile = (
         setName(file.name)
 
         reader.addEventListener('error', () => {
-          setError('idCardImageUrl', { message: 'เกิดข้อผิดพลาดในการอัพโหลด' })
+          setError(fieldName, { message: 'เกิดข้อผิดพลาดในการอัพโหลด' })
         })
 
         reader.readAsDataURL(file)
       }
     },
-    [setError, setUploadFile],
+    [fieldName, setError, setUploadFile],
   )
 
   const removeSameFile: MouseEventHandler<HTMLInputElement> = useCallback(
