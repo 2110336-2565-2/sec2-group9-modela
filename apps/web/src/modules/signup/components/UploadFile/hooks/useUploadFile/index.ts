@@ -1,6 +1,6 @@
 import { ChangeEvent, MouseEventHandler, useCallback, useState } from 'react'
 
-export const useUploadFile = (setUploadFile: (file: Blob) => void) => {
+const useUploadFile = (setUploadFile: (file: Blob) => void) => {
   const [name, setName] = useState('')
 
   const handleUploadFile = useCallback(
@@ -24,3 +24,5 @@ export const useUploadFile = (setUploadFile: (file: Blob) => void) => {
 
   return { name, handleUploadFile, removeSameFile }
 }
+
+export default useUploadFile

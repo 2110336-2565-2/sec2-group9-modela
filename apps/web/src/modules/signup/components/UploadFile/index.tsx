@@ -2,7 +2,7 @@ import { FileUploadOutlined } from '@mui/icons-material'
 import { Button, Link, Typography } from '@mui/material'
 import { FC } from 'react'
 
-import { useUploadFile } from './hooks/useUploadFile'
+import useUploadFile from './hooks/useUploadFile'
 import { UploadFileContainer } from './styled'
 import { IUploadFileProps } from './types'
 
