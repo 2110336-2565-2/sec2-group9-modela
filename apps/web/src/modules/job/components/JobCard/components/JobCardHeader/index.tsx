@@ -1,4 +1,4 @@
-import { ReportOutlined } from '@mui/icons-material'
+import { EditOutlined, ReportOutlined } from '@mui/icons-material'
 import { Tooltip, Typography } from '@mui/material'
 import { useUser } from 'common/context/UserContext'
 import React from 'react'
@@ -12,6 +12,9 @@ const JobCardHeader = (prop: HeaderProps) => {
 
   const report = () => {
     window.alert('reported')
+  }
+  const edit = () => {
+    window.alert('edited')
   }
 
   return (
@@ -30,6 +33,16 @@ const JobCardHeader = (prop: HeaderProps) => {
             color="error"
             style={{ cursor: 'pointer', marginLeft: 'auto' }}
             onClick={() => report()}
+          />
+        </Tooltip>
+      )}
+      {user?.type === 'CASTING' && (
+        <Tooltip title="Edit job">
+          <EditOutlined
+            fontSize="small"
+            color="primary"
+            style={{ cursor: 'pointer', marginLeft: 'auto' }}
+            onClick={() => edit()}
           />
         </Tooltip>
       )}
