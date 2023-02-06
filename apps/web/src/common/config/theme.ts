@@ -26,6 +26,9 @@ const theme = createTheme({
       main: '#B00020',
       contrastText: '#FFFFFF',
     },
+    success: {
+      main: '#32A31F',
+    },
     common: {
       black: '#000000',
       white: '#FFFFFF',

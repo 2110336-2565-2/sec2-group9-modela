@@ -1,47 +1,13 @@
-import { useRouter } from 'next/router'
 import React from 'react'
 
-import Card from '../components/Card'
+import JobCard from '../components/JobCard'
+import useJobData from './hooks/useJobData'
+import { RootContainer } from './styled'
 
-export default function JobDetail() {
-  const router = useRouter()
-  const { jid } = router.query
+const JobDetailPage = () => {
+  const { job } = useJobData()
 
-  return (
-    <>
-      <p>test: {jid}</p>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          paddingTop: '3rem',
-          width: '40vw',
-        }}
-      >
-        {/* TODO: remove mock data */}
-        <Card
-          castingImage=""
-          title="job"
-          companyName="company name"
-          description="lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
-          role="ติวเตอร์ พี่เลี้ยง"
-          gender="หญิง"
-          actorCount={5}
-          minAge={15}
-          maxAge={20}
-          wage={5000}
-          dueDate={new Date()}
-          shootingList={[
-            {
-              location: 'bangkok',
-              startDate: new Date(),
-              endDate: new Date(),
-              startTimes: new Date(),
-              endTimes: new Date(),
-            },
-          ]}
-        />
-      </div>
-    </>
-  )
+  return <RootContainer>{job && <JobCard {...job} />}</RootContainer>
 }
+
+export default JobDetailPage

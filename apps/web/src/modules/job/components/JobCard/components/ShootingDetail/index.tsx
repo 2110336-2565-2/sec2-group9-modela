@@ -10,15 +10,15 @@ import React from 'react'
 import { Line } from './styled'
 import { ShootingDetailProps } from './type'
 
-export default function ShootingDetail(prop: ShootingDetailProps) {
+const ShootingDetail = (prop: ShootingDetailProps) => {
   const { data, idx } = prop
 
   return (
-    <>
+    <div style={{ marginTop: '1rem' }}>
       <Typography variant="subtitle1">ถ่ายครั้งที่: {idx + 1}</Typography>
       <Line>
         <LocationOnOutlined fontSize="small" />
-        <Typography variant="subtitle2">{data.location}</Typography>
+        <Typography variant="subtitle2">{data.shootingLocation}</Typography>
       </Line>
       <Line>
         <CalendarMonthOutlined fontSize="small" />
@@ -29,9 +29,11 @@ export default function ShootingDetail(prop: ShootingDetailProps) {
       <Line>
         <QueryBuilderOutlined fontSize="small" />
         <Typography variant="subtitle2">
-          {formatTime(data.startTimes)} - {formatTime(data.endTimes)}
+          {formatTime(data.startTime)} - {formatTime(data.endTime)}
         </Typography>
       </Line>
-    </>
+    </div>
   )
 }
+
+export default ShootingDetail
