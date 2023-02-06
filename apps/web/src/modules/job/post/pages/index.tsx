@@ -43,14 +43,16 @@ const PostJobPage = () => {
             )}
           />
         </Grid>
-        {/* //todo change this to 3 row */}
         <Grid item xs={36} sm={12}>
           <Controller
             name="jobDescription"
             control={control}
             render={(props) => (
               <TextField
+                required
                 fullWidth
+                multiline
+                rows={3}
                 label="รายละเอียดงาน"
                 {...props.field}
                 error={props.fieldState.invalid}
@@ -178,7 +180,6 @@ const PostJobPage = () => {
         <Grid item xs={12} sm={12}>
           <Divider />
         </Grid>
-        {/* //todo change this to 3 row */}
         <Grid item xs={12} sm={12}>
           <Controller
             name="role"
@@ -187,6 +188,8 @@ const PostJobPage = () => {
               <TextField
                 required
                 fullWidth
+                multiline
+                rows={3}
                 label="รายละเอียดนักแสดง"
                 {...props.field}
                 error={props.fieldState.invalid}
