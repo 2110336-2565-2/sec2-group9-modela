@@ -9,7 +9,7 @@ export const NavbarContainer = styled('div')`
 
   display: flex;
   align-items: center;
-  gap: 50px;
+  gap: min(50px, 3%);
 `
 
 export const NavbarItem = styled(Typography, {

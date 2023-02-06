@@ -1,8 +1,24 @@
+import { Dispatch, SetStateAction } from 'react'
+
 export interface ILayoutContext {
   navbarFocus: NavbarFocus
-  setNavbarFocus: (focus: NavbarFocus) => void
+  setNavbarFocus: Dispatch<SetStateAction<NavbarFocus>>
   isHideNavbar: boolean
-  setHideNavbar: (isHideNavbar: boolean) => void
+  setHideNavbar: Dispatch<SetStateAction<boolean>>
+  onSearch: (() => void) | null
+  setOnSearch: Dispatch<SetStateAction<(() => void) | null>>
+  override: NavbarOverride | null
+  setOverride: Dispatch<SetStateAction<NavbarOverride | null>>
 }
 
-export type NavbarFocus = 'jobs' | 'profile' | 'notification' | null
+export interface NavbarOverride {
+  title: string
+  onBack: () => void
+}
+
+export type NavbarFocus =
+  | 'jobs'
+  | 'profile'
+  | 'notification'
+  | 'createJob'
+  | null
