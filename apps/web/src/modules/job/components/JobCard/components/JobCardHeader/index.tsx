@@ -23,7 +23,7 @@ const JobCardHeader = (prop: HeaderProps) => {
         <Typography variant="h6">{title}</Typography>
         <Typography fontWeight={400}>{companyName}</Typography>
       </div>
-      {user?.type == 'ACTOR' && (
+      {user?.type === 'ACTOR' && (
         <Tooltip title="Report job">
           <ReportOutlined
             fontSize="small"

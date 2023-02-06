@@ -1,4 +1,4 @@
-import { mock } from '@modela/dtos'
+import { JobStatus, mock, UserType } from '@modela/dtos'
 import { render } from '@testing-library/react'
 import { mockAndSpyMany } from 'common/utils/testing'
 import { mockUser } from 'common/utils/testing'
@@ -32,9 +32,9 @@ describe('<JobCardFooter />', () => {
 
   describe('normal behavior', () => {
     it('should render correctly', () => {
-      mockUserType('ACTOR')
+      mockUserType(UserType.ACTOR)
       const { getByText } = render(
-        <JobCardFooter status="OPEN" {...footerProps} />,
+        <JobCardFooter status={JobStatus.OPEN} {...footerProps} />,
       )
       expect(getByText(MOCK_ACTOR_COUNT)).toBeDefined()
       expect(getByText(MOCK_WAGE.toLocaleString())).toBeDefined()
@@ -42,9 +42,9 @@ describe('<JobCardFooter />', () => {
     })
 
     it('should render correctly when status is closed', () => {
-      mockUserType('ACTOR')
+      mockUserType(UserType.ACTOR)
       const { getByText } = render(
-        <JobCardFooter status="FINISHED" {...footerProps} />,
+        <JobCardFooter status={JobStatus.FINISHED} {...footerProps} />,
       )
       expect(getByText(MOCK_ACTOR_COUNT)).toBeDefined()
       expect(getByText(MOCK_WAGE.toLocaleString())).toBeDefined()

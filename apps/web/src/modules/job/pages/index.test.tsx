@@ -46,7 +46,7 @@ describe('<JobDetailPage />', () => {
 
       render(<JobDetailPage />)
       await waitFor(() => {
-        expect(JobCardMock).toBeCalledTimes(0)
+        expect(JobCardMock).not.toBeCalled()
       })
     })
   })

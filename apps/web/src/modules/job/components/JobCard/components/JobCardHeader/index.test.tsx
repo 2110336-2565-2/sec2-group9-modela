@@ -1,4 +1,4 @@
-import { mock } from '@modela/dtos'
+import { mock, UserType } from '@modela/dtos'
 import { render } from '@testing-library/react'
 import { mockAndSpy } from 'common/utils/testing'
 import { mockUser } from 'common/utils/testing'
@@ -24,15 +24,15 @@ describe('<Header />', () => {
 
   describe('normal behavior', () => {
     it('should render Header correctly', () => {
-      mockUserType('CASTING')
+      mockUserType(UserType.CASTING)
       const { getByText } = render(<Header {...headerProps} />)
       expect(getByText(MOCK_TITLE)).toBeDefined()
       expect(getByText(MOCK_COMPANY_NAME)).toBeDefined()
-      expect(reportButtonSpy).toBeCalledTimes(0)
+      expect(reportButtonSpy).not.toBeCalled()
     })
 
     it('should render correctly when user is Actor', () => {
-      mockUserType('ACTOR')
+      mockUserType(UserType.ACTOR)
       const { getByText } = render(<Header {...headerProps} />)
       expect(getByText(MOCK_TITLE)).toBeDefined()
       expect(getByText(MOCK_COMPANY_NAME)).toBeDefined()
