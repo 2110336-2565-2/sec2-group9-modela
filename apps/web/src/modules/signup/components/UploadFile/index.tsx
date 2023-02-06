@@ -1,26 +1,15 @@
 import { FileUploadOutlined } from '@mui/icons-material'
 import { Button, Link, Typography } from '@mui/material'
-import { FieldValues } from 'react-hook-form'
+import { FC } from 'react'
 
 import { useUploadFile } from './hooks/useUploadFile'
 import { UploadFileContainer } from './styled'
 import { IUploadFileProps } from './types'
 
-const UploadFile = <T extends FieldValues>(props: IUploadFileProps<T>) => {
-  const {
-    error,
-    url,
-    errorMessage,
-    setError,
-    handleSelectFile,
-    label,
-    imageFieldName,
-  } = props
-  const { handleUploadFile, name, removeSameFile } = useUploadFile<T>(
-    handleSelectFile,
-    setError,
-    imageFieldName,
-  )
+const UploadFile: FC<IUploadFileProps> = (props) => {
+  const { error, url, errorMessage, handleSelectFile, label } = props
+  const { handleUploadFile, name, removeSameFile } =
+    useUploadFile(handleSelectFile)
 
   return (
     <UploadFileContainer>

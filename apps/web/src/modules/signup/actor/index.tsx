@@ -10,8 +10,7 @@ import { FormContainer, RootContainer } from './styled'
 import { GENDER_CHOICE } from './utils/constants'
 
 const ActorSignUp = () => {
-  const { control, handleClickSubmit, handleUploadFile, setError } =
-    useActorForm()
+  const { control, handleClickSubmit, handleUploadFile } = useActorForm()
 
   return (
     <RootContainer onSubmit={handleClickSubmit}>
@@ -169,12 +168,10 @@ const ActorSignUp = () => {
               control={control}
               render={(props) => (
                 <UploadFile
-                  imageFieldName="idCardImageUrl"
                   label="อัปโหลดรูปถ่ายบัตรประชาชน / พาสปอร์ต"
                   handleSelectFile={handleUploadFile}
                   error={props.fieldState.invalid}
                   errorMessage={props.fieldState.error?.message}
-                  setError={setError}
                   url={props.field.value}
                 />
               )}
