@@ -1,4 +1,4 @@
-import { Login, Menu, Search } from '@mui/icons-material'
+import { ArrowBackIos, Login, Menu, Search } from '@mui/icons-material'
 import { useLayout } from 'common/context/LayoutContext'
 import { useUser } from 'common/context/UserContext'
 import useSwitch from 'common/hooks/useSwitch'
@@ -14,7 +14,15 @@ const NavbarMobile = () => {
   const menu = useSwitch()
   const user = useUser()
   const router = useRouter()
-  const { onSearch } = useLayout()
+  const { onSearch, override } = useLayout()
+
+  if (override)
+    return (
+      <NavbarContainer sx={{ gap: '5px', padding: '8px 24px' }}>
+        <ArrowBackIos onClick={override.onBack} />
+        {override.title}
+      </NavbarContainer>
+    )
 
   return (
     <NavbarContainer>

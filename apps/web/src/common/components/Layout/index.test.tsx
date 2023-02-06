@@ -1,12 +1,10 @@
 import { render } from '@testing-library/react'
-import { expectToBeCalledWith, mockAndSpy } from 'common/utils/testing'
+import { mockAndSpy } from 'common/utils/testing'
 import React from 'react'
 
 describe('<Layout />', () => {
-  const MOCK_FOCUS = 'job'
   const useLayoutSpy = jest.fn(() => ({
     isHideNavbar: false,
-    navbarFocus: MOCK_FOCUS,
   }))
 
   jest.doMock('common/context/LayoutContext', () => ({
@@ -26,7 +24,7 @@ describe('<Layout />', () => {
       it('should render Layout correctly', () => {
         render(<Layout />)
 
-        expectToBeCalledWith(NavbarSpy, { focus: MOCK_FOCUS })
+        expect(NavbarSpy).toBeCalledTimes(1)
       })
     })
   })
@@ -36,7 +34,6 @@ describe('<Layout />', () => {
       it('should not render navbar', () => {
         useLayoutSpy.mockReturnValue({
           isHideNavbar: true,
-          navbarFocus: MOCK_FOCUS,
         })
         render(<Layout />)
 

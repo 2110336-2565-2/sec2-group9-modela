@@ -11,6 +11,10 @@ export const LayoutProvider = ({ children }: React.PropsWithChildren<{}>) => {
   const [navbarFocus, setNavbarFocus] = useState<NavbarFocus>(null)
   const [isHideNavbar, setHideNavbar] = useState<boolean>(false)
   const [onSearch, setOnSearch] = useState<(() => void) | null>(null)
+  const [override, setOverride] = useState<{
+    title: string
+    onBack: () => void
+  } | null>(null)
 
   return (
     <LayoutContext.Provider
@@ -21,6 +25,8 @@ export const LayoutProvider = ({ children }: React.PropsWithChildren<{}>) => {
         setHideNavbar,
         onSearch,
         setOnSearch,
+        override,
+        setOverride,
       }}
     >
       <Layout>{children}</Layout>
