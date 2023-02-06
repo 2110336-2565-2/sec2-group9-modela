@@ -14,7 +14,8 @@ const NavbarDesktop = () => {
     <NavbarContainer>
       <Image src={logo} alt="logo" width={108} height={48} />
       {menu.map(({ label, onClick, focusKey }, idx) => {
-        if (label === 'divider') return <div style={{ flexGrow: 1 }} />
+        if (label === 'divider')
+          return <div style={{ flexGrow: 1 }} key={idx} />
         return (
           <NavbarItem
             focus={!!focusKey && navbarFocus === focusKey}

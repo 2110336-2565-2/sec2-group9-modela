@@ -5,4 +5,9 @@ export interface ILayoutContext {
   setHideNavbar: (isHideNavbar: boolean) => void
 }
 
-export type NavbarFocus = 'jobs' | 'profile' | 'notification' | null
+export type NavbarFocus =
+  | 'jobs'
+  | 'profile'
+  | 'notification'
+  | 'createJob'
+  | null

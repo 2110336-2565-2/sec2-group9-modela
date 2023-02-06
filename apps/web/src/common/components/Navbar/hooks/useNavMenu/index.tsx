@@ -18,6 +18,7 @@ const useNavMenu = (isMobile: boolean) => {
       onClick: () => router.push(''),
       icon: <PostAddOutlined />,
       mobileOnly: true,
+      focusKey: 'createJob',
     },
     {
       label: 'งานของฉัน',
