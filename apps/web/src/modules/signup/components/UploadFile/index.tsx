@@ -7,7 +7,7 @@ import { UploadFileContainer } from './styled'
 import { IUploadFileProps } from './types'
 
 const UploadFile: FC<IUploadFileProps> = (props) => {
-  const { error, url, errorMessage, setError, handleSelectFile } = props
+  const { error, url, errorMessage, setError, handleSelectFile, label } = props
   const { handleUploadFile, name, removeSameFile } = useUploadFile(
     handleSelectFile,
     setError,
@@ -17,7 +17,7 @@ const UploadFile: FC<IUploadFileProps> = (props) => {
     <UploadFileContainer>
       <Button variant="text" disableRipple component="label">
         <FileUploadOutlined sx={{ marginRight: '4px' }} />
-        อัปโหลดรูปถ่ายบัตรประชาชน / พาสปอร์ต
+        {label}
         <input
           hidden
           accept="image/*,.pdf"
@@ -27,12 +27,16 @@ const UploadFile: FC<IUploadFileProps> = (props) => {
         />
       </Button>
       {error && (
-        <Typography variant="subtitle2" color="error">
+        <Typography
+          sx={{ textAlign: 'center' }}
+          variant="subtitle2"
+          color="error"
+        >
           {errorMessage}
         </Typography>
       )}
       {name && !error ? (
-        <Typography variant="subtitle2">
+        <Typography sx={{ textAlign: 'center' }} variant="subtitle2">
           ไฟล์{' '}
           <Link href={url} variant="subtitle2" fontWeight={600} color="primary">
             {name}
