@@ -19,7 +19,7 @@ const NavbarMobile = () => {
   if (override)
     return (
       <NavbarContainer sx={{ gap: '5px', padding: '8px 24px' }}>
-        <ArrowBackIos onClick={override.onBack} />
+        <ArrowBackIos onClick={override.onBack} sx={{ cursor: 'pointer' }} />
         {override.title}
       </NavbarContainer>
     )
@@ -35,13 +35,17 @@ const NavbarMobile = () => {
               onClick={() => {
                 onSearch?.()
               }}
+              sx={{ cursor: 'pointer' }}
             />
           )}
-          <Menu onClick={menu.open} />
+          <Menu onClick={menu.open} sx={{ cursor: 'pointer' }} />
           <NavbarMenu isOpen={menu.isOpen} onClose={menu.close} />
         </>
       ) : (
-        <LoginButton onClick={() => router.push('/login')}>
+        <LoginButton
+          onClick={() => router.push('/login')}
+          sx={{ cursor: 'pointer' }}
+        >
           <Login />
           เข้าสู่ระบบ
         </LoginButton>
