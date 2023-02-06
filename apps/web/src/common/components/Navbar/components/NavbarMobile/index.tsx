@@ -1,4 +1,5 @@
 import { Login, Menu, Search } from '@mui/icons-material'
+import { useLayout } from 'common/context/LayoutContext'
 import { useUser } from 'common/context/UserContext'
 import useSwitch from 'common/hooks/useSwitch'
 import Image from 'next/image'
@@ -13,6 +14,7 @@ const NavbarMobile = () => {
   const menu = useSwitch()
   const user = useUser()
   const router = useRouter()
+  const { onSearch } = useLayout()
 
   return (
     <NavbarContainer>
@@ -20,7 +22,13 @@ const NavbarMobile = () => {
       <div style={{ flexGrow: 1 }} />
       {user ? (
         <>
-          <Search />
+          {onSearch && (
+            <Search
+              onClick={() => {
+                onSearch?.()
+              }}
+            />
+          )}
           <Menu onClick={menu.open} />
           <NavbarMenu isOpen={menu.isOpen} onClose={menu.close} />
         </>

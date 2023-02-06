@@ -3,6 +3,8 @@ export interface ILayoutContext {
   setNavbarFocus: (focus: NavbarFocus) => void
   isHideNavbar: boolean
   setHideNavbar: (isHideNavbar: boolean) => void
+  onSearch: (() => void) | null
+  setOnSearch: (callback: (() => void) | null) => void
 }
 
 export type NavbarFocus =

@@ -1,5 +1,5 @@
 import Layout from 'common/components/Layout'
-import React, { createContext, useContext, useMemo, useState } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 
 import { ILayoutContext, NavbarFocus } from './types'
 
@@ -10,19 +10,19 @@ export const useLayout = () => useContext(LayoutContext)
 export const LayoutProvider = ({ children }: React.PropsWithChildren<{}>) => {
   const [navbarFocus, setNavbarFocus] = useState<NavbarFocus>(null)
   const [isHideNavbar, setHideNavbar] = useState<boolean>(false)
-
-  const value = useMemo(
-    () => ({
-      navbarFocus,
-      setNavbarFocus,
-      isHideNavbar,
-      setHideNavbar,
-    }),
-    [navbarFocus, setNavbarFocus, isHideNavbar, setHideNavbar],
-  )
+  const [onSearch, setOnSearch] = useState<(() => void) | null>(null)
 
   return (
-    <LayoutContext.Provider value={value}>
+    <LayoutContext.Provider
+      value={{
+        navbarFocus,
+        setNavbarFocus,
+        isHideNavbar,
+        setHideNavbar,
+        onSearch,
+        setOnSearch,
+      }}
+    >
       <Layout>{children}</Layout>
     </LayoutContext.Provider>
   )
