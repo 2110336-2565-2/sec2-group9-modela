@@ -1,3 +1,4 @@
+import { Remove } from '@mui/icons-material'
 import { Grid, TextField, Typography } from '@mui/material'
 import { DesktopDatePicker, TimePicker } from '@mui/x-date-pickers'
 import React from 'react'
@@ -6,11 +7,22 @@ import { Controller } from 'react-hook-form'
 import { ShootingFormProps } from './types'
 
 const ShootingForm = (prop: ShootingFormProps) => {
-  const { id, index, control } = prop
+  const { id, index, control, remove } = prop
   return (
     <>
       <Grid item xs={12} key={id}>
-        <Typography color="primary">ถ่ายครั้งที่ {index + 1}</Typography>
+        <div style={{ display: 'flex' }}>
+          <Typography sx={{ marginRight: '20px' }}>
+            ถ่ายครั้งที่ {index + 1}
+          </Typography>
+          <div
+            style={{ display: 'flex', cursor: 'pointer' }}
+            onClick={() => remove(index)}
+          >
+            <Remove color="primary" />
+            <Typography color="primary">ลบการถ่ายทำ</Typography>
+          </div>
+        </div>
       </Grid>
       <Grid item xs={12} key={id}>
         <Controller

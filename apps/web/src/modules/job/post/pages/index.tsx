@@ -18,7 +18,8 @@ import useJobForm from '../hooks/useJobForm'
 import { RootContainer } from './styled'
 
 const PostJobPage = () => {
-  const { control, handleClickSubmit, fields, handleAppend } = useJobForm()
+  const { control, handleClickSubmit, fields, handleAppend, remove } =
+    useJobForm()
   return (
     <RootContainer onSubmit={handleClickSubmit}>
       <Grid container spacing={2} sx={{ padding: '12px' }}>
@@ -107,6 +108,7 @@ const PostJobPage = () => {
               control={control}
               id={field.id}
               key={field.id}
+              remove={remove}
             />
           ))}
         </Grid>
