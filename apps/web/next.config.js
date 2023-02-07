@@ -2,6 +2,9 @@
  * @type {import('next').NextConfig}
  */
 module.exports = {
+  images: {
+    domains: ['cloudflare-ipfs.com'],
+  },
   reactStrictMode: true,
   transpilePackages: ['@mui/system', '@mui/material', '@mui/icons-material'],
   modularizeImports: {

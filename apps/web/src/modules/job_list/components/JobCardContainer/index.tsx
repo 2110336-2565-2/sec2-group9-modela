@@ -4,12 +4,13 @@ import React from 'react'
 import JobCard from './components/JobCard'
 import { CardBoxContainer } from './styled'
 
-export default function JobCardContainer(
-  prop: GetJobCardWithMaxPageDto['jobs'],
-) {
+export default function JobCardContainer(prop: GetJobCardWithMaxPageDto) {
+  const { jobs } = prop
+  console.log('SS')
+  console.log(jobs)
   return (
     <CardBoxContainer>
-      {prop.map((item, index) => {
+      {jobs.map((item, index) => {
         return (
           <div
             key={`Job-${index}`}
@@ -30,6 +31,7 @@ export default function JobCardContainer(
               actorCount={item.actorCount}
               wage={item.wage}
               dueDate={item.applicationDeadline}
+              jobId={item.jobId}
             />
           </div>
         )

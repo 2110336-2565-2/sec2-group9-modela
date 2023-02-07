@@ -10,4 +10,5 @@ export const CardContainer = styled('div')`
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 12px;
   padding: 12px;
+  cursor: pointer;
 `
