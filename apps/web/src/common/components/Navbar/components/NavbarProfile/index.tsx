@@ -1,14 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
+import { GetUserDto } from '@modela/dtos'
 import { Typography } from '@mui/material'
+import { useUser } from 'common/context/UserContext'
 import React from 'react'
 
 import { ProfileContainer } from './styled'
 
 const NavbarProfile = () => {
+  const { profileImageUrl, firstName, middleName, lastName, companyName } =
+    useUser() as GetUserDto
   return (
     <ProfileContainer>
       <img
-        src="https://genshin.honeyhunterworld.com/img/ayaka_002.webp"
+        src={profileImageUrl}
         alt="profile image"
         style={{
           width: '40px',
@@ -19,11 +23,17 @@ const NavbarProfile = () => {
       />
       <div>
         <Typography variant="h6" color="#000000DF">
-          คุณนพัด โกสิยากอน
+          คุณ{firstName} {middleName} {lastName}
         </Typography>
-        <Typography variant="body2" color="#0000009A">
-          บริษัทพี
-        </Typography>
+        {companyName && (
+          <Typography
+            variant="body2"
+            color="#0000009A"
+            sx={{ marginTop: '-3px' }}
+          >
+            {companyName}
+          </Typography>
+        )}
       </div>
     </ProfileContainer>
   )

@@ -4,6 +4,7 @@ import { GetUserDto } from '@modela/dtos'
 export const mockUser = () => {
   let returnValue: GetUserDto = {
     firstName: 'Ayaka',
+    lastName: 'Kamisato',
     type: UserType.ACTOR,
     isVerified: true,
   }
@@ -12,6 +13,8 @@ export const mockUser = () => {
 
   const mockUserType = (type: UserType) => {
     returnValue = { ...returnValue, type }
+    if (type === UserType.CASTING)
+      returnValue = { ...returnValue, companyName: 'Yashiro Commission' }
     useUserSpy.mockReturnValue(returnValue)
   }
 
