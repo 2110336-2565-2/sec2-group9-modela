@@ -9,6 +9,18 @@ const useJobForm = () => {
     useForm<IPostJobSchemaType>({
       criteriaMode: 'all',
       resolver: zodResolver(postJobSchema),
+      defaultValues: {
+        jobName: '',
+        jobDescription: '',
+        dueDate: new Date(),
+        wage: '',
+        shooting: [],
+        actorCount: '',
+        gender: 'ANY',
+        minAge: '',
+        maxAge: '',
+        role: '',
+      },
     })
 
   const { fields, append, remove } = useFieldArray({
@@ -25,11 +37,11 @@ const useJobForm = () => {
 
   const handleAppend = () => {
     append({
-      startDate: '',
-      endDate: '',
+      startDate: new Date(),
+      endDate: new Date(),
       location: '',
-      startTime: '',
-      endTime: '',
+      startTime: new Date(),
+      endTime: new Date(),
     })
   }
 

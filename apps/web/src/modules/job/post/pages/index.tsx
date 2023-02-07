@@ -1,14 +1,7 @@
 import AddIcon from '@mui/icons-material/Add'
-import {
-  Box,
-  Button,
-  Divider,
-  Grid,
-  MenuItem,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { Box, Button, Divider, Grid, MenuItem, Typography } from '@mui/material'
 import { DesktopDatePicker } from '@mui/x-date-pickers'
+import TextField from 'common/components/TextField'
 import React from 'react'
 import { Controller } from 'react-hook-form'
 
@@ -93,7 +86,6 @@ const PostJobPage = () => {
                 required
                 fullWidth
                 label="ค่าจ้างต่อคน"
-                type="number"
                 {...props.field}
                 error={props.fieldState.invalid}
                 helperText={props.fieldState.error?.message}
