@@ -1,6 +1,8 @@
+import { UserType } from '@modela/database'
 import { Divider, Grid, MenuItem, Typography } from '@mui/material'
 import { DesktopDatePicker } from '@mui/x-date-pickers'
 import TextField from 'common/components/TextField'
+import withGuard from 'common/hoc/withGuard'
 import React from 'react'
 import { Controller } from 'react-hook-form'
 
@@ -16,7 +18,7 @@ const PostJobPage = () => {
     useJobForm()
   return (
     <RootContainer onSubmit={handleClickSubmit}>
-      <Grid container spacing={2} sx={{ padding: '12px' }}>
+      <Grid container spacing={3} sx={{ padding: '12px' }}>
         <Grid item xs={12}>
           <Typography variant="h5" sx={{ textAlign: 'center' }}>
             รายละเอียดงาน
@@ -90,7 +92,7 @@ const PostJobPage = () => {
             )}
           />
         </Grid>
-        <Grid container item spacing={2}>
+        <Grid container item spacing={3}>
           {fields.map((field, index) => (
             <ShootingForm
               index={index}
@@ -210,4 +212,4 @@ const PostJobPage = () => {
   )
 }
 
-export default PostJobPage
+export default withGuard(PostJobPage, [UserType.CASTING])
