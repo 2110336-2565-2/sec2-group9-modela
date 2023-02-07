@@ -23,13 +23,15 @@
     "@mui/material": "^5.11.4",
     "@mui/x-date-pickers": "^5.0.17",
     "@next/font": "^13.1.6",
+    "@types/react-infinite-scroller": "^1.2.3",
     "axios": "^1.2.6",
     "dayjs": "^1.11.7",
     "next": "^13.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.0",
-    "zod": "^3.20.2"
+    "zod": "^3.20.2",
+    "react-infinite-scroller": "^1.2.6"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
