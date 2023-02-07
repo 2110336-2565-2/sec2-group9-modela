@@ -21,7 +21,7 @@ export default function JobList() {
         .data as GetJobCardWithMaxPageDto
       console.log(res)
       setJob(res)
-      setHasMore(res.maxPage < page)
+      setHasMore(res.maxPage > page)
     } catch (e) {
       console.log(e)
     }
