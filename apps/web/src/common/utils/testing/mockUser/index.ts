@@ -2,11 +2,19 @@ import { UserType } from '@modela/database'
 import { GetUserDto } from '@modela/dtos'
 
 export const mockUser = () => {
-  let returnValue: GetUserDto = {
+  const MOCK_USER = {
     firstName: 'Ayaka',
+    middleName: '<3',
     lastName: 'Kamisato',
-    type: UserType.ACTOR,
+    profileImageUrl: 'https://i.imgur.com/0Z0Z0Z0.jpg',
+    companyName: 'Yashiro Commission',
+  }
+
+  let returnValue: GetUserDto = {
+    ...MOCK_USER,
+    companyName: undefined,
     isVerified: true,
+    type: UserType.ACTOR,
   }
 
   const useUserSpy = jest.fn().mockReturnValue(returnValue)
@@ -14,7 +22,7 @@ export const mockUser = () => {
   const mockUserType = (type: UserType) => {
     returnValue = { ...returnValue, type }
     if (type === UserType.CASTING)
-      returnValue = { ...returnValue, companyName: 'Yashiro Commission' }
+      returnValue = { ...returnValue, companyName: MOCK_USER.companyName }
     useUserSpy.mockReturnValue(returnValue)
   }
 
@@ -31,5 +39,10 @@ export const mockUser = () => {
     useUser: useUserSpy,
   }))
 
-  return { mockUserType, mockVerify, mockNotLoggedIn }
+  return {
+    mockUserType,
+    mockVerify,
+    mockNotLoggedIn,
+    MOCK_USER,
+  }
 }
