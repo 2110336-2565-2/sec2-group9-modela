@@ -2,7 +2,8 @@
 import { GetJobCardWithMaxPageDto } from '@modela/dtos'
 import { Typography } from '@mui/material'
 import { apiClient } from 'common/utils/api'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import InfiniteScroll from 'react-infinite-scroller'
 
 import FilterContainer from '../components/FilterContainer'
 import JobCardContainer from '../components/JobCardContainer'
@@ -13,20 +14,18 @@ import SearchBox from '../components/SearchBox'
 
 export default function JobList() {
   const [job, setJob] = useState<GetJobCardWithMaxPageDto>()
-  const fetchData = async () => {
+  const [hasMore, setHasMore] = useState(true)
+  const fetchData = async (page: number) => {
     try {
-      const res = (await apiClient.get('/job?limit=20&page=1'))
+      const res = (await apiClient.get(`/job?limit=1&page=${page}`))
         .data as GetJobCardWithMaxPageDto
       console.log(res)
       setJob(res)
+      setHasMore(res.maxPage < page)
     } catch (e) {
       console.log(e)
     }
   }
-  useEffect(() => {
-    fetchData()
-    console.log('SSSS')
-  }, [])
 
   return (
     <>
@@ -100,7 +99,19 @@ export default function JobList() {
               gap: '1rem',
             }}
           >
-            {job && <JobCardContainer {...job} />}
+            <InfiniteScroll
+              pageStart={0}
+              loadMore={fetchData}
+              hasMore={hasMore}
+              loader={
+                <div className="loader" key={0}>
+                  Loading ...
+                </div>
+              }
+              useWindow={false}
+            >
+              {job && <JobCardContainer {...job} />}
+            </InfiniteScroll>
           </div>
         </div>
 
