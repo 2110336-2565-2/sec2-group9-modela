@@ -18,6 +18,7 @@ const PasswordTextField: FC<TextFieldProps> = (props) => {
           <InputAdornment position="end">
             <IconButton
               color="primary"
+              tabIndex={-1}
               aria-label="toggle password visibility"
               onClick={handleClickShowPassword}
               onMouseDown={handleMouseDownPassword}

@@ -35,10 +35,16 @@ const UploadFile: FC<IUploadFileProps> = (props) => {
       )}
       {name && !error ? (
         <Typography sx={{ textAlign: 'center' }} variant="subtitle2">
-          เลือก{' '}
-          <Link href={url} variant="subtitle2" fontWeight={600} color="primary">
+          <Link
+            href={url}
+            target="_blank"
+            rel="noopener"
+            variant="subtitle2"
+            fontWeight={600}
+            color="primary"
+          >
             {name}
-          </Link>{' '}
+          </Link>
         </Typography>
       ) : (
         <></>
