@@ -154,6 +154,9 @@ export class EditJobDto implements EditJobType {
   shooting: ShootingDto[]
 }
 
+export class CreateJobDto extends EditJobDto {
+}
+
 export class GetJobCardDto extends OmitType(EditJobDto, [
   'role',
   'minAge',

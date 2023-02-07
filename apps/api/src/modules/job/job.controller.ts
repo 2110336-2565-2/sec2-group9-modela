@@ -1,4 +1,5 @@
 import {
+  CreateJobDto,
   EditJobDto,
   GetJobCardWithMaxPageDto,
   GetJobDto,
@@ -18,7 +19,7 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
 
-import { UseAuthGuard } from '../auth/misc/jwt.decorator'
+import { UseAuthGuard, UseTypeAuthGuard } from '../auth/misc/jwt.decorator'
 import { User } from '../auth/misc/user.decorator'
 import { JobService } from './job.service'
 
@@ -69,5 +70,20 @@ export class JobController {
   @ApiNotFoundResponse({ description: 'Job not found' })
   update(@Param('id') id: string, @Body() updateJobDto: EditJobDto) {
     return this.jobService.update(+id, updateJobDto)
+  }
+
+  @Post('job/:id')
+  @ApiCreatedResponse({ type: JobIdDTO })
+  @UseTypeAuthGuard('CASTING')
+  @ApiUnauthorizedResponse({ description: 'User is not logged in' })
+  @ApiForbiddenResponse({ description: 'User is not a casting' })
+  @ApiBadRequestResponse({ description: 'Wrong format' })
+  @ApiOperation({ summary: 'create job' })
+  postReport(
+    @Param('id') id: string,
+    @Body() createJobDto: CreateJobDto,
+    @User() user: JwtDto,
+  ) {
+    return this.jobService.postJob(+id, createJobDto, user.userId)
   }
 }

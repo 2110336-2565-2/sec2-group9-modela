@@ -1,5 +1,6 @@
 import { JobStatus } from '@modela/database'
 import {
+  CreateJobDto,
   EditJobDto,
   Gender,
   GetJobCardWithMaxPageDto,
@@ -17,7 +18,7 @@ import { JobRepository } from './job.repository'
 export class JobService {
   constructor(private repository: JobRepository) {}
 
-  create(createJobDto: EditJobDto) {
+  async postJob(createJobDto: CreateJobDto) {
     return 'This action adds a new job'
   }
 
