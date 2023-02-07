@@ -254,11 +254,11 @@ describe('JobService', () => {
         }
         const thisReqParams = reqParams
         const result = new GetJobCardWithMaxPageDto()
-        result.maxPage = Math.ceil(1)
         result.jobs = itMockedJobData.slice(
           limitQuery * (pageQuery - 1),
           limitQuery * pageQuery,
         )
+        result.maxPage = Math.ceil(result.jobs.length / limitQuery)
 
         jest
           .spyOn(repository, 'getJobCount')
