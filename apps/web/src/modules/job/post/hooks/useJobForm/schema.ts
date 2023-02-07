@@ -2,6 +2,14 @@ import { Gender } from '@modela/dtos'
 import isNumeric from 'validator/lib/isNumeric'
 import { z } from 'zod'
 
+const shootingSchema = z.object({
+  startDate: z.string(),
+  endDate: z.string(),
+  location: z.string(),
+  startTime: z.string(),
+  endTime: z.string(),
+})
+
 const postJobSchema = z
   .object({
     jobName: z.string().min(1, 'กรุณากรอกตำแหน่งงาน'),
@@ -25,6 +33,7 @@ const postJobSchema = z
       .min(1, 'กรุณากรอกอายุสูงสุด')
       .refine(isNumeric, 'กรุณากรอกอายุสูงสุดเป็นตัวเลข'),
     role: z.string().min(1, 'กรุณากรอกบทบาท'),
+    shooting: z.array(shootingSchema),
   })
   .superRefine(({ minAge, maxAge }, ctx) => {
     if (minAge && maxAge && minAge > maxAge) {
@@ -37,4 +46,5 @@ const postJobSchema = z
   })
 
 export type IPostJobSchemaType = z.infer<typeof postJobSchema>
-export { postJobSchema }
+export type IShootingSchemaType = z.infer<typeof shootingSchema>
+export { postJobSchema, shootingSchema }

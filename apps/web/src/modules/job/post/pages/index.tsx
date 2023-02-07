@@ -7,7 +7,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import { DesktopDatePicker } from '@mui/x-date-pickers'
+import { DesktopDatePicker, TimePicker } from '@mui/x-date-pickers'
 import React from 'react'
 import { Controller } from 'react-hook-form'
 
@@ -16,19 +16,19 @@ import useJobForm from '../hooks/useJobForm'
 import { RootContainer } from './styled'
 
 const PostJobPage = () => {
-  const { control, handleClickSubmit } = useJobForm()
+  const { control, handleClickSubmit, fields, append } = useJobForm()
   return (
     <RootContainer onSubmit={handleClickSubmit}>
       <Grid container spacing={2} sx={{ padding: '12px' }}>
-        <Grid item xs={12} sm={12}>
+        <Grid item xs={12}>
           <Typography variant="h5" sx={{ textAlign: 'center' }}>
             รายละเอียดงาน
           </Typography>
         </Grid>
-        <Grid item xs={12} sm={12}>
+        <Grid item xs={12}>
           <Divider />
         </Grid>
-        <Grid item xs={12} sm={12}>
+        <Grid item xs={12}>
           <Controller
             name="jobName"
             control={control}
@@ -44,7 +44,7 @@ const PostJobPage = () => {
             )}
           />
         </Grid>
-        <Grid item xs={12} sm={12}>
+        <Grid item xs={12}>
           <Controller
             name="jobDescription"
             control={control}
@@ -62,7 +62,7 @@ const PostJobPage = () => {
             )}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={6}>
           <Controller
             name="dueDate"
             control={control}
@@ -77,7 +77,7 @@ const PostJobPage = () => {
             )}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={6}>
           <Controller
             name="wage"
             control={control}
@@ -94,18 +94,106 @@ const PostJobPage = () => {
             )}
           />
         </Grid>
-        <Grid item xs={12} sm={12}>
-          <Typography>+เพิ่มการถ่ายทำ</Typography>
+        <Grid item xs={12}>
+          {fields.map((field, index) => {
+            return (
+              <>
+                <Grid item xs={12} key={field.id}>
+                  <Controller
+                    name={`shooting.${index}.location`}
+                    control={control}
+                    render={(props) => (
+                      <TextField
+                        required
+                        fullWidth
+                        label="สถานที่ถ่ายทำ"
+                        {...props.field}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid xs={6} item key={field.id}>
+                  <Controller
+                    name={`shooting.${index}.startDate`}
+                    control={control}
+                    render={(props) => (
+                      <DesktopDatePicker
+                        label="วันที่เริ่มถ่ายทำ"
+                        inputFormat="DD/MM/YYYY"
+                        value={props.field.value}
+                        onChange={(newValue) => props.field.onChange(newValue)}
+                        renderInput={(params) => (
+                          <TextField {...params} fullWidth />
+                        )}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid xs={6} item key={field.id}>
+                  <Controller
+                    name={`shooting.${index}.endDate`}
+                    control={control}
+                    render={(props) => (
+                      <DesktopDatePicker
+                        label="วันที่สิ้นสุดถ่ายทำ"
+                        inputFormat="DD/MM/YYYY"
+                        value={props.field.value}
+                        onChange={(newValue) => props.field.onChange(newValue)}
+                        renderInput={(params) => (
+                          <TextField {...params} fullWidth />
+                        )}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid xs={6} item key={field.id}>
+                  <Controller
+                    name={`shooting.${index}.startTime`}
+                    control={control}
+                    render={(props) => (
+                      <TimePicker
+                        label="เวลาเริ่มถ่ายทำในแต่ละวัน"
+                        value={props.field.value}
+                        onChange={(newValue) => props.field.onChange(newValue)}
+                        renderInput={(params) => (
+                          <TextField {...params} fullWidth />
+                        )}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid xs={6} item key={field.id}>
+                  <Controller
+                    name={`shooting.${index}.endTime`}
+                    control={control}
+                    render={(props) => (
+                      <TimePicker
+                        label="เวลาสิ้นสุดถ่ายทำในแต่ละวัน"
+                        value={props.field.value}
+                        onChange={(newValue) => props.field.onChange(newValue)}
+                        renderInput={(params) => (
+                          <TextField {...params} fullWidth />
+                        )}
+                      />
+                    )}
+                  />
+                </Grid>
+              </>
+            )
+          })}
         </Grid>
-        <Grid item xs={12} sm={12}>
+        <Grid item xs={12}>
+          <Typography onClick={() => append({})}>+เพิ่มการถ่ายทำ</Typography>
+        </Grid>
+        <Grid item xs={12}>
           <Typography variant="h5" sx={{ textAlign: 'center' }}>
             รายละเอียดนักแสดง
           </Typography>
         </Grid>
-        <Grid item xs={12} sm={12}>
+        <Grid item xs={12}>
           <Divider />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={6}>
           <Controller
             name="actorCount"
             control={control}
@@ -121,7 +209,7 @@ const PostJobPage = () => {
             )}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={6}>
           <Controller
             name="gender"
             control={control}
@@ -145,7 +233,7 @@ const PostJobPage = () => {
             )}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={6}>
           <Controller
             name="minAge"
             control={control}
@@ -161,7 +249,7 @@ const PostJobPage = () => {
             )}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={6}>
           <Controller
             name="maxAge"
             control={control}
@@ -177,10 +265,10 @@ const PostJobPage = () => {
             )}
           />
         </Grid>
-        <Grid item xs={12} sm={12}>
+        <Grid item xs={12}>
           <Divider />
         </Grid>
-        <Grid item xs={12} sm={12}>
+        <Grid item xs={12}>
           <Controller
             name="role"
             control={control}
@@ -198,7 +286,7 @@ const PostJobPage = () => {
             )}
           />
         </Grid>
-        <Grid item xs={12} sm={12}>
+        <Grid item xs={12}>
           <Box display="flex" justifyContent="center">
             <Button
               sx={{ borderRadius: '12px' }}
