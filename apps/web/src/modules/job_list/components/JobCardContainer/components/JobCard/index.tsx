@@ -1,4 +1,5 @@
 import { Divider } from '@mui/material'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 import Footer from './components/Footer'
@@ -17,10 +18,15 @@ export default function JobCard(prop: CardProps) {
     gender,
     title,
     wage,
+    jobId,
   } = prop
+  const router = useRouter()
+  const viewDetail = () => {
+    router.replace(`/job/${jobId}`)
+  }
 
   return (
-    <CardContainer>
+    <CardContainer onClick={viewDetail}>
       <Header
         title={title}
         companyName={companyName}

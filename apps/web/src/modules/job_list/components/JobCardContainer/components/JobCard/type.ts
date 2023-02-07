@@ -7,4 +7,5 @@ export interface CardProps {
   actorCount: number
   wage: number
   dueDate: Date
+  jobId: number
 }
