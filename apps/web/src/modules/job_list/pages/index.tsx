@@ -13,14 +13,15 @@ import SearchBox from '../components/SearchBox'
 //import Card from '../components/card'
 
 export default function JobList() {
-  const [job, setJob] = useState<GetJobCardWithMaxPageDto>()
+  const [job, setJob] = useState<GetJobCardWithMaxPageDto['jobs']>()
   const [hasMore, setHasMore] = useState(true)
   const fetchData = async (page: number) => {
     try {
       const res = (await apiClient.get(`/job?limit=1&page=${page}`))
         .data as GetJobCardWithMaxPageDto
       console.log(res)
-      setJob(res)
+      console.log(res.maxPage, page, res.maxPage > page)
+      setJob(job ? [...job, ...res.jobs] : res.jobs)
       setHasMore(res.maxPage > page)
     } catch (e) {
       console.log(e)
