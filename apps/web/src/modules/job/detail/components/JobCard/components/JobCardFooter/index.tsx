@@ -1,5 +1,5 @@
-import { JobStatus, UserType } from '@modela/dtos'
-import { EventBusy, Money, PersonOutlined } from '@mui/icons-material'
+import { Gender, JobStatus, UserType } from '@modela/dtos'
+import { EventBusy, Money, Person } from '@mui/icons-material'
 import { Tooltip, Typography } from '@mui/material'
 import theme from 'common/config/theme'
 import { useUser } from 'common/context/UserContext'
@@ -21,9 +21,19 @@ const JobCardFooter = (prop: FooterProps) => {
 
   return (
     <FooterRow>
-      {/* TODO: change icon color according to gender */}
+      {/* TODO: Add rainbow  */}
       <Tooltip title={genderThai}>
-        <PersonOutlined fontSize="small" />
+        <Person
+          fontSize="small"
+          sx={{
+            color:
+              gender === Gender.MALE
+                ? '#144A9B'
+                : gender === Gender.FEMALE
+                ? '#F57CD4'
+                : '#00c853',
+          }}
+        />
       </Tooltip>
       <Typography variant="subtitle1">{actorCount}</Typography>
       <Money fontSize="small" />
