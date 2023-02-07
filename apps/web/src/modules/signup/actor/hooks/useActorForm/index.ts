@@ -31,13 +31,15 @@ const useActorForm = () => {
     async ({ confirmPassword, ...data }) => {
       setLoading(true)
       try {
+        const postBody = {
+          ...data,
+          // Dummy image (Will be changed after implement upload)
+          confirmPassword: undefined,
+          idCardImageUrl: 'https://via.placeholder.com/150',
+        }
         await apiClient.post<unknown, unknown, SignupActorDto>(
           '/auth/signup/actor',
-          {
-            ...data,
-            // Dummy image (Will be changed after implement upload)
-            idCardImageUrl: 'https://via.placeholder.com/150',
-          },
+          postBody,
         )
         router.push('/job')
       } catch (err) {
