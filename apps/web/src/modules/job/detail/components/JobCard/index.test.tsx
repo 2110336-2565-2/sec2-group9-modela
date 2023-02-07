@@ -12,7 +12,7 @@ describe('<JobCard />', () => {
   }
 
   const ShootingDetailMock = mockAndSpy(
-    'modules/job/components/JobCard/components/ShootingDetail',
+    'modules/job/detail/components/JobCard/components/ShootingDetail',
   )
 
   const { default: JobCard } = require('.') as typeof import('.')

@@ -8,7 +8,7 @@ describe('<JobDetailPage />', () => {
     useRouter: jest.fn(),
   }))
   const useRouter = jest.spyOn(require('next/router'), 'useRouter')
-  const JobCardMock = mockAndSpy('modules/job/components/JobCard')
+  const JobCardMock = mockAndSpy('modules/job/detail/components/JobCard')
   const { mockGetReturn } = mockApiClient()
 
   const mockData: GetJobDto = {
