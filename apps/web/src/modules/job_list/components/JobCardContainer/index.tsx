@@ -1,15 +1,15 @@
+import { GetJobCardWithMaxPageDto } from '@modela/dtos'
 import React from 'react'
 
 import JobCard from './components/JobCard'
 import { CardBoxContainer } from './styled'
-import { CardArray } from './type'
 
-export default function JobCardContainer(prop: CardArray) {
-  const { cardData } = prop
+export default function JobCardContainer(prop: GetJobCardWithMaxPageDto) {
+  const { jobs } = prop
 
   return (
     <CardBoxContainer>
-      {cardData.map((item, index) => {
+      {jobs.map((item, index) => {
         return (
           <div
             key={`Job-${index}`}
@@ -25,11 +25,11 @@ export default function JobCardContainer(prop: CardArray) {
               title={item.title}
               companyName={item.companyName}
               description={item.description}
-              castingImage={item.castingImage}
+              castingImage={item.jobCastingImageUrl}
               gender={item.gender}
               actorCount={item.actorCount}
               wage={item.wage}
-              dueDate={item.dueDate}
+              dueDate={item.applicationDeadline}
             />
           </div>
         )
