@@ -1,11 +1,12 @@
-import AddIcon from '@mui/icons-material/Add'
-import { Box, Button, Divider, Grid, MenuItem, Typography } from '@mui/material'
+import { Divider, Grid, MenuItem, Typography } from '@mui/material'
 import { DesktopDatePicker } from '@mui/x-date-pickers'
 import TextField from 'common/components/TextField'
 import React from 'react'
 import { Controller } from 'react-hook-form'
 
+import AddShootingButton from '../components/addShootingButton'
 import ShootingForm from '../components/ShootingForm'
+import SubmitButton from '../components/SubmitButton'
 import { GENDER_CHOICE } from '../constant'
 import useJobForm from '../hooks/useJobForm'
 import { RootContainer } from './styled'
@@ -17,11 +18,7 @@ const PostJobPage = () => {
     <RootContainer onSubmit={handleClickSubmit}>
       <Grid container spacing={2} sx={{ padding: '12px' }}>
         <Grid item xs={12}>
-          <Typography
-            variant="h5"
-            sx={{ textAlign: 'center' }}
-            fontWeight="400"
-          >
+          <Typography variant="h5" sx={{ textAlign: 'center' }}>
             รายละเอียดงาน
           </Typography>
         </Grid>
@@ -105,12 +102,7 @@ const PostJobPage = () => {
           ))}
         </Grid>
         <Grid item xs={12}>
-          <div style={{ display: 'flex', cursor: 'pointer' }}>
-            <AddIcon color="primary" />
-            <Typography onClick={handleAppend} color="primary">
-              เพิ่มการถ่ายทำ
-            </Typography>
-          </div>
+          <AddShootingButton handleAppend={handleAppend} />
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5" sx={{ textAlign: 'center' }}>
@@ -193,9 +185,6 @@ const PostJobPage = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Divider />
-        </Grid>
-        <Grid item xs={12}>
           <Controller
             name="role"
             control={control}
@@ -214,16 +203,7 @@ const PostJobPage = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Box display="flex" justifyContent="center">
-            <Button
-              sx={{ borderRadius: '12px' }}
-              size="large"
-              variant="contained"
-              type="submit"
-            >
-              สร้างงาน
-            </Button>
-          </Box>
+          <SubmitButton />
         </Grid>
       </Grid>
     </RootContainer>
