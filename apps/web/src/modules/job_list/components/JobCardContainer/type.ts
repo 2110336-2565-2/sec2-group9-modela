@@ -12,5 +12,4 @@ export interface CardProps {
 }
 export interface CardArray {
   job: CardProps[]
-  maxPage: number
 }
