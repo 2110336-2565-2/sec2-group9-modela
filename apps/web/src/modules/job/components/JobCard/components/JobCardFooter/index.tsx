@@ -22,6 +22,17 @@ const JobCardFooter = (prop: FooterProps) => {
   return (
     <FooterRow>
       {/* TODO: Add rainbow  */}
+      <svg width={0} height={0}>
+        <linearGradient id="linearColors" x1={1} y1={0} x2={1} y2={1}>
+          <stop offset={0} stopColor="#ff0000" />
+          <stop offset={0.17} stopColor="#ff7f00" />
+          <stop offset={0.33} stopColor="#ffff00" />
+          <stop offset={0.5} stopColor="#00ff00" />
+          <stop offset={0.67} stopColor="#00ffff" />
+          <stop offset={0.83} stopColor="#0000ff" />
+          <stop offset={1} stopColor="#ff00ff" />
+        </linearGradient>
+      </svg>
       <Tooltip title={genderThai}>
         <Person
           fontSize="small"
@@ -32,6 +43,10 @@ const JobCardFooter = (prop: FooterProps) => {
                 : gender === Gender.FEMALE
                 ? '#F57CD4'
                 : '#00c853',
+            fill:
+              gender === Gender.MALE || gender === Gender.FEMALE
+                ? ''
+                : 'url(#linearColors)',
           }}
         />
       </Tooltip>
