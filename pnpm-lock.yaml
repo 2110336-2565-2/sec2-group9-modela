@@ -142,7 +142,6 @@ importers:
       '@types/node': ^17.0.12
       '@types/react': ^18.0.22
       '@types/react-dom': ^18.0.7
-      '@types/validator': ^13.7.12
       axios: ^1.2.6
       babel-plugin-import: ^1.13.6
       dayjs: ^1.11.7
@@ -186,7 +185,6 @@ importers:
       '@types/node': 17.0.45
       '@types/react': 18.0.26
       '@types/react-dom': 18.0.10
-      '@types/validator': 13.7.12
       babel-plugin-import: 1.13.6
       eslint: 7.32.0
       eslint-config-custom: link:../../packages/eslint-config-custom
@@ -2563,10 +2561,6 @@ packages:
 
   /@types/validator/13.7.11:
     resolution: {integrity: sha512-WqTos+CnAKN64YwyBMhgUYhb5VsTNKwUY6AuzG5qu9/pFZJar/RJFMZBXwX7VS+uzYi+lIAr3WkvuWqEI9F2eg==}
-
-  /@types/validator/13.7.12:
-    resolution: {integrity: sha512-YVtyAPqpefU+Mm/qqnOANW6IkqKpCSrarcyV269C8MA8Ux0dbkEuQwM/4CjL47kVEM2LgBef/ETfkH+c6+moFA==}
-    dev: true
 
   /@types/yargs-parser/21.0.0:
     resolution: {integrity: sha512-iO9ZQHkZxHn4mSakYV0vFHAVDyEOIJQrV2uZ06HxEPcx+mt8swXoZHIbaaJ2crJYFfErySgktuTZ3BeLz+XmFA==}
