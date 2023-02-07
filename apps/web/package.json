@@ -12,13 +12,16 @@
     "coverage": "open-cli coverage/lcov-report/index.html"
   },
   "dependencies": {
+    "@date-io/dayjs": "^2.16.0",
     "@emotion/cache": "^11.10.5",
     "@emotion/react": "^11.10.5",
     "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.10.5",
+    "@hookform/resolvers": "^2.9.10",
     "@modela/dtos": "workspace:*",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.4",
+    "@mui/x-date-pickers": "^5.0.17",
     "@next/font": "^13.1.6",
     "axios": "^1.2.6",
     "dayjs": "^1.11.7",

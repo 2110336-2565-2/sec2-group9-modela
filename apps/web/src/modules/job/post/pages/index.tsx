@@ -7,6 +7,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
+import { DesktopDatePicker } from '@mui/x-date-pickers'
 import React from 'react'
 import { Controller } from 'react-hook-form'
 
@@ -43,7 +44,7 @@ const PostJobPage = () => {
             )}
           />
         </Grid>
-        <Grid item xs={36} sm={12}>
+        <Grid item xs={12} sm={12}>
           <Controller
             name="jobDescription"
             control={control}
@@ -66,13 +67,12 @@ const PostJobPage = () => {
             name="dueDate"
             control={control}
             render={(props) => (
-              <TextField
-                required
-                fullWidth
+              <DesktopDatePicker
                 label="วันที่ปิดรับสมัคร"
-                {...props.field}
-                error={props.fieldState.invalid}
-                helperText={props.fieldState.error?.message}
+                inputFormat="DD/MM/YYYY"
+                value={props.field.value}
+                onChange={(newValue) => props.field.onChange(newValue)}
+                renderInput={(params) => <TextField {...params} fullWidth />}
               />
             )}
           />
