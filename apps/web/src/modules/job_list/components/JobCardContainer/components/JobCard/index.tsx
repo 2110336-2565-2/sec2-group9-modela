@@ -2,8 +2,8 @@ import { Divider } from '@mui/material'
 import { useRouter } from 'next/router'
 import React from 'react'
 
-import Footer from './components/Footer'
-import Header from './components/Header'
+import Footer from '../../../../../job/components/JobCard/components/JobCardFooter'
+import Header from '../../../../../job/components/JobCard/components/JobCardHeader'
 import JobDetail from './components/JobDetail'
 import { CardContainer } from './styled'
 import { CardProps } from './type'
@@ -19,6 +19,7 @@ export default function JobCard(prop: CardProps) {
     title,
     wage,
     jobId,
+    status,
   } = prop
   const router = useRouter()
   const viewDetail = () => {
@@ -40,6 +41,7 @@ export default function JobCard(prop: CardProps) {
         gender={gender}
         wage={wage}
         actorCount={actorCount}
+        status={status}
       />
     </CardContainer>
   )
