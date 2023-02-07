@@ -10,10 +10,10 @@ import {
 import React from 'react'
 
 describe('<NavbarMobile />', () => {
-  const [ArrowBackIosSpy, LoginSpy, MenuSpy, SearchSpy] = mockAndSpyMany(
-    '@mui/icons-material',
-    ['ArrowBackIos', 'Login', 'Menu', 'Search'],
-  )
+  const ArrowBackIosSpy = mockAndSpy('@mui/icons-material/ArrowBackIos')
+  const LoginSpy = mockAndSpy('@mui/icons-material/Login')
+  const MenuSpy = mockAndSpy('@mui/icons-material/Menu')
+  const SearchSpy = mockAndSpy('@mui/icons-material/Search')
   const [LoginButtonSpy] = mockAndSpyMany(
     'common/components/Navbar/components/NavbarMobile/styled',
     ['LoginButton'],
