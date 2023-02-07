@@ -42,6 +42,7 @@ export class JobService {
       skip: (searchJobDto.page - 1) * searchJobDto.limit,
       //filtering
       where: {
+        //job always have shooting
         Shooting: {
           every: {
             startDate: {
@@ -85,42 +86,31 @@ export class JobService {
     if (!Array.isArray(searchJobDto.status)) {
       searchJobDto.status = [searchJobDto.status]
     }
-    let statusQuery = {}
-    if (
-      searchJobDto.status.includes(SearchJobStatus.OPEN) &&
-      searchJobDto.status.includes(SearchJobStatus.CLOSE)
-    ) {
-      statusQuery = [
-        JobStatus.OPEN,
+
+    //handle status qyery
+    const statusQuery = []
+    //make OPEN for default
+    searchJobDto.status = searchJobDto.status || [SearchJobStatus.OPEN]
+    if (searchJobDto.status.includes(SearchJobStatus.OPEN)) {
+      statusQuery.push(JobStatus.OPEN)
+    }
+    if (searchJobDto.status.includes(SearchJobStatus.CLOSE)) {
+      statusQuery.push(
         JobStatus.SELECTING,
         JobStatus.SELECTION_ENDED,
         JobStatus.FINISHED,
-        JobStatus.CANCELLED,
-      ]
-    } else if (searchJobDto.status.includes(SearchJobStatus.OPEN)) {
-      statusQuery = [JobStatus.OPEN]
-    } else if (searchJobDto.status.includes(SearchJobStatus.CLOSE)) {
-      if (user.type == UserType.ACTOR) {
-        statusQuery = [
-          JobStatus.SELECTING,
-          JobStatus.SELECTION_ENDED,
-          JobStatus.FINISHED,
-        ]
-      } else {
-        statusQuery = [
-          JobStatus.SELECTING,
-          JobStatus.SELECTION_ENDED,
-          JobStatus.FINISHED,
-          JobStatus.CANCELLED,
-        ]
+      )
+      if (user.type != UserType.ACTOR) {
+        statusQuery.push(JobStatus.CANCELLED)
       }
     }
     params.where.status = {
       in: statusQuery,
     }
 
+    //handle gender qyery
     if (searchJobDto.gender) {
-      //check searchJobDto.gender is array or not
+      //check searchJobDto.gender is array or not (the case that only one params it will not be array)
       if (!Array.isArray(searchJobDto.gender)) {
         searchJobDto.gender = [searchJobDto.gender]
       }
