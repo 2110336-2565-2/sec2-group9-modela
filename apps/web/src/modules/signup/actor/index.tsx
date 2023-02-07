@@ -1,4 +1,12 @@
-import { Box, Button, Divider, Grid, MenuItem, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Divider,
+  Grid,
+  MenuItem,
+  Typography,
+} from '@mui/material'
 import PasswordTextField from 'common/components/PasswordTextField'
 import TextField from 'common/components/TextField'
 import React from 'react'
@@ -10,7 +18,8 @@ import { FormContainer, RootContainer } from './styled'
 import { GENDER_CHOICE } from './utils/constants'
 
 const ActorSignUp = () => {
-  const { control, handleClickSubmit, handleUploadFile } = useActorForm()
+  const { loading, control, handleClickSubmit, handleUploadFile } =
+    useActorForm()
 
   return (
     <RootContainer onSubmit={handleClickSubmit}>
@@ -235,6 +244,10 @@ const ActorSignUp = () => {
                 size="large"
                 variant="contained"
                 type="submit"
+                disabled={loading}
+                startIcon={
+                  loading && <CircularProgress size="24px" color="secondary" />
+                }
               >
                 สมัครสมาชิก
               </Button>

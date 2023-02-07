@@ -15,6 +15,7 @@ import { actorSignupSchema, IActorSignupSchemaType } from './schema'
 
 const useActorForm = () => {
   const router = useRouter()
+
   const { register, handleSubmit, control, setValue, getValues, setError } =
     useForm<IActorSignupSchemaType>({
       criteriaMode: 'all',
@@ -23,10 +24,12 @@ const useActorForm = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   const [file, setFile] = useState<Blob | null>(null)
+  const [loading, setLoading] = useState(false)
 
   const handleSuccess: SubmitHandler<IActorSignupSchemaType> = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
+    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
     async ({ confirmPassword, ...data }) => {
+      setLoading(true)
       try {
         await apiClient.post<unknown, unknown, SignupActorDto>(
           '/auth/signup/actor',
@@ -39,6 +42,8 @@ const useActorForm = () => {
         router.push('/job')
       } catch (err) {
         console.log(err)
+      } finally {
+        setLoading(false)
       }
     },
     [router],
@@ -68,7 +73,14 @@ const useActorForm = () => {
     }
   }, [currentUrl])
 
-  return { handleClickSubmit, register, handleUploadFile, control, setError }
+  return {
+    loading,
+    handleClickSubmit,
+    register,
+    handleUploadFile,
+    control,
+    setError,
+  }
 }
 
 export default useActorForm
