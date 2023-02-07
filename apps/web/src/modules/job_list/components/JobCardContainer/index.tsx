@@ -32,6 +32,7 @@ export default function JobCardContainer(prop: GetJobCardWithMaxPageDto) {
               wage={item.wage}
               dueDate={item.applicationDeadline}
               jobId={item.jobId}
+              status={item.status}
             />
           </div>
         )
