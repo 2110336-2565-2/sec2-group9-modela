@@ -1,18 +1,19 @@
 import { Remove } from '@mui/icons-material'
-import { Grid, TextField, Typography } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import { DesktopDatePicker, TimePicker } from '@mui/x-date-pickers'
+import TextField from 'common/components/TextField'
 import React from 'react'
 import { Controller } from 'react-hook-form'
 
 import { ShootingFormProps } from './types'
 
 const ShootingForm = (prop: ShootingFormProps) => {
-  const { id, index, control, remove } = prop
+  const { index, control, remove } = prop
   return (
     <>
-      <Grid item xs={12} key={id}>
-        <div style={{ display: 'flex' }}>
-          <Typography sx={{ marginRight: '20px' }}>
+      <Grid item xs={12}>
+        <div style={{ display: 'flex', margin: '10px 0px' }}>
+          <Typography variant="body1" sx={{ marginRight: '20px' }}>
             ถ่ายครั้งที่ {index + 1}
           </Typography>
           <div
@@ -24,7 +25,7 @@ const ShootingForm = (prop: ShootingFormProps) => {
           </div>
         </div>
       </Grid>
-      <Grid item xs={12} key={id}>
+      <Grid item xs={12}>
         <Controller
           name={`shooting.${index}.location`}
           control={control}
@@ -38,7 +39,7 @@ const ShootingForm = (prop: ShootingFormProps) => {
           )}
         />
       </Grid>
-      <Grid xs={6} item key={id}>
+      <Grid xs={6} item>
         <Controller
           name={`shooting.${index}.startDate`}
           control={control}
@@ -53,7 +54,7 @@ const ShootingForm = (prop: ShootingFormProps) => {
           )}
         />
       </Grid>
-      <Grid xs={6} item key={id}>
+      <Grid xs={6} item>
         <Controller
           name={`shooting.${index}.endDate`}
           control={control}
@@ -68,7 +69,7 @@ const ShootingForm = (prop: ShootingFormProps) => {
           )}
         />
       </Grid>
-      <Grid xs={6} item key={id}>
+      <Grid xs={6} item>
         <Controller
           name={`shooting.${index}.startTime`}
           control={control}
@@ -82,7 +83,7 @@ const ShootingForm = (prop: ShootingFormProps) => {
           )}
         />
       </Grid>
-      <Grid xs={6} item key={id}>
+      <Grid xs={6} item>
         <Controller
           name={`shooting.${index}.endTime`}
           control={control}
