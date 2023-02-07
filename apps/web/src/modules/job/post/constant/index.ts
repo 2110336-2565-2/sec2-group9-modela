@@ -14,4 +14,8 @@ export const GENDER_CHOICE: MenuItemProps[] = [
     children: 'อื่น ๆ',
     value: Gender.OTHER,
   },
+  {
+    children: 'ไม่ระบุ',
+    value: Gender.ANY,
+  },
 ]

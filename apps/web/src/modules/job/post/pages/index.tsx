@@ -1,3 +1,4 @@
+import AddIcon from '@mui/icons-material/Add'
 import {
   Box,
   Button,
@@ -7,21 +8,26 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import { DesktopDatePicker, TimePicker } from '@mui/x-date-pickers'
+import { DesktopDatePicker } from '@mui/x-date-pickers'
 import React from 'react'
 import { Controller } from 'react-hook-form'
 
+import ShootingForm from '../components/ShootingForm'
 import { GENDER_CHOICE } from '../constant'
 import useJobForm from '../hooks/useJobForm'
 import { RootContainer } from './styled'
 
 const PostJobPage = () => {
-  const { control, handleClickSubmit, fields, append } = useJobForm()
+  const { control, handleClickSubmit, fields, handleAppend } = useJobForm()
   return (
     <RootContainer onSubmit={handleClickSubmit}>
       <Grid container spacing={2} sx={{ padding: '12px' }}>
         <Grid item xs={12}>
-          <Typography variant="h5" sx={{ textAlign: 'center' }}>
+          <Typography
+            variant="h5"
+            sx={{ textAlign: 'center' }}
+            fontWeight="400"
+          >
             รายละเอียดงาน
           </Typography>
         </Grid>
@@ -94,96 +100,23 @@ const PostJobPage = () => {
             )}
           />
         </Grid>
-        <Grid item xs={12}>
-          {fields.map((field, index) => {
-            return (
-              <>
-                <Grid item xs={12} key={field.id}>
-                  <Controller
-                    name={`shooting.${index}.location`}
-                    control={control}
-                    render={(props) => (
-                      <TextField
-                        required
-                        fullWidth
-                        label="สถานที่ถ่ายทำ"
-                        {...props.field}
-                      />
-                    )}
-                  />
-                </Grid>
-                <Grid xs={6} item key={field.id}>
-                  <Controller
-                    name={`shooting.${index}.startDate`}
-                    control={control}
-                    render={(props) => (
-                      <DesktopDatePicker
-                        label="วันที่เริ่มถ่ายทำ"
-                        inputFormat="DD/MM/YYYY"
-                        value={props.field.value}
-                        onChange={(newValue) => props.field.onChange(newValue)}
-                        renderInput={(params) => (
-                          <TextField {...params} fullWidth />
-                        )}
-                      />
-                    )}
-                  />
-                </Grid>
-                <Grid xs={6} item key={field.id}>
-                  <Controller
-                    name={`shooting.${index}.endDate`}
-                    control={control}
-                    render={(props) => (
-                      <DesktopDatePicker
-                        label="วันที่สิ้นสุดถ่ายทำ"
-                        inputFormat="DD/MM/YYYY"
-                        value={props.field.value}
-                        onChange={(newValue) => props.field.onChange(newValue)}
-                        renderInput={(params) => (
-                          <TextField {...params} fullWidth />
-                        )}
-                      />
-                    )}
-                  />
-                </Grid>
-                <Grid xs={6} item key={field.id}>
-                  <Controller
-                    name={`shooting.${index}.startTime`}
-                    control={control}
-                    render={(props) => (
-                      <TimePicker
-                        label="เวลาเริ่มถ่ายทำในแต่ละวัน"
-                        value={props.field.value}
-                        onChange={(newValue) => props.field.onChange(newValue)}
-                        renderInput={(params) => (
-                          <TextField {...params} fullWidth />
-                        )}
-                      />
-                    )}
-                  />
-                </Grid>
-                <Grid xs={6} item key={field.id}>
-                  <Controller
-                    name={`shooting.${index}.endTime`}
-                    control={control}
-                    render={(props) => (
-                      <TimePicker
-                        label="เวลาสิ้นสุดถ่ายทำในแต่ละวัน"
-                        value={props.field.value}
-                        onChange={(newValue) => props.field.onChange(newValue)}
-                        renderInput={(params) => (
-                          <TextField {...params} fullWidth />
-                        )}
-                      />
-                    )}
-                  />
-                </Grid>
-              </>
-            )
-          })}
+        <Grid container item spacing={2}>
+          {fields.map((field, index) => (
+            <ShootingForm
+              index={index}
+              control={control}
+              id={field.id}
+              key={field.id}
+            />
+          ))}
         </Grid>
         <Grid item xs={12}>
-          <Typography onClick={() => append({})}>+เพิ่มการถ่ายทำ</Typography>
+          <div style={{ display: 'flex', cursor: 'pointer' }}>
+            <AddIcon color="primary" />
+            <Typography onClick={handleAppend} color="primary">
+              เพิ่มการถ่ายทำ
+            </Typography>
+          </div>
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5" sx={{ textAlign: 'center' }}>

@@ -13,7 +13,7 @@ const useJobForm = () => {
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'Shooting',
+    name: 'shooting',
   })
 
   const handleSuccess: SubmitHandler<IPostJobSchemaType> = useCallback(() => {
@@ -23,13 +23,23 @@ const useJobForm = () => {
   const handleClickSubmit: FormEventHandler<HTMLFormElement> =
     handleSubmit(handleSuccess)
 
+  const handleAppend = () => {
+    append({
+      startDate: '',
+      endDate: '',
+      location: '',
+      startTime: '',
+      endTime: '',
+    })
+  }
+
   return {
     handleClickSubmit,
     register,
     control,
     setError,
     fields,
-    append,
+    handleAppend,
     remove,
   }
 }
