@@ -1,6 +1,8 @@
 //import Header from 'common/components/header'
+import { GetJobCardWithMaxPageDto } from '@modela/dtos'
 import { Typography } from '@mui/material'
-import React from 'react'
+import { apiClient } from 'common/utils/api'
+import React, { useEffect, useState } from 'react'
 
 import FilterContainer from '../components/FilterContainer'
 import JobCardContainer from '../components/JobCardContainer'
@@ -10,13 +12,29 @@ import SearchBox from '../components/SearchBox'
 //import Card from '../components/card'
 
 export default function JobList() {
+  const [job, setJob] = useState<GetJobCardWithMaxPageDto>()
+  const fetchData = async () => {
+    try {
+      const res = (await apiClient.get('/job?limit=20&page=1'))
+        .data as GetJobCardWithMaxPageDto
+      console.log(res)
+      setJob(res)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  useEffect(() => {
+    fetchData()
+    console.log('SSSS')
+  }, [])
+
   return (
     <>
       <div
         style={{
           display: 'flex',
           flexDirection: 'row',
-          justifyContent: 'space-between',
+          justifyContent: 'left',
           alignItems: 'flex-start',
           gap: '3.5vw',
         }}
@@ -68,7 +86,7 @@ export default function JobList() {
           style={{
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'flex-start',
+            justifyContent: 'center',
             paddingTop: '3rem',
             width: '40vw',
             gap: '1rem',
@@ -82,30 +100,7 @@ export default function JobList() {
               gap: '1rem',
             }}
           >
-            <JobCardContainer
-              cardData={[
-                {
-                  title: 'Agoda offer',
-                  companyName: 'Agoda',
-                  description: 'Intern',
-                  castingImage: '',
-                  gender: 'male',
-                  actorCount: 3,
-                  wage: 2500,
-                  dueDate: new Date(),
-                },
-                {
-                  title: 'Lineman offer',
-                  companyName: 'LMWN',
-                  description: 'Frontend',
-                  castingImage: '',
-                  gender: 'Female',
-                  actorCount: 4,
-                  wage: 5600,
-                  dueDate: new Date(),
-                },
-              ]}
-            />
+            {job && <JobCardContainer {...job} />}
           </div>
         </div>
 
@@ -113,7 +108,7 @@ export default function JobList() {
           style={{
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'flex-start',
+            justifyContent: 'right',
             paddingTop: '3rem',
             width: '14vw',
             gap: '1rem',

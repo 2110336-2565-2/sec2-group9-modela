@@ -3,11 +3,14 @@ export interface CardProps {
   companyName: string
   description: string
   castingImage: string
+  status: string
   gender: string
   actorCount: number
   wage: number
-  dueDate: Date
+  applicationDeadline: Date
+  jobId: number
 }
 export interface CardArray {
-  cardData: CardProps[]
+  job: CardProps[]
+  maxPage: number
 }
