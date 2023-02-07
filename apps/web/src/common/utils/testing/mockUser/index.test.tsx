@@ -4,7 +4,7 @@ import { renderHook } from '@testing-library/react'
 import { mockUser } from '.'
 
 describe('mockUser()', () => {
-  const { mockUserType, mockVerify } = mockUser()
+  const { mockUserType, mockVerify, mockNotLoggedIn } = mockUser()
 
   const { useUser } =
     require('common/context/UserContext') as typeof import('common/context/UserContext')
@@ -35,5 +35,12 @@ describe('mockUser()', () => {
     expect(result.current).toMatchObject({
       isVerified: false,
     })
+  })
+
+  it('should mock not logged in correctly', () => {
+    mockNotLoggedIn()
+    const { result } = renderHook(() => useUser())
+
+    expect(result.current).toBeNull()
   })
 })

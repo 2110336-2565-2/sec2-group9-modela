@@ -20,9 +20,13 @@ export const mockUser = () => {
     useUserSpy.mockReturnValue(returnValue)
   }
 
+  const mockNotLoggedIn = () => {
+    useUserSpy.mockReturnValue(null)
+  }
+
   jest.doMock('common/context/UserContext', () => ({
     useUser: useUserSpy,
   }))
 
-  return { mockUserType, mockVerify }
+  return { mockUserType, mockVerify, mockNotLoggedIn }
 }
