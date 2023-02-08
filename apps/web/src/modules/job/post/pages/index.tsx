@@ -6,7 +6,7 @@ import withGuard from 'common/hoc/withGuard'
 import React from 'react'
 import { Controller } from 'react-hook-form'
 
-import AddShootingButton from '../components/addShootingButton'
+import AddShootingButton from '../components/AddShootingButton'
 import ShootingForm from '../components/ShootingForm'
 import SubmitButton from '../components/SubmitButton'
 import { GENDER_CHOICE } from '../constant'
@@ -104,7 +104,7 @@ const PostJobPage = () => {
           ))}
         </Grid>
         <Grid item xs={12}>
-          <AddShootingButton handleAppend={handleAppend} />
+          <AddShootingButton onClick={handleAppend} />
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5" sx={{ textAlign: 'center' }}>
