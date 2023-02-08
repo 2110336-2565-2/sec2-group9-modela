@@ -9,6 +9,8 @@ import {
 } from '@mui/material'
 import PasswordTextField from 'common/components/PasswordTextField'
 import TextField from 'common/components/TextField'
+import { useUser } from 'common/context/UserContext'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { Controller } from 'react-hook-form'
 
@@ -20,6 +22,19 @@ import { GENDER_CHOICE } from './utils/constants'
 const ActorSignUp = () => {
   const { loading, control, handleClickSubmit, handleUploadFile } =
     useActorForm()
+
+  const router = useRouter()
+  const user = useUser()
+
+  if (user && !user.isVerified) {
+    router.replace('/waiting')
+    return
+  }
+
+  if (user && user.isVerified) {
+    router.replace('/job')
+    return
+  }
 
   return (
     <RootContainer onSubmit={handleClickSubmit}>
