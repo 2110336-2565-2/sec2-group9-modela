@@ -14,7 +14,7 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import { Controller } from 'react-hook-form'
 
-import UploadFile from '../components/UploadFile'
+import UploadFile from '../components/FormController/components/UploadFile'
 import useActorForm from './hooks/useActorForm'
 import { FormContainer, RootContainer } from './styled'
 import { GENDER_CHOICE } from './utils/constants'

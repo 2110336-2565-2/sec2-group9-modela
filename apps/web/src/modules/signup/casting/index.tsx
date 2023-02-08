@@ -13,7 +13,9 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import { Controller } from 'react-hook-form'
 
-import UploadFile from '../components/UploadFile'
+import FormController from '../components/FormController'
+import UploadFile from '../components/FormController/components/UploadFile'
+import { FORM_LAYOUT } from './constants'
 import useCastingForm from './hooks/useCastingForm'
 import { FormContainer, RootContainer } from './styled'
 
@@ -46,6 +48,16 @@ const CastingSignup = () => {
               นักแสดง
             </Typography>
           </Grid>
+          {FORM_LAYOUT.map((props) => (
+            <FormController
+              {...props}
+              control={control}
+              key={JSON.stringify(props)}
+              handleUploadFile={
+                props.type === 'uploadFile' ? handleUploadFile : undefined
+              }
+            />
+          ))}
           <Grid item xs={12} sm={12}>
             <Divider />
           </Grid>
