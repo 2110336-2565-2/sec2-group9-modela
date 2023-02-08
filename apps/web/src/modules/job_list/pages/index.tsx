@@ -20,7 +20,7 @@ export default function JobList() {
     try {
       if (pageControl <= page) {
         pageControl = page + 1
-        const res = (await apiClient.get(`/job?limit=1&page=${page}`))
+        const res = (await apiClient.get(`/job?limit=5&page=${page}`))
           .data as GetJobCardWithMaxPageDto
         console.log(res)
         console.log(res.maxPage, page, res.maxPage > page)
