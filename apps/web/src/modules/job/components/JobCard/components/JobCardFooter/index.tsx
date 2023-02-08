@@ -21,7 +21,6 @@ const JobCardFooter = (prop: FooterProps) => {
 
   return (
     <FooterRow>
-      {/* TODO: Add rainbow  */}
       <svg width={0} height={0}>
         <linearGradient id="linearColors" x1={1} y1={0} x2={1} y2={1}>
           <stop offset={0} stopColor="#ff0000" />
