@@ -59,7 +59,7 @@ export class JobService {
             },
           },
           some: {
-            shootingLocation: searchJobDto.location || undefined,
+            shootingLocation: undefined,
           },
         },
 
@@ -127,10 +127,13 @@ export class JobService {
         }
       }
     }
-    //handle location undefined
+    //handle location substring query
     if (searchJobDto.location) {
       params.where.Shooting.some = {
-        shootingLocation: searchJobDto.location,
+        shootingLocation: {
+          contains: searchJobDto.location,
+          mode: 'insensitive',
+        },
       }
     }
 
