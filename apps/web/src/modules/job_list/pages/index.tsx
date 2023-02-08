@@ -1,40 +1,18 @@
 //import Header from 'common/components/header'
-import { GetJobCardWithMaxPageDto } from '@modela/dtos'
 import { Typography } from '@mui/material'
-import { apiClient } from 'common/utils/api'
-import React, { useState } from 'react'
+import React from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 
 import FilterContainer from '../components/FilterContainer'
 import JobCardContainer from '../components/JobCardContainer'
 import NotiCardContainer from '../components/NotiCardContainer'
 import SearchBox from '../components/SearchBox'
+import useJobListData from './hooks/useJobListData'
 
 //import Card from '../components/card'
 
 export default function JobList() {
-  const [job, setJob] = useState<GetJobCardWithMaxPageDto>()
-  const [hasMore, setHasMore] = useState(true)
-  var pageControl: number = 1
-  const fetchData = async (page: number) => {
-    try {
-      if (pageControl <= page) {
-        pageControl = page + 1
-        const res = (await apiClient.get(`/job?limit=5&page=${page}`))
-          .data as GetJobCardWithMaxPageDto
-        console.log(res)
-        console.log(res.maxPage, page, res.maxPage > page)
-        setJob((prevJobs) => ({
-          ...prevJobs,
-          jobs: [...(prevJobs?.jobs || []), ...res.jobs],
-          maxPage: res.maxPage,
-        }))
-        setHasMore(res.maxPage > page)
-      }
-    } catch (e) {
-      console.log(e)
-    }
-  }
+  var { job, hasMore, fetchData } = useJobListData()
 
   return (
     <>
