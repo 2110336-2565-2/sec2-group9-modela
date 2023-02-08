@@ -11,6 +11,7 @@ const actorSignupSchema = z
     firstName: z.string({
       required_error: 'กรุณากรอกชื่อ',
     }),
+    middleName: z.optional(z.string()),
     lastName: z.string({
       required_error: 'กรุณากรอกนามสกุล',
     }),
@@ -40,7 +41,6 @@ const actorSignupSchema = z
         required_error: 'กรุณากรอกเลขบัตรประชาชน / เลขพาสปอร์ต',
       })
       .refine((arg) => /^([0-9]|[A-Z])+$/.test(arg), 'รูปแบบไม่ถูกต้อง'),
-    middleName: z.string(),
     idCardImageUrl: z.string({
       required_error: 'กรุณาอัปโหลดรูปถ่าย',
     }),
