@@ -85,6 +85,7 @@ const PostJobPage = () => {
                 required
                 fullWidth
                 label="ค่าจ้างต่อคน"
+                type="number"
                 {...props.field}
                 error={props.fieldState.invalid}
                 helperText={props.fieldState.error?.message}
@@ -123,6 +124,7 @@ const PostJobPage = () => {
                 required
                 fullWidth
                 label="จำนวน"
+                type="number"
                 {...props.field}
                 error={props.fieldState.invalid}
                 helperText={props.fieldState.error?.message}
@@ -163,6 +165,7 @@ const PostJobPage = () => {
                 required
                 fullWidth
                 label="อายุต่ำสุด"
+                type="number"
                 {...props.field}
                 error={props.fieldState.invalid}
                 helperText={props.fieldState.error?.message}
@@ -179,6 +182,7 @@ const PostJobPage = () => {
                 required
                 fullWidth
                 label="อายุสูงสุด"
+                type="number"
                 {...props.field}
                 error={props.fieldState.invalid}
                 helperText={props.fieldState.error?.message}

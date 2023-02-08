@@ -1,6 +1,5 @@
 import { Gender } from '@modela/dtos'
 import dayjs, { type Dayjs } from 'dayjs'
-import isNumeric from 'validator/lib/isNumeric'
 import { z } from 'zod'
 
 const shootingSchema = z
@@ -32,27 +31,15 @@ const shootingSchema = z
 
 const postJobSchema = z
   .object({
-    jobName: z.string().min(1, 'กรุณากรอกตำแหน่งงาน'),
-    jobDescription: z.string().min(1, 'กรุณากรอกรายละเอียดงาน'),
+    jobName: z.string({ required_error: 'กรุณากรอกตำแหน่งงาน' }),
+    jobDescription: z.string({ required_error: 'กรุณากรอกรายละเอียดงาน' }),
     dueDate: z.instanceof(dayjs as unknown as typeof Dayjs),
-    wage: z
-      .string()
-      .min(1, 'กรุณากรอกค่าจ้าง')
-      .refine(isNumeric, 'กรุณากรอกค่าจ้างเป็นตัวเลข'),
-    actorCount: z
-      .string()
-      .min(1, 'กรุณากรอกจำนวนนักแสดง')
-      .refine(isNumeric, 'กรุณากรอกจำนวนนักแสดง'),
+    wage: z.string({ required_error: 'กรุณากรอกค่าจ้าง' }),
+    actorCount: z.string({ required_error: 'กรุณากรอกจำนวนนักแสดง' }),
     gender: z.nativeEnum(Gender),
-    minAge: z
-      .string()
-      .min(1, 'กรุณากรอกอายุต่ำสุด')
-      .refine(isNumeric, 'กรุณากรอกอายุต่ำสุดเป็นตัวเลข'),
-    maxAge: z
-      .string()
-      .min(1, 'กรุณากรอกอายุสูงสุด')
-      .refine(isNumeric, 'กรุณากรอกอายุสูงสุดเป็นตัวเลข'),
-    role: z.string().min(1, 'กรุณากรอกบทบาท'),
+    minAge: z.string({ required_error: 'กรุณากรอกอายุต่ำสุด' }),
+    maxAge: z.string({ required_error: 'กรุณากรอกอายุสูงสุด' }),
+    role: z.string({ required_error: 'กรุณากรอกบทบาท' }),
     shooting: z.array(shootingSchema),
   })
   .superRefine(({ minAge, maxAge }, ctx) => {

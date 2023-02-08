@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import dayjs from 'dayjs'
-import { FormEventHandler, useCallback } from 'react'
+import { FormEventHandler, useCallback, useMemo } from 'react'
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 
 import { IPostJobSchemaType, postJobSchema } from './schema'
@@ -13,7 +13,7 @@ const useJobForm = () => {
       defaultValues: {
         jobName: '',
         jobDescription: '',
-        dueDate: dayjs(),
+        dueDate: dayjs().add(1, 'day'),
         wage: '',
         shooting: [],
         actorCount: '',
@@ -33,10 +33,11 @@ const useJobForm = () => {
     console.log('success')
   }, [])
 
-  const handleClickSubmit: FormEventHandler<HTMLFormElement> =
-    handleSubmit(handleSuccess)
+  const handleClickSubmit: FormEventHandler<HTMLFormElement> = useMemo(() => {
+    return handleSubmit(handleSuccess)
+  }, [])
 
-  const handleAppend = () => {
+  const handleAppend = useCallback(() => {
     append({
       startDate: dayjs(),
       endDate: dayjs(),
@@ -44,7 +45,7 @@ const useJobForm = () => {
       startTime: dayjs().startOf('day'),
       endTime: dayjs().startOf('day'),
     })
-  }
+  }, [])
 
   return {
     handleClickSubmit,
