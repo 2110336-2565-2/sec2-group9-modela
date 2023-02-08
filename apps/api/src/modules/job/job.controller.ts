@@ -51,16 +51,6 @@ export class JobController {
     return this.jobService.findOne(+id, user)
   }
 
-  @Post()
-  @ApiOperation({ summary: 'write job' })
-  @ApiCreatedResponse({ type: JobIdDTO })
-  @ApiUnauthorizedResponse({ description: 'User is not login' })
-  @ApiForbiddenResponse({ description: 'User is not casting' })
-  @ApiBadRequestResponse({ description: 'Wrong format' })
-  create(@Body() createJobDto: EditJobDto) {
-    return this.jobService.create(createJobDto)
-  }
-
   @Put(':id')
   @ApiOperation({ summary: 'update job by id' })
   @ApiCreatedResponse({ type: JobIdDTO })
@@ -79,11 +69,7 @@ export class JobController {
   @ApiForbiddenResponse({ description: 'User is not a casting' })
   @ApiBadRequestResponse({ description: 'Wrong format' })
   @ApiOperation({ summary: 'create job' })
-  postReport(
-    @Param('id') id: string,
-    @Body() createJobDto: CreateJobDto,
-    @User() user: JwtDto,
-  ) {
-    return this.jobService.postJob(+id, createJobDto, user.userId)
+  createJob(@Body() createJobDto: CreateJobDto, @User() user: JwtDto) {
+    return this.jobService.createJob(createJobDto, user.userId)
   }
 }

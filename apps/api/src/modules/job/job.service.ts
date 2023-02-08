@@ -10,7 +10,10 @@ import {
   UserType,
 } from '@modela/dtos'
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { ForbiddenException } from '@nestjs/common/exceptions'
+import {
+  ForbiddenException,
+  InternalServerErrorException,
+} from '@nestjs/common/exceptions'
 
 import { JobRepository } from './job.repository'
 
@@ -18,8 +21,12 @@ import { JobRepository } from './job.repository'
 export class JobService {
   constructor(private repository: JobRepository) {}
 
-  async postJob(createJobDto: CreateJobDto) {
-    return 'This action adds a new job'
+  async createJob(createJobDto: CreateJobDto, userId: number) {
+    try {
+      await this.repository.createJob(createJobDto, userId)
+    } catch (e) {
+      throw new InternalServerErrorException()
+    }
   }
 
   // @function create prisma params from request
