@@ -1,4 +1,3 @@
-//import Header from 'common/components/header'
 import { Typography } from '@mui/material'
 import React from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
@@ -9,8 +8,6 @@ import NotiCardContainer from '../components/NotiCardContainer'
 import SearchBox from '../components/SearchBox'
 import useJobListData from './hooks/useJobListData'
 import { FilterBoxContainer, JobContainer, NotiContainer } from './styled'
-
-//import Card from '../components/card'
 
 export default function JobList() {
   var { job, hasMore, fetchData } = useJobListData()
@@ -26,6 +23,7 @@ export default function JobList() {
           gap: '3.5vw',
         }}
       >
+        {/* Place holder not implement in this sprint */}
         <NotiContainer>
           <Typography variant="body1"> Unread notification </Typography>
           <div
@@ -84,6 +82,7 @@ export default function JobList() {
           </div>
         </JobContainer>
 
+        {/* Place holder to do in next task */}
         <FilterBoxContainer>
           <div
             style={{
