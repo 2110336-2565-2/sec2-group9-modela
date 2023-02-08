@@ -16,6 +16,7 @@
     "@emotion/react": "^11.10.5",
     "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.10.5",
+    "@hookform/resolvers": "^2.9.10",
     "@modela/dtos": "workspace:*",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.4",
@@ -24,7 +25,9 @@
     "dayjs": "^1.11.7",
     "next": "^13.1.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.43.0",
+    "zod": "^3.20.2"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

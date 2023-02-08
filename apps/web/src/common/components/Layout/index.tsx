@@ -9,7 +9,9 @@ const Layout = ({ children }: React.PropsWithChildren<{}>) => {
   return (
     <PageContainer>
       {!isHideNavbar && <Navbar />}
-      <div style={{ flex: 1 }}>{children}</div>
+      <div style={{ flex: 1, alignItems: 'stretch', display: 'inline-flex' }}>
+        {children}
+      </div>
     </PageContainer>
   )
 }

@@ -3,6 +3,7 @@ import { styled, Typography } from '@mui/material'
 export const NavbarContainer = styled('div')`
   padding: 5px 66px;
   position: sticky;
+  z-index: 99;
   top: 0;
   width: 100%;
   background: ${({ theme }) => theme.palette.primary.main};
