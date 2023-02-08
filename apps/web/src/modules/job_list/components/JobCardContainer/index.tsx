@@ -18,7 +18,7 @@ export default function JobCardContainer(prop: GetJobCardWithMaxPageDto) {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'flex-start',
-              width: '40vw',
+              width: '100%',
               gap: '1rem',
             }}
           >
