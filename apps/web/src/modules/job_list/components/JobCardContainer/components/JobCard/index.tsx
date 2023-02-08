@@ -1,10 +1,9 @@
-import { Divider } from '@mui/material'
+import { Divider, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import React from 'react'
 
 import Footer from '../../../../../job/components/JobCard/components/JobCardFooter'
 import Header from '../../../../../job/components/JobCard/components/JobCardHeader'
-import JobDetail from './components/JobDetail'
 import { CardContainer } from './styled'
 import { CardProps } from './type'
 
@@ -33,7 +32,9 @@ export default function JobCard(prop: CardProps) {
         companyName={companyName}
         castingImage={castingImage}
       />
-      <JobDetail job={description} />
+      <Typography variant="subtitle2" sx={{ color: 'rgba(0,0,0,0.6)' }}>
+        {description}
+      </Typography>
 
       <Divider variant="middle" style={{ width: '90%' }} />
       <Footer
