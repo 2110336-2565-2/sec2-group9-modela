@@ -1,8 +1,11 @@
+import { JobStatus } from '@modela/database'
 import {
   EditJobDto,
+  Gender,
   GetJobCardWithMaxPageDto,
   JwtDto,
   SearchJobDto,
+  SearchJobStatus,
   UserType,
 } from '@modela/dtos'
 import { Injectable, NotFoundException } from '@nestjs/common'
@@ -20,34 +23,120 @@ export class JobService {
 
   // @function create prisma params from request
   // @helper for findAll function
-  convertRequestToParams(searchJobDto: SearchJobDto) {
+  convertRequestToParams(searchJobDto: SearchJobDto, user: JwtDto) {
+    //const define default value for undefined params
+    //declare here for easy to change
+    const defaultStartDate = new Date('0001-01-01T00:00:00Z')
+    const defaultEndDate = new Date('9999-12-31T23:59:59Z')
+    const defaultStartTime = new Date('1970-01-01T00:00:00Z')
+    const defaultEndTime = new Date('1970-01-01T23:59:59Z')
+
+    const defaultminAgeLte = 999
+    const defaultMaxAgeGte = 0
+    const defaultMinWageGte = 0
+    const defaultMaxWageLte = 999999999
+
     const params = {
       //take and skip from limit and page
       take: Number(searchJobDto.limit),
       skip: (searchJobDto.page - 1) * searchJobDto.limit,
       //filtering
-      //TODO: filtering in the task [24] drafted
       where: {
-        //TODO: will find out how to filter range later [24]
-        // startDate: searchJobDto.startDate || undefined,
-        // startTime: searchJobDto.startTime || undefined,
-        // endDate: searchJobDto.endDate || undefined,
-        // endTime: searchJobDto.endTime || undefined,
+        //job always have shooting
+        Shooting: {
+          every: {
+            startDate: {
+              gte: searchJobDto.startDate || defaultStartDate,
+            },
+            endDate: {
+              lte: searchJobDto.endDate || defaultEndDate,
+            },
+            startTime: {
+              gte: searchJobDto.startTime || defaultStartTime,
+            },
+            endTime: {
+              lte: searchJobDto.endTime || defaultEndTime,
+            },
+          },
+          some: {
+            shootingLocation: undefined,
+          },
+        },
 
-        //TODO: will find out how to filter const into range later [24]
-        // age: searchJobDto.age || undefined,
+        minAge: {
+          lte: Number(searchJobDto.age) || defaultminAgeLte,
+        },
+        maxAge: {
+          gte: Number(searchJobDto.age) || defaultMaxAgeGte,
+        },
 
-        //TODO: will find out how to filter range later [24]
-        // minWage: searchJobDto.minWage || undefined,
-        // maxWage: searchJobDto.maxWage || undefined,
+        wage: {
+          gte: Number(searchJobDto.minWage) || defaultMinWageGte,
+          lte: Number(searchJobDto.maxWage) || defaultMaxWageLte,
+        },
 
-        //TODO: will find out how to filter enum later [24]
-        //status: searchJobDto.status || undefined,
-        //gender: searchJobDto.gender || undefined,
-
+        status: undefined,
+        gender: undefined,
         castingId: Number(searchJobDto.castingId) || undefined,
       },
     }
+    //handle array and undefined
+    searchJobDto.status = searchJobDto.status || [SearchJobStatus.OPEN]
+    //check searchJobDto.status is array or not
+    if (!Array.isArray(searchJobDto.status)) {
+      searchJobDto.status = [searchJobDto.status]
+    }
+
+    //handle status qyery
+    const statusQuery = []
+    //make OPEN for default
+    searchJobDto.status = searchJobDto.status || [SearchJobStatus.OPEN]
+    if (searchJobDto.status.includes(SearchJobStatus.OPEN)) {
+      statusQuery.push(JobStatus.OPEN)
+    }
+    if (searchJobDto.status.includes(SearchJobStatus.CLOSE)) {
+      statusQuery.push(
+        JobStatus.SELECTING,
+        JobStatus.SELECTION_ENDED,
+        JobStatus.FINISHED,
+      )
+      if (user.type != UserType.ACTOR) {
+        statusQuery.push(JobStatus.CANCELLED)
+      }
+    }
+    params.where.status = {
+      in: statusQuery,
+    }
+
+    //handle gender qyery
+    if (searchJobDto.gender) {
+      //check searchJobDto.gender is array or not (the case that only one params it will not be array)
+      if (!Array.isArray(searchJobDto.gender)) {
+        searchJobDto.gender = [searchJobDto.gender]
+      }
+      //if Query only Gender.ANY return all
+      if (
+        !(
+          searchJobDto.gender &&
+          searchJobDto.gender.length === 1 &&
+          searchJobDto.gender[0] === Gender.ANY
+        )
+      ) {
+        params.where.gender = {
+          in: [...searchJobDto.gender, Gender.ANY],
+        }
+      }
+    }
+    //handle location substring query
+    if (searchJobDto.location) {
+      params.where.Shooting.some = {
+        shootingLocation: {
+          contains: searchJobDto.location,
+          mode: 'insensitive',
+        },
+      }
+    }
+
     return params
   }
   async findAll(searchJobDto: SearchJobDto, user: JwtDto) {
@@ -63,7 +152,7 @@ export class JobService {
     }
 
     //set params for getJob
-    const params = this.convertRequestToParams(searchJobDto)
+    const params = this.convertRequestToParams(searchJobDto, user)
 
     //get jobs with params from repository
     const jobsJoinCasting = await this.repository.getJobJoined(params)
@@ -71,7 +160,6 @@ export class JobService {
     result.jobs = jobsJoinCasting
 
     //calculate maxPage
-    //TODO: will calculate maxPage with filter later [24]
     const allJobsCount = await this.repository.getJobCount({
       where: params.where,
     })

@@ -1,22 +1,23 @@
 import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger'
 import { Type } from 'class-transformer'
 import {
-  IsDateString,
+  IsDate,
   IsEnum,
   IsNumber,
-  IsNumberString,
   IsOptional,
+  IsString,
   Max,
   Min,
 } from 'class-validator'
 import { Casting, Gender, Job, JobStatus, Shooting } from '@modela/database'
 
 export enum SearchJobStatus {
-  'OPEN',
-  'CLOSE',
+  'OPEN' = 'OPEN',
+  'CLOSE' = 'CLOSE'
 }
 
 export class SearchJobDto {
+  @IsOptional()
   @Type(() => Number)
   @IsNumber()
   @Min(1)
@@ -26,6 +27,7 @@ export class SearchJobDto {
   }) //Will set default again in job.service.ts
   limit: number
 
+  @IsOptional()
   @Type(() => Number)
   @IsNumber()
   @Min(1)
@@ -35,37 +37,49 @@ export class SearchJobDto {
   page: number
 
   @IsOptional()
-  @IsDateString()
+  @Type(() => Date)
+  @IsDate()
   @ApiPropertyOptional()
   startDate?: Date
 
   @IsOptional()
-  @IsDateString()
+  @Type(() => Date)
+  @IsDate()
   @ApiPropertyOptional()
   startTime?: Date
 
   @IsOptional()
-  @IsDateString()
+  @Type(() => Date)
+  @IsDate()
   @ApiPropertyOptional()
   endDate?: Date
 
   @IsOptional()
-  @IsDateString()
+  @Type(() => Date)
+  @IsDate()
   @ApiPropertyOptional()
   endTime?: Date
 
   @IsOptional()
-  @IsNumberString()
+  @IsString()
+  @ApiPropertyOptional()
+  location?: string
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
   @ApiPropertyOptional()
   age?: number
 
   @IsOptional()
-  @IsNumberString()
+  @Type(() => Number)
+  @IsNumber()
   @ApiPropertyOptional()
   minWage?: number
 
   @IsOptional()
-  @IsNumberString()
+  @Type(() => Number)
+  @IsNumber()
   @ApiPropertyOptional()
   maxWage?: number
 

@@ -130,6 +130,7 @@ importers:
       '@emotion/react': ^11.10.5
       '@emotion/server': ^11.10.0
       '@emotion/styled': ^11.10.5
+      '@hookform/resolvers': ^2.9.10
       '@modela/dtos': workspace:*
       '@modela/swagger-utils': workspace:*
       '@mui/icons-material': ^5.11.0
@@ -155,13 +156,16 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0
       react-infinite-scroller: ^1.2.6
+      react-hook-form: ^7.43.0
       tsconfig: workspace:*
       typescript: ^4.5.3
+      zod: ^3.20.2
     dependencies:
       '@emotion/cache': 11.10.5
       '@emotion/react': 11.10.5_jp5qgyg6plq757v5hojp7ls2oe
       '@emotion/server': 11.10.0
       '@emotion/styled': 11.10.5_jp5djshq6aqfasno3mth3hguci
+      '@hookform/resolvers': 2.9.10_react-hook-form@7.43.0
       '@modela/dtos': link:../../packages/dtos
       '@mui/icons-material': 5.11.0_6zueiyxsk3wwk7ardr4xipkxnu
       '@mui/material': 5.11.4_lskpmcsdi7ipu6qpuapyu56ihm
@@ -172,6 +176,8 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-infinite-scroller: 1.2.6_react@18.2.0
+      react-hook-form: 7.43.0_react@18.2.0
+      zod: 3.20.2
     devDependencies:
       '@babel/core': 7.20.12
       '@babel/runtime': 7.20.13
@@ -1035,6 +1041,14 @@ packages:
   /@faker-js/faker/7.6.0:
     resolution: {integrity: sha512-XK6BTq1NDMo9Xqw/YkYyGjSsg44fbNwYRx7QK2CuoQgyy+f1rrTDHoExVM5PsyXCtfl2vs2vVJ0MN0yN6LppRw==}
     engines: {node: '>=14.0.0', npm: '>=6.0.0'}
+
+  /@hookform/resolvers/2.9.10_react-hook-form@7.43.0:
+    resolution: {integrity: sha512-JIL1DgJIlH9yuxcNGtyhsWX/PgNltz+5Gr6+8SX9fhXc/hPbEIk6wPI82nhgvp3uUb6ZfAM5mqg/x7KR7NAb+A==}
+    peerDependencies:
+      react-hook-form: ^7.0.0
+    dependencies:
+      react-hook-form: 7.43.0_react@18.2.0
+    dev: false
 
   /@humanwhocodes/config-array/0.11.8:
     resolution: {integrity: sha512-UybHIJzJnR5Qc/MsD9Kr+RpO2h+/P1GhOwdiLPXK5TWk5sgTdu88bTD9UP+CKbPPh5Rni1u0GjAdYQLemG8g+g==}
@@ -7895,6 +7909,12 @@ packages:
       react: ^0.14.9 || ^15.3.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
     dependencies:
       prop-types: 15.8.1
+  /react-hook-form/7.43.0_react@18.2.0:
+    resolution: {integrity: sha512-/rVEz7T0gLdSFwPqutJ1kn2e0sQNyb9ci/hmwEYr2YG0KF/LSuRLvNrf9QWJM+gj88CjDpDW5Bh/1AD7B2+z9Q==}
+    engines: {node: '>=12.22.0'}
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18
+    dependencies:
       react: 18.2.0
     dev: false
 
@@ -9593,3 +9613,7 @@ packages:
       compress-commons: 4.1.1
       readable-stream: 3.6.0
     dev: true
+
+  /zod/3.20.2:
+    resolution: {integrity: sha512-1MzNQdAvO+54H+EaK5YpyEy0T+Ejo/7YLHS93G3RnYWh5gaotGHwGeN/ZO687qEDU2y4CdStQYXVHIgrUl5UVQ==}
+    dev: false

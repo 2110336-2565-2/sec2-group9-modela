@@ -9,8 +9,8 @@ const TextField: FC<TextFieldProps> = (props) => {
       InputProps={{
         ...props.InputProps,
         sx: {
-          ...props.InputProps?.sx,
           borderRadius: '10px',
+          backgroundColor: '#21212114',
           '& .MuiOutlinedInput-notchedOutline': {
             borderColor: 'transparent',
           },
@@ -20,6 +20,7 @@ const TextField: FC<TextFieldProps> = (props) => {
           '& ::-ms-clear': {
             display: 'none',
           },
+          ...props.InputProps?.sx,
         },
       }}
       InputLabelProps={{
@@ -28,10 +29,9 @@ const TextField: FC<TextFieldProps> = (props) => {
         },
       }}
       sx={{
-        ...props.sx,
         borderColor: 'white',
-        backgroundColor: '#21212114',
         borderRadius: '10px',
+        ...props.sx,
       }}
     />
   )
