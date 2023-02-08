@@ -2,8 +2,8 @@ import { Divider, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import React from 'react'
 
-import Footer from '../../../../../job/components/JobCard/components/JobCardFooter'
-import Header from '../../../../../job/components/JobCard/components/JobCardHeader'
+import Footer from '../../../../../detail/components/JobCard/components/JobCardFooter'
+import Header from '../../../../../detail/components/JobCard/components/JobCardHeader'
 import { CardContainer } from './styled'
 import { CardProps } from './type'
 
