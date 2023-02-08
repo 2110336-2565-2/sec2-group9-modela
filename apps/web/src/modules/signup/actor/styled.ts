@@ -1,6 +1,9 @@
 import { Card, styled } from '@mui/material'
 
 export const FormContainer = styled(Card)`
+  ${(props) => props.theme.breakpoints.down('md')} {
+    padding: 10px;
+  }
   padding: 20px;
   width: 100%;
   max-width: 600px;

@@ -33,7 +33,7 @@ const UploadFile: FC<IUploadFileProps> = (props) => {
           {errorMessage}
         </Typography>
       )}
-      {name && !error ? (
+      {name && !error && (
         <Typography sx={{ textAlign: 'center' }} variant="subtitle2">
           <Link
             href={url}
@@ -46,8 +46,6 @@ const UploadFile: FC<IUploadFileProps> = (props) => {
             {name}
           </Link>
         </Typography>
-      ) : (
-        <></>
       )}
     </UploadFileContainer>
   )
