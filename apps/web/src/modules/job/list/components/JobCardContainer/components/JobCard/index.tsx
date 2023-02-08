@@ -22,7 +22,7 @@ export default function JobCard(prop: CardProps) {
   } = prop
   const router = useRouter()
   const viewDetail = () => {
-    router.replace(`/job/${jobId}`)
+    router.push(`/job/${jobId}`)
   }
 
   return (
