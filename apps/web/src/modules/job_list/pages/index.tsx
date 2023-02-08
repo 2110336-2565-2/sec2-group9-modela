@@ -8,6 +8,7 @@ import JobCardContainer from '../components/JobCardContainer'
 import NotiCardContainer from '../components/NotiCardContainer'
 import SearchBox from '../components/SearchBox'
 import useJobListData from './hooks/useJobListData'
+import { FilterBoxContainer, JobContainer, NotiContainer } from './styled'
 
 //import Card from '../components/card'
 
@@ -25,16 +26,7 @@ export default function JobList() {
           gap: '3.5vw',
         }}
       >
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            paddingTop: '3rem',
-            width: '20vw',
-            gap: '1rem',
-          }}
-        >
+        <NotiContainer>
           <Typography variant="body1"> Unread notification </Typography>
           <div
             style={{
@@ -66,18 +58,9 @@ export default function JobList() {
               ]}
             />
           </div>
-        </div>
+        </NotiContainer>
 
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            paddingTop: '3rem',
-            width: '40vw',
-            gap: '1rem',
-          }}
-        >
+        <JobContainer>
           <SearchBox />
           <div
             style={{
@@ -99,18 +82,9 @@ export default function JobList() {
               {job ? <JobCardContainer {...job} /> : null}
             </InfiniteScroll>
           </div>
-        </div>
+        </JobContainer>
 
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'right',
-            paddingTop: '3rem',
-            width: '14vw',
-            gap: '1rem',
-          }}
-        >
+        <FilterBoxContainer>
           <div
             style={{
               display: 'flex',
@@ -120,7 +94,7 @@ export default function JobList() {
           >
             <FilterContainer />
           </div>
-        </div>
+        </FilterBoxContainer>
       </div>
     </>
   )
