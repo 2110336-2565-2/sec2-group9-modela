@@ -50,6 +50,24 @@ const FormController = <T extends FieldValues>(
                   {...inputProps}
                 />
               )
+            if (type === 'number')
+              return (
+                <TextField
+                  required={!optional}
+                  fullWidth={fullWidth}
+                  label={label}
+                  {...props.field}
+                  error={props.fieldState.invalid}
+                  helperText={props.fieldState.error?.message}
+                  onChange={(event) =>
+                    props.field.onChange(
+                      event.target.value === '' ? '' : +event.target.value,
+                    )
+                  }
+                  type="number"
+                  {...inputProps}
+                />
+              )
             if (type === 'uploadFile')
               return (
                 <UploadFile

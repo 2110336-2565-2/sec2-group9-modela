@@ -52,12 +52,9 @@ export const FORM_LAYOUT:
     xs: 6,
   },
   {
-    type: 'textField',
+    type: 'number',
     label: 'ค่าจ้างต่อคน (บาท)',
     name: 'wage',
-    inputProps: {
-      type: 'number',
-    },
     sm: 6,
     xs: 6,
   },
@@ -72,12 +69,9 @@ export const FORM_LAYOUT:
     type: 'divider',
   },
   {
-    type: 'textField',
+    type: 'number',
     label: 'จำนวนนักแสดง',
     name: 'actorCount',
-    inputProps: {
-      type: 'number',
-    },
     sm: 6,
     xs: 6,
   },
@@ -90,22 +84,16 @@ export const FORM_LAYOUT:
     xs: 6,
   },
   {
-    type: 'textField',
+    type: 'number',
     label: 'อายุต่ำสุด',
     name: 'minAge',
-    inputProps: {
-      type: 'number',
-    },
     sm: 6,
     xs: 6,
   },
   {
-    type: 'textField',
+    type: 'number',
     label: 'อายุสูงสุด',
     name: 'maxAge',
-    inputProps: {
-      type: 'number',
-    },
     sm: 6,
     xs: 6,
   },
@@ -120,15 +108,16 @@ export const FORM_LAYOUT:
   },
 ]
 
+// any better way here ? ;w;
 export const DEFAULT_FORM_VALUES: IPostJobSchemaType = {
   title: '',
   description: '',
   applicationDeadline: dayjs().add(1, 'day'),
-  wage: '',
+  wage: '' as unknown as number,
   shooting: [],
-  actorCount: '',
+  actorCount: '' as unknown as number,
   gender: 'ANY',
-  minAge: '',
-  maxAge: '',
+  minAge: '' as unknown as number,
+  maxAge: '' as unknown as number,
   role: '',
 }

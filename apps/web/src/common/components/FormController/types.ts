@@ -4,6 +4,7 @@ import { Control, FieldValues, Path } from 'react-hook-form'
 export interface IFormControllerProps<T extends FieldValues> {
   type:
     | 'textField'
+    | 'number'
     | 'uploadFile'
     | 'divider'
     | 'password'

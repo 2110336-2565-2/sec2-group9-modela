@@ -8,7 +8,7 @@ export const formLayout = (
   {
     type: 'textField',
     label: 'สถานที่ถ่ายทำ',
-    name: `shooting.${index}.location`,
+    name: `shooting.${index}.shootingLocation`,
   },
   {
     type: 'date',

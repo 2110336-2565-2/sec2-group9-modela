@@ -34,7 +34,7 @@ const useJobForm = (edit?: boolean) => {
     append({
       startDate: dayjs().add(1, 'day'),
       endDate: dayjs().add(1, 'day'),
-      location: '',
+      shootingLocation: '',
       startTime: dayjs().startOf('day'),
       endTime: dayjs().startOf('day'),
     })

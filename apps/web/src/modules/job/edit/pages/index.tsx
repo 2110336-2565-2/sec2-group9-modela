@@ -1,7 +1,7 @@
 import Jobform from 'modules/job/components/Jobform'
 
-const PostJobPage = () => {
+const EditJobPage = () => {
   return <Jobform edit />
 }
 
-export default PostJobPage
+export default EditJobPage
