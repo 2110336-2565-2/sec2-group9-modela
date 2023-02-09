@@ -12,15 +12,16 @@ const FormController = <T extends FieldValues>(
 ) => {
   const {
     type,
-    xs,
-    sm,
+    xs = 12,
+    sm = 12,
     control,
     name,
     handleUploadFile,
-    fullWidth,
+    fullWidth = true,
     label,
-    required,
+    optional,
     selectProps,
+    inputProps,
   } = props
 
   return (
@@ -35,12 +36,13 @@ const FormController = <T extends FieldValues>(
             if (type === 'textField')
               return (
                 <TextField
-                  required={required}
+                  required={!optional}
                   fullWidth={fullWidth}
                   label={label}
                   {...props.field}
                   error={props.fieldState.invalid}
                   helperText={props.fieldState.error?.message}
+                  {...inputProps}
                 />
               )
             if (type === 'uploadFile')
@@ -51,6 +53,7 @@ const FormController = <T extends FieldValues>(
                   error={props.fieldState.invalid}
                   errorMessage={props.fieldState.error?.message}
                   url={props.field.value}
+                  {...inputProps}
                 />
               )
 
@@ -58,12 +61,13 @@ const FormController = <T extends FieldValues>(
               return (
                 <TextField
                   select
-                  required={required}
+                  required={!optional}
                   fullWidth={fullWidth}
                   label={label}
                   {...props.field}
                   error={props.fieldState.invalid}
                   helperText={props.fieldState.error?.message}
+                  {...inputProps}
                 >
                   {selectProps?.map((choice) => (
                     <MenuItem
@@ -76,12 +80,13 @@ const FormController = <T extends FieldValues>(
 
             return (
               <PasswordTextField
-                required={required}
+                required={!optional}
                 fullWidth={fullWidth}
                 label={label}
                 {...props.field}
                 error={props.fieldState.invalid}
                 helperText={props.fieldState.error?.message}
+                {...inputProps}
               />
             )
           }}
