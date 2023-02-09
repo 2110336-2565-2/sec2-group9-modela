@@ -3,25 +3,17 @@ import dayjs from 'dayjs'
 import { FormEventHandler, useCallback, useMemo } from 'react'
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 
+import useDefaultValues from '../useDefaultValues'
 import { IPostJobSchemaType, postJobSchema } from './schema'
 
-const useJobForm = () => {
+const useJobForm = (edit?: boolean) => {
+  const defaultValues = useDefaultValues(edit)
+
   const { register, handleSubmit, control, setError } =
     useForm<IPostJobSchemaType>({
       criteriaMode: 'all',
       resolver: zodResolver(postJobSchema),
-      defaultValues: {
-        jobName: '',
-        jobDescription: '',
-        dueDate: dayjs().add(1, 'day'),
-        wage: '',
-        shooting: [],
-        actorCount: '',
-        gender: 'ANY',
-        minAge: '',
-        maxAge: '',
-        role: '',
-      },
+      defaultValues,
     })
 
   const { fields, append, remove } = useFieldArray({
@@ -46,7 +38,7 @@ const useJobForm = () => {
       startTime: dayjs().startOf('day'),
       endTime: dayjs().startOf('day'),
     })
-  }, [])
+  }, [append])
 
   return {
     handleClickSubmit,

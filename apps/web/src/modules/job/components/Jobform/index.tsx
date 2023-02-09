@@ -12,10 +12,12 @@ import SubmitButton from './components/SubmitButton'
 import { GENDER_CHOICE } from './constant'
 import useJobForm from './hooks/useJobForm'
 import { RootContainer } from './styled'
+import { JobformProps } from './types'
 
-const PostJobPage = () => {
+const PostJobPage = ({ edit }: JobformProps) => {
   const { control, handleClickSubmit, fields, handleAppend, remove } =
-    useJobForm()
+    useJobForm(edit)
+
   return (
     <RootContainer onSubmit={handleClickSubmit}>
       <Grid container spacing={3} sx={{ padding: '12px' }}>
