@@ -58,8 +58,8 @@ const FormController = <T extends FieldValues>(
               return (
                 <TextField
                   select
-                  required
-                  fullWidth
+                  required={required}
+                  fullWidth={fullWidth}
                   label={label}
                   {...props.field}
                   error={props.fieldState.invalid}
