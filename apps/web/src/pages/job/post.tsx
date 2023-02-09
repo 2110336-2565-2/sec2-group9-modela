@@ -1,2 +1,2 @@
-import PostJobPage from 'modules/job/post/pages'
+import PostJobPage from 'modules/job/components/Jobform'
 export default PostJobPage
