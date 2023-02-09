@@ -1,5 +1,6 @@
-import { Divider, Grid, TextField } from '@mui/material'
+import { Divider, Grid, MenuItem } from '@mui/material'
 import PasswordTextField from 'common/components/PasswordTextField'
+import TextField from 'common/components/TextField'
 import { memo } from 'react'
 import { Controller, FieldValues } from 'react-hook-form'
 
@@ -19,10 +20,11 @@ const FormController = <T extends FieldValues>(
     fullWidth,
     label,
     required,
+    selectProps,
   } = props
 
   return (
-    <Grid xs={xs} sm={sm}>
+    <Grid item xs={xs} sm={sm}>
       {type === 'divider' ? (
         <Divider />
       ) : (
@@ -50,6 +52,26 @@ const FormController = <T extends FieldValues>(
                   errorMessage={props.fieldState.error?.message}
                   url={props.field.value}
                 />
+              )
+
+            if (type === 'select')
+              return (
+                <TextField
+                  select
+                  required
+                  fullWidth
+                  label={label}
+                  {...props.field}
+                  error={props.fieldState.invalid}
+                  helperText={props.fieldState.error?.message}
+                >
+                  {selectProps?.map((choice) => (
+                    <MenuItem
+                      {...choice}
+                      key={choice.value?.toString() || `${Math.random()}`}
+                    />
+                  ))}
+                </TextField>
               )
 
             return (
