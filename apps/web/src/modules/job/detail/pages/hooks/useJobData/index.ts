@@ -5,13 +5,13 @@ import { useEffect, useState } from 'react'
 
 const useJobData = () => {
   const router = useRouter()
-  const { jid } = router.query
+  const { jobId } = router.query
   const [job, setJob] = useState<GetJobDto>()
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = (await apiClient.get<GetJobDto>('/job/' + jid)).data
+        const res = (await apiClient.get<GetJobDto>('/job/' + jobId)).data
         setJob(res)
       } catch (e) {
         console.log(e)
@@ -21,7 +21,7 @@ const useJobData = () => {
     if (router.isReady) {
       fetchData()
     }
-  }, [jid])
+  }, [jobId])
 
   return { job }
 }

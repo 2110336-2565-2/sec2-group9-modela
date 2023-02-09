@@ -1,6 +1,9 @@
 import { Box, Button } from '@mui/material'
 import React from 'react'
-const SubmitButton = () => {
+
+import { SubmitButtonProps } from './types'
+
+const SubmitButton = ({ edit }: SubmitButtonProps) => {
   return (
     <Box display="flex" justifyContent="center">
       <Button
@@ -9,7 +12,7 @@ const SubmitButton = () => {
         variant="contained"
         type="submit"
       >
-        สร้างงาน
+        {edit ? 'แก้ไขงาน' : 'สร้างงาน'}
       </Button>
     </Box>
   )

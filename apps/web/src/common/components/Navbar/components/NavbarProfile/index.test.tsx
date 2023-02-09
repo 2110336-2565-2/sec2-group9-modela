@@ -1,4 +1,4 @@
-import { UserType } from '@modela/database'
+import { UserType } from '@modela/dtos'
 import { render } from '@testing-library/react'
 import { mockUser } from 'common/utils/testing'
 import React from 'react'

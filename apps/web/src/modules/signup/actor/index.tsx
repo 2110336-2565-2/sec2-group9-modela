@@ -1,10 +1,10 @@
 import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material'
+import FormController from 'common/components/FormController'
 import { useUser } from 'common/context/UserContext'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { Control, FieldValues } from 'react-hook-form'
 
-import FormController from '../components/FormController'
 import { FORM_LAYOUT } from './constants'
 import useActorForm from './hooks/useActorForm'
 import { FormContainer, RootContainer } from './styled'

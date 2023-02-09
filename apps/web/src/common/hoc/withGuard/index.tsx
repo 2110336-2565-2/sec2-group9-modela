@@ -21,6 +21,7 @@ const withGuard = (
     if (!user.isVerified) {
       // TODO change path
       router.replace('/waiting')
+      return null
     }
 
     // TODO implement error page

@@ -4,7 +4,7 @@ import { z } from 'zod'
 
 const shootingSchema = z
   .object({
-    location: z.string({ required_error: 'กรุณากรอกสถานที่ถ่ายทำ' }),
+    shootingLocation: z.string({ required_error: 'กรุณากรอกสถานที่ถ่ายทำ' }),
     startDate: z
       .instanceof(dayjs as unknown as typeof Dayjs)
       .refine((arg) => arg.isAfter(dayjs()), {
@@ -33,34 +33,41 @@ const shootingSchema = z
 
 const postJobSchema = z
   .object({
-    jobName: z.string({ required_error: 'กรุณากรอกตำแหน่งงาน' }),
-    jobDescription: z.string({ required_error: 'กรุณากรอกรายละเอียดงาน' }),
-    dueDate: z
+    title: z.string({ required_error: 'กรุณากรอกตำแหน่งงาน' }),
+    description: z.string({ required_error: 'กรุณากรอกรายละเอียดงาน' }),
+    applicationDeadline: z
       .instanceof(dayjs as unknown as typeof Dayjs)
       .refine((arg) => arg.isAfter(dayjs()), {
         message: 'วันที่สิ้นสุดการรับสมัครต้องอยู่หลังวันที่ปัจจุบัน',
       }),
     wage: z
-      .string({ required_error: 'กรุณากรอกค่าจ้าง' })
-      .refine((arg) => /^[0-9]*\.?[0-9]*$/.test(arg), {
-        message: 'กรุณาค่าจ้างกรอกเป็นตัวเลข',
-      }),
+      .number({
+        required_error: 'กรุณากรอกค่าจ้าง',
+        invalid_type_error: 'กรุณากรอกค่าจ้างเป็นจำนวนบวก',
+      })
+      .nonnegative({ message: 'กรุณากรอกค่าจ้างเป็นจำนวนบวก' }),
     actorCount: z
-      .string({ required_error: 'กรุณากรอกจำนวนนักแสดง' })
-      .refine((arg) => /^[0-9]*$/.test(arg), {
-        message: 'กรุณากรอกจำนวนนักแสดงเป็นตัวเลขจำนวนเต็ม',
-      }),
+      .number({
+        required_error: 'กรุณากรอกจำนวนนักแสดง',
+        invalid_type_error: 'กรุณากรอกจำนวนนักแสดงเป็นจำนวนเต็มบวก',
+      })
+      .positive('กรุณากรอกจำนวนนักแสดงเป็นจำนวนเต็มบวก')
+      .multipleOf(1, 'กรุณากรอกจำนวนนักแสดงเป็นจำนวนเต็มบวก'),
     gender: z.nativeEnum(Gender),
     minAge: z
-      .string({ required_error: 'กรุณากรอกอายุต่ำสุด' })
-      .refine((arg) => /^[0-9]*$/.test(arg), {
-        message: 'กรุณากรอกอายุต่ำสุดเป็นตัวเลขจำนวนเต็ม',
-      }),
+      .number({
+        required_error: 'กรุณากรอกอายุต่ำสุด',
+        invalid_type_error: 'กรุณากรอกอายุต่ำสุดเป็นจำนวนเต็มบวก',
+      })
+      .positive('กรุณากรอกอายุต่ำสุดเป็นจำนวนเต็มบวก')
+      .multipleOf(1, 'กรุณากรอกอายุต่ำสุดเป็นจำนวนเต็มบวก'),
     maxAge: z
-      .string({ required_error: 'กรุณากรอกอายุสูงสุด' })
-      .refine((arg) => /^[0-9]*$/.test(arg), {
-        message: 'กรุณากรอกอายุสูงสุดเป็นตัวเลขจำนวนเต็ม',
-      }),
+      .number({
+        required_error: 'กรุณากรอกอายุสูงสุด',
+        invalid_type_error: 'กรุณากรอกอายุสูงสุดเป็นจำนวนเต็มบวก',
+      })
+      .positive('กรุณากรอกอายุสูงสุดเป็นจำนวนเต็มบวก')
+      .multipleOf(1, 'กรุณากรอกอายุสูงสุดเป็นจำนวนเต็มบวก'),
     role: z.string({ required_error: 'กรุณากรอกบทบาท' }),
     shooting: z.array(shootingSchema),
   })

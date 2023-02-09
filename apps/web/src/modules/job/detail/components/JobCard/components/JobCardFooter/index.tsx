@@ -1,4 +1,4 @@
-import { JobStatus, UserType } from '@modela/database'
+import { JobStatus, UserType } from '@modela/dtos'
 import { EventBusy, Money, PersonOutlined } from '@mui/icons-material'
 import { Tooltip, Typography } from '@mui/material'
 import theme from 'common/config/theme'
