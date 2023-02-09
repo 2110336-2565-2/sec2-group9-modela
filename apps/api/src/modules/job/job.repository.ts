@@ -35,6 +35,7 @@ export class JobRepository {
             User: true,
           },
         },
+        Shooting: true,
       },
     }
     //get data
