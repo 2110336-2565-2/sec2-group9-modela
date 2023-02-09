@@ -4,16 +4,17 @@ import { useCallback, useMemo } from 'react'
 
 const useFormNavbar = (edit?: boolean) => {
   const router = useRouter()
+
   const handleBack = useCallback(() => router.push('/job'), [router])
-  useBackNavbar(
-    useMemo(
-      () => ({
-        title: edit ? 'แก้ไขงาน' : 'สร้างงาน',
-        onBack: handleBack,
-      }),
-      [edit, handleBack],
-    ),
+  const override = useMemo(
+    () => ({
+      title: edit ? 'แก้ไขงาน' : 'สร้างงาน',
+      onBack: handleBack,
+    }),
+    [edit, handleBack],
   )
+
+  useBackNavbar(override)
 }
 
 export default useFormNavbar

@@ -16,7 +16,7 @@ export interface IFormControllerProps<T extends FieldValues> {
   sm?: number
   name?: Path<T>
   label?: string
-  control?: Control<FieldValues>
+  control?: Control<T>
   optional?: boolean
   fullWidth?: boolean
   selectProps?: MenuItemProps[]

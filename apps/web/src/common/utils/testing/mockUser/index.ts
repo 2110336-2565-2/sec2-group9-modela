@@ -1,5 +1,4 @@
-import { UserType } from '@modela/database'
-import { GetUserDto } from '@modela/dtos'
+import { GetUserDto, UserType } from '@modela/dtos'
 
 export const mockUser = () => {
   const MOCK_USER = {
