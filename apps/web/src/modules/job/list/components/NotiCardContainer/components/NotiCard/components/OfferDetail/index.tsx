@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material'
 import React from 'react'
 
-import { OfferDetailProps } from './type'
+import { OfferDetailProps } from './types'
 
 export default function OfferDetail(prop: OfferDetailProps) {
   const { offer } = prop

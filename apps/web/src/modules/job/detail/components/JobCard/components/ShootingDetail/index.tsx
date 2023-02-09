@@ -8,7 +8,7 @@ import { formatDate, formatTime } from 'common/utils/formatter'
 import React from 'react'
 
 import { Line } from './styled'
-import { ShootingDetailProps } from './type'
+import { ShootingDetailProps } from './types'
 
 const ShootingDetail = (prop: ShootingDetailProps) => {
   const { data, idx } = prop

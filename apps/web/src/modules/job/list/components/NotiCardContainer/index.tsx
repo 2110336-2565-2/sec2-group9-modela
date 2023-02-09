@@ -2,7 +2,7 @@ import React from 'react'
 
 import NotiCard from './components/NotiCard'
 import { CardBoxContainer } from './styled'
-import { CardArray } from './type'
+import { CardArray } from './types'
 
 export default function NotiCardContainer(prop: CardArray) {
   const { cardData } = prop

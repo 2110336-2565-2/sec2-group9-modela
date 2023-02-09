@@ -3,7 +3,7 @@ import Image from 'next/image'
 import React from 'react'
 
 import { HeaderRow } from './styled'
-import { HeaderProps } from './type'
+import { HeaderProps } from './types'
 
 export default function Header(prop: HeaderProps) {
   const { castingImage, companyName, title } = prop

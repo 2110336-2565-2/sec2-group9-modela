@@ -8,7 +8,7 @@ import { formatDate } from 'common/utils/formatter'
 import React from 'react'
 
 import { FooterRow } from './styled'
-import { FooterProps } from './type'
+import { FooterProps } from './types'
 
 const JobCardFooter = (prop: FooterProps) => {
   const { actorCount, wage, status, dueDate, gender } = prop

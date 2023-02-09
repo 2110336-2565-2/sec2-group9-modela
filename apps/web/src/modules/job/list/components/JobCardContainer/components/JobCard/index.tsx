@@ -5,7 +5,7 @@ import React from 'react'
 import Footer from '../../../../../detail/components/JobCard/components/JobCardFooter'
 import Header from '../../../../../detail/components/JobCard/components/JobCardHeader'
 import { CardContainer } from './styled'
-import { CardProps } from './type'
+import { CardProps } from './types'
 
 export default function JobCard(prop: CardProps) {
   const {
