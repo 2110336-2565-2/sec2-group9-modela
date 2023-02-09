@@ -1,4 +1,4 @@
-import { Job, Prisma } from '@modela/database'
+import { Job, JobStatus, Prisma } from '@modela/database'
 import {
   CreateJobDto,
   GetJobCardDto,
@@ -17,7 +17,7 @@ export class JobRepository {
       data: {
         title: createJobDto.title,
         description: createJobDto.description,
-        status: createJobDto.status,
+        status: JobStatus.OPEN,
         role: createJobDto.role,
         minAge: createJobDto.minAge,
         maxAge: createJobDto.maxAge,

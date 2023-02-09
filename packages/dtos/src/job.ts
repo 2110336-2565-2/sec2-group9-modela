@@ -160,7 +160,6 @@ export class EditJobDto implements EditJobType {
   @IsOptional()
   @IsNotEmpty()
   @ApiProperty()
-  @ApiProperty()
   gender: Gender
 
   @IsNumber()
@@ -201,12 +200,6 @@ export class CreateJobDto {
   @ApiProperty()
   description: string
 
-  
-  @IsEnum(JobStatus, { each: true })
-  @IsNotEmpty()
-  @ApiProperty()
-  status: JobStatus
-
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
@@ -222,7 +215,6 @@ export class CreateJobDto {
 
   @IsEnum(Gender, { each: true })
   @IsNotEmpty()
-  @ApiProperty()
   @ApiProperty()
   gender: Gender
 
