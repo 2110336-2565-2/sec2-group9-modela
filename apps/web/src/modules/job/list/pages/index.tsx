@@ -7,6 +7,7 @@ import JobCardContainer from '../components/JobCardContainer'
 import NotiCardContainer from '../components/NotiCardContainer'
 import SearchBox from '../components/SearchBox'
 import useJobListData from './hooks/useJobListData'
+import { notiHolder } from './placeholder'
 import { FilterBoxContainer, JobContainer, NotiContainer } from './styled'
 
 export default function JobList() {
@@ -32,28 +33,7 @@ export default function JobList() {
             gap: '1rem',
           }}
         >
-          <NotiCardContainer
-            cardData={[
-              {
-                title: 'Intern offer',
-                companyName: 'Fridge Agile',
-                offer: '100k perk year',
-                castingImage: '',
-              },
-              {
-                title: 'Software Engineer offer',
-                companyName: 'Apple Inc.',
-                offer: '150k perk year',
-                castingImage: '',
-              },
-              {
-                title: 'Data Scientist offer',
-                companyName: 'Google',
-                offer: '200k perk year',
-                castingImage: '',
-              },
-            ]}
-          />
+          <NotiCardContainer cardData={notiHolder} />
         </div>
       </NotiContainer>
 
