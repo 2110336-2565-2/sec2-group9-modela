@@ -360,7 +360,7 @@ describe('JobService', () => {
 
     const MOCK_JOB = {
       ...mock('job')
-        .omit(['castingId', 'createdAt', 'updatedAt', 'jobId'])
+        .omit(['castingId', 'createdAt', 'updatedAt', 'jobId', 'status'])
         .get(),
       castingId: MOCK_CASTING_ID,
       shooting: mock('shooting').get(3),
