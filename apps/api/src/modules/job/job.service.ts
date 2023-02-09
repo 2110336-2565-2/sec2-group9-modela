@@ -22,6 +22,20 @@ export class JobService {
   constructor(private repository: JobRepository) {}
 
   async createJob(createJobDto: CreateJobDto, userId: number) {
+    // if minAge is greater than maxAge, throw error
+    if (createJobDto.minAge > createJobDto.maxAge) {
+      throw new ForbiddenException('minAge is greater than maxAge')
+      return
+    }
+    // for each shooting, if the start time is greater than the end time, throw error
+    for (let i = 0; i < createJobDto.shooting.length; i++) {
+      if (
+        createJobDto.shooting[i].startTime > createJobDto.shooting[i].endTime
+      ) {
+        throw new ForbiddenException('startTime is greater than endTime')
+        return
+      }
+    }
     try {
       await this.repository.createJob(createJobDto, userId)
     } catch (e) {
