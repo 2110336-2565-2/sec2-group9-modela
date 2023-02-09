@@ -1,9 +1,9 @@
 import { Divider, Typography } from '@mui/material'
+import Footer from 'modules/job/components/JobCardFooter'
+import Header from 'modules/job/components/JobCardHeader'
 import React from 'react'
 
-import Footer from '../../../../../components/JobCardFooter'
-import Header from '../../../../../components/JobCardHeader'
-import goJobDetail from './hooks/goJobDetail'
+import goJobDetail from './hooks/useJobCard'
 import { CardContainer } from './styled'
 import { CardProps } from './types'
 

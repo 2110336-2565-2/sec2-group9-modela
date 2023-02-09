@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material'
+import { CircularProgress, Typography } from '@mui/material'
 import React from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 
@@ -72,7 +72,7 @@ export default function JobList() {
             hasMore={hasMore}
             loader={
               <div className="loader" key={0}>
-                Loading ...
+                <CircularProgress color="primary" />
               </div>
             }
           >
