@@ -13,7 +13,7 @@ export default function Footer() {
       <Typography
         variant="button"
         color="primary"
-        style={{ cursor: 'pointer', justifyContent: 'left' }}
+        sx={{ cursor: 'pointer', justifyContent: 'left' }}
         onClick={() => read()}
       >
         MARK AS READ

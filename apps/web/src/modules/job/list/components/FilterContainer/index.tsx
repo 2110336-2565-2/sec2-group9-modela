@@ -36,12 +36,12 @@ export default function SearchBox() {
       />
       <TextField fullWidth label="สถานที่ถ่ายทำ" />
 
-      <Divider variant="middle" style={{ width: '90%' }} />
+      <Divider variant="middle" sx={{ width: '90%' }} />
 
       <Typography variant="body1"> อายุนักแสดง </Typography>
-      <TextField fullWidth label="กรอกอายุนักแสดง" />
+      <TextField fullWidth type="number" label="กรอกอายุนักแสดง" />
 
-      <Divider variant="middle" style={{ width: '90%' }} />
+      <Divider variant="middle" sx={{ width: '90%' }} />
       <Typography variant="body1"> ค่าจ้าง </Typography>
       <TextField
         fullWidth
@@ -58,14 +58,14 @@ export default function SearchBox() {
         InputProps={{ endAdornment: <ArrowDropDownOutlined color="primary" /> }}
       />
 
-      <Divider variant="middle" style={{ width: '90%' }} />
+      <Divider variant="middle" sx={{ width: '90%' }} />
       <Typography variant="body1"> สถานะการเปิดรับสมัคร </Typography>
       <FormGroup>
         <FormControlLabel control={<Checkbox />} label="เปิดรับสมัคร" />
         <FormControlLabel control={<Checkbox />} label="ปิดรับสมัคร" />
       </FormGroup>
 
-      <Divider variant="middle" style={{ width: '90%' }} />
+      <Divider variant="middle" sx={{ width: '90%' }} />
       <Typography variant="body1"> เพศ </Typography>
       <FormGroup>
         <FormControlLabel control={<Checkbox />} label="ชาย" />

@@ -33,7 +33,7 @@ export default function JobCard(prop: CardProps) {
         {description}
       </Typography>
 
-      <Divider variant="middle" style={{ width: '90%' }} />
+      <Divider variant="middle" sx={{ width: '90%' }} />
       <Footer
         dueDate={applicationDeadline}
         gender={gender}
