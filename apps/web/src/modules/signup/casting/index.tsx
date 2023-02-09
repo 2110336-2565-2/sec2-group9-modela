@@ -35,7 +35,7 @@ const CastingSignup = () => {
         <Grid container spacing={2} sx={{ padding: '12px' }}>
           <Grid item xs={12} sm={12}>
             <Typography variant="h5" sx={{ textAlign: 'center' }}>
-              นักแสดง
+              ผู้กำกับ
             </Typography>
           </Grid>
           {FORM_LAYOUT.map((props) => (
