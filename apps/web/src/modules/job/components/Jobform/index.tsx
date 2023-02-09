@@ -1,21 +1,19 @@
-import { UserType } from '@modela/database'
 import { Grid } from '@mui/material'
 import FormController from 'common/components/FormController'
-import withGuard from 'common/hoc/withGuard'
 import React from 'react'
 import { Control, FieldValues } from 'react-hook-form'
 
 import AddShootingButton from './components/AddShootingButton'
 import ShootingForm from './components/ShootingForm'
 import SubmitButton from './components/SubmitButton'
-import { FORM_LAYOUT } from './constant'
+import { DEFAULT_FORM_VALUES, FORM_LAYOUT } from './constant'
 import useJobForm from './hooks/useJobForm'
 import { RootContainer } from './styled'
 import { JobformProps } from './types'
 
-const PostJobPage = ({ edit }: JobformProps) => {
+const PostJobPage = ({ edit, initialValues }: JobformProps) => {
   const { control, handleClickSubmit, fields, handleAppend, remove } =
-    useJobForm(edit)
+    useJobForm(initialValues || DEFAULT_FORM_VALUES, edit)
 
   return (
     <RootContainer onSubmit={handleClickSubmit}>
@@ -49,11 +47,11 @@ const PostJobPage = ({ edit }: JobformProps) => {
           )
         })}
         <Grid item xs={12}>
-          <SubmitButton />
+          <SubmitButton edit={edit} />
         </Grid>
       </Grid>
     </RootContainer>
   )
 }
 
-export default withGuard(PostJobPage, [UserType.CASTING])
+export default PostJobPage

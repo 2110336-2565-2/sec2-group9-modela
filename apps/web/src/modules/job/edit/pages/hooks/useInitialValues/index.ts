@@ -1,23 +1,25 @@
 import { GetJobDto } from '@modela/dtos'
 import { apiClient } from 'common/utils/api'
 import dayjs from 'dayjs'
+import { IPostJobSchemaType } from 'modules/job/components/Jobform/hooks/useJobForm/schema'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-import { DEFAULT_FORM_VALUES } from '../../constant'
-
-const useDefaultValues = (edit?: boolean) => {
+const useInitialValues = () => {
   const router = useRouter()
   const { jobId } = router.query as { jobId: string }
 
-  const [defaultValues, setDefaultValues] = useState(DEFAULT_FORM_VALUES)
+  const [initialValues, setInitialValues] = useState<IPostJobSchemaType | null>(
+    null,
+  )
 
   useEffect(() => {
     const fetchPostData = async () => {
+      if (!router.isReady) return null
       const res = await apiClient.get<GetJobDto>(`/job/${jobId}`)
       const { applicationDeadline, shooting, ...rest } = res.data
 
-      setDefaultValues({
+      setInitialValues({
         ...rest,
         applicationDeadline: dayjs(applicationDeadline),
         shooting: shooting.map(
@@ -31,10 +33,10 @@ const useDefaultValues = (edit?: boolean) => {
         ),
       })
     }
-    if (edit) fetchPostData()
-  }, [edit, jobId])
+    fetchPostData()
+  }, [jobId, router.isReady])
 
-  return defaultValues
+  return initialValues
 }
 
-export default useDefaultValues
+export default useInitialValues

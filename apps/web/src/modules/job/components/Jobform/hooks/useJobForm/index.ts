@@ -1,20 +1,21 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import dayjs from 'dayjs'
-import { FormEventHandler, useCallback, useMemo } from 'react'
+import { FormEventHandler, useCallback, useEffect, useMemo } from 'react'
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 
-import useDefaultValues from '../useDefaultValues'
 import { IPostJobSchemaType, postJobSchema } from './schema'
 
-const useJobForm = (edit?: boolean) => {
-  const defaultValues = useDefaultValues(edit)
-
-  const { register, handleSubmit, control, setError } =
+const useJobForm = (defaultValues: IPostJobSchemaType, edit?: boolean) => {
+  const { register, handleSubmit, control, setError, reset } =
     useForm<IPostJobSchemaType>({
       criteriaMode: 'all',
       resolver: zodResolver(postJobSchema),
-      defaultValues,
+      defaultValues: defaultValues,
     })
+
+  useEffect(() => {
+    reset(defaultValues)
+  }, [defaultValues, reset])
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -23,7 +24,10 @@ const useJobForm = (edit?: boolean) => {
 
   const handleSuccess: SubmitHandler<IPostJobSchemaType> = useCallback(() => {
     console.log('success')
-  }, [])
+    if (edit) {
+      console.log('edit success')
+    }
+  }, [edit])
 
   const handleClickSubmit: FormEventHandler<HTMLFormElement> = useMemo(
     () => handleSubmit(handleSuccess),
