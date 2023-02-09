@@ -10,12 +10,18 @@ import {
   FormGroup,
   Typography,
 } from '@mui/material'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker'
 import TextField from 'common/components/TextField'
+import { Dayjs } from 'dayjs'
 import React from 'react'
 
 import { FilterBox } from './style'
 
 export default function SearchBox() {
+  const [startShooting, setStartShooting] = React.useState<Dayjs | null>(null)
+  const [endShooting, setEndShooting] = React.useState<Dayjs | null>(null)
   return (
     <FilterBox>
       <Typography variant="body1"> การถ่ายทำ </Typography>
@@ -24,16 +30,45 @@ export default function SearchBox() {
         label="วันถ่ายทำ"
         InputProps={{ endAdornment: <DateRangeOutlined color="primary" /> }}
       />
-      <TextField
-        fullWidth
-        label="เวลาเริ่มต้นการถ่ายทำ"
-        InputProps={{ endAdornment: <Schedule color="primary" /> }}
-      />
-      <TextField
-        fullWidth
-        label="เวลาสิ้นสุดการถ่ายทำ"
-        InputProps={{ endAdornment: <Schedule color="primary" /> }}
-      />
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <MobileTimePicker
+          label="เวลาเริ่มต้นการถ่ายทำ"
+          value={startShooting}
+          onChange={(newValue) => {
+            setStartShooting(newValue)
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              InputProps={{
+                ...params.InputProps,
+                endAdornment: (
+                  <Schedule color="primary" sx={{ cursor: 'pointer' }} />
+                ),
+              }}
+            />
+          )}
+        />
+        <MobileTimePicker
+          label="เวลาสิ้นสุดการถ่ายทำ"
+          value={endShooting}
+          onChange={(newValue) => {
+            setEndShooting(newValue)
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              InputProps={{
+                ...params.InputProps,
+                endAdornment: (
+                  <Schedule color="primary" sx={{ cursor: 'pointer' }} />
+                ),
+              }}
+            />
+          )}
+        />
+      </LocalizationProvider>
+
       <TextField fullWidth label="สถานที่ถ่ายทำ" />
 
       <Divider variant="middle" sx={{ width: '90%' }} />

@@ -1,7 +1,7 @@
 import React from 'react'
 
-import Footer from './components/Footer'
-import Header from './components/Header'
+import Footer from './components/NotiCardFooter'
+import Header from './components/NotiCardHeader'
 import OfferDetail from './components/OfferDetail'
 import { CardContainer } from './styled'
 import { CardProps } from './types'
