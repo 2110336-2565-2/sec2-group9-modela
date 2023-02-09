@@ -37,14 +37,15 @@ const FormController = <T extends FieldValues>(
         <Controller
           name={name!}
           control={control}
-          render={(props) => {
+          render={({ field: { ref, ...field }, ...props }) => {
             if (type === 'textField')
               return (
                 <TextField
                   required={!optional}
                   fullWidth={fullWidth}
                   label={label}
-                  {...props.field}
+                  inputRef={ref}
+                  {...field}
                   error={props.fieldState.invalid}
                   helperText={props.fieldState.error?.message}
                   {...inputProps}
@@ -56,11 +57,12 @@ const FormController = <T extends FieldValues>(
                   required={!optional}
                   fullWidth={fullWidth}
                   label={label}
-                  {...props.field}
+                  inputRef={ref}
+                  {...field}
                   error={props.fieldState.invalid}
                   helperText={props.fieldState.error?.message}
                   onChange={(event) =>
-                    props.field.onChange(
+                    field.onChange(
                       event.target.value === '' ? '' : +event.target.value,
                     )
                   }
@@ -75,7 +77,7 @@ const FormController = <T extends FieldValues>(
                   handleSelectFile={handleUploadFile!}
                   error={props.fieldState.invalid}
                   errorMessage={props.fieldState.error?.message}
-                  url={props.field.value}
+                  url={field.value}
                   {...inputProps}
                 />
               )
@@ -87,7 +89,8 @@ const FormController = <T extends FieldValues>(
                   required={!optional}
                   fullWidth={fullWidth}
                   label={label}
-                  {...props.field}
+                  inputRef={ref}
+                  {...field}
                   error={props.fieldState.invalid}
                   helperText={props.fieldState.error?.message}
                   {...inputProps}
@@ -105,8 +108,9 @@ const FormController = <T extends FieldValues>(
                 <DesktopDatePicker
                   label={label}
                   inputFormat="DD/MM/YYYY"
-                  {...props.field}
-                  onChange={(newValue) => props.field.onChange(newValue)}
+                  inputRef={ref}
+                  {...field}
+                  onChange={(newValue) => field.onChange(newValue)}
                   renderInput={(params) => <TextField {...params} fullWidth />}
                 />
               )
@@ -114,8 +118,9 @@ const FormController = <T extends FieldValues>(
               return (
                 <TimePicker
                   label={label}
-                  {...props.field}
-                  onChange={(newValue) => props.field.onChange(newValue)}
+                  inputRef={ref}
+                  {...field}
+                  onChange={(newValue) => field.onChange(newValue)}
                   renderInput={(params) => <TextField {...params} fullWidth />}
                 />
               )
@@ -125,7 +130,8 @@ const FormController = <T extends FieldValues>(
                 required={!optional}
                 fullWidth={fullWidth}
                 label={label}
-                {...props.field}
+                {...field}
+                inputRef={ref}
                 error={props.fieldState.invalid}
                 helperText={props.fieldState.error?.message}
                 {...inputProps}
