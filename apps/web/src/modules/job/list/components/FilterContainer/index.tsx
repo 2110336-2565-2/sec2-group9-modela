@@ -12,6 +12,7 @@ import {
 } from '@mui/material'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker'
 import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker'
 import TextField from 'common/components/TextField'
 import { Dayjs } from 'dayjs'
@@ -22,15 +23,27 @@ import { FilterBox } from './style'
 export default function SearchBox() {
   const [startShooting, setStartShooting] = React.useState<Dayjs | null>(null)
   const [endShooting, setEndShooting] = React.useState<Dayjs | null>(null)
+  const [date, setDate] = React.useState<Dayjs | null>(null)
   return (
     <FilterBox>
       <Typography variant="body1"> การถ่ายทำ </Typography>
-      <TextField
-        fullWidth
-        label="วันถ่ายทำ"
-        InputProps={{ endAdornment: <DateRangeOutlined color="primary" /> }}
-      />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <MobileDatePicker
+          label="วันถ่ายทำ"
+          value={date}
+          onChange={(newValue) => {
+            setDate(newValue)
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              InputProps={{
+                ...params.InputProps,
+                endAdornment: <DateRangeOutlined color="primary" />,
+              }}
+            />
+          )}
+        />
         <MobileTimePicker
           label="เวลาเริ่มต้นการถ่ายทำ"
           value={startShooting}
