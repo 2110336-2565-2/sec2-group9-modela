@@ -8,12 +8,14 @@ import useInitialValues from './hooks/useInitialValues'
 
 const EditJobPage = () => {
   const initialValues = useInitialValues()
+
   if (!initialValues)
     return (
       <PageContainer>
         <CircularProgress />
       </PageContainer>
     )
+
   return <Jobform edit initialValues={initialValues} />
 }
 

@@ -105,7 +105,7 @@ const FormController = <T extends FieldValues>(
                 <DesktopDatePicker
                   label={label}
                   inputFormat="DD/MM/YYYY"
-                  value={props.field.value}
+                  {...props.field}
                   onChange={(newValue) => props.field.onChange(newValue)}
                   renderInput={(params) => <TextField {...params} fullWidth />}
                 />
@@ -114,7 +114,7 @@ const FormController = <T extends FieldValues>(
               return (
                 <TimePicker
                   label={label}
-                  value={props.field.value}
+                  {...props.field}
                   onChange={(newValue) => props.field.onChange(newValue)}
                   renderInput={(params) => <TextField {...params} fullWidth />}
                 />
