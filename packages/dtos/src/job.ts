@@ -3,6 +3,7 @@ import { Type } from 'class-transformer'
 import {
   IsDate,
   IsEnum,
+  IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
@@ -120,41 +121,131 @@ export class ShootingDto implements Partial<Shooting> {
 type EditJobType = Partial<Job> & { shooting: ShootingDto[] }
 
 export class EditJobDto implements EditJobType {
+
+  @IsString()
+  @IsOptional()
+  @IsNotEmpty()
   @ApiProperty()
   title: string
 
+  @IsString()
+  @IsOptional()
+  @IsNotEmpty()
   @ApiProperty()
   description: string
 
+  
+  @IsEnum(JobStatus, { each: true })
+  @IsOptional()
+  @IsNotEmpty()
   @ApiProperty()
   status: JobStatus
 
+  @IsString()
+  @IsOptional()
+  @IsNotEmpty()
   @ApiProperty()
   role: string
 
+  @IsNumber()
+  @IsOptional()
+  @IsNotEmpty()
   @ApiProperty()
   minAge: number
 
   @ApiProperty()
   maxAge: number
 
+  @IsEnum(Gender, { each: true })
+  @IsOptional()
+  @IsNotEmpty()
+  @ApiProperty()
   @ApiProperty()
   gender: Gender
 
+  @IsNumber()
+  @IsOptional()
+  @IsNotEmpty()
   @ApiProperty()
   actorCount: number
 
+
+  @IsNumber()
+  @IsOptional()
+  @IsNotEmpty()
   @ApiProperty()
   wage: number
 
+
+  @IsDateString()
+  @IsOptional()
+  @IsNotEmpty()
   @ApiProperty()
   applicationDeadline: Date
 
+  @IsNotEmpty()
+  @IsOptional()
   @ApiProperty({ type: ShootingDto, isArray: true })
   shooting: ShootingDto[]
 }
 
-export class CreateJobDto extends EditJobDto {
+export class CreateJobDto {
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  title: string
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  description: string
+
+  
+  @IsEnum(JobStatus, { each: true })
+  @IsNotEmpty()
+  @ApiProperty()
+  status: JobStatus
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  role: string
+
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty()
+  minAge: number
+
+  @ApiProperty()
+  maxAge: number
+
+  @IsEnum(Gender, { each: true })
+  @IsNotEmpty()
+  @ApiProperty()
+  @ApiProperty()
+  gender: Gender
+
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty()
+  actorCount: number
+
+
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty()
+  wage: number
+
+
+  @IsDateString()
+  @IsNotEmpty()
+  @ApiProperty()
+  applicationDeadline: Date
+
+  @IsNotEmpty()
+  @ApiProperty({ type: ShootingDto, isArray: true })
+  shooting: ShootingDto[]
 }
 
 export class GetJobCardDto extends OmitType(EditJobDto, [
