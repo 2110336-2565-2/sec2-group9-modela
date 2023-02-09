@@ -1,7 +1,7 @@
 import { UserType } from '@modela/dtos'
 import withGuard from 'common/hoc/withGuard'
-import Jobform from 'modules/job/components/Jobform'
+import JobForm from 'modules/job/components/JobForm'
 
-const PostJobPage = () => <Jobform />
+const PostJobPage = () => <JobForm />
 
 export default withGuard(PostJobPage, [UserType.CASTING])

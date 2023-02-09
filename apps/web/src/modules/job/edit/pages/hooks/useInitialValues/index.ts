@@ -1,7 +1,7 @@
 import { GetJobDto } from '@modela/dtos'
 import { apiClient } from 'common/utils/api'
 import dayjs from 'dayjs'
-import { IPostJobSchemaType } from 'modules/job/components/Jobform/hooks/useJobForm/schema'
+import { IPostJobSchemaType } from 'modules/job/components/JobForm/hooks/useJobForm/schema'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
