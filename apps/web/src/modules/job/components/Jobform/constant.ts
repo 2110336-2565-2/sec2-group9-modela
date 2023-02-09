@@ -49,6 +49,7 @@ export const FORM_LAYOUT:
     label: 'วันที่ปิดรับสมัคร',
     name: 'applicationDeadline',
     sm: 6,
+    xs: 6,
   },
   {
     type: 'textField',
@@ -58,6 +59,7 @@ export const FORM_LAYOUT:
       type: 'number',
     },
     sm: 6,
+    xs: 6,
   },
   {
     type: 'shooting',
@@ -77,6 +79,7 @@ export const FORM_LAYOUT:
       type: 'number',
     },
     sm: 6,
+    xs: 6,
   },
   {
     type: 'select',
@@ -84,6 +87,7 @@ export const FORM_LAYOUT:
     name: 'gender',
     selectProps: GENDER_CHOICE,
     sm: 6,
+    xs: 6,
   },
   {
     type: 'textField',
@@ -93,6 +97,7 @@ export const FORM_LAYOUT:
       type: 'number',
     },
     sm: 6,
+    xs: 6,
   },
   {
     type: 'textField',
@@ -102,6 +107,7 @@ export const FORM_LAYOUT:
       type: 'number',
     },
     sm: 6,
+    xs: 6,
   },
   {
     type: 'textField',

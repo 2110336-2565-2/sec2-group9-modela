@@ -1,10 +1,10 @@
 import { Remove } from '@mui/icons-material'
 import { Grid, Typography } from '@mui/material'
-import { DesktopDatePicker, TimePicker } from '@mui/x-date-pickers'
-import TextField from 'common/components/TextField'
+import FormController from 'common/components/FormController'
 import React from 'react'
-import { Controller } from 'react-hook-form'
+import { Control, FieldValues } from 'react-hook-form'
 
+import { formLayout } from './constant'
 import { ShootingFormProps } from './types'
 
 const ShootingForm = (prop: ShootingFormProps) => {
@@ -25,78 +25,13 @@ const ShootingForm = (prop: ShootingFormProps) => {
           </div>
         </div>
       </Grid>
-      <Grid item xs={12}>
-        <Controller
-          name={`shooting.${index}.location`}
-          control={control}
-          render={(props) => (
-            <TextField
-              required
-              fullWidth
-              label="สถานที่ถ่ายทำ"
-              {...props.field}
-            />
-          )}
+      {formLayout(index).map((props) => (
+        <FormController
+          control={control as unknown as Control<FieldValues>}
+          key={JSON.stringify(props)}
+          {...props}
         />
-      </Grid>
-      <Grid xs={6} item>
-        <Controller
-          name={`shooting.${index}.startDate`}
-          control={control}
-          render={(props) => (
-            <DesktopDatePicker
-              label="วันที่เริ่มถ่ายทำ"
-              inputFormat="DD/MM/YYYY"
-              value={props.field.value}
-              onChange={(newValue) => props.field.onChange(newValue)}
-              renderInput={(params) => <TextField {...params} fullWidth />}
-            />
-          )}
-        />
-      </Grid>
-      <Grid xs={6} item>
-        <Controller
-          name={`shooting.${index}.endDate`}
-          control={control}
-          render={(props) => (
-            <DesktopDatePicker
-              label="วันที่สิ้นสุดถ่ายทำ"
-              inputFormat="DD/MM/YYYY"
-              value={props.field.value}
-              onChange={(newValue) => props.field.onChange(newValue)}
-              renderInput={(params) => <TextField {...params} fullWidth />}
-            />
-          )}
-        />
-      </Grid>
-      <Grid xs={6} item>
-        <Controller
-          name={`shooting.${index}.startTime`}
-          control={control}
-          render={(props) => (
-            <TimePicker
-              label="เวลาเริ่มถ่ายทำในแต่ละวัน"
-              value={props.field.value}
-              onChange={(newValue) => props.field.onChange(newValue)}
-              renderInput={(params) => <TextField {...params} fullWidth />}
-            />
-          )}
-        />
-      </Grid>
-      <Grid xs={6} item>
-        <Controller
-          name={`shooting.${index}.endTime`}
-          control={control}
-          render={(props) => (
-            <TimePicker
-              label="เวลาสิ้นสุดถ่ายทำในแต่ละวัน"
-              value={props.field.value}
-              onChange={(newValue) => props.field.onChange(newValue)}
-              renderInput={(params) => <TextField {...params} fullWidth />}
-            />
-          )}
-        />
-      </Grid>
+      ))}
     </>
   )
 }
