@@ -4,11 +4,11 @@ export interface CardProps {
   title: string
   companyName: string
   description: string
-  castingImage: string
+  jobCastingImageUrl: string
   gender: Gender
   actorCount: number
   wage: number
-  dueDate: Date
+  applicationDeadline: Date
   jobId: number
   status: JobStatus
 }

@@ -10,9 +10,9 @@ import {
   FormGroup,
   Typography,
 } from '@mui/material'
+import TextField from 'common/components/TextField'
 import React from 'react'
 
-import TextField from '../../../../../common/components/TextField'
 import { FilterBox } from './style'
 
 export default function SearchBox() {
@@ -50,8 +50,7 @@ export default function SearchBox() {
       />
 
       <Typography variant="subtitle2" sx={{ color: 'rgba(0,0,0,0.6)' }}>
-        {' '}
-        +- ไม่เกิน{' '}
+        +- ไม่เกิน
       </Typography>
       <TextField
         fullWidth

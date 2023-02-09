@@ -14,12 +14,13 @@ const useJobListData = () => {
       if (pageControl <= page) {
         pageControl = page + 1
         const res = (
-          await apiClient.get<GetJobCardWithMaxPageDto>(
-            `/job?limit=5&page=${page}`,
-          )
+          await apiClient.get<GetJobCardWithMaxPageDto>(`/job`, {
+            params: {
+              limit: 5,
+              page,
+            },
+          })
         ).data
-        console.log(res)
-        console.log(res.maxPage, page, res.maxPage > page)
         setJob((prevJobs) => ({
           ...prevJobs,
           jobs: [...(prevJobs?.jobs || []), ...res.jobs],

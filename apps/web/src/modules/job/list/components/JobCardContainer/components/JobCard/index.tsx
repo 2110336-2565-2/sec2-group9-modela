@@ -2,18 +2,18 @@ import { Divider, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import React from 'react'
 
-import Footer from '../../../../../detail/components/JobCard/components/JobCardFooter'
-import Header from '../../../../../detail/components/JobCard/components/JobCardHeader'
+import Footer from '../../../../../components/JobCardFooter'
+import Header from '../../../../../components/JobCardHeader'
 import { CardContainer } from './styled'
 import { CardProps } from './types'
 
 export default function JobCard(prop: CardProps) {
   const {
     actorCount,
-    castingImage,
+    jobCastingImageUrl,
     companyName,
     description,
-    dueDate,
+    applicationDeadline,
     gender,
     title,
     wage,
@@ -30,7 +30,7 @@ export default function JobCard(prop: CardProps) {
       <Header
         title={title}
         companyName={companyName}
-        castingImage={castingImage}
+        castingImage={jobCastingImageUrl}
       />
       <Typography variant="subtitle2" sx={{ color: 'rgba(0,0,0,0.6)' }}>
         {description}
@@ -38,7 +38,7 @@ export default function JobCard(prop: CardProps) {
 
       <Divider variant="middle" style={{ width: '90%' }} />
       <Footer
-        dueDate={dueDate}
+        dueDate={applicationDeadline}
         gender={gender}
         wage={wage}
         actorCount={actorCount}

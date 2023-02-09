@@ -7,10 +7,8 @@ export default function OfferDetail(prop: OfferDetailProps) {
   const { offer } = prop
 
   return (
-    <>
-      <Typography variant="subtitle2" sx={{ color: 'rgba(0,0,0,0.6)' }}>
-        {offer}
-      </Typography>
-    </>
+    <Typography variant="subtitle2" sx={{ color: 'rgba(0,0,0,0.6)' }}>
+      {offer}
+    </Typography>
   )
 }
