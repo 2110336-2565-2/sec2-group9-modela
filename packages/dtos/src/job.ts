@@ -2,6 +2,7 @@ import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger'
 import { Type } from 'class-transformer'
 import {
   IsDate,
+  IsDateString,
   IsEnum,
   IsNotEmpty,
   IsNumber,
@@ -14,7 +15,7 @@ import { Casting, Gender, Job, JobStatus, Shooting } from '@modela/database'
 
 export enum SearchJobStatus {
   'OPEN' = 'OPEN',
-  'CLOSE' = 'CLOSE'
+  'CLOSE' = 'CLOSE',
 }
 
 export class SearchJobDto {
