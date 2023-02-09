@@ -1,7 +1,7 @@
 import {
+  AccessTime,
   ArrowDropDownOutlined,
   DateRangeOutlined,
-  Schedule,
 } from '@mui/icons-material'
 import {
   Checkbox,
@@ -56,7 +56,7 @@ export default function SearchBox() {
               InputProps={{
                 ...params.InputProps,
                 endAdornment: (
-                  <Schedule color="primary" sx={{ cursor: 'pointer' }} />
+                  <AccessTime color="primary" sx={{ cursor: 'pointer' }} />
                 ),
               }}
             />
@@ -74,7 +74,7 @@ export default function SearchBox() {
               InputProps={{
                 ...params.InputProps,
                 endAdornment: (
-                  <Schedule color="primary" sx={{ cursor: 'pointer' }} />
+                  <AccessTime color="primary" sx={{ cursor: 'pointer' }} />
                 ),
               }}
             />

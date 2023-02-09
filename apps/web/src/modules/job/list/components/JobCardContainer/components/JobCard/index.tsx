@@ -29,11 +29,14 @@ export default function JobCard(prop: CardProps) {
         companyName={companyName}
         castingImage={jobCastingImageUrl}
       />
-      <Typography variant="subtitle2" sx={{ color: 'rgba(0,0,0,0.6)' }}>
+      <Typography
+        variant="subtitle2"
+        sx={{ color: 'rgba(0,0,0,0.6)', paddingBottom: '12px' }}
+      >
         {description}
       </Typography>
 
-      <Divider variant="middle" sx={{ width: '90%' }} />
+      <Divider variant="fullWidth" sx={{ width: '100%' }} />
       <Footer
         dueDate={applicationDeadline}
         gender={gender}

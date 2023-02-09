@@ -7,6 +7,9 @@ export const NotiContainer = styled('div')`
   padding-top: 3rem;
   width: 20vw;
   gap: 1rem;
+  ${(props) => props.theme.breakpoints.down('lg')} {
+    display: none;
+  }
   ${(props) => props.theme.breakpoints.down('md')} {
     display: none;
   }
@@ -17,8 +20,11 @@ export const JobContainer = styled('div')`
   flex-direction: column;
   justify-content: center;
   padding-top: 3rem;
-  width: 40vw;
+  width: 45vw;
   gap: 1rem;
+  ${(props) => props.theme.breakpoints.down('lg')} {
+    width: 60vw;
+  }
   ${(props) => props.theme.breakpoints.down('md')} {
     width: 90vw;
   }
@@ -31,6 +37,9 @@ export const FilterBoxContainer = styled('div')`
   padding-top: 3rem;
   width: 14vw;
   gap: 1rem;
+  ${(props) => props.theme.breakpoints.down('lg')} {
+    width: 19vw;
+  }
   ${(props) => props.theme.breakpoints.down('md')} {
     display: none;
   }

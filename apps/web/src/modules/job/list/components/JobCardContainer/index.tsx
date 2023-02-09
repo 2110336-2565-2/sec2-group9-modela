@@ -8,10 +8,10 @@ export default function JobCardContainer(prop: GetJobCardWithMaxPageDto) {
   const { jobs } = prop
   return (
     <CardBoxContainer>
-      {jobs.map((item, jobID) => {
+      {jobs.map((item) => {
         return (
           <div
-            key={`Job-${jobID}`}
+            key={`Job-${item.jobId}`}
             style={{
               display: 'flex',
               flexDirection: 'column',
