@@ -1,6 +1,8 @@
 import { EmotionCache } from '@emotion/cache'
 import { CacheProvider } from '@emotion/react'
 import { CssBaseline, ThemeProvider } from '@mui/material'
+import { LocalizationProvider } from '@mui/x-date-pickers'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import theme, { createEmotionCache } from 'common/config/theme'
 import { LayoutProvider } from 'common/context/LayoutContext'
 import { UserProvider } from 'common/context/UserContext'
@@ -18,12 +20,14 @@ function MyApp(props: AppPropsWithCache) {
   return (
     <CacheProvider value={emotionCache}>
       <ThemeProvider theme={theme}>
-        <UserProvider>
-          <CssBaseline />
-          <LayoutProvider>
-            <Component {...pageProps} />
-          </LayoutProvider>
-        </UserProvider>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <UserProvider>
+            <CssBaseline />
+            <LayoutProvider>
+              <Component {...pageProps} />
+            </LayoutProvider>
+          </UserProvider>
+        </LocalizationProvider>
       </ThemeProvider>
     </CacheProvider>
   )
