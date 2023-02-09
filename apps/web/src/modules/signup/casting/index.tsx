@@ -6,12 +6,12 @@ import { Control, FieldValues } from 'react-hook-form'
 
 import FormController from '../components/FormController'
 import { FORM_LAYOUT } from './constants'
-import useActorForm from './hooks/useActorForm'
+import useCastingForm from './hooks/useCastingForm'
 import { FormContainer, RootContainer } from './styled'
 
-const ActorSignUp = () => {
+const CastingSignup = () => {
   const { loading, control, handleClickSubmit, handleUploadFile } =
-    useActorForm()
+    useCastingForm()
 
   const router = useRouter()
   const user = useUser()
@@ -35,7 +35,7 @@ const ActorSignUp = () => {
         <Grid container spacing={2} sx={{ padding: '12px' }}>
           <Grid item xs={12} sm={12}>
             <Typography variant="h5" sx={{ textAlign: 'center' }}>
-              นักแสดง
+              ผู้กำกับ
             </Typography>
           </Grid>
           {FORM_LAYOUT.map((props) => (
@@ -71,4 +71,4 @@ const ActorSignUp = () => {
   )
 }
 
-export default ActorSignUp
+export default CastingSignup

@@ -1,7 +1,6 @@
-import { Gender } from '@modela/dtos'
 import { z } from 'zod'
 
-const actorSignupSchema = z
+const castingSignupSchema = z
   .object({
     email: z
       .string({
@@ -15,7 +14,7 @@ const actorSignupSchema = z
     lastName: z.string({
       required_error: 'กรุณากรอกนามสกุล',
     }),
-    nationality: z.string({
+    companyName: z.string({
       required_error: 'กรุณากรอกสัญชาติ',
     }),
     password: z.string({
@@ -24,24 +23,12 @@ const actorSignupSchema = z
     confirmPassword: z.string({
       required_error: 'กรุณากรอกยืนยันรหัสผ่าน',
     }),
-    phoneNumber: z
-      .string({
-        required_error: 'กรุณากรอกเบอร์โทรศัพท์',
-      })
-      .refine(
-        (arg) => /^((\+66)|0)((2[0-9]{7})|([3-9][0-9]{8}))$/.test(arg),
-        'รูปแบบเบอร์โทรศัพท์ไม่ถูกต้อง',
-      ),
-    gender: z.nativeEnum(Gender),
-    prefix: z.string({
-      required_error: 'กรุณากรอกคำนำหน้าชื่อ',
-    }),
-    ssn: z
+    companyId: z
       .string({
         required_error: 'กรุณากรอกเลขบัตรประชาชน / เลขพาสปอร์ต',
       })
-      .refine((arg) => /^([0-9]|[A-Z])+$/.test(arg), 'รูปแบบไม่ถูกต้อง'),
-    idCardImageUrl: z.string({
+      .refine((arg) => /^[0-9]{13}$/.test(arg), 'รูปแบบไม่ถูกต้อง'),
+    employmentCertUrl: z.string({
       required_error: 'กรุณาอัปโหลดรูปถ่าย',
     }),
   })
@@ -55,5 +42,5 @@ const actorSignupSchema = z
     }
   })
 
-export type IActorSignupSchemaType = z.infer<typeof actorSignupSchema>
-export { actorSignupSchema }
+export type ICastingSignupSchemaType = z.infer<typeof castingSignupSchema>
+export { castingSignupSchema }
