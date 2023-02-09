@@ -1,18 +1,18 @@
 import { GetJobCardWithMaxPageDto } from '@modela/dtos'
 import { apiClient } from 'common/utils/api'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 const useJobListData = () => {
   const router = useRouter()
   const [job, setJob] = useState<GetJobCardWithMaxPageDto>()
   const [hasMore, setHasMore] = useState(true)
-  var pageControl: number = 1
+  const pageControl = useRef(1)
 
   const fetchData = async (page: number) => {
     try {
-      if (pageControl <= page) {
-        pageControl = page + 1
+      if (pageControl.current <= page) {
+        pageControl.current = page + 1
         const res = (
           await apiClient.get<GetJobCardWithMaxPageDto>(`/job`, {
             params: {

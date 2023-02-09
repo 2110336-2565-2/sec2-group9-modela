@@ -1,7 +1,6 @@
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined'
+import TextField from 'common/components/TextField'
 import React from 'react'
-
-import TextField from '../../../../../common/components/TextField'
 
 export default function SearchBox() {
   return (

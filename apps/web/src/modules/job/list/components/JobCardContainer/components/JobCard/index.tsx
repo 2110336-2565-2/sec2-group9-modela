@@ -1,9 +1,9 @@
 import { Divider, Typography } from '@mui/material'
-import { useRouter } from 'next/router'
 import React from 'react'
 
 import Footer from '../../../../../components/JobCardFooter'
 import Header from '../../../../../components/JobCardHeader'
+import goJobDetail from './hooks/goJobDetail'
 import { CardContainer } from './styled'
 import { CardProps } from './types'
 
@@ -20,13 +20,10 @@ export default function JobCard(prop: CardProps) {
     jobId,
     status,
   } = prop
-  const router = useRouter()
-  const viewDetail = () => {
-    router.push(`/job/${jobId}`)
-  }
+  const { viewDetail } = goJobDetail()
 
   return (
-    <CardContainer onClick={viewDetail}>
+    <CardContainer onClick={() => viewDetail(jobId)}>
       <Header
         title={title}
         companyName={companyName}

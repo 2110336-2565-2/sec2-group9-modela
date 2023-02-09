@@ -3,8 +3,8 @@ import { Divider, Typography } from '@mui/material'
 import { genderTranslationMap } from 'common/types/gender'
 import React from 'react'
 
-import JobCardFooter from './components/JobCardFooter'
-import JobCardHeader from './components/JobCardHeader'
+import JobCardFooter from '../../../components/JobCardFooter'
+import JobCardHeader from '../../../components/JobCardHeader'
 import ShootingDetail from './components/ShootingDetail'
 import { CardContainer, CorporateRow, DescriptionRow } from './styled'
 
