@@ -62,7 +62,7 @@ export class JobController {
     return this.jobService.update(+id, updateJobDto)
   }
 
-  @Post('job/:id')
+  @Post()
   @ApiCreatedResponse({ type: JobIdDTO })
   @UseTypeAuthGuard('CASTING')
   @ApiUnauthorizedResponse({ description: 'User is not logged in' })

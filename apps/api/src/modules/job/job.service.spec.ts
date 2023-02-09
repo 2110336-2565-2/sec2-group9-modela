@@ -1,4 +1,4 @@
-import { mock, UserType } from '@modela/database'
+import { JobStatus, mock, UserType } from '@modela/database'
 import {
   GetJobCardDto,
   GetJobCardWithMaxPageDto,
@@ -6,6 +6,7 @@ import {
 } from '@modela/dtos'
 import { ForbiddenException, NotFoundException } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
+import exp from 'constants'
 import { PrismaService } from 'src/database/prisma.service'
 
 import { JobRepository } from './job.repository'
@@ -341,6 +342,39 @@ describe('JobService', () => {
             type: UserType.CASTING,
           }),
         ).rejects.toThrow(ForbiddenException)
+      })
+    })
+  })
+
+  describe('postJob', () => {
+    const MOCK_TITLE = 'test title'
+    const MOCK_DESCRIPTION = 'test description'
+    const MOCK_STATUS = JobStatus.OPEN
+    const MOCK_ROLE = 'test role'
+    const MOCK_AGE = 20
+    const MOCK_ACTORCOUNT = 1
+    const MOCK_WAGE = 10000
+    const MOCK_DEADLINE = new Date()
+    const MOCK_SHOOTING = mock('shooting').get(3)
+    const MOCK_CASTING_ID = 1
+
+    const MOCK_JOB = {
+      ...mock('job')
+        .omit(['castingId', 'createdAt', 'updatedAt', 'jobId'])
+        .get(),
+      castingId: MOCK_CASTING_ID,
+      shooting: mock('shooting').get(3),
+    }
+
+    describe('normal behavior', () => {
+      it('should create the job successfully', async () => {
+        jest.spyOn(repository, 'createJob').mockResolvedValue()
+        jest.spyOn(service, 'createJob').mockResolvedValue()
+
+        await service.createJob(MOCK_JOB, MOCK_CASTING_ID)
+
+        expect(repository.createJob).toBeCalledWith(MOCK_JOB, MOCK_CASTING_ID)
+        expect(service.createJob).toBeCalledWith(MOCK_JOB, MOCK_CASTING_ID)
       })
     })
   })
