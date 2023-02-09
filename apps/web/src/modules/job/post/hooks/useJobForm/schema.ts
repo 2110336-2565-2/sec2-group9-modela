@@ -14,21 +14,19 @@ const shootingSchema = z
     startTime: z.instanceof(dayjs as unknown as typeof Dayjs),
     endTime: z.instanceof(dayjs as unknown as typeof Dayjs),
   })
-  .superRefine(({ startTime, endTime }, ctx) => {
+  .superRefine(({ startTime, endTime, startDate, endDate }, ctx) => {
     if (startTime && endTime && startTime.isAfter(endTime)) {
       ctx.addIssue({
         code: 'custom',
         path: ['endTime'],
-        message: 'เวลาสิ้นสุดการถ่ายทำต้องมากกว่าเวลาเริ่มต้น',
+        message: 'เวลาสิ้นสุดการถ่ายทำต้องอยู่หลังเวลาเริ่มต้น',
       })
     }
-  })
-  .superRefine(({ startDate, endDate }, ctx) => {
     if (startDate && endDate && startDate.isAfter(endDate)) {
       ctx.addIssue({
         code: 'custom',
         path: ['endDate'],
-        message: 'วันที่สิ้นสุดการถ่ายทำต้องมากกว่าวันที่เริ่มต้น',
+        message: 'วันที่สิ้นสุดการถ่ายทำต้องอยู่หลังวันที่เริ่มต้น',
       })
     }
   })
@@ -40,7 +38,7 @@ const postJobSchema = z
     dueDate: z
       .instanceof(dayjs as unknown as typeof Dayjs)
       .refine((arg) => arg.isAfter(dayjs()), {
-        message: 'วันที่สิ้นสุดการรับสมัครต้องมากกว่าวันที่ปัจจุบัน',
+        message: 'วันที่สิ้นสุดการรับสมัครต้องอยู่หลังวันที่ปัจจุบัน',
       }),
     wage: z
       .string({ required_error: 'กรุณากรอกค่าจ้าง' })
@@ -71,7 +69,7 @@ const postJobSchema = z
       ctx.addIssue({
         code: 'custom',
         path: ['maxAge'],
-        message: 'อายุต่ำสุดต้องน้อยกว่าอายุสูงสุด',
+        message: 'อายุต่ำสุดต้องน้อยกว่าหรือเท่ากับอายุสูงสุด',
       })
     }
   })

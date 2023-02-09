@@ -33,14 +33,15 @@ const useJobForm = () => {
     console.log('success')
   }, [])
 
-  const handleClickSubmit: FormEventHandler<HTMLFormElement> = useMemo(() => {
-    return handleSubmit(handleSuccess)
-  }, [])
+  const handleClickSubmit: FormEventHandler<HTMLFormElement> = useMemo(
+    () => handleSubmit(handleSuccess),
+    [handleSubmit, handleSuccess],
+  )
 
   const handleAppend = useCallback(() => {
     append({
-      startDate: dayjs(),
-      endDate: dayjs(),
+      startDate: dayjs().add(1, 'day'),
+      endDate: dayjs().add(1, 'day'),
       location: '',
       startTime: dayjs().startOf('day'),
       endTime: dayjs().startOf('day'),
