@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-import { DEFAULT_FORM_VALUES } from '../../constant'
+import { DEFAULT_FORM_VALUES } from '../..'
 
 const useDefaultValues = (edit?: boolean) => {
   const router = useRouter()

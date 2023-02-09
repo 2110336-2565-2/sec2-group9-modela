@@ -1,4 +1,5 @@
-import { Divider, Grid, MenuItem } from '@mui/material'
+import { Divider, Grid, MenuItem, Typography } from '@mui/material'
+import { DesktopDatePicker, TimePicker } from '@mui/x-date-pickers'
 import PasswordTextField from 'common/components/PasswordTextField'
 import TextField from 'common/components/TextField'
 import { memo } from 'react'
@@ -28,6 +29,10 @@ const FormController = <T extends FieldValues>(
     <Grid item xs={xs} sm={sm}>
       {type === 'divider' ? (
         <Divider />
+      ) : type === 'typography' ? (
+        <Typography variant="h5" sx={{ textAlign: 'center' }}>
+          {label}
+        </Typography>
       ) : (
         <Controller
           name={name!}
@@ -76,6 +81,25 @@ const FormController = <T extends FieldValues>(
                     />
                   ))}
                 </TextField>
+              )
+            if (type === 'date')
+              return (
+                <DesktopDatePicker
+                  label={label}
+                  inputFormat="DD/MM/YYYY"
+                  value={props.field.value}
+                  onChange={(newValue) => props.field.onChange(newValue)}
+                  renderInput={(params) => <TextField {...params} fullWidth />}
+                />
+              )
+            if (type === 'time')
+              return (
+                <TimePicker
+                  label={label}
+                  value={props.field.value}
+                  onChange={(newValue) => props.field.onChange(newValue)}
+                  renderInput={(params) => <TextField {...params} fullWidth />}
+                />
               )
 
             return (

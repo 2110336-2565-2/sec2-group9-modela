@@ -33,9 +33,9 @@ const shootingSchema = z
 
 const postJobSchema = z
   .object({
-    jobName: z.string({ required_error: 'กรุณากรอกตำแหน่งงาน' }),
-    jobDescription: z.string({ required_error: 'กรุณากรอกรายละเอียดงาน' }),
-    dueDate: z
+    title: z.string({ required_error: 'กรุณากรอกตำแหน่งงาน' }),
+    description: z.string({ required_error: 'กรุณากรอกรายละเอียดงาน' }),
+    applicationDeadline: z
       .instanceof(dayjs as unknown as typeof Dayjs)
       .refine((arg) => arg.isAfter(dayjs()), {
         message: 'วันที่สิ้นสุดการรับสมัครต้องอยู่หลังวันที่ปัจจุบัน',

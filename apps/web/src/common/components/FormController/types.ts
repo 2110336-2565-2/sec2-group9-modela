@@ -2,7 +2,15 @@ import { MenuItemProps } from '@mui/material'
 import { Control, FieldValues, Path } from 'react-hook-form'
 
 export interface IFormControllerProps<T extends FieldValues> {
-  type: 'textField' | 'uploadFile' | 'divider' | 'password' | 'select'
+  type:
+    | 'textField'
+    | 'uploadFile'
+    | 'divider'
+    | 'password'
+    | 'select'
+    | 'date'
+    | 'time'
+    | 'typography'
   xs?: number
   sm?: number
   name?: Path<T>
