@@ -26,7 +26,9 @@ const TextField: FC<TextFieldProps> = (props) => {
       InputLabelProps={{
         sx: {
           color: '#00000060',
+          ...props.InputLabelProps?.sx,
         },
+        ...props.InputLabelProps,
       }}
       sx={{
         borderColor: 'white',

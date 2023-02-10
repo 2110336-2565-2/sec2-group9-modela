@@ -1,10 +1,10 @@
 import { GetJobDto, ShootingDto } from '@modela/dtos'
 import { Divider, Typography } from '@mui/material'
 import { genderTranslationMap } from 'common/types/gender'
+import JobCardFooter from 'modules/job/components/JobCardFooter'
+import JobCardHeader from 'modules/job/components/JobCardHeader'
 import React from 'react'
 
-import JobCardFooter from './components/JobCardFooter'
-import JobCardHeader from './components/JobCardHeader'
 import ShootingDetail from './components/ShootingDetail'
 import { CardContainer, CorporateRow, DescriptionRow } from './styled'
 

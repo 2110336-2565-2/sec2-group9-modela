@@ -5,7 +5,7 @@ import { useUser } from 'common/context/UserContext'
 import React from 'react'
 
 import { HeaderRow, ProfileImageContainer } from './styled'
-import { HeaderProps } from './type'
+import { HeaderProps } from './types'
 
 const JobCardHeader = (prop: HeaderProps) => {
   const { castingImage, companyName, title } = prop
