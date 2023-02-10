@@ -1,5 +1,5 @@
 import { Alert, Snackbar } from '@mui/material'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { createContext } from 'react'
 
 import { INotiContext, NotiType } from './types'
@@ -14,14 +14,17 @@ export const NotiProvider = ({ children }: React.PropsWithChildren<{}>) => {
   const [duration, setDuration] = React.useState(3000)
   const [type, setType] = React.useState<NotiType>('success')
 
-  const handleClose = () => setShowNoti(false)
+  const handleClose = useCallback(() => setShowNoti(false), [])
 
-  const displayNoti = (message: string, type: NotiType, duration?: number) => {
-    setNotiMessage(message)
-    setType(type)
-    duration && setDuration(duration)
-    setShowNoti(true)
-  }
+  const displayNoti = useCallback(
+    (message: string, type: NotiType, duration?: number) => {
+      setNotiMessage(message)
+      setType(type)
+      if (duration) setDuration(duration)
+      setShowNoti(true)
+    },
+    [],
+  )
 
   return (
     <NotiContext.Provider value={{ handleClose, displayNoti }}>

@@ -44,6 +44,7 @@ const ReportPage = () => {
             multiline
             rows={3}
             {...prop.field}
+            inputRef={prop.field.ref}
             error={prop.fieldState.invalid}
             helperText={prop.fieldState.error?.message}
             placeholder="เหตุผล"

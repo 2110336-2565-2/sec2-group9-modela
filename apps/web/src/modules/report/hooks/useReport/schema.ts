@@ -1,9 +1,7 @@
 import { z } from 'zod'
 
 const ReportSchema = z.object({
-  description: z
-    .string({ required_error: 'กรุณากรอกรายละเอียดปัญหา' })
-    .min(1, 'กรุณากรอกรายละเอียดปัญหา'),
+  description: z.string({ required_error: 'กรุณากรอกรายละเอียดปัญหา' }),
 })
 
 export type IReportSchemaType = z.infer<typeof ReportSchema>
