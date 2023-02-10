@@ -1,8 +1,4 @@
-import {
-  AccessTime,
-  ArrowDropDownOutlined,
-  DateRangeOutlined,
-} from '@mui/icons-material'
+import { AccessTime, DateRangeOutlined } from '@mui/icons-material'
 import {
   Checkbox,
   Divider,
@@ -16,12 +12,14 @@ import TextField from 'common/components/TextField'
 import { Dayjs } from 'dayjs'
 import React from 'react'
 
+import useWageControl from './hooks/useWageControl'
 import { FilterBox } from './styled'
 
 export default function SearchBox() {
   const [startShooting, setStartShooting] = React.useState<Dayjs | null>(null)
   const [endShooting, setEndShooting] = React.useState<Dayjs | null>(null)
   const [date, setDate] = React.useState<Dayjs | null>(null)
+  const { wage, setWage, deviant, setDeviant } = useWageControl()
   return (
     <FilterBox>
       <Typography variant="body1"> การถ่ายทำ </Typography>
@@ -89,8 +87,10 @@ export default function SearchBox() {
       <Typography variant="body1"> ค่าจ้าง </Typography>
       <TextField
         fullWidth
+        type="number"
+        onChange={(event) => setWage(Number(event.target.value))}
+        value={wage}
         placeholder="10000"
-        InputProps={{ endAdornment: <ArrowDropDownOutlined color="primary" /> }}
       />
 
       <Typography variant="subtitle2" sx={{ color: 'rgba(0,0,0,0.6)' }}>
@@ -98,8 +98,10 @@ export default function SearchBox() {
       </Typography>
       <TextField
         fullWidth
+        type="number"
+        onChange={(event) => setDeviant(Number(event.target.value))}
+        value={deviant}
         placeholder="1000"
-        InputProps={{ endAdornment: <ArrowDropDownOutlined color="primary" /> }}
       />
 
       <Divider variant="middle" sx={{ width: '90%' }} />
