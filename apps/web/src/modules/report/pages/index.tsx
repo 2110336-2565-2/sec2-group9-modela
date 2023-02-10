@@ -1,11 +1,9 @@
 import { UserType } from '@modela/database'
 import {
-  Alert,
   Button,
   CircularProgress,
   Divider,
   Link,
-  Snackbar,
   Typography,
 } from '@mui/material'
 import TextField from 'common/components/TextField'
@@ -17,15 +15,7 @@ import useReport from '../hooks/useReport'
 import { RootContainer } from './styled'
 
 const ReportPage = () => {
-  const {
-    jid,
-    jobName,
-    control,
-    handleClickSubmit,
-    loading,
-    showNoti,
-    closeNoti,
-  } = useReport()
+  const { jid, jobName, control, handleClickSubmit, loading } = useReport()
 
   return (
     <RootContainer onSubmit={handleClickSubmit}>
@@ -70,11 +60,6 @@ const ReportPage = () => {
       >
         แจ้งปัญหา
       </Button>
-      <Snackbar open={showNoti} autoHideDuration={6000} onClose={closeNoti}>
-        <Alert onClose={closeNoti} severity="success" sx={{ width: '100%' }}>
-          ขอบคุณที่แจ้งปัญหา ทางทีมงานจะดำเนินการตรวจสอบต่อไป
-        </Alert>
-      </Snackbar>
     </RootContainer>
   )
 }
