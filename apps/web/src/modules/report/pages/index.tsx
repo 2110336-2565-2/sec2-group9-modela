@@ -57,6 +57,7 @@ const ReportPage = () => {
         size="large"
         variant="contained"
         type="submit"
+        disabled={loading}
         startIcon={loading && <CircularProgress size={20} />}
       >
         แจ้งปัญหา
