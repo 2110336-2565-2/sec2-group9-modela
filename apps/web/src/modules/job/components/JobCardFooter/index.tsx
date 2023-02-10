@@ -7,7 +7,7 @@ import { genderTranslationMap } from 'common/types/gender'
 import { formatDate } from 'common/utils/formatter'
 import React from 'react'
 
-import { FooterRow } from './styled'
+import { FooterRow, SameDiv } from './styled'
 import { FooterProps } from './types'
 
 const JobCardFooter = (prop: FooterProps) => {
@@ -21,6 +21,45 @@ const JobCardFooter = (prop: FooterProps) => {
 
   return (
     <FooterRow>
+      <SameDiv>
+        <Tooltip title={genderThai}>
+          <Person
+            fontSize="small"
+            sx={{
+              color:
+                gender === Gender.MALE
+                  ? '#144A9B'
+                  : gender === Gender.FEMALE
+                  ? '#F57CD4'
+                  : '#00c853',
+              fill:
+                gender === Gender.MALE || gender === Gender.FEMALE
+                  ? ''
+                  : 'url(#linearColors)',
+            }}
+          />
+        </Tooltip>
+        <Typography variant="subtitle1">{actorCount}</Typography>
+      </SameDiv>
+
+      <SameDiv>
+        <Money fontSize="small" />
+        <Typography variant="subtitle1">{wage.toLocaleString()}</Typography>
+      </SameDiv>
+
+      <SameDiv>
+        <EventBusy
+          fontSize="small"
+          sx={{
+            color:
+              status == JobStatus.OPEN
+                ? theme.palette.success.main
+                : theme.palette.error.main,
+          }}
+        />
+        <Typography variant="subtitle1">{formatDate(dueDate)}</Typography>
+      </SameDiv>
+
       <svg width={0} height={0}>
         <linearGradient id="linearColors" x1={1} y1={0} x2={1} y2={1}>
           <stop offset={0} stopColor="#ff0000" />
@@ -32,36 +71,6 @@ const JobCardFooter = (prop: FooterProps) => {
           <stop offset={1} stopColor="#ff00ff" />
         </linearGradient>
       </svg>
-      <Tooltip title={genderThai}>
-        <Person
-          fontSize="small"
-          sx={{
-            color:
-              gender === Gender.MALE
-                ? '#144A9B'
-                : gender === Gender.FEMALE
-                ? '#F57CD4'
-                : '#00c853',
-            fill:
-              gender === Gender.MALE || gender === Gender.FEMALE
-                ? ''
-                : 'url(#linearColors)',
-          }}
-        />
-      </Tooltip>
-      <Typography variant="subtitle1">{actorCount}</Typography>
-      <Money fontSize="small" />
-      <Typography variant="subtitle1">{wage.toLocaleString()}</Typography>
-      <EventBusy
-        fontSize="small"
-        sx={{
-          color:
-            status == JobStatus.OPEN
-              ? theme.palette.success.main
-              : theme.palette.error.main,
-        }}
-      />
-      <Typography variant="subtitle1">{formatDate(dueDate)}</Typography>
 
       {status === JobStatus.OPEN && user?.type === UserType.ACTOR && (
         <Typography
