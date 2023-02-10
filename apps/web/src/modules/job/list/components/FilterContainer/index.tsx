@@ -18,7 +18,7 @@ import TextField from 'common/components/TextField'
 import { Dayjs } from 'dayjs'
 import React from 'react'
 
-import { FilterBox } from './style'
+import { FilterBox } from './styled'
 
 export default function SearchBox() {
   const [startShooting, setStartShooting] = React.useState<Dayjs | null>(null)
