@@ -10,8 +10,6 @@ import {
   FormGroup,
   Typography,
 } from '@mui/material'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker'
 import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker'
 import TextField from 'common/components/TextField'
@@ -27,60 +25,58 @@ export default function SearchBox() {
   return (
     <FilterBox>
       <Typography variant="body1"> การถ่ายทำ </Typography>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <MobileDatePicker
-          label="วันถ่ายทำ"
-          value={date}
-          onChange={(newValue) => {
-            setDate(newValue)
-          }}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              InputProps={{
-                ...params.InputProps,
-                endAdornment: <DateRangeOutlined color="primary" />,
-              }}
-            />
-          )}
-        />
-        <MobileTimePicker
-          label="เวลาเริ่มต้นการถ่ายทำ"
-          value={startShooting}
-          onChange={(newValue) => {
-            setStartShooting(newValue)
-          }}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              InputProps={{
-                ...params.InputProps,
-                endAdornment: (
-                  <AccessTime color="primary" sx={{ cursor: 'pointer' }} />
-                ),
-              }}
-            />
-          )}
-        />
-        <MobileTimePicker
-          label="เวลาสิ้นสุดการถ่ายทำ"
-          value={endShooting}
-          onChange={(newValue) => {
-            setEndShooting(newValue)
-          }}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              InputProps={{
-                ...params.InputProps,
-                endAdornment: (
-                  <AccessTime color="primary" sx={{ cursor: 'pointer' }} />
-                ),
-              }}
-            />
-          )}
-        />
-      </LocalizationProvider>
+      <MobileDatePicker
+        label="วันถ่ายทำ"
+        value={date}
+        onChange={(newValue) => {
+          setDate(newValue)
+        }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            InputProps={{
+              ...params.InputProps,
+              endAdornment: <DateRangeOutlined color="primary" />,
+            }}
+          />
+        )}
+      />
+      <MobileTimePicker
+        label="เวลาเริ่มต้นการถ่ายทำ"
+        value={startShooting}
+        onChange={(newValue) => {
+          setStartShooting(newValue)
+        }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            InputProps={{
+              ...params.InputProps,
+              endAdornment: (
+                <AccessTime color="primary" sx={{ cursor: 'pointer' }} />
+              ),
+            }}
+          />
+        )}
+      />
+      <MobileTimePicker
+        label="เวลาสิ้นสุดการถ่ายทำ"
+        value={endShooting}
+        onChange={(newValue) => {
+          setEndShooting(newValue)
+        }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            InputProps={{
+              ...params.InputProps,
+              endAdornment: (
+                <AccessTime color="primary" sx={{ cursor: 'pointer' }} />
+              ),
+            }}
+          />
+        )}
+      />
 
       <TextField fullWidth label="สถานที่ถ่ายทำ" />
 
