@@ -52,6 +52,7 @@ const useNavMenu = (isMobile: boolean) => {
       {
         label: `สวัสดี คุณ ${user?.firstName}`,
         desktopOnly: true,
+        allowNotVerified: true,
       },
       {
         label: 'ออกจากระบบ',
