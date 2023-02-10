@@ -58,6 +58,7 @@ export const FORM_LAYOUT: Omit<
     name: 'nationality',
   },
   {
+    sm: 6,
     type: 'select',
     label: 'เพศ',
     name: 'gender',
@@ -71,8 +72,15 @@ export const FORM_LAYOUT: Omit<
   {
     xs: 12,
     sm: 12,
-    type: 'uploadFile',
+    type: 'textField',
     label: 'เลขบัตรประจำตัวประชาชน/เลขพาสปอร์ต',
+    name: 'ssn',
+  },
+  {
+    xs: 12,
+    sm: 12,
+    type: 'uploadFile',
+    label: 'อัพโหลดรูปถ่ายบัตรประชาชน/พาสปอร์ต',
     name: 'idCardImageUrl',
   },
   {
