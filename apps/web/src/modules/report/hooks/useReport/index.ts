@@ -3,7 +3,13 @@ import { GetJobDto } from '@modela/dtos'
 import { useNoti } from 'common/context/NotiContext'
 import { apiClient } from 'common/utils/api'
 import { useRouter } from 'next/router'
-import { FormEventHandler, useCallback, useEffect, useState } from 'react'
+import {
+  FormEventHandler,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { IReportSchemaType, ReportSchema } from './schema'
@@ -23,12 +29,12 @@ const useReport = () => {
   })
 
   const handleSuccess: SubmitHandler<IReportSchemaType> = useCallback(
-    async ({ ...data }) => {
+    async (data) => {
+      setLoading(true)
       try {
         const postBody = {
           reason: data.description,
         }
-        setLoading(true)
         await apiClient.post('report/job/' + jid, postBody)
         displayNoti(
           'ขอบคุณที่แจ้งปัญหา ทางทีมงานจะดำเนินการตรวจสอบต่อไป',
@@ -44,8 +50,10 @@ const useReport = () => {
     [router],
   )
 
-  const handleClickSubmit: FormEventHandler<HTMLFormElement> =
-    handleSubmit(handleSuccess)
+  const handleClickSubmit: FormEventHandler<HTMLFormElement> = useMemo(
+    () => handleSubmit(handleSuccess),
+    [handleSubmit, handleSuccess],
+  )
 
   //fetch job title
   useEffect(() => {
