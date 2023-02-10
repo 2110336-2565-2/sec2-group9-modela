@@ -1,9 +1,9 @@
-export interface INotiContext {
+export interface INotificationContext {
   displayNotification: (
     message: string,
-    type: NotiType,
+    type: NotificationType,
     duration?: number,
   ) => void
 }
 
-export type NotiType = 'success' | 'error' | 'warning' | 'info'
+export type NotificationType = 'success' | 'error' | 'warning' | 'info'
