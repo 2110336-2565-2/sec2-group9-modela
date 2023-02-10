@@ -6,9 +6,11 @@ import { INotiContext, NotiType } from './types'
 
 const NotiContext = createContext<INotiContext>({} as INotiContext)
 
-export const useNoti = () => React.useContext(NotiContext)
+export const useNotification = () => React.useContext(NotiContext)
 
-export const NotiProvider = ({ children }: React.PropsWithChildren<{}>) => {
+export const NotificationProvider = ({
+  children,
+}: React.PropsWithChildren<{}>) => {
   const [notiMessage, setNotiMessage] = React.useState('')
   const [showNoti, setShowNoti] = React.useState(false)
   const [duration, setDuration] = React.useState(3000)
@@ -16,7 +18,7 @@ export const NotiProvider = ({ children }: React.PropsWithChildren<{}>) => {
 
   const handleClose = useCallback(() => setShowNoti(false), [])
 
-  const displayNoti = useCallback(
+  const displayNotification = useCallback(
     (message: string, type: NotiType, duration?: number) => {
       setNotiMessage(message)
       setType(type)
@@ -27,7 +29,7 @@ export const NotiProvider = ({ children }: React.PropsWithChildren<{}>) => {
   )
 
   return (
-    <NotiContext.Provider value={{ handleClose, displayNoti }}>
+    <NotiContext.Provider value={{ displayNotification }}>
       {children}
       {showNoti && (
         <Snackbar

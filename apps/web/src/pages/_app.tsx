@@ -5,7 +5,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import theme, { createEmotionCache } from 'common/config/theme'
 import { LayoutProvider } from 'common/context/LayoutContext'
-import { NotiProvider } from 'common/context/NotiContext'
+import { NotificationProvider } from 'common/context/NotificationContext'
 import { UserProvider } from 'common/context/UserContext'
 import type { AppProps } from 'next/app'
 
@@ -25,9 +25,9 @@ function MyApp(props: AppPropsWithCache) {
           <UserProvider>
             <CssBaseline />
             <LayoutProvider>
-              <NotiProvider>
+              <NotificationProvider>
                 <Component {...pageProps} />
-              </NotiProvider>
+              </NotificationProvider>
             </LayoutProvider>
           </UserProvider>
         </LocalizationProvider>
