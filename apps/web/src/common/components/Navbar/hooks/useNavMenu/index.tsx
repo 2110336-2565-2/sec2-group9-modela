@@ -8,12 +8,22 @@ import {
   PostAddOutlined,
 } from '@mui/icons-material'
 import { useUser } from 'common/context/UserContext'
+import { apiClient } from 'common/utils/api'
 import { useRouter } from 'next/router'
 import { useCallback, useMemo } from 'react'
 
 const useNavMenu = (isMobile: boolean) => {
   const router = useRouter()
   const { user } = useUser()
+
+  const handleLogout = useCallback(async () => {
+    try {
+      await apiClient.post('/auth/logout')
+      router.push('/login', undefined, { shallow: true })
+    } catch (err) {
+      console.log(err)
+    }
+  }, [router])
 
   const VERIFIED_MENU = useMemo(
     () => [
@@ -58,9 +68,11 @@ const useNavMenu = (isMobile: boolean) => {
         label: 'ออกจากระบบ',
         onClick: () => {
           //TODO Implement logout logic
+          handleLogout()
         },
         icon: <LogoutOutlined />,
         allowNotVerified: true,
+        desktopIconOnly: true,
       },
       {
         label: 'เข้าสู่ระบบ',
