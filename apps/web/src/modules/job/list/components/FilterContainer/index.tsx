@@ -109,7 +109,10 @@ export default function SearchBox() {
       <Divider variant="middle" sx={{ width: '90%' }} />
       <Typography variant="body1"> สถานะการเปิดรับสมัคร </Typography>
       <FormGroup>
-        <FormControlLabel control={<Checkbox />} label="เปิดรับสมัคร" />
+        <FormControlLabel
+          control={<Checkbox defaultChecked />}
+          label="เปิดรับสมัคร"
+        />
         <FormControlLabel control={<Checkbox />} label="ปิดรับสมัคร" />
       </FormGroup>
 

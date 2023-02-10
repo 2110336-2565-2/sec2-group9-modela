@@ -7,5 +7,5 @@ export const FilterBox = styled('div')`
   padding: 0px;
   width: 100%;
   min-width: 200px;
-  gap: 6px;
+  gap: 8px;
 `
