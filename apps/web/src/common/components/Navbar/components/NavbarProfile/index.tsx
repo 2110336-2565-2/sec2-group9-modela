@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import { GetUserDto } from '@modela/dtos'
 import { Typography } from '@mui/material'
 import { useUser } from 'common/context/UserContext'
 import React from 'react'
@@ -7,8 +6,10 @@ import React from 'react'
 import { ProfileContainer } from './styled'
 
 const NavbarProfile = () => {
+  const { user } = useUser()
   const { profileImageUrl, firstName, middleName, lastName, companyName } =
-    useUser() as GetUserDto
+    user!
+
   return (
     <ProfileContainer>
       <img

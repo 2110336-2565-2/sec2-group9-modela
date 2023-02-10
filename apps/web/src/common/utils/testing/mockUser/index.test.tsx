@@ -13,10 +13,14 @@ describe('mockUser()', () => {
     const { result } = renderHook(() => useUser())
 
     expect(result.current).toEqual({
-      ...MOCK_USER,
-      companyName: undefined,
-      type: UserType.ACTOR,
-      isVerified: true,
+      user: {
+        ...MOCK_USER,
+        companyName: undefined,
+        type: UserType.ACTOR,
+        isVerified: true,
+      },
+      refetch: expect.any(Function),
+      reset: expect.any(Function),
     })
   })
 
@@ -25,7 +29,9 @@ describe('mockUser()', () => {
     const { result } = renderHook(() => useUser())
 
     expect(result.current).toMatchObject({
-      type: UserType.ADMIN,
+      user: {
+        type: UserType.ADMIN,
+      },
     })
   })
 
@@ -34,8 +40,10 @@ describe('mockUser()', () => {
     const { result } = renderHook(() => useUser())
 
     expect(result.current).toMatchObject({
-      type: UserType.CASTING,
-      companyName: MOCK_USER.companyName,
+      user: {
+        type: UserType.CASTING,
+        companyName: MOCK_USER.companyName,
+      },
     })
   })
 
@@ -44,7 +52,9 @@ describe('mockUser()', () => {
     const { result } = renderHook(() => useUser())
 
     expect(result.current).toMatchObject({
-      isVerified: false,
+      user: {
+        isVerified: false,
+      },
     })
   })
 
@@ -52,6 +62,6 @@ describe('mockUser()', () => {
     mockNotLoggedIn()
     const { result } = renderHook(() => useUser())
 
-    expect(result.current).toBeNull()
+    expect(result.current.user).toBeNull()
   })
 })

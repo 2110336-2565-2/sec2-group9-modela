@@ -12,7 +12,7 @@ import { LoginButton, NavbarContainer } from './styled'
 
 const NavbarMobile = () => {
   const menu = useSwitch()
-  const user = useUser()
+  const { user } = useUser()
   const router = useRouter()
   const { onSearch, override } = useLayout()
 

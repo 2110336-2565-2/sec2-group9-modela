@@ -10,7 +10,7 @@ describe('withGuard', () => {
     type: UserType.ACTOR,
   }
 
-  const useUserSpy = jest.fn().mockReturnValue(MOCK_USER)
+  const useUserSpy = jest.fn().mockReturnValue({ user: MOCK_USER })
   jest.doMock('common/context/UserContext', () => ({ useUser: useUserSpy }))
 
   const replaceSpy = jest.fn()
@@ -37,7 +37,7 @@ describe('withGuard', () => {
   describe('user is not loggedin', () => {
     it('should redirect to login page', () => {
       const WithGuard = withGuard(MockChildren, [UserType.ACTOR])
-      useUserSpy.mockReturnValue(null)
+      useUserSpy.mockReturnValue({ user: null })
       render(<WithGuard />)
 
       expect(replaceSpy).toBeCalledWith('/login')
@@ -47,7 +47,7 @@ describe('withGuard', () => {
   describe('user is not verified', () => {
     it('should redirect to waiting page', () => {
       const WithGuard = withGuard(MockChildren, [UserType.ACTOR])
-      useUserSpy.mockReturnValue({ ...MOCK_USER, isVerified: false })
+      useUserSpy.mockReturnValue({ user: { ...MOCK_USER, isVerified: false } })
       render(<WithGuard />)
 
       expect(replaceSpy).toBeCalledWith('/waiting')

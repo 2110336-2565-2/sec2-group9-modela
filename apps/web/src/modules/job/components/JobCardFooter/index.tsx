@@ -12,7 +12,7 @@ import { FooterProps } from './types'
 
 const JobCardFooter = (prop: FooterProps) => {
   const { actorCount, wage, status, dueDate, gender } = prop
-  const user = useUser()
+  const { user } = useUser()
 
   const apply = () => {
     window.alert('applied')

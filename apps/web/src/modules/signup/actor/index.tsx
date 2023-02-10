@@ -14,7 +14,7 @@ const ActorSignUp = () => {
     useActorForm()
 
   const router = useRouter()
-  const user = useUser()
+  const { user } = useUser()
 
   if (user && !user.isVerified) {
     router.replace('/waiting')

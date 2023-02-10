@@ -8,7 +8,7 @@ const withGuard = (
   allowedType: UserType[],
 ) => {
   const WithGuard = (props: any) => {
-    const user = useUser()
+    const { user } = useUser()
     const router = useRouter()
 
     // not login

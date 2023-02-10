@@ -9,7 +9,7 @@ import { HeaderProps } from './types'
 
 const JobCardHeader = (prop: HeaderProps) => {
   const { castingImage, companyName, title } = prop
-  const user = useUser()
+  const { user } = useUser()
 
   const report = () => {
     window.alert('reported')
