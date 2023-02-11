@@ -11,6 +11,7 @@ import {
 } from '@modela/dtos'
 import { Injectable, NotFoundException } from '@nestjs/common'
 import {
+  BadRequestException,
   ForbiddenException,
   InternalServerErrorException,
 } from '@nestjs/common/exceptions'
@@ -24,21 +25,39 @@ export class JobService {
   async createJob(createJobDto: CreateJobDto, userId: number) {
     // if minAge is greater than maxAge, throw error
     if (createJobDto.minAge > createJobDto.maxAge) {
-      throw new ForbiddenException('minAge is greater than maxAge')
-      return
+      throw new BadRequestException('minAge is greater than maxAge')
     }
     // for each shooting, if the start time is greater than the end time, throw error
     for (let i = 0; i < createJobDto.shooting.length; i++) {
       if (
-        createJobDto.shooting[i].startTime > createJobDto.shooting[i].endTime
+        createJobDto.shooting[i].startTime > createJobDto.shooting[i].endTime &&
+        createJobDto.shooting[i].startDate == createJobDto.shooting[i].endDate
       ) {
-        throw new ForbiddenException('startTime is greater than endTime')
-        return
+        throw new BadRequestException(
+          'startTime is greater than endTime in the same day',
+        )
       }
+      if (
+        createJobDto.shooting[i].startDate > createJobDto.shooting[i].endDate
+      ) {
+        throw new BadRequestException('startDate is greater than endDate')
+      }
+      if (
+        createJobDto.shooting[i].startDate < createJobDto.applicationDeadline
+      ) {
+        throw new BadRequestException(
+          'startDate is less than applicationDeadline',
+        )
+      }
+    }
+    // actorCount is less than 1
+    if (createJobDto.actorCount < 1) {
+      throw new BadRequestException('actorCount is less than 1')
     }
     try {
       await this.repository.createJob(createJobDto, userId)
     } catch (e) {
+      console.log(e)
       throw new InternalServerErrorException()
     }
   }
