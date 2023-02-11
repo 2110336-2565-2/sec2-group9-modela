@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import { useRouter } from 'next/router'
 import { useRef, useState } from 'react'
 
-import { IFilter, ISearch } from '../../types'
+import { IFilter, initialISearch, ISearch } from '../../types'
 
 const useJobListData = () => {
   const router = useRouter()
@@ -12,19 +12,7 @@ const useJobListData = () => {
   const [hasMore, setHasMore] = useState(true)
   const [page, setPage] = useState(0)
   const pageControl = useRef(1)
-  const [search, setSearch] = useState<ISearch>({
-    startDate: null,
-    endDate: null,
-    location: null,
-    startTime: null,
-    endTime: null,
-    minWage: 0,
-    maxWage: null,
-    age: null,
-    status: [],
-    gender: [],
-    castingId: null,
-  })
+  const [search, setSearch] = useState<ISearch>(initialISearch)
   const filterData = async (state: IFilter) => {
     let newStatus = []
     let newGender = []
