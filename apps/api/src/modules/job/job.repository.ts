@@ -1,11 +1,32 @@
-import { Prisma } from '@modela/database'
-import { GetJobCardDto, GetJobDto } from '@modela/dtos'
+import { Job, JobStatus, Prisma } from '@modela/database'
+import {
+  CreateJobDto,
+  GetJobCardDto,
+  GetJobDto,
+  ShootingDto,
+} from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
+import { OmitType } from '@nestjs/swagger'
 import { PrismaService } from 'src/database/prisma.service'
 
 @Injectable()
 export class JobRepository {
   constructor(private prisma: PrismaService) {}
+
+  async createJob(createJobDto: CreateJobDto, userId: number) {
+    const { shooting, ...field } = createJobDto
+    const job = await this.prisma.job.create({
+      data: {
+        status: JobStatus.OPEN,
+        castingId: userId,
+        ...field,
+        Shooting: {
+          create: shooting,
+        },
+      },
+    })
+    return job.jobId
+  }
 
   async getJobCount(params: {
     skip?: number

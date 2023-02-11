@@ -1,5 +1,6 @@
 import { JobStatus } from '@modela/database'
 import {
+  CreateJobDto,
   EditJobDto,
   Gender,
   GetJobCardWithMaxPageDto,
@@ -9,7 +10,11 @@ import {
   UserType,
 } from '@modela/dtos'
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { ForbiddenException } from '@nestjs/common/exceptions'
+import {
+  BadRequestException,
+  ForbiddenException,
+  InternalServerErrorException,
+} from '@nestjs/common/exceptions'
 
 import { JobRepository } from './job.repository'
 
@@ -17,8 +22,57 @@ import { JobRepository } from './job.repository'
 export class JobService {
   constructor(private repository: JobRepository) {}
 
-  create(createJobDto: EditJobDto) {
-    return 'This action adds a new job'
+  async createJob(createJobDto: CreateJobDto, userId: number) {
+    // if minAge is greater than maxAge, throw error
+    if (createJobDto.minAge > createJobDto.maxAge) {
+      throw new BadRequestException('minAge is greater than maxAge')
+    }
+    // for each shooting, if the start time is greater than the end time, throw error
+    for (let i = 0; i < createJobDto.shooting.length; i++) {
+      if (
+        createJobDto.shooting[i].startTime > createJobDto.shooting[i].endTime &&
+        createJobDto.shooting[i].startDate == createJobDto.shooting[i].endDate
+      ) {
+        throw new BadRequestException(
+          'startTime is greater than endTime in the same day',
+        )
+      }
+      if (
+        createJobDto.shooting[i].startDate > createJobDto.shooting[i].endDate
+      ) {
+        throw new BadRequestException('startDate is greater than endDate')
+      }
+      if (
+        createJobDto.shooting[i].startDate < createJobDto.applicationDeadline
+      ) {
+        throw new BadRequestException(
+          'startDate is less than applicationDeadline',
+        )
+      }
+    }
+    // actorCount is less than 1
+    if (createJobDto.actorCount < 1) {
+      throw new BadRequestException('actorCount is less than 1')
+    }
+    // minAge is less than 1
+    if (createJobDto.minAge < 1) {
+      throw new BadRequestException('minAge is less than 1')
+    }
+    // wage is less than 0
+    if (createJobDto.wage < 0) {
+      throw new BadRequestException('wage is less than 0')
+    }
+    const applicationDeadline = new Date(createJobDto.applicationDeadline)
+    const now = new Date()
+    if (applicationDeadline < now) {
+      throw new BadRequestException('applicationDeadline is less than now')
+    }
+    try {
+      return await this.repository.createJob(createJobDto, userId)
+    } catch (e) {
+      console.log(e)
+      throw new InternalServerErrorException()
+    }
   }
 
   // @function create prisma params from request
