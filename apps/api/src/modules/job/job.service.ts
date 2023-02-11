@@ -246,7 +246,14 @@ export class JobService {
     return jobDetail
   }
 
-  update(id: number, updateJobDto: EditJobDto, userId: number) {
+  async update(id: number, updateJobDto: EditJobDto, userId: number) {
+    const job = await this.repository.getJobById(id)
+    if (job.castingId !== userId) {
+      throw new ForbiddenException(
+        "You don't have permission to update this job",
+      )
+    }
+
     this.validateJobDto(updateJobDto)
     return this.repository.updateJob(id, updateJobDto, userId)
   }

@@ -23,7 +23,7 @@ function createValidJob(MOCK_CASTING_ID: number) {
     ...mock('job')
       .omit(['castingId', 'createdAt', 'updatedAt', 'jobId', 'status'])
       .get(),
-    castingId: MOCK_CASTING_ID,
+    //castingId: MOCK_CASTING_ID,
     shooting: mock('shooting').get(3),
   }
   MOCK_JOB.applicationDeadline = new Date()
@@ -420,6 +420,58 @@ describe('JobService', () => {
 
         // expect repository.createJob to not be called
         expect(repository.createJob).not.toBeCalled()
+      })
+    })
+  })
+
+  describe('updateJob', () => {
+    const MOCK_CASTING_ID = 1
+
+    describe('normal behavior', () => {
+      it('should update the job successfully', async () => {
+        const MOCK_UPDATED_TITLE = 'updated title'
+        const MOCK_JOB = createValidJob(MOCK_CASTING_ID)
+
+        const result = mock('job').get(1)[0]
+        console.log(result)
+
+        jest.spyOn(repository, 'createJob').mockResolvedValue(result.jobId)
+        jest.spyOn(repository, 'updateJob').mockResolvedValue(result.jobId)
+
+        const newId = await service.createJob(MOCK_JOB, MOCK_CASTING_ID)
+        MOCK_JOB.title = MOCK_UPDATED_TITLE
+        const newerId = await service.update(newId, MOCK_JOB, MOCK_CASTING_ID)
+
+        expect(repository.updateJob).toBeCalledWith(
+          newId,
+          MOCK_JOB,
+          MOCK_CASTING_ID,
+        )
+      })
+
+      it('should be bad request due to user not being the job owner', async () => {
+        const MOCK_UPDATED_TITLE = 'updated title'
+        const MOCK_INVALID_USER_ID = 2394082
+        const MOCK_JOB = createValidJob(MOCK_CASTING_ID)
+
+        const result = mock('job').get(1)[0]
+        console.log(result)
+
+        jest.spyOn(repository, 'createJob').mockResolvedValue(result.jobId)
+        jest.spyOn(repository, 'updateJob').mockResolvedValue(result.jobId)
+
+        await service.createJob(MOCK_JOB, MOCK_CASTING_ID)
+        MOCK_JOB.title = MOCK_UPDATED_TITLE
+        const newId = await service.createJob(MOCK_JOB, MOCK_CASTING_ID)
+
+        expect(repository.createJob).toBeCalledWith(MOCK_JOB, MOCK_CASTING_ID)
+
+        await expect(
+          service.update(newId, MOCK_JOB, MOCK_INVALID_USER_ID),
+        ).rejects.toThrow(BadRequestException)
+
+        // expect repository.updateJob to not be called
+        expect(repository.updateJob).not.toBeCalled()
       })
     })
   })

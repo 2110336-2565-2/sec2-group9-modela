@@ -29,16 +29,6 @@ export class JobRepository {
 
   async updateJob(id: number, updateJobDto: CreateJobDto, userId: number) {
     const { shooting, ...field } = updateJobDto
-    const job = await this.prisma.job.findUnique({
-      where: {
-        jobId: id,
-      },
-    })
-    if (job.castingId !== userId) {
-      throw new ForbiddenException(
-        "You don't have permission to update this job",
-      )
-    }
     const updatedJob = await this.prisma.job.update({
       where: { jobId: id },
       data: {
