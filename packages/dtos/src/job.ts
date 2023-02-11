@@ -4,11 +4,13 @@ import {
   IsDate,
   IsDateString,
   IsEnum,
+  IsInt,
   IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
   Max,
+  min,
   Min,
 } from 'class-validator'
 import { Casting, Gender, Job, JobStatus, Shooting } from '@modela/database'
@@ -196,9 +198,13 @@ export class CreateJobDto {
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty()
+  @Min(1)
+  @IsInt()
   minAge: number
 
   @ApiProperty()
+  @Min(1)
+  @IsInt()
   maxAge: number
 
   @IsEnum(Gender, { each: true })
@@ -209,11 +215,14 @@ export class CreateJobDto {
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty()
+  @Min(1)
+  @IsInt()
   actorCount: number
 
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty()
+  @Min(1)
   wage: number
 
   @IsNotEmpty()

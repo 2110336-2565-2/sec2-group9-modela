@@ -54,6 +54,19 @@ export class JobService {
     if (createJobDto.actorCount < 1) {
       throw new BadRequestException('actorCount is less than 1')
     }
+    // minAge is less than 1
+    if (createJobDto.minAge < 1) {
+      throw new BadRequestException('minAge is less than 1')
+    }
+    // wage is less than 0
+    if (createJobDto.wage < 0) {
+      throw new BadRequestException('wage is less than 0')
+    }
+    const applicationDeadline = new Date(createJobDto.applicationDeadline)
+    const now = new Date()
+    if (applicationDeadline < now) {
+      throw new BadRequestException('applicationDeadline is less than now')
+    }
     try {
       return await this.repository.createJob(createJobDto, userId)
     } catch (e) {
