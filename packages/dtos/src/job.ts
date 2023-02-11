@@ -123,67 +123,56 @@ type EditJobType = Partial<Job> & { shooting: ShootingDto[] }
 
 export class EditJobDto implements EditJobType {
   @IsString()
-  @IsOptional()
   @IsNotEmpty()
   @ApiProperty()
   title: string
 
   @IsString()
-  @IsOptional()
   @IsNotEmpty()
   @ApiProperty()
   description: string
 
   @IsEnum(JobStatus, { each: true })
-  @IsOptional()
   @IsNotEmpty()
   @ApiProperty()
   status: JobStatus
 
   @IsString()
-  @IsOptional()
   @IsNotEmpty()
   @ApiProperty()
   role: string
 
   @IsNumber()
-  @IsOptional()
   @IsNotEmpty()
   @ApiProperty()
   minAge: number
 
   @IsNumber()
-  @IsOptional()
   @IsNotEmpty()
   @ApiProperty()
   maxAge: number
 
   @IsEnum(Gender, { each: true })
-  @IsOptional()
   @IsNotEmpty()
   @ApiProperty()
   gender: Gender
 
   @IsNumber()
-  @IsOptional()
   @IsNotEmpty()
   @ApiProperty()
   actorCount: number
 
   @IsNumber()
-  @IsOptional()
   @IsNotEmpty()
   @ApiProperty()
   wage: number
 
-  @IsOptional()
   @IsNotEmpty()
   @IsDateString()
   @ApiProperty()
   applicationDeadline: Date
 
   @IsNotEmpty()
-  @IsOptional()
   @ApiProperty({ type: ShootingDto, isArray: true })
   shooting: ShootingDto[]
 }
