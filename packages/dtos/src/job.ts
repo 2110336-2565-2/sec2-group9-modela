@@ -37,6 +37,11 @@ export class SearchJobDto {
   page: number
 
   @IsOptional()
+  @IsString()
+  @ApiPropertyOptional()
+  title?: string
+
+  @IsOptional()
   @Type(() => Date)
   @IsDate()
   @ApiPropertyOptional()
