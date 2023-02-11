@@ -37,6 +37,7 @@ export class JobRepository {
         },
       },
     })
+    return job.jobId
   }
 
   async getJobCount(params: {

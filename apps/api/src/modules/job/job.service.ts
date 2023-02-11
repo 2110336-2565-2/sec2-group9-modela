@@ -55,7 +55,7 @@ export class JobService {
       throw new BadRequestException('actorCount is less than 1')
     }
     try {
-      await this.repository.createJob(createJobDto, userId)
+      return await this.repository.createJob(createJobDto, userId)
     } catch (e) {
       console.log(e)
       throw new InternalServerErrorException()
