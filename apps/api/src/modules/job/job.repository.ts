@@ -6,6 +6,7 @@ import {
   ShootingDto,
 } from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
+import { OmitType } from '@nestjs/swagger'
 import { PrismaService } from 'src/database/prisma.service'
 
 @Injectable()
@@ -13,27 +14,14 @@ export class JobRepository {
   constructor(private prisma: PrismaService) {}
 
   async createJob(createJobDto: CreateJobDto, userId: number) {
+    const { shooting, ...field } = createJobDto
     const job = await this.prisma.job.create({
       data: {
-        title: createJobDto.title,
-        description: createJobDto.description,
         status: JobStatus.OPEN,
-        role: createJobDto.role,
-        minAge: createJobDto.minAge,
-        maxAge: createJobDto.maxAge,
-        gender: createJobDto.gender,
-        wage: createJobDto.wage,
-        actorCount: createJobDto.actorCount,
-        applicationDeadline: createJobDto.applicationDeadline,
         castingId: userId,
+        ...field,
         Shooting: {
-          create: createJobDto.shooting.map((shooting) => ({
-            startDate: shooting.startDate,
-            endDate: shooting.endDate,
-            startTime: shooting.startTime,
-            endTime: shooting.endTime,
-            shootingLocation: shooting.shootingLocation,
-          })),
+          create: shooting,
         },
       },
     })

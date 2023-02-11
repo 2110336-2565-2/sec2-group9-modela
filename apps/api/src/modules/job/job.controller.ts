@@ -6,6 +6,7 @@ import {
   JobIdDTO,
   JwtDto,
   SearchJobDto,
+  UserType,
 } from '@modela/dtos'
 import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common'
 import {
@@ -64,7 +65,7 @@ export class JobController {
 
   @Post()
   @ApiCreatedResponse({ type: JobIdDTO })
-  @UseTypeAuthGuard('CASTING')
+  @UseTypeAuthGuard(UserType.CASTING)
   @ApiUnauthorizedResponse({ description: 'User is not logged in' })
   @ApiForbiddenResponse({ description: 'User is not a casting' })
   @ApiBadRequestResponse({ description: 'Wrong format' })
