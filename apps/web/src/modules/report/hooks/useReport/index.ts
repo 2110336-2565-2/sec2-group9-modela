@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { GetJobDto, PostReportDTO } from '@modela/dtos'
-import { useNotification } from 'common/context/NotificationContext'
+import { useSnackbar } from 'common/context/SnackbarContext'
 import { apiClient } from 'common/utils/api'
 import { useRouter } from 'next/router'
 import {
@@ -19,7 +19,7 @@ const useReport = () => {
   const { jid } = router.query
   const [loading, setLoading] = useState(false)
   const [jobName, setJobName] = useState('')
-  const { displayNotification } = useNotification()
+  const { displaySnackbar } = useSnackbar()
   const { control, handleSubmit } = useForm<IReportSchemaType>({
     criteriaMode: 'all',
     resolver: zodResolver(ReportSchema),
@@ -36,7 +36,7 @@ const useReport = () => {
           reason: data.description,
         }
         await apiClient.post('report/job/' + jid, postBody)
-        displayNotification(
+        displaySnackbar(
           'ขอบคุณที่แจ้งปัญหา ทางทีมงานจะดำเนินการตรวจสอบต่อไป',
           'success',
         )
