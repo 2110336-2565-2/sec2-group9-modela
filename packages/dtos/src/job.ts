@@ -152,6 +152,9 @@ export class EditJobDto implements EditJobType {
   @ApiProperty()
   minAge: number
 
+  @IsNumber()
+  @IsOptional()
+  @IsNotEmpty()
   @ApiProperty()
   maxAge: number
 
