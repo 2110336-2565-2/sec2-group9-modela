@@ -9,29 +9,38 @@ export const mockUser = () => {
     companyName: 'Yashiro Commission',
   }
 
-  let returnValue: GetUserDto = {
+  const refetchSpy = jest.fn()
+  const resetSpy = jest.fn()
+
+  let returnUser: GetUserDto = {
     ...MOCK_USER,
     companyName: undefined,
     isVerified: true,
     type: UserType.ACTOR,
   }
 
-  const useUserSpy = jest.fn().mockReturnValue(returnValue)
+  const useUserSpy = jest.fn()
+
+  const mockReturn = (user: GetUserDto | null) => {
+    useUserSpy.mockReturnValue({ user, refetch: refetchSpy, reset: resetSpy })
+  }
+
+  mockReturn(returnUser)
 
   const mockUserType = (type: UserType) => {
-    returnValue = { ...returnValue, type }
+    returnUser = { ...returnUser, type }
     if (type === UserType.CASTING)
-      returnValue = { ...returnValue, companyName: MOCK_USER.companyName }
-    useUserSpy.mockReturnValue(returnValue)
+      returnUser = { ...returnUser, companyName: MOCK_USER.companyName }
+    mockReturn(returnUser)
   }
 
   const mockVerify = (isVerified: boolean) => {
-    returnValue = { ...returnValue, isVerified }
-    useUserSpy.mockReturnValue(returnValue)
+    returnUser = { ...returnUser, isVerified }
+    mockReturn(returnUser)
   }
 
   const mockNotLoggedIn = () => {
-    useUserSpy.mockReturnValue(null)
+    mockReturn(null)
   }
 
   jest.doMock('common/context/UserContext', () => ({

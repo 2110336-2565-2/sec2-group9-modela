@@ -1,26 +1,31 @@
 import { GetUserDto } from '@modela/dtos'
 import { apiClient } from 'common/utils/api'
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 
 const useUserData = () => {
   const [user, setUser] = React.useState<GetUserDto | null>(null)
   const [isLoading, setLoading] = React.useState(true)
 
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const res = await apiClient.get<GetUserDto>('/user/me')
-        setUser(res.data)
-      } catch (e) {
-        // TODO handle error
-        console.log(e)
-      }
-      setLoading(false)
+  const refetch = useCallback(async () => {
+    try {
+      const res = await apiClient.get<GetUserDto>('/user/me')
+      setUser(res.data)
+    } catch (e) {
+      // TODO handle error
+      console.log(e)
     }
-    getUser()
+    setLoading(false)
   }, [])
 
-  return { user, isLoading }
+  const reset = useCallback(() => {
+    setUser(null)
+  }, [])
+
+  useEffect(() => {
+    refetch()
+  }, [refetch])
+
+  return { user, isLoading, refetch, reset }
 }
 
 export default useUserData

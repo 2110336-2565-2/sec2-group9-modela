@@ -9,7 +9,7 @@ describe('useUserData()', () => {
     .pick(['firstName', 'isVerified', 'type'])
     .get()
 
-  mockGetReturn(MOCK_USER_DATA)
+  mockGetReturn({ user: MOCK_USER_DATA })
 
   const { default: useUserData } = require('.') as typeof import('.')
 
@@ -33,7 +33,7 @@ describe('useUserData()', () => {
       expect(getSpy).toBeCalledWith('/user/me')
 
       await waitFor(() => expect(result.current.isLoading).toBe(false))
-      expect(result.current.user).toEqual(MOCK_USER_DATA)
+      expect(result.current.user).toEqual({ user: MOCK_USER_DATA })
     })
   })
 })

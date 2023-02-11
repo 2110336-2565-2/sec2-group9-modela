@@ -13,7 +13,7 @@ import { useCallback, useMemo } from 'react'
 
 const useNavMenu = (isMobile: boolean) => {
   const router = useRouter()
-  const user = useUser()
+  const { user } = useUser()
 
   const VERIFIED_MENU = useMemo(
     () => [
@@ -52,6 +52,7 @@ const useNavMenu = (isMobile: boolean) => {
       {
         label: `สวัสดี คุณ ${user?.firstName}`,
         desktopOnly: true,
+        allowNotVerified: true,
       },
       {
         label: 'ออกจากระบบ',

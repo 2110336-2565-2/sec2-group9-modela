@@ -1,17 +1,10 @@
-import { mock, UserType } from '@modela/dtos'
+import { UserType } from '@modela/dtos'
 import { render } from '@testing-library/react'
-import { mockComponent } from 'common/utils/testing'
+import { mockComponent, mockUser } from 'common/utils/testing'
 import React from 'react'
 
 describe('withGuard', () => {
-  const MOCK_USER = {
-    firstName: mock('user').get().firstName,
-    isVerified: true,
-    type: UserType.ACTOR,
-  }
-
-  const useUserSpy = jest.fn().mockReturnValue(MOCK_USER)
-  jest.doMock('common/context/UserContext', () => ({ useUser: useUserSpy }))
+  const { mockNotLoggedIn, mockUserType, mockVerify } = mockUser()
 
   const replaceSpy = jest.fn()
   const useRouterSpy = jest.fn(() => ({ replace: replaceSpy }))
@@ -36,8 +29,9 @@ describe('withGuard', () => {
 
   describe('user is not loggedin', () => {
     it('should redirect to login page', () => {
+      mockNotLoggedIn()
+
       const WithGuard = withGuard(MockChildren, [UserType.ACTOR])
-      useUserSpy.mockReturnValue(null)
       render(<WithGuard />)
 
       expect(replaceSpy).toBeCalledWith('/login')
@@ -46,8 +40,9 @@ describe('withGuard', () => {
 
   describe('user is not verified', () => {
     it('should redirect to waiting page', () => {
+      mockVerify(false)
+
       const WithGuard = withGuard(MockChildren, [UserType.ACTOR])
-      useUserSpy.mockReturnValue({ ...MOCK_USER, isVerified: false })
       render(<WithGuard />)
 
       expect(replaceSpy).toBeCalledWith('/waiting')
@@ -56,6 +51,9 @@ describe('withGuard', () => {
 
   describe('user is not allowed', () => {
     it('should render not allowed page', () => {
+      mockUserType(UserType.ACTOR)
+      mockVerify(true)
+
       const WithGuard = withGuard(MockChildren, [UserType.ADMIN])
       render(<WithGuard />)
 
