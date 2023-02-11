@@ -20,10 +20,26 @@ export default function SearchBox(props: FilterContainerProps) {
     <FilterBox>
       <Typography variant="body1"> การถ่ายทำ </Typography>
       <MobileDatePicker
-        label="วันถ่ายทำ"
-        value={state.date}
+        label="วันเริ่มการถ่ายทำ"
+        value={state.startDate}
         onChange={(newValue) => {
-          setState({ ...state, date: newValue })
+          setState({ ...state, startDate: newValue })
+        }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            InputProps={{
+              ...params.InputProps,
+              endAdornment: <DateRangeOutlined color="primary" />,
+            }}
+          />
+        )}
+      />
+      <MobileDatePicker
+        label="วันสิ้นสุดถ่ายทำ"
+        value={state.endDate}
+        onChange={(newValue) => {
+          setState({ ...state, endDate: newValue })
         }}
         renderInput={(params) => (
           <TextField
@@ -37,9 +53,9 @@ export default function SearchBox(props: FilterContainerProps) {
       />
       <MobileTimePicker
         label="เวลาเริ่มต้นการถ่ายทำ"
-        value={state.startShooting}
+        value={state.startTime}
         onChange={(newValue) => {
-          setState({ ...state, startShooting: newValue })
+          setState({ ...state, startTime: newValue })
         }}
         renderInput={(params) => (
           <TextField
@@ -55,9 +71,9 @@ export default function SearchBox(props: FilterContainerProps) {
       />
       <MobileTimePicker
         label="เวลาสิ้นสุดการถ่ายทำ"
-        value={state.endShooting}
+        value={state.endTime}
         onChange={(newValue) => {
-          setState({ ...state, endShooting: newValue })
+          setState({ ...state, endTime: newValue })
         }}
         renderInput={(params) => (
           <TextField
@@ -75,9 +91,9 @@ export default function SearchBox(props: FilterContainerProps) {
       <TextField
         fullWidth
         label="สถานที่ถ่ายทำ"
-        value={state.place}
+        value={state.location}
         onChange={(event) => {
-          setState({ ...state, place: event.target.value })
+          setState({ ...state, location: event.target.value })
         }}
       />
 

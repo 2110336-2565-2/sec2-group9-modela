@@ -1,28 +1,15 @@
-import { Dayjs } from 'dayjs'
 import React from 'react'
 import { useEffect } from 'react'
 
-interface IFilter {
-  startShooting: Dayjs | null
-  endShooting: Dayjs | null
-  place: String | null
-  date: Dayjs | null
-  wage: Number | null
-  deviant: Number | null
-  age: Number | null
-  openCheck: boolean
-  closeCheck: boolean
-  maleCheck: boolean
-  femaleCheck: boolean
-  otherCheck: boolean
-}
+import { IFilter } from '../../types'
 
 const useFilterData = () => {
   const [state, setState] = React.useState<IFilter>({
-    startShooting: null,
-    endShooting: null,
-    place: null,
-    date: null,
+    startDate: null,
+    endDate: null,
+    location: null,
+    startTime: null,
+    endTime: null,
     wage: null,
     deviant: null,
     age: null,
