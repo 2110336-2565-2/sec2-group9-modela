@@ -16,6 +16,45 @@ import { PrismaService } from 'src/database/prisma.service'
 import { JobRepository } from './job.repository'
 import { JobService } from './job.service'
 
+function createValidJob(MOCK_CASTING_ID: number) {
+  const now = new Date()
+
+  const MOCK_JOB = {
+    ...mock('job')
+      .omit(['castingId', 'createdAt', 'updatedAt', 'jobId', 'status'])
+      .get(),
+    castingId: MOCK_CASTING_ID,
+    shooting: mock('shooting').get(3),
+  }
+  MOCK_JOB.applicationDeadline = new Date()
+  MOCK_JOB.applicationDeadline.setFullYear(
+    MOCK_JOB.applicationDeadline.getFullYear() + 1,
+  )
+  // for each shooting set start date to be 2 years from now, set start time to be the same
+  MOCK_JOB.shooting.forEach((shooting) => {
+    shooting.startDate = new Date()
+    shooting.startDate.setFullYear(shooting.startDate.getFullYear() + 2)
+    shooting.startTime = now
+  })
+  // for each shooting set end date to be 3 years from now, set end time to be the same
+  MOCK_JOB.shooting.forEach((shooting) => {
+    shooting.endDate = new Date()
+    shooting.endDate.setFullYear(shooting.endDate.getFullYear() + 3)
+    shooting.endTime = now
+  })
+  // set actorCount, minAge and wage to be 1 if they are less than 1
+  if (MOCK_JOB.actorCount < 1) {
+    MOCK_JOB.actorCount = 1
+  }
+  if (MOCK_JOB.minAge < 1) {
+    MOCK_JOB.minAge = 1
+  }
+  if (MOCK_JOB.wage < 1) {
+    MOCK_JOB.wage = 1
+  }
+  return MOCK_JOB
+}
+
 describe('JobService', () => {
   let service: JobService
   let repository: JobRepository
@@ -355,90 +394,7 @@ describe('JobService', () => {
 
     describe('normal behavior', () => {
       it('should create the job successfully', async () => {
-        const now = new Date()
-
-        const MOCK_JOB = {
-          ...mock('job')
-            .omit(['castingId', 'createdAt', 'updatedAt', 'jobId', 'status'])
-            .get(),
-          castingId: MOCK_CASTING_ID,
-          shooting: mock('shooting').get(3),
-        }
-        MOCK_JOB.applicationDeadline = new Date()
-        MOCK_JOB.applicationDeadline.setFullYear(
-          MOCK_JOB.applicationDeadline.getFullYear() + 1,
-        )
-        // for each shooting set start date to be 2 years from now, set start time to be the same
-        MOCK_JOB.shooting.forEach((shooting) => {
-          shooting.startDate = new Date()
-          shooting.startDate.setFullYear(shooting.startDate.getFullYear() + 2)
-          shooting.startTime = now
-        })
-        // for each shooting set end date to be 3 years from now, set end time to be the same
-        MOCK_JOB.shooting.forEach((shooting) => {
-          shooting.endDate = new Date()
-          shooting.endDate.setFullYear(shooting.endDate.getFullYear() + 3)
-          shooting.endTime = now
-        })
-        // set actorCount, minAge and wage to be 1 if they are less than 1
-        if (MOCK_JOB.actorCount < 1) {
-          MOCK_JOB.actorCount = 1
-        }
-        if (MOCK_JOB.minAge < 1) {
-          MOCK_JOB.minAge = 1
-        }
-        if (MOCK_JOB.wage < 1) {
-          MOCK_JOB.wage = 1
-        }
-
-        const result = mock('job').get(1)[0]
-        console.log(result)
-
-        jest.spyOn(repository, 'createJob').mockResolvedValue(result.jobId)
-
-        const newId = await service.createJob(MOCK_JOB, MOCK_CASTING_ID)
-
-        expect(repository.createJob).toBeCalledWith(MOCK_JOB, MOCK_CASTING_ID)
-      })
-    })
-
-    describe('normal behavior', () => {
-      it('should create the job successfully', async () => {
-        const now = new Date()
-
-        const MOCK_JOB = {
-          ...mock('job')
-            .omit(['castingId', 'createdAt', 'updatedAt', 'jobId', 'status'])
-            .get(),
-          castingId: MOCK_CASTING_ID,
-          shooting: mock('shooting').get(3),
-        }
-        MOCK_JOB.applicationDeadline = new Date()
-        MOCK_JOB.applicationDeadline.setFullYear(
-          MOCK_JOB.applicationDeadline.getFullYear() + 1,
-        )
-        // for each shooting set start date to be 2 years from now, set start time to be the same
-        MOCK_JOB.shooting.forEach((shooting) => {
-          shooting.startDate = new Date()
-          shooting.startDate.setFullYear(shooting.startDate.getFullYear() + 2)
-          shooting.startTime = now
-        })
-        // for each shooting set end date to be 3 years from now, set end time to be the same
-        MOCK_JOB.shooting.forEach((shooting) => {
-          shooting.endDate = new Date()
-          shooting.endDate.setFullYear(shooting.endDate.getFullYear() + 3)
-          shooting.endTime = now
-        })
-        // set actorCount, minAge and wage to be 1 if they are less than 1
-        if (MOCK_JOB.actorCount < 1) {
-          MOCK_JOB.actorCount = 1
-        }
-        if (MOCK_JOB.minAge < 1) {
-          MOCK_JOB.minAge = 1
-        }
-        if (MOCK_JOB.wage < 1) {
-          MOCK_JOB.wage = 1
-        }
+        const MOCK_JOB = createValidJob(MOCK_CASTING_ID)
 
         const result = mock('job').get(1)[0]
         console.log(result)
@@ -451,41 +407,7 @@ describe('JobService', () => {
       })
 
       it('should be bad request due to date conflict', async () => {
-        const now = new Date()
-
-        const MOCK_JOB = {
-          ...mock('job')
-            .omit(['castingId', 'createdAt', 'updatedAt', 'jobId', 'status'])
-            .get(),
-          castingId: MOCK_CASTING_ID,
-          shooting: mock('shooting').get(3),
-        }
-        MOCK_JOB.applicationDeadline = new Date()
-        MOCK_JOB.applicationDeadline.setFullYear(
-          MOCK_JOB.applicationDeadline.getFullYear() + 1,
-        )
-        // for each shooting set start date to be 2 years from now, set start time to be the same
-        MOCK_JOB.shooting.forEach((shooting) => {
-          shooting.startDate = new Date()
-          shooting.startDate.setFullYear(shooting.startDate.getFullYear() + 2)
-          shooting.startTime = now
-        })
-        // for each shooting set end date to be 3 years from now, set end time to be the same
-        MOCK_JOB.shooting.forEach((shooting) => {
-          shooting.endDate = new Date()
-          shooting.endDate.setFullYear(shooting.endDate.getFullYear() + 1)
-          shooting.endTime = now
-        })
-        // set actorCount, minAge and wage to be 1 if they are less than 1
-        if (MOCK_JOB.actorCount < 1) {
-          MOCK_JOB.actorCount = 1
-        }
-        if (MOCK_JOB.minAge < 1) {
-          MOCK_JOB.minAge = 1
-        }
-        if (MOCK_JOB.wage < 1) {
-          MOCK_JOB.wage = 1
-        }
+        const MOCK_JOB = createValidJob(MOCK_CASTING_ID)
 
         const result = mock('job').get(1)[0]
         console.log(result)
