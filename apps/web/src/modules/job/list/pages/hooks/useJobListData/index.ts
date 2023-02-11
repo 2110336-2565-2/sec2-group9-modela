@@ -59,11 +59,7 @@ const useJobListData = () => {
       gender: newGender,
     })
 
-    setJob((prevJobs) => ({
-      ...prevJobs,
-      jobs: [],
-      maxPage: 2,
-    }))
+    setJob({ ...job, jobs: [], maxPage: 1 })
     setPage(1)
     console.log('Set Page : ', page)
     pageControl.current = 0
@@ -79,7 +75,7 @@ const useJobListData = () => {
         const res = (
           await apiClient.get<GetJobCardWithMaxPageDto>(`/job`, {
             params: {
-              limit: 1,
+              limit: 5,
               page,
               ...search,
             },

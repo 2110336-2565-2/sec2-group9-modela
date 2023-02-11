@@ -1,5 +1,14 @@
 import { styled } from '@mui/material'
 
+export const SearchContainer = styled('div')`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  ${(props) => props.theme.breakpoints.down('md')} {
+    display: none;
+  }
+`
+
 export const NotiContainer = styled('div')`
   display: flex;
   flex-direction: column;

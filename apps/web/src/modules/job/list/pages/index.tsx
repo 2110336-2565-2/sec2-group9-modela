@@ -9,7 +9,12 @@ import SearchBox from '../components/SearchBox'
 import useFilterData from './hooks/useFilterData'
 import useJobListData from './hooks/useJobListData'
 import { notiHolder } from './placeholder'
-import { FilterBoxContainer, JobContainer, NotiContainer } from './styled'
+import {
+  FilterBoxContainer,
+  JobContainer,
+  NotiContainer,
+  SearchContainer,
+} from './styled'
 
 export default function JobList() {
   const { job, hasMore, fetchData, filterData } = useJobListData()
@@ -40,7 +45,10 @@ export default function JobList() {
       </NotiContainer>
 
       <JobContainer>
-        <SearchBox state={state} filterData={filterData} />
+        <SearchContainer>
+          <SearchBox state={state} filterData={filterData} />
+        </SearchContainer>
+
         <div
           style={{
             display: 'flex',
