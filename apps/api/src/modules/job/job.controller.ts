@@ -55,12 +55,17 @@ export class JobController {
   @Put(':id')
   @ApiOperation({ summary: 'update job by id' })
   @ApiCreatedResponse({ type: JobIdDTO })
+  @UseTypeAuthGuard(UserType.CASTING)
   @ApiUnauthorizedResponse({ description: 'User is not login' })
   @ApiForbiddenResponse({ description: 'User is not owner' })
   @ApiBadRequestResponse({ description: 'Wrong format' })
   @ApiNotFoundResponse({ description: 'Job not found' })
-  update(@Param('id') id: string, @Body() updateJobDto: EditJobDto) {
-    return this.jobService.update(+id, updateJobDto)
+  update(
+    @Param('id') id: string,
+    @Body() updateJobDto: EditJobDto,
+    @User() user: JwtDto,
+  ) {
+    return this.jobService.update(+id, updateJobDto, user.userId)
   }
 
   @Post()
