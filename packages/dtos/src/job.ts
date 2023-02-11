@@ -128,62 +128,6 @@ export class ShootingDto implements Partial<Shooting> {
 
 type EditJobType = Partial<Job> & { shooting: ShootingDto[] }
 
-export class EditJobDto implements EditJobType {
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
-  title: string
-
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
-  description: string
-
-  @IsEnum(JobStatus, { each: true })
-  @IsNotEmpty()
-  @ApiProperty()
-  status: JobStatus
-
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
-  role: string
-
-  @IsNumber()
-  @IsNotEmpty()
-  @ApiProperty()
-  minAge: number
-
-  @IsNumber()
-  @IsNotEmpty()
-  @ApiProperty()
-  maxAge: number
-
-  @IsEnum(Gender, { each: true })
-  @IsNotEmpty()
-  @ApiProperty()
-  gender: Gender
-
-  @IsNumber()
-  @IsNotEmpty()
-  @ApiProperty()
-  actorCount: number
-
-  @IsNumber()
-  @IsNotEmpty()
-  @ApiProperty()
-  wage: number
-
-  @IsNotEmpty()
-  @IsDateString()
-  @ApiProperty()
-  applicationDeadline: Date
-
-  @IsNotEmpty()
-  @ApiProperty({ type: ShootingDto, isArray: true })
-  shooting: ShootingDto[]
-}
-
 export class CreateJobDto {
   @IsString()
   @IsNotEmpty()
@@ -238,6 +182,10 @@ export class CreateJobDto {
   @IsNotEmpty()
   @ApiProperty({ type: ShootingDto, isArray: true })
   shooting: ShootingDto[]
+}
+
+export class EditJobDto extends CreateJobDto implements EditJobType {
+  
 }
 
 export class GetJobCardDto extends OmitType(EditJobDto, [

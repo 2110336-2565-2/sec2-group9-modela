@@ -22,7 +22,7 @@ import { JobRepository } from './job.repository'
 export class JobService {
   constructor(private repository: JobRepository) {}
 
-  async createJob(createJobDto: CreateJobDto, userId: number) {
+  private validateJobDto(createJobDto: CreateJobDto) {
     // if minAge is greater than maxAge, throw error
     if (createJobDto.minAge > createJobDto.maxAge) {
       throw new BadRequestException('minAge is greater than maxAge')
@@ -67,6 +67,10 @@ export class JobService {
     if (applicationDeadline < now) {
       throw new BadRequestException('applicationDeadline is less than now')
     }
+  }
+
+  async createJob(createJobDto: CreateJobDto, userId: number) {
+    this.validateJobDto(createJobDto)
     try {
       return await this.repository.createJob(createJobDto, userId)
     } catch (e) {
@@ -243,7 +247,7 @@ export class JobService {
   }
 
   update(id: number, updateJobDto: EditJobDto) {
-    return `This action updates a #${id} job`
+    return null
   }
 
   remove(id: number) {

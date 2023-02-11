@@ -5,8 +5,7 @@ import {
   GetJobDto,
   ShootingDto,
 } from '@modela/dtos'
-import { Injectable } from '@nestjs/common'
-import { OmitType } from '@nestjs/swagger'
+import { ForbiddenException, Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
 
 @Injectable()
@@ -26,6 +25,30 @@ export class JobRepository {
       },
     })
     return job.jobId
+  }
+
+  async updateJob(id: number, updateJobDto: CreateJobDto, userId: number) {
+    const { shooting, ...field } = updateJobDto
+    const job = await this.prisma.job.findUnique({
+      where: {
+        jobId: id,
+      },
+    })
+    if (job.castingId !== userId) {
+      throw new ForbiddenException(
+        "You don't have permission to update this job",
+      )
+    }
+    const updatedJob = await this.prisma.job.update({
+      where: { jobId: id },
+      data: {
+        ...field,
+        Shooting: {
+          create: shooting,
+        },
+      },
+    })
+    return updatedJob.jobId
   }
 
   async getJobCount(params: {
