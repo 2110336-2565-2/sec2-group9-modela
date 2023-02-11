@@ -35,6 +35,7 @@ const useJobListData = () => {
 
     setSearch({
       ...search,
+      title: state.title,
       age: state.age,
       startDate: state.startDate ? dayjs(state.startDate).toISOString() : null,
       endDate: state.endDate ? dayjs(state.endDate).toISOString() : null,

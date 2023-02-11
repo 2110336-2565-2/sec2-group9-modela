@@ -46,7 +46,11 @@ export default function JobList() {
 
       <JobContainer>
         <SearchContainer>
-          <SearchBox state={state} filterData={filterData} />
+          <SearchBox
+            state={state}
+            filterData={filterData}
+            setState={setState}
+          />
         </SearchContainer>
 
         <div
