@@ -6,12 +6,14 @@ import FilterContainer from '../components/FilterContainer'
 import JobCardContainer from '../components/JobCardContainer'
 import NotiCardContainer from '../components/NotiCardContainer'
 import SearchBox from '../components/SearchBox'
+import useFilterData from './hooks/useFilterData'
 import useJobListData from './hooks/useJobListData'
 import { notiHolder } from './placeholder'
 import { FilterBoxContainer, JobContainer, NotiContainer } from './styled'
 
 export default function JobList() {
-  var { job, hasMore, fetchData } = useJobListData()
+  const { job, hasMore, fetchData } = useJobListData()
+  const { state, setState } = useFilterData()
 
   return (
     <div
@@ -70,7 +72,7 @@ export default function JobList() {
             gap: '1rem',
           }}
         >
-          <FilterContainer />
+          <FilterContainer state={state} setState={setState} />
         </div>
       </FilterBoxContainer>
     </div>

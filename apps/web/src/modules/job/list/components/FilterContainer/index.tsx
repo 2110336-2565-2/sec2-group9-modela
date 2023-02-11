@@ -9,25 +9,21 @@ import {
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker'
 import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker'
 import TextField from 'common/components/TextField'
-import { Dayjs } from 'dayjs'
 import React from 'react'
 
-import useWageControl from './hooks/useWageControl'
 import { FilterBox } from './styled'
+import { FilterContainerProps } from './types'
 
-export default function SearchBox() {
-  const [startShooting, setStartShooting] = React.useState<Dayjs | null>(null)
-  const [endShooting, setEndShooting] = React.useState<Dayjs | null>(null)
-  const [date, setDate] = React.useState<Dayjs | null>(null)
-  const { wage, setWage, deviant, setDeviant } = useWageControl()
+export default function SearchBox(props: FilterContainerProps) {
+  const { state, setState } = props
   return (
     <FilterBox>
       <Typography variant="body1"> การถ่ายทำ </Typography>
       <MobileDatePicker
         label="วันถ่ายทำ"
-        value={date}
+        value={state.date}
         onChange={(newValue) => {
-          setDate(newValue)
+          setState({ ...state, date: newValue })
         }}
         renderInput={(params) => (
           <TextField
@@ -41,9 +37,9 @@ export default function SearchBox() {
       />
       <MobileTimePicker
         label="เวลาเริ่มต้นการถ่ายทำ"
-        value={startShooting}
+        value={state.startShooting}
         onChange={(newValue) => {
-          setStartShooting(newValue)
+          setState({ ...state, startShooting: newValue })
         }}
         renderInput={(params) => (
           <TextField
@@ -59,9 +55,9 @@ export default function SearchBox() {
       />
       <MobileTimePicker
         label="เวลาสิ้นสุดการถ่ายทำ"
-        value={endShooting}
+        value={state.endShooting}
         onChange={(newValue) => {
-          setEndShooting(newValue)
+          setState({ ...state, endShooting: newValue })
         }}
         renderInput={(params) => (
           <TextField
@@ -76,20 +72,37 @@ export default function SearchBox() {
         )}
       />
 
-      <TextField fullWidth label="สถานที่ถ่ายทำ" />
+      <TextField
+        fullWidth
+        label="สถานที่ถ่ายทำ"
+        value={state.place}
+        onChange={(event) => {
+          setState({ ...state, place: event.target.value })
+        }}
+      />
 
       <Divider variant="middle" sx={{ width: '90%' }} />
 
       <Typography variant="body1"> อายุนักแสดง </Typography>
-      <TextField fullWidth type="number" label="กรอกอายุนักแสดง" />
+      <TextField
+        fullWidth
+        type="number"
+        label="กรอกอายุนักแสดง"
+        value={state.age}
+        onChange={(event) => {
+          setState({ ...state, age: Number(event.target.value) })
+        }}
+      />
 
       <Divider variant="middle" sx={{ width: '90%' }} />
       <Typography variant="body1"> ค่าจ้าง </Typography>
       <TextField
         fullWidth
         type="number"
-        onChange={(event) => setWage(Number(event.target.value))}
-        value={wage}
+        onChange={(event) =>
+          setState({ ...state, wage: Number(event.target.value) })
+        }
+        value={state.wage}
         placeholder="10000"
       />
 
@@ -99,8 +112,10 @@ export default function SearchBox() {
       <TextField
         fullWidth
         type="number"
-        onChange={(event) => setDeviant(Number(event.target.value))}
-        value={deviant}
+        onChange={(event) =>
+          setState({ ...state, deviant: Number(event.target.value) })
+        }
+        value={state.deviant}
         placeholder="1000"
       />
 
@@ -108,18 +123,65 @@ export default function SearchBox() {
       <Typography variant="body1"> สถานะการเปิดรับสมัคร </Typography>
       <FormGroup>
         <FormControlLabel
-          control={<Checkbox defaultChecked />}
+          control={
+            <Checkbox
+              checked={state.openCheck}
+              onChange={(event) =>
+                setState({ ...state, openCheck: event.target.checked })
+              }
+            />
+          }
           label="เปิดรับสมัคร"
         />
-        <FormControlLabel control={<Checkbox />} label="ปิดรับสมัคร" />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={state.closeCheck}
+              onChange={(event) =>
+                setState({ ...state, closeCheck: event.target.checked })
+              }
+            />
+          }
+          label="ปิดรับสมัคร"
+        />
       </FormGroup>
 
       <Divider variant="middle" sx={{ width: '90%' }} />
       <Typography variant="body1"> เพศ </Typography>
       <FormGroup>
-        <FormControlLabel control={<Checkbox />} label="ชาย" />
-        <FormControlLabel control={<Checkbox />} label="หญิง" />
-        <FormControlLabel control={<Checkbox />} label="อื่นๆ" />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={state.maleCheck}
+              onChange={(event) =>
+                setState({ ...state, maleCheck: event.target.checked })
+              }
+            />
+          }
+          label="ชาย"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={state.femaleCheck}
+              onChange={(event) =>
+                setState({ ...state, femaleCheck: event.target.checked })
+              }
+            />
+          }
+          label="หญิง"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={state.otherCheck}
+              onChange={(event) =>
+                setState({ ...state, otherCheck: event.target.checked })
+              }
+            />
+          }
+          label="อื่นๆ"
+        />
       </FormGroup>
     </FilterBox>
   )
