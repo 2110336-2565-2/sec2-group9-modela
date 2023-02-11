@@ -1,4 +1,4 @@
-import { JobStatus, mock, UserType } from '@modela/database'
+import { mock, UserType } from '@modela/database'
 import {
   GetJobCardDto,
   GetJobCardWithMaxPageDto,
@@ -16,14 +16,13 @@ import { PrismaService } from 'src/database/prisma.service'
 import { JobRepository } from './job.repository'
 import { JobService } from './job.service'
 
-function createValidJob(MOCK_CASTING_ID: number) {
+function createValidJob() {
   const now = new Date()
 
   const MOCK_JOB = {
     ...mock('job')
       .omit(['castingId', 'createdAt', 'updatedAt', 'jobId', 'status'])
       .get(),
-    //castingId: MOCK_CASTING_ID,
     shooting: mock('shooting').get(3),
   }
   MOCK_JOB.applicationDeadline = new Date()
@@ -51,6 +50,18 @@ function createValidJob(MOCK_CASTING_ID: number) {
   }
   if (MOCK_JOB.wage < 1) {
     MOCK_JOB.wage = 1
+  }
+  return MOCK_JOB
+}
+
+function createValidJobWithID(userId: number, jobId: number) {
+  const BASE_JOB = createValidJob()
+  const MOCK_JOB = {
+    ...BASE_JOB,
+    castingId: userId,
+    jobId: jobId,
+    companyName: 'test',
+    jobCastingImageUrl: 'test',
   }
   return MOCK_JOB
 }
@@ -394,7 +405,7 @@ describe('JobService', () => {
 
     describe('normal behavior', () => {
       it('should create the job successfully', async () => {
-        const MOCK_JOB = createValidJob(MOCK_CASTING_ID)
+        const MOCK_JOB = createValidJob()
 
         const result = mock('job').get(1)[0]
         console.log(result)
@@ -407,7 +418,7 @@ describe('JobService', () => {
       })
 
       it('should be bad request due to date conflict', async () => {
-        const MOCK_JOB = createValidJob(MOCK_CASTING_ID)
+        const MOCK_JOB = createValidJob()
 
         const result = mock('job').get(1)[0]
         console.log(result)
@@ -430,15 +441,18 @@ describe('JobService', () => {
     describe('normal behavior', () => {
       it('should update the job successfully', async () => {
         const MOCK_UPDATED_TITLE = 'updated title'
-        const MOCK_JOB = createValidJob(MOCK_CASTING_ID)
+        const MOCK_JOB = createValidJob()
 
         const result = mock('job').get(1)[0]
         console.log(result)
-
         jest.spyOn(repository, 'createJob').mockResolvedValue(result.jobId)
         jest.spyOn(repository, 'updateJob').mockResolvedValue(result.jobId)
 
         const newId = await service.createJob(MOCK_JOB, MOCK_CASTING_ID)
+
+        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
+        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
+
         MOCK_JOB.title = MOCK_UPDATED_TITLE
         const newerId = await service.update(newId, MOCK_JOB, MOCK_CASTING_ID)
 
@@ -452,7 +466,7 @@ describe('JobService', () => {
       it('should be bad request due to user not being the job owner', async () => {
         const MOCK_UPDATED_TITLE = 'updated title'
         const MOCK_INVALID_USER_ID = 2394082
-        const MOCK_JOB = createValidJob(MOCK_CASTING_ID)
+        const MOCK_JOB = createValidJob()
 
         const result = mock('job').get(1)[0]
         console.log(result)
@@ -460,15 +474,19 @@ describe('JobService', () => {
         jest.spyOn(repository, 'createJob').mockResolvedValue(result.jobId)
         jest.spyOn(repository, 'updateJob').mockResolvedValue(result.jobId)
 
-        await service.createJob(MOCK_JOB, MOCK_CASTING_ID)
-        MOCK_JOB.title = MOCK_UPDATED_TITLE
         const newId = await service.createJob(MOCK_JOB, MOCK_CASTING_ID)
+
+        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
+        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
+
+        MOCK_JOB.title = MOCK_UPDATED_TITLE
+        await service.createJob(MOCK_JOB, MOCK_CASTING_ID)
 
         expect(repository.createJob).toBeCalledWith(MOCK_JOB, MOCK_CASTING_ID)
 
         await expect(
           service.update(newId, MOCK_JOB, MOCK_INVALID_USER_ID),
-        ).rejects.toThrow(BadRequestException)
+        ).rejects.toThrow(ForbiddenException)
 
         // expect repository.updateJob to not be called
         expect(repository.updateJob).not.toBeCalled()
