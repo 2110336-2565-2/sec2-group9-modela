@@ -2,6 +2,7 @@ import { UserType } from '@modela/database'
 import { Add } from '@mui/icons-material'
 import { Button, CircularProgress, Typography } from '@mui/material'
 import { useUser } from 'common/context/UserContext'
+import withGuard from 'common/hoc/withGuard'
 import useNavbarSearch from 'common/hooks/useNavbarSearch'
 import useSwitch from 'common/hooks/useSwitch'
 import React, { useCallback } from 'react'
@@ -22,7 +23,7 @@ import {
   SearchContainer,
 } from './styled'
 
-export default function JobList() {
+const JobList = () => {
   const { job, hasMore, fetchData, filterData, createPostPage } =
     useJobListData()
   const { state, setState } = useFilterData()
@@ -31,7 +32,7 @@ export default function JobList() {
   useNavbarSearch(
     useCallback(() => {
       open()
-    }, []),
+    }, [open]),
   )
 
   return (
@@ -136,3 +137,5 @@ export default function JobList() {
     </div>
   )
 }
+
+export default withGuard(JobList, [UserType.ACTOR, UserType.CASTING])

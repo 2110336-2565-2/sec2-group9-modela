@@ -1,7 +1,6 @@
 import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material'
 import FormController from 'common/components/FormController'
-import { useUser } from 'common/context/UserContext'
-import { useRouter } from 'next/router'
+import withNotLoggedInGuard from 'common/hoc/withNotLoggedInGuard'
 import React from 'react'
 import { Control, FieldValues } from 'react-hook-form'
 
@@ -11,19 +10,6 @@ import { FormContainer, RootContainer } from './styled'
 
 const Login = () => {
   const { loading, control, handleClickSubmit } = useLoginForm()
-
-  const router = useRouter()
-  const user = useUser()
-
-  if (user && !user.isVerified) {
-    router.replace('/waiting')
-    return
-  }
-
-  if (user && user.isVerified) {
-    router.replace('/job')
-    return
-  }
 
   return (
     <RootContainer onSubmit={handleClickSubmit}>
@@ -72,4 +58,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default withNotLoggedInGuard(Login)

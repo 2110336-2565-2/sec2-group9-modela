@@ -14,16 +14,17 @@ import { useCallback, useMemo } from 'react'
 
 const useNavMenu = (isMobile: boolean) => {
   const router = useRouter()
-  const { user } = useUser()
+  const { user, reset } = useUser()
 
   const handleLogout = useCallback(async () => {
     try {
       await apiClient.post('/auth/logout')
-      router.push('/login', undefined, { shallow: true })
+      reset()
+      router.push('/login')
     } catch (err) {
       console.log(err)
     }
-  }, [router])
+  }, [reset, router])
 
   const VERIFIED_MENU = useMemo(
     () => [
@@ -67,7 +68,6 @@ const useNavMenu = (isMobile: boolean) => {
       {
         label: 'ออกจากระบบ',
         onClick: () => {
-          //TODO Implement logout logic
           handleLogout()
         },
         icon: <LogoutOutlined />,
@@ -82,7 +82,7 @@ const useNavMenu = (isMobile: boolean) => {
         onlyNotLoggedIn: true,
       },
     ],
-    [router, user?.firstName],
+    [handleLogout, router, user?.firstName],
   )
 
   const getMenuByUser = useCallback(() => {

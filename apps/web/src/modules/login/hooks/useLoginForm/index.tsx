@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LoginDto } from '@modela/dtos'
+import { useUser } from 'common/context/UserContext'
 import { apiClient } from 'common/utils/api'
 import { useRouter } from 'next/router'
 import { FormEventHandler, useCallback, useState } from 'react'
@@ -9,6 +10,7 @@ import { ILoginSchemaType, LoginSchema } from './schema'
 
 const useLoginForm = () => {
   const router = useRouter()
+  const { refetch } = useUser()
 
   const { register, handleSubmit, control, setError } =
     useForm<ILoginSchemaType>({
@@ -23,6 +25,7 @@ const useLoginForm = () => {
       setLoading(true)
       try {
         await apiClient.post<unknown, unknown, LoginDto>('/auth/login', data)
+        await refetch()
         router.push('/job')
       } catch (err) {
         console.log(err)
@@ -30,7 +33,7 @@ const useLoginForm = () => {
         setLoading(false)
       }
     },
-    [router],
+    [refetch, router],
   )
 
   const handleClickSubmit: FormEventHandler<HTMLFormElement> =
