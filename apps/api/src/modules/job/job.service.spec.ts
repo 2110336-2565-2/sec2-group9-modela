@@ -347,15 +347,6 @@ describe('JobService', () => {
   })
 
   describe('postJob', () => {
-    const MOCK_TITLE = 'test title'
-    const MOCK_DESCRIPTION = 'test description'
-    const MOCK_STATUS = JobStatus.OPEN
-    const MOCK_ROLE = 'test role'
-    const MOCK_AGE = 20
-    const MOCK_ACTORCOUNT = 1
-    const MOCK_WAGE = 10000
-    const MOCK_DEADLINE = new Date()
-    const MOCK_SHOOTING = mock('shooting').get(3)
     const MOCK_CASTING_ID = 1
 
     const MOCK_JOB = {
@@ -368,13 +359,15 @@ describe('JobService', () => {
 
     describe('normal behavior', () => {
       it('should create the job successfully', async () => {
-        jest.spyOn(repository, 'createJob').mockResolvedValue()
-        jest.spyOn(service, 'createJob').mockResolvedValue()
+        const result = mock('job').get(1)[0]
 
-        await service.createJob(MOCK_JOB, MOCK_CASTING_ID)
+        jest.spyOn(repository, 'createJob').mockResolvedValue(result.jobId)
+        jest.spyOn(service, 'createJob').mockResolvedValue(result.jobId)
 
         expect(repository.createJob).toBeCalledWith(MOCK_JOB, MOCK_CASTING_ID)
         expect(service.createJob).toBeCalledWith(MOCK_JOB, MOCK_CASTING_ID)
+
+        await service.createJob(MOCK_JOB, MOCK_CASTING_ID)
       })
     })
   })
