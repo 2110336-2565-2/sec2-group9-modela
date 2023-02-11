@@ -4,14 +4,9 @@ export const FIlterPage = styled('div')`
   display: none;
   flex-direction: row;
   justify-content: center;
-  padding-top: 3rem;
-  width: 110%;
-  height: 140%;
+  width: 100%;
+  height: 100%;
   gap: 1rem;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   background-color: white;
   ${(props) => props.theme.breakpoints.up('md')} {
     display: none;
@@ -23,8 +18,7 @@ export const FilterPageFilterBox = styled('div')`
   justify-content: center;
   text-align: center;
   align-items: center;
-  padding-top: 10rem;
-  margin: 3rem;
+  margin: 1rem;
   width: 80vw;
   gap: 1rem;
 `

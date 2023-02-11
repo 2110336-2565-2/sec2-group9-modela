@@ -29,6 +29,7 @@ export default function FilterMobileContainer(props: FilterContainerProps) {
             closeFilterPage()
           }}
           variant="contained"
+          sx={{ borderRadius: '12px', width: '25vw', height: '5vh' }}
         >
           ค้นหางาน
         </Button>
