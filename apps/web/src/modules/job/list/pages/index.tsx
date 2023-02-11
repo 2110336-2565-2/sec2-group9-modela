@@ -12,7 +12,7 @@ import { notiHolder } from './placeholder'
 import { FilterBoxContainer, JobContainer, NotiContainer } from './styled'
 
 export default function JobList() {
-  const { job, hasMore, fetchData } = useJobListData()
+  const { job, hasMore, fetchData, filterData } = useJobListData()
   const { state, setState } = useFilterData()
 
   return (
@@ -40,7 +40,7 @@ export default function JobList() {
       </NotiContainer>
 
       <JobContainer>
-        <SearchBox />
+        <SearchBox state={state} filterData={filterData} />
         <div
           style={{
             display: 'flex',
@@ -49,7 +49,6 @@ export default function JobList() {
           }}
         >
           <InfiniteScroll
-            pageStart={0}
             loadMore={fetchData}
             hasMore={hasMore}
             loader={
