@@ -29,6 +29,9 @@ export class JobRepository {
     //generate join casting and user table params
     const paramsWithInclude = {
       ...params,
+      orderBy: {
+        jobId: Prisma.SortOrder.desc,
+      },
       include: {
         Casting: {
           include: {
