@@ -63,6 +63,7 @@ export class JobService {
           },
         },
 
+        title: undefined,
         minAge: {
           lte: Number(searchJobDto.age) || defaultminAgeLte,
         },
@@ -136,7 +137,13 @@ export class JobService {
         },
       }
     }
-
+    //handle title substring query
+    if (searchJobDto.title) {
+      params.where.title = {
+        contains: searchJobDto.title,
+        mode: 'insensitive',
+      }
+    }
     return params
   }
   async findAll(searchJobDto: SearchJobDto, user: JwtDto) {
