@@ -4,7 +4,11 @@ import {
   GetJobCardWithMaxPageDto,
   SearchJobDto,
 } from '@modela/dtos'
-import { ForbiddenException, NotFoundException } from '@nestjs/common'
+import {
+  BadRequestException,
+  ForbiddenException,
+  NotFoundException,
+} from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import exp from 'constants'
 import { PrismaService } from 'src/database/prisma.service'
@@ -349,25 +353,151 @@ describe('JobService', () => {
   describe('postJob', () => {
     const MOCK_CASTING_ID = 1
 
-    const MOCK_JOB = {
-      ...mock('job')
-        .omit(['castingId', 'createdAt', 'updatedAt', 'jobId', 'status'])
-        .get(),
-      castingId: MOCK_CASTING_ID,
-      shooting: mock('shooting').get(3),
-    }
+    describe('normal behavior', () => {
+      it('should create the job successfully', async () => {
+        const now = new Date()
+
+        const MOCK_JOB = {
+          ...mock('job')
+            .omit(['castingId', 'createdAt', 'updatedAt', 'jobId', 'status'])
+            .get(),
+          castingId: MOCK_CASTING_ID,
+          shooting: mock('shooting').get(3),
+        }
+        MOCK_JOB.applicationDeadline = new Date()
+        MOCK_JOB.applicationDeadline.setFullYear(
+          MOCK_JOB.applicationDeadline.getFullYear() + 1,
+        )
+        // for each shooting set start date to be 2 years from now, set start time to be the same
+        MOCK_JOB.shooting.forEach((shooting) => {
+          shooting.startDate = new Date()
+          shooting.startDate.setFullYear(shooting.startDate.getFullYear() + 2)
+          shooting.startTime = now
+        })
+        // for each shooting set end date to be 3 years from now, set end time to be the same
+        MOCK_JOB.shooting.forEach((shooting) => {
+          shooting.endDate = new Date()
+          shooting.endDate.setFullYear(shooting.endDate.getFullYear() + 3)
+          shooting.endTime = now
+        })
+        // set actorCount, minAge and wage to be 1 if they are less than 1
+        if (MOCK_JOB.actorCount < 1) {
+          MOCK_JOB.actorCount = 1
+        }
+        if (MOCK_JOB.minAge < 1) {
+          MOCK_JOB.minAge = 1
+        }
+        if (MOCK_JOB.wage < 1) {
+          MOCK_JOB.wage = 1
+        }
+
+        const result = mock('job').get(1)[0]
+        console.log(result)
+
+        jest.spyOn(repository, 'createJob').mockResolvedValue(result.jobId)
+
+        const newId = await service.createJob(MOCK_JOB, MOCK_CASTING_ID)
+
+        expect(repository.createJob).toBeCalledWith(MOCK_JOB, MOCK_CASTING_ID)
+      })
+    })
 
     describe('normal behavior', () => {
       it('should create the job successfully', async () => {
+        const now = new Date()
+
+        const MOCK_JOB = {
+          ...mock('job')
+            .omit(['castingId', 'createdAt', 'updatedAt', 'jobId', 'status'])
+            .get(),
+          castingId: MOCK_CASTING_ID,
+          shooting: mock('shooting').get(3),
+        }
+        MOCK_JOB.applicationDeadline = new Date()
+        MOCK_JOB.applicationDeadline.setFullYear(
+          MOCK_JOB.applicationDeadline.getFullYear() + 1,
+        )
+        // for each shooting set start date to be 2 years from now, set start time to be the same
+        MOCK_JOB.shooting.forEach((shooting) => {
+          shooting.startDate = new Date()
+          shooting.startDate.setFullYear(shooting.startDate.getFullYear() + 2)
+          shooting.startTime = now
+        })
+        // for each shooting set end date to be 3 years from now, set end time to be the same
+        MOCK_JOB.shooting.forEach((shooting) => {
+          shooting.endDate = new Date()
+          shooting.endDate.setFullYear(shooting.endDate.getFullYear() + 3)
+          shooting.endTime = now
+        })
+        // set actorCount, minAge and wage to be 1 if they are less than 1
+        if (MOCK_JOB.actorCount < 1) {
+          MOCK_JOB.actorCount = 1
+        }
+        if (MOCK_JOB.minAge < 1) {
+          MOCK_JOB.minAge = 1
+        }
+        if (MOCK_JOB.wage < 1) {
+          MOCK_JOB.wage = 1
+        }
+
         const result = mock('job').get(1)[0]
+        console.log(result)
 
         jest.spyOn(repository, 'createJob').mockResolvedValue(result.jobId)
-        jest.spyOn(service, 'createJob').mockResolvedValue(result.jobId)
+
+        const newId = await service.createJob(MOCK_JOB, MOCK_CASTING_ID)
 
         expect(repository.createJob).toBeCalledWith(MOCK_JOB, MOCK_CASTING_ID)
-        expect(service.createJob).toBeCalledWith(MOCK_JOB, MOCK_CASTING_ID)
+      })
 
-        await service.createJob(MOCK_JOB, MOCK_CASTING_ID)
+      it('should be bad request due to date conflict', async () => {
+        const now = new Date()
+
+        const MOCK_JOB = {
+          ...mock('job')
+            .omit(['castingId', 'createdAt', 'updatedAt', 'jobId', 'status'])
+            .get(),
+          castingId: MOCK_CASTING_ID,
+          shooting: mock('shooting').get(3),
+        }
+        MOCK_JOB.applicationDeadline = new Date()
+        MOCK_JOB.applicationDeadline.setFullYear(
+          MOCK_JOB.applicationDeadline.getFullYear() + 1,
+        )
+        // for each shooting set start date to be 2 years from now, set start time to be the same
+        MOCK_JOB.shooting.forEach((shooting) => {
+          shooting.startDate = new Date()
+          shooting.startDate.setFullYear(shooting.startDate.getFullYear() + 2)
+          shooting.startTime = now
+        })
+        // for each shooting set end date to be 3 years from now, set end time to be the same
+        MOCK_JOB.shooting.forEach((shooting) => {
+          shooting.endDate = new Date()
+          shooting.endDate.setFullYear(shooting.endDate.getFullYear() + 1)
+          shooting.endTime = now
+        })
+        // set actorCount, minAge and wage to be 1 if they are less than 1
+        if (MOCK_JOB.actorCount < 1) {
+          MOCK_JOB.actorCount = 1
+        }
+        if (MOCK_JOB.minAge < 1) {
+          MOCK_JOB.minAge = 1
+        }
+        if (MOCK_JOB.wage < 1) {
+          MOCK_JOB.wage = 1
+        }
+
+        const result = mock('job').get(1)[0]
+        console.log(result)
+
+        jest.spyOn(repository, 'createJob').mockResolvedValue(result.jobId)
+
+        await expect(
+          service.createJob(MOCK_JOB, MOCK_CASTING_ID),
+        ).rejects.toThrow(BadRequestException)
+
+        // expect repository.createJob to not be called
+        expect(repository.createJob).not.toBeCalled()
       })
     })
   })
