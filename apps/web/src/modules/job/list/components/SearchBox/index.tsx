@@ -5,10 +5,10 @@ import React from 'react'
 import { SearchBoxProps } from './types'
 
 export default function SearchBox(prop: SearchBoxProps) {
-  const { filterData, state, setState } = prop
+  const { filterData, state, setState, labels } = prop
   return (
     <TextField
-      placeholder="ค้นหางานทั้งหมด"
+      placeholder={labels}
       value={state.title}
       onChange={(event) => {
         setState({ ...state, title: event.target.value })

@@ -14,10 +14,20 @@ import React from 'react'
 import { FilterBox } from './styled'
 import { FilterContainerProps } from './types'
 
-export default function SearchBox(props: FilterContainerProps) {
-  const { state, setState } = props
+export default function FilterContainer(props: FilterContainerProps) {
+  const { state, setState, isTitle } = props
   return (
     <FilterBox>
+      {isTitle && (
+        <TextField
+          fullWidth
+          label="ชื่องาน"
+          value={state.title}
+          onChange={(event) => {
+            setState({ ...state, title: event.target.value })
+          }}
+        />
+      )}
       <Typography variant="body1"> การถ่ายทำ </Typography>
       <MobileDatePicker
         label="วันเริ่มการถ่ายทำ"
@@ -28,6 +38,7 @@ export default function SearchBox(props: FilterContainerProps) {
         renderInput={(params) => (
           <TextField
             {...params}
+            fullWidth={true}
             InputProps={{
               ...params.InputProps,
               endAdornment: <DateRangeOutlined color="primary" />,
@@ -44,6 +55,7 @@ export default function SearchBox(props: FilterContainerProps) {
         renderInput={(params) => (
           <TextField
             {...params}
+            fullWidth={true}
             InputProps={{
               ...params.InputProps,
               endAdornment: <DateRangeOutlined color="primary" />,
@@ -60,6 +72,7 @@ export default function SearchBox(props: FilterContainerProps) {
         renderInput={(params) => (
           <TextField
             {...params}
+            fullWidth={true}
             InputProps={{
               ...params.InputProps,
               endAdornment: (
@@ -78,6 +91,7 @@ export default function SearchBox(props: FilterContainerProps) {
         renderInput={(params) => (
           <TextField
             {...params}
+            fullWidth={true}
             InputProps={{
               ...params.InputProps,
               endAdornment: (

@@ -1,8 +1,11 @@
-import { IFilter } from 'modules/job/list/pages/types'
 import { Dispatch, SetStateAction } from 'react'
+
+import { IFilter } from '../../pages/types'
 
 export interface FilterContainerProps {
   state: IFilter
   setState: Dispatch<SetStateAction<IFilter>>
-  isTitle: boolean
+  isFilterShow: boolean
+  closeFilterPage: () => void
+  filterData: (state: IFilter) => Promise<void>
 }

@@ -1,13 +1,16 @@
 import { CircularProgress, Typography } from '@mui/material'
-import React from 'react'
+import useNavbarSearch from 'common/hooks/useNavbarSearch'
+import React, { useCallback } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 
 import FilterContainer from '../components/FilterContainer'
+import FilterMobileContainer from '../components/FilterMobileContainer'
 import JobCardContainer from '../components/JobCardContainer'
 import NotiCardContainer from '../components/NotiCardContainer'
 import SearchBox from '../components/SearchBox'
 import useFilterData from './hooks/useFilterData'
 import useJobListData from './hooks/useJobListData'
+import useMobileStyle from './hooks/useMobileStyle'
 import { notiHolder } from './placeholder'
 import {
   FilterBoxContainer,
@@ -19,6 +22,12 @@ import {
 export default function JobList() {
   const { job, hasMore, fetchData, filterData } = useJobListData()
   const { state, setState } = useFilterData()
+  const { isFilterShow, setIsFilterShow, closeFilterPage } = useMobileStyle()
+  useNavbarSearch(
+    useCallback(() => {
+      setIsFilterShow(true)
+    }, []),
+  )
 
   return (
     <div
@@ -44,12 +53,17 @@ export default function JobList() {
         </div>
       </NotiContainer>
 
-      <JobContainer>
+      <JobContainer
+        sx={{
+          display: isFilterShow ? 'none' : 'flex',
+        }}
+      >
         <SearchContainer>
           <SearchBox
             state={state}
             filterData={filterData}
             setState={setState}
+            labels={'ค้นหางานทั้งหมด'}
           />
         </SearchContainer>
 
@@ -73,8 +87,6 @@ export default function JobList() {
           </InfiniteScroll>
         </div>
       </JobContainer>
-
-      {/* Place holder to do in next task */}
       <FilterBoxContainer>
         <div
           style={{
@@ -83,9 +95,24 @@ export default function JobList() {
             gap: '1rem',
           }}
         >
-          <FilterContainer state={state} setState={setState} />
+          <FilterContainer state={state} setState={setState} isTitle={false} />
         </div>
       </FilterBoxContainer>
+
+      {isFilterShow && (
+        <FilterMobileContainer
+          state={state}
+          setState={setState}
+          isFilterShow={isFilterShow}
+          closeFilterPage={closeFilterPage}
+          filterData={filterData}
+        />
+      )}
+      {/*<FIlterPage sx={{display: isFilterShow ? 'flex' : 'none'}}>
+        <FilterPageFilterBox>
+          <FilterContainer state={state} setState={setState} isTitle={true} />
+        </FilterPageFilterBox>
+        </FIlterPage>*/}
     </div>
   )
 }

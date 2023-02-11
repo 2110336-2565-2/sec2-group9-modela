@@ -5,4 +5,5 @@ export interface SearchBoxProps {
   state: IFilter
   filterData: (state: IFilter) => Promise<void>
   setState: Dispatch<SetStateAction<IFilter>>
+  labels: string
 }
