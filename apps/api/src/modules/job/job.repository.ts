@@ -12,7 +12,7 @@ import { PrismaService } from 'src/database/prisma.service'
 export class JobRepository {
   constructor(private prisma: PrismaService) {}
 
-  async createJob(createJobDto: EditJobDto, userId: number) {
+  async createJob(createJobDto: CreateJobDto, userId: number) {
     const { shooting, ...field } = createJobDto
     const job = await this.prisma.job.create({
       data: {
@@ -27,7 +27,7 @@ export class JobRepository {
     return { jobId: job.jobId }
   }
 
-  async updateJob(id: number, updateJobDto: CreateJobDto) {
+  async updateJob(id: number, updateJobDto: EditJobDto) {
     const { shooting, ...field } = updateJobDto
     const updatedJob = await this.prisma.job.update({
       where: { jobId: id },
