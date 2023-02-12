@@ -445,7 +445,7 @@ describe('JobService', () => {
         jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
 
         MOCK_JOB.title = MOCK_UPDATED_TITLE
-        const newerId = await service.update(newId, MOCK_JOB, MOCK_CASTING_ID)
+        await service.update(newId, MOCK_JOB, MOCK_CASTING_ID)
 
         expect(repository.updateJob).toBeCalledWith(
           newId,
