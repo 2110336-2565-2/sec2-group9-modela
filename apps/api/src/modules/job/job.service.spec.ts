@@ -16,8 +16,6 @@ import { JobRepository } from './job.repository'
 import { JobService } from './job.service'
 
 function createValidJob() {
-  const now = new Date()
-
   const MOCK_START_DATE = new Date()
   MOCK_START_DATE.setFullYear(MOCK_START_DATE.getFullYear() + 2)
   const MOCK_END_DATE = new Date()
@@ -409,7 +407,7 @@ describe('JobService', () => {
           .spyOn(repository, 'createJob')
           .mockResolvedValue({ jobId: result.jobId })
 
-        const newId = await service.createJob(MOCK_JOB, MOCK_CASTING_ID)
+        await service.createJob(MOCK_JOB, MOCK_CASTING_ID)
 
         expect(repository.createJob).toBeCalledWith(MOCK_JOB, MOCK_CASTING_ID)
       })
