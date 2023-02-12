@@ -23,6 +23,7 @@ export default function SearchBox(prop: SearchBoxProps) {
         InputProps={{
           endAdornment: (
             <SearchOutlinedIcon
+              type="submit"
               color="primary"
               sx={{ cursor: 'pointer' }}
               onClick={() => {
