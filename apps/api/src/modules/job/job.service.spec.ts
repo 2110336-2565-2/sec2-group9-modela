@@ -506,6 +506,208 @@ describe('JobService', () => {
 
         expect(repository.updateJob).not.toBeCalled()
       })
+
+      it('should be bad request due to endDate being earlier than startDate', async () => {
+        const MOCK_JOB = createValidJob()
+        MOCK_JOB.shooting[0].endDate = new Date(MOCK_JOB.shooting[0].startDate)
+        MOCK_JOB.shooting[0].endDate.setDate(
+          MOCK_JOB.shooting[0].endDate.getDate() - 1,
+        )
+
+        const result = mock('job').get()
+
+        jest
+          .spyOn(repository, 'updateJob')
+          .mockResolvedValue({ jobId: result.jobId })
+
+        const newId = result.jobId
+
+        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
+        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
+
+        MOCK_JOB.title = MOCK_UPDATED_TITLE
+
+        await expect(
+          service.update(newId, MOCK_JOB, MOCK_CASTING_ID),
+        ).rejects.toThrow(BadRequestException)
+
+        expect(repository.updateJob).not.toBeCalled()
+      })
+
+      it('should be bad request due to minAge being higher than maxAge', async () => {
+        const MOCK_JOB = createValidJob()
+        MOCK_JOB.minAge = 100
+        MOCK_JOB.maxAge = 10
+
+        const result = mock('job').get()
+
+        jest
+          .spyOn(repository, 'updateJob')
+          .mockResolvedValue({ jobId: result.jobId })
+
+        const newId = result.jobId
+
+        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
+        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
+
+        MOCK_JOB.title = MOCK_UPDATED_TITLE
+
+        await expect(
+          service.update(newId, MOCK_JOB, MOCK_CASTING_ID),
+        ).rejects.toThrow(BadRequestException)
+
+        expect(repository.updateJob).not.toBeCalled()
+      })
+
+      it('should be bad request due to startDate being before applicationDeadline', async () => {
+        const MOCK_JOB = createValidJob()
+        MOCK_JOB.shooting[0].startDate = new Date(MOCK_JOB.applicationDeadline)
+        MOCK_JOB.shooting[0].startDate.setDate(
+          MOCK_JOB.shooting[0].startDate.getDate() - 1,
+        )
+
+        const result = mock('job').get()
+
+        jest
+          .spyOn(repository, 'updateJob')
+          .mockResolvedValue({ jobId: result.jobId })
+
+        const newId = result.jobId
+
+        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
+        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
+
+        MOCK_JOB.title = MOCK_UPDATED_TITLE
+
+        await expect(
+          service.update(newId, MOCK_JOB, MOCK_CASTING_ID),
+        ).rejects.toThrow(BadRequestException)
+
+        expect(repository.updateJob).not.toBeCalled()
+      })
+
+      it('should be bad request due to minAge being higher than maxAge', async () => {
+        const MOCK_JOB = createValidJob()
+        MOCK_JOB.minAge = 100
+        MOCK_JOB.maxAge = 10
+
+        const result = mock('job').get()
+
+        jest
+          .spyOn(repository, 'updateJob')
+          .mockResolvedValue({ jobId: result.jobId })
+
+        const newId = result.jobId
+
+        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
+        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
+
+        MOCK_JOB.title = MOCK_UPDATED_TITLE
+
+        await expect(
+          service.update(newId, MOCK_JOB, MOCK_CASTING_ID),
+        ).rejects.toThrow(BadRequestException)
+
+        expect(repository.updateJob).not.toBeCalled()
+      })
+
+      it('should be bad request due to minAge being less than 1', async () => {
+        const MOCK_JOB = createValidJob()
+        MOCK_JOB.minAge = 0
+
+        const result = mock('job').get()
+
+        jest
+          .spyOn(repository, 'updateJob')
+          .mockResolvedValue({ jobId: result.jobId })
+
+        const newId = result.jobId
+
+        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
+        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
+
+        MOCK_JOB.title = MOCK_UPDATED_TITLE
+
+        await expect(
+          service.update(newId, MOCK_JOB, MOCK_CASTING_ID),
+        ).rejects.toThrow(BadRequestException)
+
+        expect(repository.updateJob).not.toBeCalled()
+      })
+
+      it('should be bad request due to actorCount being less than 1', async () => {
+        const MOCK_JOB = createValidJob()
+        MOCK_JOB.actorCount = 0
+
+        const result = mock('job').get()
+
+        jest
+          .spyOn(repository, 'updateJob')
+          .mockResolvedValue({ jobId: result.jobId })
+
+        const newId = result.jobId
+
+        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
+        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
+
+        MOCK_JOB.title = MOCK_UPDATED_TITLE
+
+        await expect(
+          service.update(newId, MOCK_JOB, MOCK_CASTING_ID),
+        ).rejects.toThrow(BadRequestException)
+
+        expect(repository.updateJob).not.toBeCalled()
+      })
+
+      it('should be bad request due to wage being less than 0', async () => {
+        const MOCK_JOB = createValidJob()
+        MOCK_JOB.wage = -1
+
+        const result = mock('job').get()
+
+        jest
+          .spyOn(repository, 'updateJob')
+          .mockResolvedValue({ jobId: result.jobId })
+
+        const newId = result.jobId
+
+        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
+        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
+
+        MOCK_JOB.title = MOCK_UPDATED_TITLE
+
+        await expect(
+          service.update(newId, MOCK_JOB, MOCK_CASTING_ID),
+        ).rejects.toThrow(BadRequestException)
+
+        expect(repository.updateJob).not.toBeCalled()
+      })
+      it('should be bad request due to applicationDeadline being before current time', async () => {
+        const MOCK_JOB = createValidJob()
+        MOCK_JOB.applicationDeadline = new Date()
+        MOCK_JOB.applicationDeadline.setDate(
+          MOCK_JOB.applicationDeadline.getDate() - 1,
+        )
+
+        const result = mock('job').get()
+
+        jest
+          .spyOn(repository, 'updateJob')
+          .mockResolvedValue({ jobId: result.jobId })
+
+        const newId = result.jobId
+
+        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
+        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
+
+        MOCK_JOB.title = MOCK_UPDATED_TITLE
+
+        await expect(
+          service.update(newId, MOCK_JOB, MOCK_CASTING_ID),
+        ).rejects.toThrow(BadRequestException)
+
+        expect(repository.updateJob).not.toBeCalled()
+      })
     })
   })
 })
