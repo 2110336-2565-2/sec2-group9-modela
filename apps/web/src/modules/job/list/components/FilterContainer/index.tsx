@@ -66,6 +66,7 @@ export default function FilterContainer(props: FilterContainerProps) {
       <MobileTimePicker
         label="เวลาเริ่มต้นการถ่ายทำ"
         value={state.startTime}
+        ampm={false}
         onChange={(newValue) => {
           setState({ ...state, startTime: newValue })
         }}
@@ -85,6 +86,7 @@ export default function FilterContainer(props: FilterContainerProps) {
       <MobileTimePicker
         label="เวลาสิ้นสุดการถ่ายทำ"
         value={state.endTime}
+        ampm={false}
         onChange={(newValue) => {
           setState({ ...state, endTime: newValue })
         }}

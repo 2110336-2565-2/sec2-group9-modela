@@ -1,5 +1,6 @@
 import { CircularProgress, Typography } from '@mui/material'
 import useNavbarSearch from 'common/hooks/useNavbarSearch'
+import useSwitch from 'common/hooks/useSwitch'
 import React, { useCallback } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 
@@ -10,7 +11,6 @@ import NotiCardContainer from '../components/NotiCardContainer'
 import SearchBox from '../components/SearchBox'
 import useFilterData from './hooks/useFilterData'
 import useJobListData from './hooks/useJobListData'
-import useMobileStyle from './hooks/useMobileStyle'
 import { notiHolder } from './placeholder'
 import {
   FilterBoxContainer,
@@ -22,10 +22,10 @@ import {
 export default function JobList() {
   const { job, hasMore, fetchData, filterData } = useJobListData()
   const { state, setState } = useFilterData()
-  const { isFilterShow, setIsFilterShow, closeFilterPage } = useMobileStyle()
+  const { isOpen, open, close } = useSwitch()
   useNavbarSearch(
     useCallback(() => {
-      setIsFilterShow(true)
+      open()
     }, []),
   )
 
@@ -55,7 +55,7 @@ export default function JobList() {
 
       <JobContainer
         sx={{
-          display: isFilterShow ? 'none' : 'flex',
+          display: isOpen ? 'none' : 'flex',
         }}
       >
         <SearchContainer>
@@ -99,12 +99,12 @@ export default function JobList() {
         </div>
       </FilterBoxContainer>
 
-      {isFilterShow && (
+      {isOpen && (
         <FilterMobileContainer
           state={state}
           setState={setState}
-          isFilterShow={isFilterShow}
-          closeFilterPage={closeFilterPage}
+          isFilterShow={isOpen}
+          closeFilterPage={close}
           filterData={filterData}
         />
       )}

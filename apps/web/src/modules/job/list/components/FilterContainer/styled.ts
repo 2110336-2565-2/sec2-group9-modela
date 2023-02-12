@@ -6,6 +6,6 @@ export const FilterBox = styled('div')`
   align-items: flex-start;
   padding: 12px;
   width: 100%;
-  min-width: 200px;
   gap: 8px;
+  min-width: 220px;
 `
