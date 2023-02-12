@@ -201,6 +201,9 @@ export class GetJobCardDto extends OmitType(EditJobDto, [
 
   @ApiProperty()
   jobCastingImageUrl: string
+
+  @ApiProperty()
+  status: JobStatus
 }
 
 export class GetJobCardWithMaxPageDto {
