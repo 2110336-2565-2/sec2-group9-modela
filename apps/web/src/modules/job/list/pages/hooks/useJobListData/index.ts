@@ -50,15 +50,12 @@ const useJobListData = () => {
 
     setJob({ ...job, jobs: [], maxPage: 1 })
     setPage(1)
-    console.log('Set Page : ', page)
     pageControl.current = 0
 
     setHasMore(true)
   }
   const fetchData = async () => {
-    console.log('Fetched')
     try {
-      console.log(page, pageControl.current)
       if (pageControl.current <= page) {
         pageControl.current = page + 1
         const res = (
@@ -77,7 +74,7 @@ const useJobListData = () => {
         }))
         setHasMore(res.maxPage > page)
       }
-      setPage(page + 1)
+      setPage((prev) => prev + 1)
     } catch (e) {
       console.log(e)
       router.replace('/404')

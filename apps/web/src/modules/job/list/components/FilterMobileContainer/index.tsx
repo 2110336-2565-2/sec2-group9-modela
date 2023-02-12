@@ -6,7 +6,7 @@ import FilterContainer from '../FilterContainer'
 import { FIlterPage, FilterPageFilterBox } from './styled'
 import { FilterContainerProps } from './types'
 
-export default function FilterMobileContainer(props: FilterContainerProps) {
+const FilterMobileContainer = (props: FilterContainerProps) => {
   const { state, setState, isFilterShow, closeFilterPage, filterData } = props
   useBackNavbar(
     useMemo(
@@ -37,3 +37,4 @@ export default function FilterMobileContainer(props: FilterContainerProps) {
     </FIlterPage>
   )
 }
+export default FilterMobileContainer

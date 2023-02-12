@@ -108,11 +108,6 @@ export default function JobList() {
           filterData={filterData}
         />
       )}
-      {/*<FIlterPage sx={{display: isFilterShow ? 'flex' : 'none'}}>
-        <FilterPageFilterBox>
-          <FilterContainer state={state} setState={setState} isTitle={true} />
-        </FilterPageFilterBox>
-        </FIlterPage>*/}
     </div>
   )
 }
