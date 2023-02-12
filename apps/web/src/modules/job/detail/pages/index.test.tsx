@@ -28,6 +28,7 @@ describe('<JobDetailPage />', () => {
     it('should render correctly when API return correct data', async () => {
       useRouter.mockImplementation(() => ({
         query: { jobId: 1 },
+        replace: () => {},
         isReady: true,
       }))
       mockGetReturn(mockData)
@@ -40,6 +41,7 @@ describe('<JobDetailPage />', () => {
     it('should render correctly when API not return', async () => {
       useRouter.mockImplementation(() => ({
         query: { jobId: 1 },
+        replace: () => {},
         isReady: true,
       }))
       mockGetReturn(undefined)
