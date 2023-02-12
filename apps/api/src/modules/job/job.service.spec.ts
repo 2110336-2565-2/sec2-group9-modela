@@ -453,11 +453,7 @@ describe('JobService', () => {
         MOCK_JOB.title = MOCK_UPDATED_TITLE
         await service.update(newId, MOCK_JOB, MOCK_CASTING_ID)
 
-        expect(repository.updateJob).toBeCalledWith(
-          newId,
-          MOCK_JOB,
-          MOCK_CASTING_ID,
-        )
+        expect(repository.updateJob).toBeCalledWith(newId, MOCK_JOB)
       })
 
       it('should be bad request due to user not being the job owner', async () => {
