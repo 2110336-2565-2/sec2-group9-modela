@@ -47,7 +47,8 @@ module.exports = {
         ],
       },
     ],
-    '^.+\\.svg$': '<rootDir>/svgTransform.js',
+    '^.+\\.(png|jpg|jpeg|gif|webp|avif|ico|bmp|svg)$':
+      '<rootDir>/fileTransform.js',
   },
   transformIgnorePatterns: [
     '/node_modules/',

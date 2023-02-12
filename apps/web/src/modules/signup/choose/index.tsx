@@ -31,7 +31,7 @@ const ChooseSignup = () => {
               href="/signup/actor"
               style={{ width: '100%', textDecoration: 'none' }}
             >
-              <Button LinkComponent="a" fullWidth variant="contained">
+              <Button fullWidth variant="contained">
                 <Typography variant="button">นักแสดง</Typography>
               </Button>
             </Link>
@@ -43,7 +43,7 @@ const ChooseSignup = () => {
               href="/signup/casting"
               style={{ width: '100%', textDecoration: 'none' }}
             >
-              <Button LinkComponent="a" fullWidth variant="contained">
+              <Button fullWidth variant="contained">
                 <Typography variant="button">ผู้กำกับ</Typography>
               </Button>
             </Link>
@@ -52,7 +52,7 @@ const ChooseSignup = () => {
         <Typography variant="subtitle1" sx={{ textAlign: 'center' }}>
           มีบัญชีอยู่แล้ว ?{' '}
           <Link href="/login" passHref style={{ textDecoration: 'none' }}>
-            <Typography variant="subtitle1" color="primary" component="a">
+            <Typography variant="subtitle1" color="primary">
               เข้าสู่ระบบ
             </Typography>
           </Link>
