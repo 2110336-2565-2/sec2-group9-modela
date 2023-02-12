@@ -1,5 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LoginDto } from '@modela/dtos'
+import { AxiosError } from 'axios'
+import { useSnackbar } from 'common/context/SnackbarContext'
 import { useUser } from 'common/context/UserContext'
 import { apiClient } from 'common/utils/api'
 import { useRouter } from 'next/router'
@@ -11,6 +13,7 @@ import { ILoginSchemaType, LoginSchema } from './schema'
 const useLoginForm = () => {
   const router = useRouter()
   const { refetch } = useUser()
+  const { displaySnackbar } = useSnackbar()
 
   const { register, handleSubmit, control, setError } =
     useForm<ILoginSchemaType>({
@@ -28,12 +31,14 @@ const useLoginForm = () => {
         await refetch()
         router.push('/job')
       } catch (err) {
-        console.log(err)
+        const error = err as AxiosError<{ message: string }>
+
+        displaySnackbar(error.response?.data.message!, 'error')
       } finally {
         setLoading(false)
       }
     },
-    [refetch, router],
+    [displaySnackbar, refetch, router],
   )
 
   const handleClickSubmit: FormEventHandler<HTMLFormElement> =
