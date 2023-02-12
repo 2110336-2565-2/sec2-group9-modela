@@ -5,6 +5,7 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material'
+import withNotLoggedInGuard from 'common/hoc/withNotLoggedInGuard'
 import Image from 'next/image'
 import Link from 'next/link'
 import ActorImage from 'public/actor.png'
@@ -72,4 +73,4 @@ const ChooseSignup = () => {
   )
 }
 
-export default ChooseSignup
+export default withNotLoggedInGuard(ChooseSignup)
