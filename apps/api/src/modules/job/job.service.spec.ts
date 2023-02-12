@@ -442,10 +442,9 @@ describe('JobService', () => {
         const MOCK_JOB = createValidJob()
 
         const result = mock('job').get()
-        jest.spyOn(repository, 'createJob').mockResolvedValue(result.jobId)
         jest.spyOn(repository, 'updateJob').mockResolvedValue(result.jobId)
 
-        const newId = await service.createJob(MOCK_JOB, MOCK_CASTING_ID)
+        const newId = result.jobId
 
         const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
         jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
@@ -467,10 +466,9 @@ describe('JobService', () => {
 
         const result = mock('job').get()
 
-        jest.spyOn(repository, 'createJob').mockResolvedValue(result.jobId)
         jest.spyOn(repository, 'updateJob').mockResolvedValue(result.jobId)
 
-        const newId = await service.createJob(MOCK_JOB, MOCK_CASTING_ID)
+        const newId = result.jobId
 
         const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
         jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)

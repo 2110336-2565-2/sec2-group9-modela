@@ -128,7 +128,7 @@ export class ShootingDto implements Partial<Shooting> {
 
 type EditJobType = Partial<Job> & { shooting: ShootingDto[] }
 
-export class CreateJobDto {
+export class CreateJobDto  implements EditJobType {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
@@ -184,7 +184,7 @@ export class CreateJobDto {
   shooting: ShootingDto[]
 }
 
-export class EditJobDto extends CreateJobDto implements EditJobType {
+export class EditJobDto extends CreateJobDto{
   
 }
 
