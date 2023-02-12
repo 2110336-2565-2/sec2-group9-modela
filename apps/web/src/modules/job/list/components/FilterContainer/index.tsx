@@ -1,5 +1,6 @@
 import { AccessTime, DateRangeOutlined } from '@mui/icons-material'
 import {
+  Button,
   Checkbox,
   Divider,
   FormControlLabel,
@@ -15,9 +16,14 @@ import { FilterBox } from './styled'
 import { FilterContainerProps } from './types'
 
 export default function FilterContainer(props: FilterContainerProps) {
-  const { state, setState, isTitle } = props
+  const { state, setState, isTitle, filterData } = props
   return (
-    <FilterBox>
+    <FilterBox
+      onSubmit={(event) => {
+        event.preventDefault()
+        filterData(state)
+      }}
+    >
       {isTitle && (
         <TextField
           fullWidth
@@ -103,7 +109,6 @@ export default function FilterContainer(props: FilterContainerProps) {
           />
         )}
       />
-
       <TextField
         fullWidth
         label="สถานที่ถ่ายทำ"
@@ -215,6 +220,9 @@ export default function FilterContainer(props: FilterContainerProps) {
           label="อื่นๆ"
         />
       </FormGroup>
+      <Button type="submit" sx={{ display: 'none' }}>
+        Submit
+      </Button>
     </FilterBox>
   )
 }

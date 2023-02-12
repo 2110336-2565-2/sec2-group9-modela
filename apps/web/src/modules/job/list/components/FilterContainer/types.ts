@@ -5,4 +5,5 @@ export interface FilterContainerProps {
   state: IFilter
   setState: Dispatch<SetStateAction<IFilter>>
   isTitle: boolean
+  filterData: (state: IFilter) => Promise<void>
 }

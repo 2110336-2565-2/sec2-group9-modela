@@ -95,7 +95,12 @@ export default function JobList() {
             gap: '1rem',
           }}
         >
-          <FilterContainer state={state} setState={setState} isTitle={false} />
+          <FilterContainer
+            state={state}
+            setState={setState}
+            isTitle={false}
+            filterData={filterData}
+          />
         </div>
       </FilterBoxContainer>
 

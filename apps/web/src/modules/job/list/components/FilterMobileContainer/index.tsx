@@ -22,7 +22,12 @@ const FilterMobileContainer = (props: FilterContainerProps) => {
   return (
     <FIlterPage sx={{ display: isFilterShow ? 'flex' : 'none' }}>
       <FilterPageFilterBox>
-        <FilterContainer state={state} setState={setState} isTitle={true} />
+        <FilterContainer
+          state={state}
+          setState={setState}
+          isTitle={true}
+          filterData={filterData}
+        />
         <Button
           onClick={() => {
             filterData(state)
