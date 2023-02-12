@@ -711,6 +711,56 @@ describe('JobService', () => {
 
         expect(repository.updateJob).not.toBeCalled()
       })
+
+      it('should be not found due to giving an ID which should not exist', async () => {
+        const MOCK_JOB = createValidJob()
+
+        const result = mock('job').get()
+
+        jest
+          .spyOn(repository, 'updateJob')
+          .mockResolvedValue({ jobId: result.jobId })
+
+        const newId = 98094832
+
+        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
+        jest.spyOn(repository, 'getJobById').mockResolvedValue(null)
+
+        MOCK_JOB.title = MOCK_UPDATED_TITLE
+
+        await expect(
+          service.update(newId, MOCK_JOB, MOCK_CASTING_ID),
+        ).rejects.toThrow(NotFoundException)
+
+        expect(repository.updateJob).not.toBeCalled()
+      })
+
+      it('should be bad request due to endDate being earlier than startDate on the same day', async () => {
+        const MOCK_JOB = createValidJob()
+        MOCK_JOB.shooting[0].endDate = new Date(MOCK_JOB.shooting[0].startDate)
+        MOCK_JOB.shooting[0].endDate.setMinutes(
+          MOCK_JOB.shooting[0].endDate.getMinutes() - 1,
+        )
+
+        const result = mock('job').get()
+
+        jest
+          .spyOn(repository, 'updateJob')
+          .mockResolvedValue({ jobId: result.jobId })
+
+        const newId = result.jobId
+
+        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
+        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
+
+        MOCK_JOB.title = MOCK_UPDATED_TITLE
+
+        await expect(
+          service.update(newId, MOCK_JOB, MOCK_CASTING_ID),
+        ).rejects.toThrow(BadRequestException)
+
+        expect(repository.updateJob).not.toBeCalled()
+      })
     })
   })
 })
