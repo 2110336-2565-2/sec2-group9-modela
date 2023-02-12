@@ -1,4 +1,10 @@
-import { Button, Divider, Typography } from '@mui/material'
+import {
+  Button,
+  Divider,
+  Theme,
+  Typography,
+  useMediaQuery,
+} from '@mui/material'
 import Image from 'next/image'
 import Link from 'next/link'
 import ActorImage from 'public/actor.png'
@@ -8,18 +14,22 @@ import {
   CardButtonContainer,
   CardButtonSection,
   CardContainer,
+  HeaderContainer,
   RootContainer,
 } from './styled'
 
 const ChooseSignup = () => {
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
   return (
     <RootContainer>
-      <Typography color="primary" variant="h3">
-        Modela
-      </Typography>
-      <Typography color="#00000080" variant="h5">
-        Platform หางานสำหรับนักแสดง
-      </Typography>
+      <HeaderContainer>
+        <Typography color="primary" variant={isMobile ? 'h3' : 'h2'}>
+          Modela
+        </Typography>
+        <Typography color="#00000080" variant="h5">
+          Platform หางานสำหรับนักแสดง
+        </Typography>
+      </HeaderContainer>
       <CardContainer>
         <Typography variant="h5">ต้องการสมัครสมาชิกในฐานะ</Typography>
         <Divider sx={{ width: '100%' }} />
@@ -52,7 +62,7 @@ const ChooseSignup = () => {
         <Typography variant="subtitle1" sx={{ textAlign: 'center' }}>
           มีบัญชีอยู่แล้ว ?{' '}
           <Link href="/login" passHref style={{ textDecoration: 'none' }}>
-            <Typography variant="subtitle1" color="primary">
+            <Typography variant="subtitle1" color="primary" component="span">
               เข้าสู่ระบบ
             </Typography>
           </Link>
