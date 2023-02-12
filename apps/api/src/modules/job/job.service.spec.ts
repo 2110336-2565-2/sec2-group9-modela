@@ -1,4 +1,4 @@
-import { mock, UserType } from '@modela/database'
+import { JobStatus, mock, UserType } from '@modela/database'
 import {
   GetJobCardDto,
   GetJobCardWithMaxPageDto,
@@ -58,6 +58,7 @@ function createValidJobWithID(userId: number, jobId: number) {
     jobId: jobId,
     companyName: 'test',
     jobCastingImageUrl: 'test',
+    status: JobStatus.OPEN,
   }
   return MOCK_JOB
 }
