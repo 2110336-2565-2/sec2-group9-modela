@@ -10,7 +10,6 @@ import {
   NotFoundException,
 } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
-import exp from 'constants'
 import { PrismaService } from 'src/database/prisma.service'
 
 import { JobRepository } from './job.repository'
@@ -304,7 +303,6 @@ describe('JobService', () => {
           limit: limitQuery,
           page: pageQuery,
         }
-        const thisReqParams = reqParams
         const result = new GetJobCardWithMaxPageDto()
         result.jobs = itMockedJobData.slice(
           limitQuery * (pageQuery - 1),

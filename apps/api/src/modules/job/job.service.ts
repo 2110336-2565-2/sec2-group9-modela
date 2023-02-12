@@ -256,7 +256,7 @@ export class JobService {
     }
 
     this.validateJobDto(updateJobDto)
-    return this.repository.updateJob(id, updateJobDto, userId)
+    return this.repository.updateJob(id, updateJobDto)
   }
 
   remove(id: number) {

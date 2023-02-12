@@ -1,12 +1,11 @@
-import { Job, JobStatus, Prisma } from '@modela/database'
+import { JobStatus, Prisma } from '@modela/database'
 import {
   CreateJobDto,
   EditJobDto,
   GetJobCardDto,
   GetJobDto,
-  ShootingDto,
 } from '@modela/dtos'
-import { ForbiddenException, Injectable } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
 
 @Injectable()
@@ -28,7 +27,7 @@ export class JobRepository {
     return job.jobId
   }
 
-  async updateJob(id: number, updateJobDto: CreateJobDto, userId: number) {
+  async updateJob(id: number, updateJobDto: CreateJobDto) {
     const { shooting, ...field } = updateJobDto
     const updatedJob = await this.prisma.job.update({
       where: { jobId: id },

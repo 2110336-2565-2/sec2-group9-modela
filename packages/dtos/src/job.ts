@@ -10,7 +10,6 @@ import {
   IsOptional,
   IsString,
   Max,
-  min,
   Min,
 } from 'class-validator'
 import { Casting, Gender, Job, JobStatus, Shooting } from '@modela/database'
