@@ -248,6 +248,7 @@ export class JobService {
 
   async update(id: number, updateJobDto: EditJobDto, userId: number) {
     const job = await this.repository.getJobById(id)
+    if (!job) throw new NotFoundException('Job not found')
     if (job.castingId !== userId) {
       throw new ForbiddenException(
         "You don't have permission to update this job",

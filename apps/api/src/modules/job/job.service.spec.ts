@@ -19,28 +19,25 @@ import { JobService } from './job.service'
 function createValidJob() {
   const now = new Date()
 
+  const MOCK_START_DATE = new Date()
+  MOCK_START_DATE.setFullYear(MOCK_START_DATE.getFullYear() + 1)
+  const MOCK_END_DATE = new Date()
+  MOCK_END_DATE.setFullYear(MOCK_END_DATE.getFullYear() + 2)
+  const MOCK_APPLICATION_DEADLINE = new Date()
+  MOCK_APPLICATION_DEADLINE.setFullYear(
+    MOCK_APPLICATION_DEADLINE.getFullYear() + 1,
+  )
+
   const MOCK_JOB = {
     ...mock('job')
       .omit(['castingId', 'createdAt', 'updatedAt', 'jobId', 'status'])
+      .override({ applicationDeadline: MOCK_APPLICATION_DEADLINE })
       .get(),
-    shooting: mock('shooting').get(3),
+    shooting: mock('shooting')
+      .override({ startDate: MOCK_START_DATE, endDate: MOCK_END_DATE })
+      .get(3),
   }
-  MOCK_JOB.applicationDeadline = new Date()
-  MOCK_JOB.applicationDeadline.setFullYear(
-    MOCK_JOB.applicationDeadline.getFullYear() + 1,
-  )
-  // for each shooting set start date to be 2 years from now, set start time to be the same
-  MOCK_JOB.shooting.forEach((shooting) => {
-    shooting.startDate = new Date()
-    shooting.startDate.setFullYear(shooting.startDate.getFullYear() + 2)
-    shooting.startTime = now
-  })
-  // for each shooting set end date to be 3 years from now, set end time to be the same
-  MOCK_JOB.shooting.forEach((shooting) => {
-    shooting.endDate = new Date()
-    shooting.endDate.setFullYear(shooting.endDate.getFullYear() + 3)
-    shooting.endTime = now
-  })
+
   // set actorCount, minAge and wage to be 1 if they are less than 1
   if (MOCK_JOB.actorCount < 1) {
     MOCK_JOB.actorCount = 1
