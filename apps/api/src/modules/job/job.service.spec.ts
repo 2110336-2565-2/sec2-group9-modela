@@ -19,9 +19,9 @@ function createValidJob() {
   const now = new Date()
 
   const MOCK_START_DATE = new Date()
-  MOCK_START_DATE.setFullYear(MOCK_START_DATE.getFullYear() + 1)
+  MOCK_START_DATE.setFullYear(MOCK_START_DATE.getFullYear() + 2)
   const MOCK_END_DATE = new Date()
-  MOCK_END_DATE.setFullYear(MOCK_END_DATE.getFullYear() + 2)
+  MOCK_END_DATE.setFullYear(MOCK_END_DATE.getFullYear() + 3)
   const MOCK_APPLICATION_DEADLINE = new Date()
   MOCK_APPLICATION_DEADLINE.setFullYear(
     MOCK_APPLICATION_DEADLINE.getFullYear() + 1,
@@ -404,7 +404,9 @@ describe('JobService', () => {
 
         const result = mock('job').get()
 
-        jest.spyOn(repository, 'createJob').mockResolvedValue(result.jobId)
+        jest
+          .spyOn(repository, 'createJob')
+          .mockResolvedValue({ jobId: result.jobId })
 
         const newId = await service.createJob(MOCK_JOB, MOCK_CASTING_ID)
 
@@ -416,7 +418,9 @@ describe('JobService', () => {
 
         const result = mock('job').get()
 
-        jest.spyOn(repository, 'createJob').mockResolvedValue(result.jobId)
+        jest
+          .spyOn(repository, 'createJob')
+          .mockResolvedValue({ jobId: result.jobId })
 
         await expect(
           service.createJob(MOCK_JOB, MOCK_CASTING_ID),
@@ -430,14 +434,16 @@ describe('JobService', () => {
 
   describe('updateJob', () => {
     const MOCK_CASTING_ID = 1
+    const MOCK_UPDATED_TITLE = 'updated title'
 
     describe('normal behavior', () => {
       it('should update the job successfully', async () => {
-        const MOCK_UPDATED_TITLE = 'updated title'
         const MOCK_JOB = createValidJob()
 
         const result = mock('job').get()
-        jest.spyOn(repository, 'updateJob').mockResolvedValue(result.jobId)
+        jest
+          .spyOn(repository, 'updateJob')
+          .mockResolvedValue({ jobId: result.jobId })
 
         const newId = result.jobId
 
@@ -455,13 +461,14 @@ describe('JobService', () => {
       })
 
       it('should be bad request due to user not being the job owner', async () => {
-        const MOCK_UPDATED_TITLE = 'updated title'
         const MOCK_INVALID_USER_ID = 2394082
         const MOCK_JOB = createValidJob()
 
         const result = mock('job').get()
 
-        jest.spyOn(repository, 'updateJob').mockResolvedValue(result.jobId)
+        jest
+          .spyOn(repository, 'updateJob')
+          .mockResolvedValue({ jobId: result.jobId })
 
         const newId = result.jobId
 
@@ -469,13 +476,37 @@ describe('JobService', () => {
         jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
 
         MOCK_JOB.title = MOCK_UPDATED_TITLE
-        await service.createJob(MOCK_JOB, MOCK_CASTING_ID)
-
-        expect(repository.createJob).toBeCalledWith(MOCK_JOB, MOCK_CASTING_ID)
 
         await expect(
           service.update(newId, MOCK_JOB, MOCK_INVALID_USER_ID),
         ).rejects.toThrow(ForbiddenException)
+
+        expect(repository.updateJob).not.toBeCalled()
+      })
+
+      it('should be bad request due to endDate being earlier in the same day', async () => {
+        const MOCK_JOB = createValidJob()
+        MOCK_JOB.shooting[0].endDate = new Date(MOCK_JOB.shooting[0].startDate)
+        MOCK_JOB.shooting[0].endDate.setHours(
+          MOCK_JOB.shooting[0].endDate.getHours() - 1,
+        )
+
+        const result = mock('job').get()
+
+        jest
+          .spyOn(repository, 'updateJob')
+          .mockResolvedValue({ jobId: result.jobId })
+
+        const newId = result.jobId
+
+        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
+        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
+
+        MOCK_JOB.title = MOCK_UPDATED_TITLE
+
+        await expect(
+          service.update(newId, MOCK_JOB, MOCK_CASTING_ID),
+        ).rejects.toThrow(BadRequestException)
 
         expect(repository.updateJob).not.toBeCalled()
       })

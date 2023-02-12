@@ -24,7 +24,7 @@ export class JobRepository {
         },
       },
     })
-    return job.jobId
+    return { jobId: job.jobId }
   }
 
   async updateJob(id: number, updateJobDto: CreateJobDto) {
@@ -38,7 +38,7 @@ export class JobRepository {
         },
       },
     })
-    return updatedJob.jobId
+    return { jobId: updatedJob.jobId }
   }
 
   async getJobCount(params: {
