@@ -417,6 +417,10 @@ describe('JobService', () => {
         const MOCK_JOB = createValidJob()
 
         const result = mock('job').get()
+        MOCK_JOB.applicationDeadline = new Date()
+        MOCK_JOB.applicationDeadline.setDate(
+          MOCK_JOB.applicationDeadline.getDate() - 1,
+        )
 
         jest
           .spyOn(repository, 'createJob')
