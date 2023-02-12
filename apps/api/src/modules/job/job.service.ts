@@ -22,7 +22,7 @@ import { JobRepository } from './job.repository'
 export class JobService {
   constructor(private repository: JobRepository) {}
 
-  async createJob(createJobDto: CreateJobDto, userId: number) {
+  private validateJobDto(createJobDto: CreateJobDto) {
     // if minAge is greater than maxAge, throw error
     if (createJobDto.minAge > createJobDto.maxAge) {
       throw new BadRequestException('minAge is greater than maxAge')
@@ -31,7 +31,7 @@ export class JobService {
     for (let i = 0; i < createJobDto.shooting.length; i++) {
       if (
         createJobDto.shooting[i].startTime > createJobDto.shooting[i].endTime &&
-        createJobDto.shooting[i].startDate == createJobDto.shooting[i].endDate
+        createJobDto.shooting[i].startDate === createJobDto.shooting[i].endDate
       ) {
         throw new BadRequestException(
           'startTime is greater than endTime in the same day',
@@ -67,6 +67,10 @@ export class JobService {
     if (applicationDeadline < now) {
       throw new BadRequestException('applicationDeadline is less than now')
     }
+  }
+
+  async createJob(createJobDto: CreateJobDto, userId: number) {
+    this.validateJobDto(createJobDto)
     try {
       return await this.repository.createJob(createJobDto, userId)
     } catch (e) {
@@ -242,8 +246,17 @@ export class JobService {
     return jobDetail
   }
 
-  update(id: number, updateJobDto: EditJobDto) {
-    return `This action updates a #${id} job`
+  async update(id: number, updateJobDto: EditJobDto, userId: number) {
+    const job = await this.repository.getJobById(id)
+    if (!job) throw new NotFoundException('Job not found')
+    if (job.castingId !== userId) {
+      throw new ForbiddenException(
+        "You don't have permission to update this job",
+      )
+    }
+
+    this.validateJobDto(updateJobDto)
+    return this.repository.updateJob(id, updateJobDto)
   }
 
   remove(id: number) {

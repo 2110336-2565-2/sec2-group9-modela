@@ -10,7 +10,6 @@ import {
   IsOptional,
   IsString,
   Max,
-  min,
   Min,
 } from 'class-validator'
 import { Casting, Gender, Job, JobStatus, Shooting } from '@modela/database'
@@ -128,7 +127,7 @@ export class ShootingDto implements Partial<Shooting> {
 
 type EditJobType = Partial<Job> & { shooting: ShootingDto[] }
 
-export class EditJobDto implements EditJobType {
+export class CreateJobDto  implements EditJobType {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
@@ -139,11 +138,6 @@ export class EditJobDto implements EditJobType {
   @ApiProperty()
   description: string
 
-  @IsEnum(JobStatus, { each: true })
-  @IsNotEmpty()
-  @ApiProperty()
-  status: JobStatus
-
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
@@ -152,11 +146,13 @@ export class EditJobDto implements EditJobType {
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty()
+  @Min(1)
+  @IsInt()
   minAge: number
 
-  @IsNumber()
-  @IsNotEmpty()
   @ApiProperty()
+  @Min(1)
+  @IsInt()
   maxAge: number
 
   @IsEnum(Gender, { each: true })
@@ -167,11 +163,14 @@ export class EditJobDto implements EditJobType {
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty()
+  @Min(1)
+  @IsInt()
   actorCount: number
 
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty()
+  @Min(1)
   wage: number
 
   @IsNotEmpty()
@@ -184,60 +183,8 @@ export class EditJobDto implements EditJobType {
   shooting: ShootingDto[]
 }
 
-export class CreateJobDto {
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
-  title: string
-
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
-  description: string
-
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
-  role: string
-
-  @IsNumber()
-  @IsNotEmpty()
-  @ApiProperty()
-  @Min(1)
-  @IsInt()
-  minAge: number
-
-  @ApiProperty()
-  @Min(1)
-  @IsInt()
-  maxAge: number
-
-  @IsEnum(Gender, { each: true })
-  @IsNotEmpty()
-  @ApiProperty()
-  gender: Gender
-
-  @IsNumber()
-  @IsNotEmpty()
-  @ApiProperty()
-  @Min(1)
-  @IsInt()
-  actorCount: number
-
-  @IsNumber()
-  @IsNotEmpty()
-  @ApiProperty()
-  @Min(1)
-  wage: number
-
-  @IsNotEmpty()
-  @IsDateString()
-  @ApiProperty()
-  applicationDeadline: Date
-
-  @IsNotEmpty()
-  @ApiProperty({ type: ShootingDto, isArray: true })
-  shooting: ShootingDto[]
+export class EditJobDto extends CreateJobDto{
+  
 }
 
 export class GetJobCardDto extends OmitType(EditJobDto, [
@@ -254,6 +201,9 @@ export class GetJobCardDto extends OmitType(EditJobDto, [
 
   @ApiProperty()
   jobCastingImageUrl: string
+
+  @ApiProperty()
+  status: JobStatus
 }
 
 export class GetJobCardWithMaxPageDto {
@@ -273,6 +223,9 @@ export class GetJobDto extends EditJobDto {
 
   @ApiProperty()
   jobCastingImageUrl: string
+
+  @ApiProperty()
+  status: JobStatus
 }
 
 export class JobIdDTO {
