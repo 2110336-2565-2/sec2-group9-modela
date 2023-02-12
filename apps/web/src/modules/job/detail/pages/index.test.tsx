@@ -1,4 +1,4 @@
-import { GetJobDto, mock } from '@modela/dtos'
+import { GetJobDto, mock, UserType } from '@modela/dtos'
 import { render, waitFor } from '@testing-library/react'
 import { mockAndSpy, mockApiClient } from 'common/utils/testing'
 import React from 'react'
@@ -8,6 +8,14 @@ describe('<JobDetailPage />', () => {
     useRouter: jest.fn(),
   }))
   const useRouter = jest.spyOn(require('next/router'), 'useRouter')
+  jest.doMock('common/context/UserContext', () => ({
+    useUser: () => ({
+      user: {
+        isVerified: true,
+        type: UserType.ACTOR,
+      },
+    }),
+  }))
   const JobCardMock = mockAndSpy('modules/job/detail/components/JobCard')
   const { mockGetReturn } = mockApiClient()
 
@@ -28,7 +36,6 @@ describe('<JobDetailPage />', () => {
     it('should render correctly when API return correct data', async () => {
       useRouter.mockImplementation(() => ({
         query: { jobId: 1 },
-        replace: () => {},
         isReady: true,
       }))
       mockGetReturn(mockData)
@@ -41,7 +48,6 @@ describe('<JobDetailPage />', () => {
     it('should render correctly when API not return', async () => {
       useRouter.mockImplementation(() => ({
         query: { jobId: 1 },
-        replace: () => {},
         isReady: true,
       }))
       mockGetReturn(undefined)
