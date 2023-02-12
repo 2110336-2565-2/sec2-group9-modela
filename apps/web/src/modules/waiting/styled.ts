@@ -5,6 +5,10 @@ export const RootContainer = styled('div')`
   gap: ${({ theme }) => theme.spacing(2)};
   display: flex;
   flex-direction: column;
+  ${(props) => props.theme.breakpoints.down('md')} {
+    justify-content: center;
+    height: auto;
+  }
   align-items: center;
   height: fit-content;
 `
