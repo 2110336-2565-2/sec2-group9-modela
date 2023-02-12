@@ -209,9 +209,6 @@ export class GetJobCardWithMaxPageDto {
 
   @ApiProperty()
   maxPage: number
-
-  @ApiProperty()
-  status: JobStatus
 }
 
 export class GetJobDto extends EditJobDto {
@@ -223,6 +220,9 @@ export class GetJobDto extends EditJobDto {
 
   @ApiProperty()
   jobCastingImageUrl: string
+
+  @ApiProperty()
+  status: JobStatus
 }
 
 export class JobIdDTO {
