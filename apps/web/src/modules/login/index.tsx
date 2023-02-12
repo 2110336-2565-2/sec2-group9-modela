@@ -1,6 +1,7 @@
 import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material'
 import FormController from 'common/components/FormController'
 import withNotLoggedInGuard from 'common/hoc/withNotLoggedInGuard'
+import Link from 'next/link'
 import React from 'react'
 import { Control, FieldValues } from 'react-hook-form'
 
@@ -48,8 +49,13 @@ const Login = () => {
             </Box>
           </Grid>
           <Grid item xs={12} sm={12}>
-            <Typography variant="subtitle2" sx={{ textAlign: 'center' }}>
-              ยังไม่มีบัญชี ?
+            <Typography variant="subtitle1" sx={{ textAlign: 'center' }}>
+              ยังไม่มีบัญชี ?{' '}
+              <Link href="/signup" passHref style={{ textDecoration: 'none' }}>
+                <Typography variant="subtitle1" color="primary" component="a">
+                  ลงทะเบียน
+                </Typography>
+              </Link>
             </Typography>
           </Grid>
         </Grid>
