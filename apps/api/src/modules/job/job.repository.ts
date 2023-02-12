@@ -1,6 +1,7 @@
 import { Job, JobStatus, Prisma } from '@modela/database'
 import {
   CreateJobDto,
+  EditJobDto,
   GetJobCardDto,
   GetJobDto,
   ShootingDto,
@@ -12,7 +13,7 @@ import { PrismaService } from 'src/database/prisma.service'
 export class JobRepository {
   constructor(private prisma: PrismaService) {}
 
-  async createJob(createJobDto: CreateJobDto, userId: number) {
+  async createJob(createJobDto: EditJobDto, userId: number) {
     const { shooting, ...field } = createJobDto
     const job = await this.prisma.job.create({
       data: {
