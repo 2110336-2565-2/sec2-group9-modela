@@ -407,7 +407,7 @@ describe('JobService', () => {
       it('should create the job successfully', async () => {
         const MOCK_JOB = createValidJob()
 
-        const result = mock('job').get(1)[0]
+        const result = mock('job').get()
 
         jest.spyOn(repository, 'createJob').mockResolvedValue(result.jobId)
 
@@ -419,7 +419,7 @@ describe('JobService', () => {
       it('should be bad request due to date conflict', async () => {
         const MOCK_JOB = createValidJob()
 
-        const result = mock('job').get(1)[0]
+        const result = mock('job').get()
 
         jest.spyOn(repository, 'createJob').mockResolvedValue(result.jobId)
 
@@ -441,7 +441,7 @@ describe('JobService', () => {
         const MOCK_UPDATED_TITLE = 'updated title'
         const MOCK_JOB = createValidJob()
 
-        const result = mock('job').get(1)[0]
+        const result = mock('job').get()
         jest.spyOn(repository, 'createJob').mockResolvedValue(result.jobId)
         jest.spyOn(repository, 'updateJob').mockResolvedValue(result.jobId)
 
@@ -465,7 +465,7 @@ describe('JobService', () => {
         const MOCK_INVALID_USER_ID = 2394082
         const MOCK_JOB = createValidJob()
 
-        const result = mock('job').get(1)[0]
+        const result = mock('job').get()
 
         jest.spyOn(repository, 'createJob').mockResolvedValue(result.jobId)
         jest.spyOn(repository, 'updateJob').mockResolvedValue(result.jobId)
@@ -484,7 +484,6 @@ describe('JobService', () => {
           service.update(newId, MOCK_JOB, MOCK_INVALID_USER_ID),
         ).rejects.toThrow(ForbiddenException)
 
-        // expect repository.updateJob to not be called
         expect(repository.updateJob).not.toBeCalled()
       })
     })
