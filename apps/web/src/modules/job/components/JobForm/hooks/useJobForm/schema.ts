@@ -80,6 +80,23 @@ const postJobSchema = z
       })
     }
   })
+  .superRefine(({ applicationDeadline, shooting }, ctx) => {
+    if (applicationDeadline && shooting.length) {
+      shooting.forEach((shooting, idx) => {
+        if (
+          shooting.startDate &&
+          shooting.startDate.isBefore(applicationDeadline)
+        ) {
+          ctx.addIssue({
+            code: 'custom',
+            path: [`shooting.${idx}.startDate`],
+            message:
+              'วันที่เริ่มต้นการถ่ายทำต้องอยู่หลังวันที่สิ้นสุดการรับสมัคร',
+          })
+        }
+      })
+    }
+  })
 
 export type IPostJobSchemaType = z.infer<typeof postJobSchema>
 export type IShootingSchemaType = z.infer<typeof shootingSchema>
