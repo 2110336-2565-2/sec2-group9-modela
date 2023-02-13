@@ -1,15 +1,15 @@
 import { Dayjs } from 'dayjs'
 
 export interface IFilter {
-  title: String | null
+  title: string | null
   startTime: Dayjs | null
   endTime: Dayjs | null
-  location: String | null
+  location: string | null
   startDate: Dayjs | null
   endDate: Dayjs | null
-  wage: Number | null
-  deviant: Number | null
-  age: Number | null
+  wage: number | null
+  deviant: number | null
+  age: number | null
   openCheck: boolean
   closeCheck: boolean
   maleCheck: boolean
@@ -17,20 +17,20 @@ export interface IFilter {
   otherCheck: boolean
 }
 export interface ISearch {
-  title: String | null
-  startTime: String | null
-  endTime: String | null
-  location: String | null
-  startDate: String | null
-  endDate: String | null
-  age: Number | null
+  title: string | null
+  startTime: string | null
+  endTime: string | null
+  location: string | null
+  startDate: string | null
+  endDate: string | null
+  age: number | null
 
-  minWage: Number | null
-  maxWage: Number | null
+  minWage: number | null
+  maxWage: number | null
 
-  status: String[]
-  gender: String[]
-  castingId: Number | null
+  status: string[]
+  gender: string[]
+  castingId: number | null
 }
 export const initialIFilter: IFilter = {
   title: null,
