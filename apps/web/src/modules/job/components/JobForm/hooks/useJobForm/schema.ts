@@ -45,7 +45,7 @@ const postJobSchema = z
         required_error: 'กรุณากรอกค่าจ้าง',
         invalid_type_error: 'กรุณากรอกค่าจ้างเป็นจำนวนบวก',
       })
-      .nonnegative({ message: 'กรุณากรอกค่าจ้างเป็นจำนวนบวก' }),
+      .positive({ message: 'กรุณากรอกค่าจ้างเป็นจำนวนบวก' }),
     actorCount: z
       .number({
         required_error: 'กรุณากรอกจำนวนนักแสดง',
