@@ -1,4 +1,4 @@
-import { CircularProgress, Typography } from '@mui/material'
+import { Button, CircularProgress, Typography } from '@mui/material'
 import useNavbarSearch from 'common/hooks/useNavbarSearch'
 import useSwitch from 'common/hooks/useSwitch'
 import React, { useCallback } from 'react'
@@ -20,7 +20,8 @@ import {
 } from './styled'
 
 export default function JobList() {
-  const { job, hasMore, fetchData, filterData } = useJobListData()
+  const { job, hasMore, fetchData, filterData, createPostPage } =
+    useJobListData()
   const { state, setState } = useFilterData()
   const { isOpen, open, close } = useSwitch()
   useNavbarSearch(
@@ -95,6 +96,13 @@ export default function JobList() {
             gap: '1rem',
           }}
         >
+          <Button
+            onClick={createPostPage}
+            variant="contained"
+            sx={{ borderRadius: '12px', width: '75%' }}
+          >
+            + สร้างโพสต์
+          </Button>
           <FilterContainer
             state={state}
             setState={setState}

@@ -87,7 +87,11 @@ const useJobListData = () => {
       router.replace('/404')
     }
   }, [apiClient, page, search, setHasMore, setJob, setPage])
-  return { job, hasMore, fetchData, filterData }
+
+  const createPostPage = useCallback(() => {
+    router.push('/job/post')
+  }, [])
+  return { job, hasMore, fetchData, filterData, createPostPage }
 }
 
 export default useJobListData
