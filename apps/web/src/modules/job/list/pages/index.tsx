@@ -1,4 +1,6 @@
+import { UserType } from '@modela/database'
 import { Button, CircularProgress, Typography } from '@mui/material'
+import { useUser } from 'common/context/UserContext'
 import useNavbarSearch from 'common/hooks/useNavbarSearch'
 import useSwitch from 'common/hooks/useSwitch'
 import React, { useCallback } from 'react'
@@ -24,6 +26,7 @@ export default function JobList() {
     useJobListData()
   const { state, setState } = useFilterData()
   const { isOpen, open, close } = useSwitch()
+  const { user } = useUser()
   useNavbarSearch(
     useCallback(() => {
       open()
@@ -96,13 +99,15 @@ export default function JobList() {
             gap: '1rem',
           }}
         >
-          <Button
-            onClick={createPostPage}
-            variant="contained"
-            sx={{ borderRadius: '12px', width: '75%' }}
-          >
-            + สร้างโพสต์
-          </Button>
+          {user?.type === UserType.CASTING && (
+            <Button
+              onClick={createPostPage}
+              variant="contained"
+              sx={{ borderRadius: '12px', width: '75%', marginLeft: '1rem' }}
+            >
+              + สร้างโพสต์
+            </Button>
+          )}
           <FilterContainer
             state={state}
             setState={setState}
