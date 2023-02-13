@@ -8,7 +8,6 @@ describe('<JobCard/>', () => {
     ...mock('job').get(),
     companyName: mock('casting').get().companyName,
     jobCastingImageUrl: mock('user').get().profileImageUrl || '',
-    description: mock('job').get().description,
   }
 
   jest.mock('next/router', () => ({
