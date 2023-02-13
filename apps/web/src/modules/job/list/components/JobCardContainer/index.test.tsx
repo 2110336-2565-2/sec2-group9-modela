@@ -14,6 +14,10 @@ describe('<JobCardContainer/>', () => {
         ...job,
       })),
   }
+  const cardPropsEmpty: GetJobCardWithMaxPageDto = {
+    maxPage: 0,
+    jobs: [],
+  }
 
   jest.mock('next/router', () => ({
     useRouter: jest.fn(),
@@ -32,6 +36,12 @@ describe('<JobCardContainer/>', () => {
     it('should render JobCardContainer correctly', () => {
       render(<JobCardContainer {...cardProps} />)
       expect(jobCardMock).toBeCalledTimes(2)
+    })
+
+    it('should render message when jobs is empty', () => {
+      const { getByText } = render(<JobCardContainer {...cardPropsEmpty} />)
+      expect(jobCardMock).toBeCalledTimes(0)
+      expect(getByText('ไม่พบงานที่คุณต้องการหา')).toBeDefined()
     })
   })
 })

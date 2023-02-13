@@ -19,7 +19,7 @@ import {
   SearchContainer,
 } from './styled'
 
-export default function JobList() {
+export default function JobListPage() {
   const { job, hasMore, fetchData, filterData } = useJobListData()
   const { state, setState } = useFilterData()
   const { isOpen, open, close } = useSwitch()
