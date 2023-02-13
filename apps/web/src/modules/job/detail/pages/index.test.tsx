@@ -1,6 +1,6 @@
 import { GetJobDto, mock, UserType } from '@modela/dtos'
 import { render, waitFor } from '@testing-library/react'
-import { mockAndSpy, mockApiClient } from 'common/utils/testing'
+import { mockAndSpy, mockApiClient, mockUser } from 'common/utils/testing'
 import React from 'react'
 
 describe('<JobDetailPage />', () => {
@@ -8,16 +8,15 @@ describe('<JobDetailPage />', () => {
     useRouter: jest.fn(),
   }))
   const useRouter = jest.spyOn(require('next/router'), 'useRouter')
-  jest.doMock('common/context/UserContext', () => ({
-    useUser: () => ({
-      user: {
-        isVerified: true,
-        type: UserType.ACTOR,
-      },
-    }),
-  }))
+
   const JobCardMock = mockAndSpy('modules/job/detail/components/JobCard')
   const { mockGetReturn } = mockApiClient()
+
+  const { mockUserType, mockVerify } = mockUser()
+  beforeEach(() => {
+    mockUserType(UserType.ACTOR)
+    mockVerify(true)
+  })
 
   const mockData: GetJobDto = {
     ...mock('job').get(),
