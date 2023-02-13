@@ -29,6 +29,13 @@ export class JobRepository {
 
   async updateJob(id: number, updateJobDto: EditJobDto) {
     const { shooting, ...field } = updateJobDto
+
+    await this.prisma.shooting.deleteMany({
+      where: {
+        jobId: id,
+      },
+    })
+
     const updatedJob = await this.prisma.job.update({
       where: { jobId: id },
       data: {
