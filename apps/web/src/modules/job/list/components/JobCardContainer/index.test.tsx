@@ -40,7 +40,7 @@ describe('<JobCardContainer/>', () => {
 
     it('should render message when jobs is empty', () => {
       const { getByText } = render(<JobCardContainer {...cardPropsEmpty} />)
-      expect(jobCardMock).toBeCalledTimes(0)
+      expect(jobCardMock).not.toBeCalled()
       expect(getByText('ไม่พบงานที่คุณต้องการหา')).toBeDefined()
     })
   })

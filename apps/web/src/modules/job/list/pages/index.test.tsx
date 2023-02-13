@@ -35,13 +35,7 @@ describe('<JobListlPage />', () => {
   }))
   jest.doMock('./hooks/useJobListData', () => useJobListDataSpy)
   jest.doMock('./hooks/useFilterData', () => useFilterDataSpy)
-  jest.doMock('common/hooks/useNavbarSearch', () =>
-    jest.fn().mockReturnValue({
-      isOpen: false,
-      open: jest.fn(),
-      close: jest.fn(),
-    }),
-  )
+  jest.doMock('common/hooks/useNavbarSearch', () => jest.fn())
   const { default: JobListPage } = require('.') as typeof import('.')
 
   afterEach(() => {
