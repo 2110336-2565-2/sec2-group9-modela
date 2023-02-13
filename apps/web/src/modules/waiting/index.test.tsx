@@ -4,7 +4,9 @@ import { mockUser } from 'common/utils/testing'
 
 describe('<Waiting />', () => {
   const { mockVerify, mockUserType } = mockUser()
-
+  jest.mock('next/router', () => ({
+    useRouter: jest.fn(),
+  }))
   const { default: Waiting } = require('.') as typeof import('.')
 
   beforeEach(() => {

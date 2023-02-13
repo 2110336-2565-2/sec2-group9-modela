@@ -1,6 +1,5 @@
-import { UserType } from '@modela/database'
 import { Typography } from '@mui/material'
-import withGuard from 'common/hoc/withGuard'
+import withWaitingGuard from 'common/hoc/withWaitingGuard'
 
 import { CardContainer, CardDivider, RootContainer } from './styled'
 
@@ -21,4 +20,4 @@ const Waiting = () => {
   )
 }
 
-export default withGuard(Waiting, [UserType.ACTOR, UserType.CASTING])
+export default withWaitingGuard(Waiting)
