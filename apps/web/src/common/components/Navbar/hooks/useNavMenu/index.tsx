@@ -30,7 +30,7 @@ const useNavMenu = (isMobile: boolean) => {
     () => [
       {
         label: 'สร้างงาน',
-        onClick: () => router.push(''),
+        onClick: () => router.push('/job/post'),
         icon: <PostAddOutlined />,
         mobileOnly: true,
         focusKey: 'createJob',
