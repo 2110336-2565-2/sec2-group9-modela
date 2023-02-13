@@ -1,4 +1,7 @@
-import { CircularProgress, Typography } from '@mui/material'
+import { UserType } from '@modela/database'
+import { Add } from '@mui/icons-material'
+import { Button, CircularProgress, Typography } from '@mui/material'
+import { useUser } from 'common/context/UserContext'
 import useNavbarSearch from 'common/hooks/useNavbarSearch'
 import useSwitch from 'common/hooks/useSwitch'
 import React, { useCallback } from 'react'
@@ -19,10 +22,12 @@ import {
   SearchContainer,
 } from './styled'
 
-export default function JobListPage() {
-  const { job, hasMore, fetchData, filterData } = useJobListData()
+export default function JobList() {
+  const { job, hasMore, fetchData, filterData, createPostPage } =
+    useJobListData()
   const { state, setState } = useFilterData()
   const { isOpen, open, close } = useSwitch()
+  const { user } = useUser()
   useNavbarSearch(
     useCallback(() => {
       open()
@@ -95,6 +100,21 @@ export default function JobListPage() {
             gap: '1rem',
           }}
         >
+          {user?.type === UserType.CASTING && (
+            <Button
+              onClick={createPostPage}
+              variant="contained"
+              sx={{
+                borderRadius: '12px',
+                width: '75%',
+                marginLeft: '1rem',
+                fontSize: '16px',
+              }}
+              startIcon={<Add />}
+            >
+              สร้างโพสต์
+            </Button>
+          )}
           <FilterContainer
             state={state}
             setState={setState}
