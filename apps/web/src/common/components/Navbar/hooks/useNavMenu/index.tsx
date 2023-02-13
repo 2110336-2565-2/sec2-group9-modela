@@ -80,6 +80,7 @@ const useNavMenu = (isMobile: boolean) => {
         icon: <LoginOutlined />,
         allowNotVerified: true,
         onlyNotLoggedIn: true,
+        desktopIconOnly: true,
       },
     ],
     [handleLogout, router, user?.firstName],

@@ -33,7 +33,10 @@ const useLoginForm = () => {
       } catch (err) {
         const error = err as AxiosError<{ message: string }>
 
-        displaySnackbar(error.response?.data.message!, 'error')
+        if (error.response?.status === 401)
+          displaySnackbar('อีเมลหรือรหัสผ่านไม่ถูกต้อง', 'error')
+
+        displaySnackbar('เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ', 'error')
       } finally {
         setLoading(false)
       }
