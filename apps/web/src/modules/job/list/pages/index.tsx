@@ -1,4 +1,5 @@
 import { UserType } from '@modela/database'
+import { Add } from '@mui/icons-material'
 import { Button, CircularProgress, Typography } from '@mui/material'
 import { useUser } from 'common/context/UserContext'
 import useNavbarSearch from 'common/hooks/useNavbarSearch'
@@ -103,9 +104,15 @@ export default function JobList() {
             <Button
               onClick={createPostPage}
               variant="contained"
-              sx={{ borderRadius: '12px', width: '75%', marginLeft: '1rem' }}
+              sx={{
+                borderRadius: '12px',
+                width: '75%',
+                marginLeft: '1rem',
+                fontSize: '16px',
+              }}
+              startIcon={<Add />}
             >
-              + สร้างโพสต์
+              สร้างโพสต์
             </Button>
           )}
           <FilterContainer
