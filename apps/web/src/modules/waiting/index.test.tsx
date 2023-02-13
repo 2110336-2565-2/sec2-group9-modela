@@ -1,7 +1,16 @@
+import { UserType } from '@modela/database'
 import { render } from '@testing-library/react'
+import { mockUser } from 'common/utils/testing'
 
 describe('<Waiting />', () => {
+  const { mockVerify, mockUserType } = mockUser()
+
   const { default: Waiting } = require('.') as typeof import('.')
+
+  beforeEach(() => {
+    mockVerify(false)
+    mockUserType(UserType.ACTOR)
+  })
 
   test('default behavior', () => {
     const { getByText } = render(<Waiting />)
