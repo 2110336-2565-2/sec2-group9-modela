@@ -5,6 +5,7 @@ export const HeaderRow = styled('div')`
   width: 100%;
   align-items: center;
   gap: 12px;
+  height: fit-content;
   margin-bottom: 1rem;
 `
 

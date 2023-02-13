@@ -1,22 +1,18 @@
-import { UserType } from '@modela/dtos'
+import { JobStatus, UserType } from '@modela/dtos'
 import { EditOutlined, ReportOutlined } from '@mui/icons-material'
 import { Tooltip, Typography } from '@mui/material'
 import { useUser } from 'common/context/UserContext'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 import { HeaderRow, ProfileImageContainer } from './styled'
 import { HeaderProps } from './types'
 
 const JobCardHeader = (prop: HeaderProps) => {
-  const { castingImage, companyName, title } = prop
+  const { castingImage, companyName, title, status } = prop
   const { user } = useUser()
-
-  const report = () => {
-    window.alert('reported')
-  }
-  const edit = () => {
-    window.alert('edited')
-  }
+  const router = useRouter()
+  const { jobId } = router.query
 
   return (
     <HeaderRow>
@@ -33,17 +29,17 @@ const JobCardHeader = (prop: HeaderProps) => {
             fontSize="small"
             color="error"
             style={{ cursor: 'pointer', marginLeft: 'auto' }}
-            onClick={() => report()}
+            onClick={() => router.push('/report/' + jobId)}
           />
         </Tooltip>
       )}
-      {user?.type === UserType.CASTING && (
+      {user?.type === UserType.CASTING && status === JobStatus.OPEN && (
         <Tooltip title="Edit job">
           <EditOutlined
             fontSize="small"
             color="primary"
             style={{ cursor: 'pointer', marginLeft: 'auto' }}
-            onClick={() => edit()}
+            onClick={() => router.push('/job/' + jobId + '/edit')}
           />
         </Tooltip>
       )}

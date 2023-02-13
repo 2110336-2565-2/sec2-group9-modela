@@ -33,6 +33,7 @@ const JobCard = (prop: GetJobDto) => {
         title={title}
         companyName={companyName}
         castingImage={jobCastingImageUrl}
+        status={status}
       />
       <CorporateRow>
         <Typography variant="subtitle2" sx={{ color: 'rgba(0,0,0,0.6)' }}>

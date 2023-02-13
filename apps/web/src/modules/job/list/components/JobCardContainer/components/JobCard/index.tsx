@@ -28,6 +28,7 @@ export default function JobCard(prop: CardProps) {
         title={title}
         companyName={companyName}
         castingImage={jobCastingImageUrl}
+        status={status}
       />
       <Typography
         variant="subtitle2"
