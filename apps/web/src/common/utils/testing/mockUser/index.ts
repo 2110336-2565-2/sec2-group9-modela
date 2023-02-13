@@ -1,6 +1,9 @@
 import { GetUserDto, UserType } from '@modela/dtos'
 
-export const mockUser = () => {
+export const mockUser = (
+  type: UserType = UserType.ACTOR,
+  isVerified: boolean = true,
+) => {
   const MOCK_USER = {
     firstName: 'Ayaka',
     middleName: '<3',
@@ -15,8 +18,8 @@ export const mockUser = () => {
   let returnUser: GetUserDto = {
     ...MOCK_USER,
     companyName: undefined,
-    isVerified: true,
-    type: UserType.ACTOR,
+    isVerified: isVerified,
+    type: type,
   }
 
   const useUserSpy = jest.fn()
