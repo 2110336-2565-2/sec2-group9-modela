@@ -1,6 +1,7 @@
 import { GetJobDto, mock } from '@modela/dtos'
 import { render } from '@testing-library/react'
 import { mockAndSpy } from 'common/utils/testing'
+import { mockRouter } from 'common/utils/testing/mockRouter'
 import React from 'react'
 
 describe('<JobCard />', () => {
@@ -11,10 +12,7 @@ describe('<JobCard />', () => {
     shooting: mock('shooting').get(2),
   }
 
-  jest.mock('next/router', () => ({
-    useRouter: jest.fn(),
-  }))
-  const useRouter = jest.spyOn(require('next/router'), 'useRouter')
+  mockRouter(true, { jobId: 1 })
 
   const ShootingDetailMock = mockAndSpy(
     'modules/job/detail/components/JobCard/components/ShootingDetail',
@@ -27,10 +25,6 @@ describe('<JobCard />', () => {
   })
 
   describe('normal behavior', () => {
-    useRouter.mockImplementation(() => ({
-      query: { jobId: 1 },
-      isReady: true,
-    }))
     it('should render JobCard correctly', () => {
       render(<JobCard {...cardProps} />)
       expect(ShootingDetailMock).toBeCalledTimes(2)

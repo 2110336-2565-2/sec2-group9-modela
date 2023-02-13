@@ -1,6 +1,7 @@
 import { mock } from '@modela/dtos'
 import { renderHook, waitFor } from '@testing-library/react'
 import { mockApiClient } from 'common/utils/testing'
+import { mockRouter } from 'common/utils/testing/mockRouter'
 import dayjs from 'dayjs'
 
 describe('useInitialValues()', () => {
@@ -10,13 +11,7 @@ describe('useInitialValues()', () => {
     shooting: mock('shooting').omit(['shootingId', 'jobId']).get(1),
   }
 
-  const useRouterSpy = jest.fn().mockReturnValue({
-    isReady: true,
-    query: {
-      jobId: MOCK_JOB_ID,
-    },
-  })
-  jest.doMock('next/router', () => ({ useRouter: useRouterSpy }))
+  mockRouter(true, { jobId: MOCK_JOB_ID })
 
   const { getSpy, mockGetReturn } = mockApiClient()
   mockGetReturn(MOCK_JOB)

@@ -1,6 +1,7 @@
 import { JobStatus, mock, UserType } from '@modela/dtos'
 import { render } from '@testing-library/react'
 import { mockUser } from 'common/utils/testing'
+import { mockRouter } from 'common/utils/testing/mockRouter'
 import React from 'react'
 
 describe('<JobCardHeader />', () => {
@@ -16,10 +17,7 @@ describe('<JobCardHeader />', () => {
   }
   const { mockUserType } = mockUser()
 
-  jest.mock('next/router', () => ({
-    useRouter: jest.fn(),
-  }))
-  const useRouter = jest.spyOn(require('next/router'), 'useRouter')
+  mockRouter(true, { jobId: 1 })
 
   const { default: JobCardHeader } = require('.') as typeof import('.')
 
@@ -30,10 +28,6 @@ describe('<JobCardHeader />', () => {
   describe('normal behavior', () => {
     it('should render Header correctly', () => {
       mockUserType(UserType.CASTING)
-      useRouter.mockImplementation(() => ({
-        query: { jobId: 1 },
-        isReady: true,
-      }))
       const { getByText } = render(<JobCardHeader {...headerProps} />)
       expect(getByText(MOCK_TITLE)).toBeDefined()
       expect(getByText(MOCK_COMPANY_NAME)).toBeDefined()
@@ -41,10 +35,6 @@ describe('<JobCardHeader />', () => {
 
     it('should render correctly when user is Actor', () => {
       mockUserType(UserType.ACTOR)
-      useRouter.mockImplementation(() => ({
-        query: { jobId: 1 },
-        isReady: true,
-      }))
       const { getByText } = render(<JobCardHeader {...headerProps} />)
       expect(getByText(MOCK_TITLE)).toBeDefined()
       expect(getByText(MOCK_COMPANY_NAME)).toBeDefined()

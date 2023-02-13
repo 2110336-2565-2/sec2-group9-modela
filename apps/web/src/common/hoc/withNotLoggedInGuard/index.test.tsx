@@ -1,13 +1,12 @@
 import { render } from '@testing-library/react'
 import { mockComponent, mockUser } from 'common/utils/testing'
+import { mockRouter } from 'common/utils/testing/mockRouter'
 import React from 'react'
 
 describe('withGuard', () => {
   const { mockNotLoggedIn, mockVerify } = mockUser()
 
-  const replaceSpy = jest.fn()
-  const useRouterSpy = jest.fn(() => ({ replace: replaceSpy }))
-  jest.doMock('next/router', () => ({ useRouter: useRouterSpy }))
+  const { replaceSpy } = mockRouter()
 
   const [ChildrenSpy, MockChildren] = mockComponent()
 

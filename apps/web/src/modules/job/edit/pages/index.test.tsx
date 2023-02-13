@@ -6,6 +6,7 @@ import {
   mockAndSpyMany,
   mockUser,
 } from 'common/utils/testing'
+import { mockRouter } from 'common/utils/testing/mockRouter'
 import React from 'react'
 
 describe('<EditPage />', () => {
@@ -20,9 +21,7 @@ describe('<EditPage />', () => {
 
   mockUser(UserType.CASTING)
 
-  const replaceSpy = jest.fn()
-  const useRouterSpy = jest.fn().mockReturnValue({ replace: replaceSpy })
-  jest.doMock('next/router', () => ({ useRouter: useRouterSpy }))
+  mockRouter()
 
   const { default: EditPage } = require('.') as typeof import('.')
 
