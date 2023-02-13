@@ -16,6 +16,7 @@ import {
   CardButtonSection,
   CardContainer,
   HeaderContainer,
+  ImageContainer,
   RootContainer,
 } from './styled'
 
@@ -31,12 +32,14 @@ const ChooseSignup = () => {
           Platform หางานสำหรับนักแสดง
         </Typography>
       </HeaderContainer>
-      <CardContainer>
+      <CardContainer variant="outlined">
         <Typography variant="h5">ต้องการสมัครสมาชิกในฐานะ</Typography>
         <Divider sx={{ width: '100%' }} />
         <CardButtonContainer>
           <CardButtonSection>
-            <Image src={ActorImage} alt="actor" />
+            <ImageContainer>
+              <Image src={ActorImage} alt="actor" fill />
+            </ImageContainer>
             <Link
               passHref
               href="/signup/actor"
@@ -48,7 +51,9 @@ const ChooseSignup = () => {
             </Link>
           </CardButtonSection>
           <CardButtonSection>
-            <Image src={CastingImage} alt="casting" />
+            <ImageContainer>
+              <Image src={CastingImage} alt="casting" fill />
+            </ImageContainer>
             <Link
               passHref
               href="/signup/casting"
