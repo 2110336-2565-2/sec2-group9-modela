@@ -2,11 +2,37 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined'
 import TextField from 'common/components/TextField'
 import React from 'react'
 
-export default function SearchBox() {
+import { SearchBoxProps } from './types'
+
+export default function SearchBox(prop: SearchBoxProps) {
+  const { filterData, state, setState, labels } = prop
   return (
-    <TextField
-      placeholder="ค้นหางานทั้งหมด"
-      InputProps={{ endAdornment: <SearchOutlinedIcon color="primary" /> }}
-    />
+    <form
+      onSubmit={(event) => {
+        event.preventDefault()
+        filterData(state)
+      }}
+    >
+      <TextField
+        placeholder={labels}
+        fullWidth={true}
+        value={state.title}
+        onChange={(event) => {
+          setState({ ...state, title: event.target.value })
+        }}
+        InputProps={{
+          endAdornment: (
+            <SearchOutlinedIcon
+              type="submit"
+              color="primary"
+              sx={{ cursor: 'pointer' }}
+              onClick={() => {
+                filterData(state)
+              }}
+            />
+          ),
+        }}
+      />
+    </form>
   )
 }

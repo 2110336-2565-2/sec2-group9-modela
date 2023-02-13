@@ -1,17 +1,33 @@
 import { CircularProgress, Typography } from '@mui/material'
-import React from 'react'
+import useNavbarSearch from 'common/hooks/useNavbarSearch'
+import useSwitch from 'common/hooks/useSwitch'
+import React, { useCallback } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 
 import FilterContainer from '../components/FilterContainer'
+import FilterMobileContainer from '../components/FilterMobileContainer'
 import JobCardContainer from '../components/JobCardContainer'
 import NotiCardContainer from '../components/NotiCardContainer'
 import SearchBox from '../components/SearchBox'
+import useFilterData from './hooks/useFilterData'
 import useJobListData from './hooks/useJobListData'
 import { notiHolder } from './placeholder'
-import { FilterBoxContainer, JobContainer, NotiContainer } from './styled'
+import {
+  FilterBoxContainer,
+  JobContainer,
+  NotiContainer,
+  SearchContainer,
+} from './styled'
 
 export default function JobList() {
-  var { job, hasMore, fetchData } = useJobListData()
+  const { job, hasMore, fetchData, filterData } = useJobListData()
+  const { state, setState } = useFilterData()
+  const { isOpen, open, close } = useSwitch()
+  useNavbarSearch(
+    useCallback(() => {
+      open()
+    }, []),
+  )
 
   return (
     <div
@@ -37,8 +53,20 @@ export default function JobList() {
         </div>
       </NotiContainer>
 
-      <JobContainer>
-        <SearchBox />
+      <JobContainer
+        sx={{
+          display: isOpen ? 'none' : 'flex',
+        }}
+      >
+        <SearchContainer>
+          <SearchBox
+            state={state}
+            filterData={filterData}
+            setState={setState}
+            labels={'ค้นหางานทั้งหมด'}
+          />
+        </SearchContainer>
+
         <div
           style={{
             display: 'flex',
@@ -47,7 +75,6 @@ export default function JobList() {
           }}
         >
           <InfiniteScroll
-            pageStart={0}
             loadMore={fetchData}
             hasMore={hasMore}
             loader={
@@ -60,8 +87,6 @@ export default function JobList() {
           </InfiniteScroll>
         </div>
       </JobContainer>
-
-      {/* Place holder to do in next task */}
       <FilterBoxContainer>
         <div
           style={{
@@ -70,9 +95,24 @@ export default function JobList() {
             gap: '1rem',
           }}
         >
-          <FilterContainer />
+          <FilterContainer
+            state={state}
+            setState={setState}
+            isTitle={false}
+            filterData={filterData}
+          />
         </div>
       </FilterBoxContainer>
+
+      {isOpen && (
+        <FilterMobileContainer
+          state={state}
+          setState={setState}
+          isFilterShow={isOpen}
+          closeFilterPage={close}
+          filterData={filterData}
+        />
+      )}
     </div>
   )
 }
