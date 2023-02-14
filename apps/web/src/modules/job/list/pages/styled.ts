@@ -31,6 +31,7 @@ export const JobContainer = styled('div')`
   padding-top: 3rem;
   width: 45vw;
   gap: 1rem;
+  padding-bottom: 3rem;
   ${(props) => props.theme.breakpoints.down('lg')} {
     width: 60vw;
   }
