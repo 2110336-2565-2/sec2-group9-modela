@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { EditJobDto } from '@modela/dtos'
+import { CreateJobDto, EditJobDto } from '@modela/dtos'
 import { useSnackbar } from 'common/context/SnackbarContext'
 import { apiClient } from 'common/utils/api'
 import dayjs from 'dayjs'
@@ -33,14 +33,20 @@ const useJobForm = (defaultValues: IPostJobSchemaType, edit?: boolean) => {
   const handleSuccess: SubmitHandler<IPostJobSchemaType> = useCallback(
     async (data) => {
       const payload = fieldToPayload(data)
+      const { jobId } = router.query as { jobId: string }
       if (edit) {
-        const { jobId } = router.query as { jobId: string }
         await apiClient.put<unknown, unknown, EditJobDto>(
           `/job/${jobId}`,
           payload,
         )
         displaySnackbar('แก้ไขงานสำเร็จ', 'success')
         router.push(`/job/${jobId}`)
+      }
+      //post job
+      else {
+        await apiClient.post<unknown, unknown, CreateJobDto>('/job/', payload)
+        displaySnackbar('ลงประกาศงานสำเร็จ', 'success')
+        router.push('/job')
       }
     },
     [displaySnackbar, edit, router],
