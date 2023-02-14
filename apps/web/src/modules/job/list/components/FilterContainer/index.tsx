@@ -41,6 +41,7 @@ export default function FilterContainer(props: FilterContainerProps) {
         onChange={(newValue) => {
           setState({ ...state, startDate: newValue })
         }}
+        inputFormat="DD/MM/YYYY"
         renderInput={(params) => (
           <TextField
             {...params}
@@ -58,6 +59,7 @@ export default function FilterContainer(props: FilterContainerProps) {
         onChange={(newValue) => {
           setState({ ...state, endDate: newValue })
         }}
+        inputFormat="DD/MM/YYYY"
         renderInput={(params) => (
           <TextField
             {...params}
