@@ -94,7 +94,7 @@ const useJobListData = () => {
     } catch (e) {
       console.log(e)
     }
-  }, [page, search, setHasMore, setJob, setPage])
+  }, [page, search])
 
   useEffect(() => {
     if (!isOpen) {
