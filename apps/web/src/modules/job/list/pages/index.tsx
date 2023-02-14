@@ -4,7 +4,6 @@ import { Button, CircularProgress, Typography } from '@mui/material'
 import { useUser } from 'common/context/UserContext'
 import withGuard from 'common/hoc/withGuard'
 import useNavbarSearch from 'common/hooks/useNavbarSearch'
-import useSwitch from 'common/hooks/useSwitch'
 import React, { useCallback } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 
@@ -13,7 +12,6 @@ import FilterMobileContainer from '../components/FilterMobileContainer'
 import JobCardContainer from '../components/JobCardContainer'
 import NotiCardContainer from '../components/NotiCardContainer'
 import SearchBox from '../components/SearchBox'
-import useFilterData from './hooks/useFilterData'
 import useJobListData from './hooks/useJobListData'
 import { notiHolder } from './placeholder'
 import {
@@ -22,12 +20,19 @@ import {
   NotiContainer,
   SearchContainer,
 } from './styled'
-
 const JobList = () => {
-  const { job, hasMore, fetchData, filterData, createPostPage } =
-    useJobListData()
-  const { state, setState } = useFilterData()
-  const { isOpen, open, close } = useSwitch()
+  const {
+    job,
+    hasMore,
+    fetchData,
+    filterData,
+    createPostPage,
+    state,
+    setState,
+    isOpen,
+    open,
+    close,
+  } = useJobListData()
   const { user } = useUser()
   useNavbarSearch(
     useCallback(() => {
@@ -84,7 +89,15 @@ const JobList = () => {
             loadMore={fetchData}
             hasMore={hasMore}
             loader={
-              <div className="loader" key={0}>
+              <div
+                className="loader"
+                key={0}
+                style={{
+                  display: 'flex',
+                  alignItems: 'column',
+                  justifyContent: 'center',
+                }}
+              >
                 <CircularProgress color="primary" />
               </div>
             }

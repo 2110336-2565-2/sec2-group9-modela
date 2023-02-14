@@ -30,13 +30,10 @@ describe('<JobListlPage />', () => {
     hasMore: true,
     fetchData: fetchDataSpy,
     filterData: [{ someFilterData: 'data' }],
-  }))
-  const useFilterDataSpy = jest.fn(() => ({
     state: {},
     setState: jest.fn(),
   }))
   jest.doMock('./hooks/useJobListData', () => useJobListDataSpy)
-  jest.doMock('./hooks/useFilterData', () => useFilterDataSpy)
   jest.doMock('common/hooks/useNavbarSearch', () => jest.fn())
   const { default: JobListPage } = require('.') as typeof import('.')
 

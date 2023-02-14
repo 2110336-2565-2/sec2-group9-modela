@@ -31,9 +31,13 @@ const JobCardFooter = (prop: FooterProps) => {
                   ? '#144A9B'
                   : gender === Gender.FEMALE
                   ? '#F57CD4'
+                  : gender === Gender.ANY
+                  ? 'rgba(0, 0, 0, 0.6)'
                   : '#00c853',
               fill:
-                gender === Gender.MALE || gender === Gender.FEMALE
+                gender === Gender.MALE ||
+                gender === Gender.FEMALE ||
+                gender === Gender.ANY
                   ? ''
                   : 'url(#linearColors)',
             }}

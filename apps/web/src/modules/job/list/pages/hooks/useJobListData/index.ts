@@ -1,18 +1,23 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { GetJobCardWithMaxPageDto } from '@modela/dtos'
 import { apiClient } from 'common/utils/api'
 import dayjs from 'dayjs'
 import { useRouter } from 'next/router'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { IFilter, initialISearch, ISearch } from '../../types'
+import { IFilter, initialIFilter, initialISearch, ISearch } from '../../types'
 
 const useJobListData = () => {
+  const [isOpen, setOpen] = useState(false)
   const [job, setJob] = useState<GetJobCardWithMaxPageDto>()
   const [hasMore, setHasMore] = useState(true)
   const router = useRouter()
   const [page, setPage] = useState(0)
   const pageControl = useRef(1)
   const [search, setSearch] = useState<ISearch>(initialISearch)
+  const [state, setState] = useState<IFilter>(initialIFilter)
+  const open = useCallback(() => setOpen(true), [])
+  const close = useCallback(() => setOpen(false), [])
   const filterData = useCallback(
     async (state: IFilter) => {
       let newStatus = []
@@ -55,7 +60,7 @@ const useJobListData = () => {
 
       setJob({ ...job, jobs: [], maxPage: 1 })
       setPage(1)
-      pageControl.current = 0
+      pageControl.current = 1
 
       setHasMore(true)
     },
@@ -86,12 +91,64 @@ const useJobListData = () => {
     } catch (e) {
       console.log(e)
     }
-  }, [apiClient, page, search, setHasMore, setJob, setPage])
+  }, [page, search, setHasMore, setJob, setPage])
 
   const createPostPage = useCallback(() => {
     router.push('/job/post')
-  }, [])
-  return { job, hasMore, fetchData, filterData, createPostPage }
+  }, [router])
+
+  useEffect(() => {
+    if (state.wage !== null) {
+      if (state.wage < 0) {
+        setState({ ...state, wage: -state.wage })
+      }
+    }
+  }, [state.wage])
+
+  useEffect(() => {
+    if (state.deviant !== null) {
+      if (state.deviant < 0) {
+        setState({ ...state, deviant: -state.deviant })
+      }
+    }
+  }, [state.deviant])
+
+  useEffect(() => {
+    if (state.age !== null) {
+      if (state.age < 0) {
+        setState({ ...state, age: -state.age })
+      }
+    }
+  }, [state.age])
+
+  useEffect(() => {
+    if (!isOpen) {
+      filterData(state)
+    }
+  }, [
+    state.maleCheck,
+    state.femaleCheck,
+    state.otherCheck,
+    state.openCheck,
+    state.closeCheck,
+    state.startDate,
+    state.endDate,
+    state.startTime,
+    state.endTime,
+  ])
+
+  return {
+    job,
+    hasMore,
+    fetchData,
+    filterData,
+    createPostPage,
+    state,
+    setState,
+    isOpen,
+    open,
+    close,
+  }
 }
 
 export default useJobListData

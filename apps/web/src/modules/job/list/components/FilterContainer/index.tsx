@@ -41,6 +41,7 @@ export default function FilterContainer(props: FilterContainerProps) {
         onChange={(newValue) => {
           setState({ ...state, startDate: newValue })
         }}
+        inputFormat="DD/MM/YYYY"
         renderInput={(params) => (
           <TextField
             {...params}
@@ -58,6 +59,7 @@ export default function FilterContainer(props: FilterContainerProps) {
         onChange={(newValue) => {
           setState({ ...state, endDate: newValue })
         }}
+        inputFormat="DD/MM/YYYY"
         renderInput={(params) => (
           <TextField
             {...params}
@@ -127,7 +129,11 @@ export default function FilterContainer(props: FilterContainerProps) {
         label="กรอกอายุนักแสดง"
         value={state.age}
         onChange={(event) => {
-          setState({ ...state, age: Number(event.target.value) })
+          if (event.target.value != '') {
+            setState({ ...state, age: Number(event.target.value) })
+          } else {
+            setState({ ...state, age: null })
+          }
         }}
       />
 
@@ -136,9 +142,13 @@ export default function FilterContainer(props: FilterContainerProps) {
       <TextField
         fullWidth
         type="number"
-        onChange={(event) =>
-          setState({ ...state, wage: Number(event.target.value) })
-        }
+        onChange={(event) => {
+          if (event.target.value != '') {
+            setState({ ...state, wage: Number(event.target.value) })
+          } else {
+            setState({ ...state, wage: null })
+          }
+        }}
         value={state.wage}
         placeholder="10000"
       />
@@ -149,9 +159,13 @@ export default function FilterContainer(props: FilterContainerProps) {
       <TextField
         fullWidth
         type="number"
-        onChange={(event) =>
-          setState({ ...state, deviant: Number(event.target.value) })
-        }
+        onChange={(event) => {
+          if (event.target.value != '') {
+            setState({ ...state, deviant: Number(event.target.value) })
+          } else {
+            setState({ ...state, deviant: null })
+          }
+        }}
         value={state.deviant}
         placeholder="1000"
       />
