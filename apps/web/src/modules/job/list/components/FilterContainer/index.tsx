@@ -120,7 +120,7 @@ export default function FilterContainer(props: FilterContainerProps) {
         }}
       />
 
-      <Divider variant="middle" sx={{ width: '100%' }} />
+      <Divider sx={{ width: '100%' }} />
 
       <Typography variant="body1"> อายุนักแสดง </Typography>
       <TextField
@@ -137,7 +137,7 @@ export default function FilterContainer(props: FilterContainerProps) {
         }}
       />
 
-      <Divider variant="middle" sx={{ width: '100%' }} />
+      <Divider sx={{ width: '100%' }} />
       <Typography variant="body1"> ค่าจ้าง </Typography>
       <TextField
         fullWidth
@@ -170,7 +170,7 @@ export default function FilterContainer(props: FilterContainerProps) {
         placeholder="1000"
       />
 
-      <Divider variant="middle" sx={{ width: '100%' }} />
+      <Divider sx={{ width: '100%' }} />
       <Typography variant="body1"> สถานะการเปิดรับสมัคร </Typography>
       <FormGroup>
         <FormControlLabel
@@ -197,7 +197,7 @@ export default function FilterContainer(props: FilterContainerProps) {
         />
       </FormGroup>
 
-      <Divider variant="middle" sx={{ width: '100%' }} />
+      <Divider sx={{ width: '100%' }} />
       <Typography variant="body1"> เพศ </Typography>
       <FormGroup>
         <FormControlLabel
