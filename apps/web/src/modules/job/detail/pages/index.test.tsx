@@ -1,22 +1,15 @@
 import { GetJobDto, mock, UserType } from '@modela/dtos'
 import { render, waitFor } from '@testing-library/react'
 import { mockAndSpy, mockApiClient, mockUser } from 'common/utils/testing'
+import { mockRouter } from 'common/utils/testing/mockRouter'
 import React from 'react'
 
 describe('<JobDetailPage />', () => {
-  jest.mock('next/router', () => ({
-    useRouter: jest.fn(),
-  }))
-  const useRouter = jest.spyOn(require('next/router'), 'useRouter')
-
+  mockRouter(true, { jobId: 1 })
   const JobCardMock = mockAndSpy('modules/job/detail/components/JobCard')
   const { mockGetReturn } = mockApiClient()
 
-  const { mockUserType, mockVerify } = mockUser()
-  beforeEach(() => {
-    mockUserType(UserType.ACTOR)
-    mockVerify(true)
-  })
+  mockUser(UserType.ACTOR, true)
 
   const mockData: GetJobDto = {
     ...mock('job').get(),
@@ -33,10 +26,6 @@ describe('<JobDetailPage />', () => {
 
   describe('normal behavior', () => {
     it('should render correctly when API return correct data', async () => {
-      useRouter.mockImplementation(() => ({
-        query: { jobId: 1 },
-        isReady: true,
-      }))
       mockGetReturn(mockData)
       render(<JobDetailPage />)
       await waitFor(() => {
@@ -45,10 +34,6 @@ describe('<JobDetailPage />', () => {
     })
 
     it('should render correctly when API not return', async () => {
-      useRouter.mockImplementation(() => ({
-        query: { jobId: 1 },
-        isReady: true,
-      }))
       mockGetReturn(undefined)
 
       render(<JobDetailPage />)

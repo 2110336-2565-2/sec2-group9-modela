@@ -45,7 +45,7 @@ const postJobSchema = z
         required_error: 'กรุณากรอกค่าจ้าง',
         invalid_type_error: 'กรุณากรอกค่าจ้างเป็นจำนวนบวก',
       })
-      .nonnegative({ message: 'กรุณากรอกค่าจ้างเป็นจำนวนบวก' }),
+      .positive({ message: 'กรุณากรอกค่าจ้างเป็นจำนวนบวก' }),
     actorCount: z
       .number({
         required_error: 'กรุณากรอกจำนวนนักแสดง',
@@ -77,6 +77,23 @@ const postJobSchema = z
         code: 'custom',
         path: ['maxAge'],
         message: 'อายุต่ำสุดต้องน้อยกว่าหรือเท่ากับอายุสูงสุด',
+      })
+    }
+  })
+  .superRefine(({ applicationDeadline, shooting }, ctx) => {
+    if (applicationDeadline && shooting.length) {
+      shooting.forEach((shooting, idx) => {
+        if (
+          shooting.startDate &&
+          shooting.startDate.isBefore(applicationDeadline)
+        ) {
+          ctx.addIssue({
+            code: 'custom',
+            path: [`shooting.${idx}.startDate`],
+            message:
+              'วันที่เริ่มต้นการถ่ายทำต้องอยู่หลังวันที่สิ้นสุดการรับสมัคร',
+          })
+        }
       })
     }
   })

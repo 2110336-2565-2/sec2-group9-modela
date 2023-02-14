@@ -7,6 +7,7 @@ import {
   mockUser,
   mockUseSwitch,
 } from 'common/utils/testing'
+import { mockRouter } from 'common/utils/testing/mockRouter'
 import React from 'react'
 
 describe('<NavbarMobile />', () => {
@@ -37,9 +38,7 @@ describe('<NavbarMobile />', () => {
     useLayout: useLayoutSpy,
   }))
 
-  const pushSpy = jest.fn()
-  const useRouterSpy = jest.fn().mockReturnValue({ push: pushSpy })
-  jest.doMock('next/router', () => ({ useRouter: useRouterSpy }))
+  const { pushSpy } = mockRouter()
 
   const { default: NavbarMobile } = require('.') as typeof import('.')
 

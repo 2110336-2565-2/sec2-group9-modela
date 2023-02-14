@@ -1,8 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { EditJobDto } from '@modela/dtos'
+import { useSnackbar } from 'common/context/SnackbarContext'
+import { apiClient } from 'common/utils/api'
 import dayjs from 'dayjs'
+import { useRouter } from 'next/router'
 import { FormEventHandler, useCallback, useEffect, useMemo } from 'react'
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 
+import { fieldToPayload } from '../../utils/jobAdapter'
 import { IPostJobSchemaType, postJobSchema } from './schema'
 
 const useJobForm = (defaultValues: IPostJobSchemaType, edit?: boolean) => {
@@ -17,17 +22,29 @@ const useJobForm = (defaultValues: IPostJobSchemaType, edit?: boolean) => {
     reset(defaultValues)
   }, [defaultValues, reset])
 
+  const router = useRouter()
+  const { displaySnackbar } = useSnackbar()
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'shooting',
   })
 
-  const handleSuccess: SubmitHandler<IPostJobSchemaType> = useCallback(() => {
-    console.log('success')
-    if (edit) {
-      console.log('edit success')
-    }
-  }, [edit])
+  const handleSuccess: SubmitHandler<IPostJobSchemaType> = useCallback(
+    async (data) => {
+      const payload = fieldToPayload(data)
+      if (edit) {
+        const { jobId } = router.query as { jobId: string }
+        await apiClient.put<unknown, unknown, EditJobDto>(
+          `/job/${jobId}`,
+          payload,
+        )
+        displaySnackbar('แก้ไขงานสำเร็จ', 'success')
+        router.push(`/job/${jobId}`)
+      }
+    },
+    [displaySnackbar, edit, router],
+  )
 
   const handleClickSubmit: FormEventHandler<HTMLFormElement> = useMemo(
     () => handleSubmit(handleSuccess),

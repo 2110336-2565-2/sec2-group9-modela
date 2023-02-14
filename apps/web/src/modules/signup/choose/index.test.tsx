@@ -1,14 +1,12 @@
 import { render, waitFor } from '@testing-library/react'
 import { mockAndSpy, mockAndSpyMany } from 'common/utils/testing'
+import { mockRouter } from 'common/utils/testing/mockRouter'
 
 describe('<ChooseSignup />', () => {
   const LinkMock = mockAndSpy('next/link')
-  const ImageSpy = mockAndSpy('next/image')
-  ImageSpy.mockImplementation(() => {})
+  mockAndSpy('next/image')
 
-  const replaceSpy = jest.fn()
-  const useRouterSpy = jest.fn(() => ({ replace: replaceSpy }))
-  jest.doMock('next/router', () => ({ useRouter: useRouterSpy }))
+  mockRouter()
 
   const [mediaQuerySpy] = mockAndSpyMany('@mui/material', ['useMediaQuery'])
   mediaQuerySpy.mockImplementation(() => true)

@@ -1,6 +1,7 @@
 import { GetJobCardWithMaxPageDto, mock } from '@modela/dtos'
 import { render } from '@testing-library/react'
 import { mockAndSpy } from 'common/utils/testing'
+import { mockRouter } from 'common/utils/testing/mockRouter'
 import React from 'react'
 
 describe('<JobCardContainer/>', () => {
@@ -19,9 +20,7 @@ describe('<JobCardContainer/>', () => {
     jobs: [],
   }
 
-  jest.mock('next/router', () => ({
-    useRouter: jest.fn(),
-  }))
+  mockRouter()
 
   const jobCardMock = mockAndSpy(
     'modules/job/list/components/JobCardContainer/components/JobCard',

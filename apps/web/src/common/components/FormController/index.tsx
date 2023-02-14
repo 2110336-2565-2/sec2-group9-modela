@@ -111,17 +111,32 @@ const FormController = <T extends FieldValues>(
                   inputRef={ref}
                   {...field}
                   onChange={(newValue) => field.onChange(newValue)}
-                  renderInput={(params) => <TextField {...params} fullWidth />}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      fullWidth
+                      error={props.fieldState.invalid}
+                      helperText={props.fieldState.error?.message}
+                    />
+                  )}
                 />
               )
             if (type === 'time')
               return (
                 <TimePicker
                   label={label}
+                  ampm={false}
                   inputRef={ref}
                   {...field}
                   onChange={(newValue) => field.onChange(newValue)}
-                  renderInput={(params) => <TextField {...params} fullWidth />}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      fullWidth
+                      error={props.fieldState.invalid}
+                      helperText={props.fieldState.error?.message}
+                    />
+                  )}
                 />
               )
 

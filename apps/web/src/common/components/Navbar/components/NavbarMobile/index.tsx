@@ -3,6 +3,7 @@ import { useLayout } from 'common/context/LayoutContext'
 import { useUser } from 'common/context/UserContext'
 import useSwitch from 'common/hooks/useSwitch'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import logo from 'public/logo.svg'
 import React from 'react'
@@ -26,7 +27,9 @@ const NavbarMobile = () => {
 
   return (
     <NavbarContainer>
-      <Image src={logo} alt="logo" width={67.5} height={30} />
+      <Link href="/">
+        <Image src={logo} alt="logo" width={67.5} height={30} />
+      </Link>
       <div style={{ flexGrow: 1 }} />
       {user ? (
         <>

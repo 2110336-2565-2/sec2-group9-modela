@@ -1,5 +1,6 @@
 import { useLayout } from 'common/context/LayoutContext'
 import Image from 'next/image'
+import Link from 'next/link'
 import logo from 'public/logo.svg'
 import React from 'react'
 
@@ -12,7 +13,9 @@ const NavbarDesktop = () => {
 
   return (
     <NavbarContainer>
-      <Image src={logo} alt="logo" width={108} height={48} />
+      <Link href="/">
+        <Image src={logo} alt="logo" width={108} height={48} />
+      </Link>
       {menu.map(({ label, onClick, focusKey, icon, desktopIconOnly }, idx) => {
         if (label === 'divider')
           return <div style={{ flexGrow: 1 }} key={idx} />
