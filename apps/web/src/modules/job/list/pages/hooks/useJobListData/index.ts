@@ -86,7 +86,6 @@ const useJobListData = () => {
       setPage((prev) => prev + 1)
     } catch (e) {
       console.log(e)
-      router.replace('/404')
     }
   }, [apiClient, page, search, setHasMore, setJob, setPage])
 
