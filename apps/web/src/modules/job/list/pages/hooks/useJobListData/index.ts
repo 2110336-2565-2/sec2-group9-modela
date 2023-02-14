@@ -87,11 +87,11 @@ const useJobListData = () => {
     } catch (e) {
       console.log(e)
     }
-  }, [apiClient, page, search, setHasMore, setJob, setPage])
+  }, [page, search, setHasMore, setJob, setPage])
 
   const createPostPage = useCallback(() => {
     router.push('/job/post')
-  }, [])
+  }, [router])
 
   useEffect(() => {
     if (state.wage !== null) {
@@ -99,7 +99,7 @@ const useJobListData = () => {
         setState({ ...state, wage: -state.wage })
       }
     }
-  }, [state.wage])
+  }, [state, state.wage])
 
   useEffect(() => {
     if (state.deviant !== null) {
@@ -107,7 +107,7 @@ const useJobListData = () => {
         setState({ ...state, deviant: -state.deviant })
       }
     }
-  }, [state.deviant])
+  }, [state, state.deviant])
 
   useEffect(() => {
     if (state.age !== null) {
@@ -115,7 +115,7 @@ const useJobListData = () => {
         setState({ ...state, age: -state.age })
       }
     }
-  }, [state.age])
+  }, [state, state.age])
 
   useEffect(() => {
     filterData(state)
@@ -129,6 +129,8 @@ const useJobListData = () => {
     state.endDate,
     state.startTime,
     state.endTime,
+    filterData,
+    state,
   ])
 
   return {

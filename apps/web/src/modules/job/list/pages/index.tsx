@@ -22,8 +22,15 @@ import {
   SearchContainer,
 } from './styled'
 const JobList = () => {
-  const { job, hasMore, fetchData, filterData, createPostPage, state, setState } =
-    useJobListData()
+  const {
+    job,
+    hasMore,
+    fetchData,
+    filterData,
+    createPostPage,
+    state,
+    setState,
+  } = useJobListData()
   const { isOpen, open, close } = useSwitch()
   const { user } = useUser()
   useNavbarSearch(
