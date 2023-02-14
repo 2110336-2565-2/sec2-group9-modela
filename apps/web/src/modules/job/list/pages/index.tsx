@@ -13,7 +13,6 @@ import FilterMobileContainer from '../components/FilterMobileContainer'
 import JobCardContainer from '../components/JobCardContainer'
 import NotiCardContainer from '../components/NotiCardContainer'
 import SearchBox from '../components/SearchBox'
-import useFilterData from './hooks/useFilterData'
 import useJobListData from './hooks/useJobListData'
 import { notiHolder } from './placeholder'
 import {
@@ -22,11 +21,9 @@ import {
   NotiContainer,
   SearchContainer,
 } from './styled'
-
 const JobList = () => {
-  const { job, hasMore, fetchData, filterData, createPostPage } =
+  const { job, hasMore, fetchData, filterData, createPostPage, state, setState } =
     useJobListData()
-  const { state, setState } = useFilterData()
   const { isOpen, open, close } = useSwitch()
   const { user } = useUser()
   useNavbarSearch(
