@@ -18,7 +18,9 @@ export const NavbarItem = styled(Typography, {
 })<{ focus?: boolean }>`
   color: ${({ theme }) => theme.palette.primary.contrastText};
   font-weight: ${(props) => (props.focus ? 500 : 300)};
-
+  display: flex;
+  align-items: center;
+  gap: 6px;
   &:hover {
     cursor: pointer;
   }

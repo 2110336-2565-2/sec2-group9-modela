@@ -7,9 +7,9 @@ import { useCallback, useRef, useState } from 'react'
 import { IFilter, initialISearch, ISearch } from '../../types'
 
 const useJobListData = () => {
-  const router = useRouter()
   const [job, setJob] = useState<GetJobCardWithMaxPageDto>()
   const [hasMore, setHasMore] = useState(true)
+  const router = useRouter()
   const [page, setPage] = useState(0)
   const pageControl = useRef(1)
   const [search, setSearch] = useState<ISearch>(initialISearch)
@@ -61,6 +61,7 @@ const useJobListData = () => {
     },
     [search, job, setJob, setPage, pageControl, setHasMore],
   )
+
   const fetchData = useCallback(async () => {
     try {
       if (pageControl.current <= page) {
@@ -84,7 +85,6 @@ const useJobListData = () => {
       setPage((prev) => prev + 1)
     } catch (e) {
       console.log(e)
-      router.replace('/404')
     }
   }, [apiClient, page, search, setHasMore, setJob, setPage])
 

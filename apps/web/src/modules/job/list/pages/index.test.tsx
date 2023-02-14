@@ -1,13 +1,16 @@
-import { GetJobCardWithMaxPageDto, mock } from '@modela/dtos'
+import { GetJobCardWithMaxPageDto, mock, UserType } from '@modela/dtos'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { render, waitFor } from '@testing-library/react'
-import { mockAndSpy, mockApiClient } from 'common/utils/testing'
+import { mockAndSpy, mockApiClient, mockUser } from 'common/utils/testing'
 import React from 'react'
+
 describe('<JobListlPage />', () => {
   jest.mock('next/router', () => ({
     useRouter: jest.fn(),
   }))
+
+  const { mockUserType, mockVerify } = mockUser()
   const JobCardContainerMock = mockAndSpy(
     'modules/job/list/components/JobCardContainer',
   )
@@ -38,9 +41,15 @@ describe('<JobListlPage />', () => {
   jest.doMock('common/hooks/useNavbarSearch', () => jest.fn())
   const { default: JobListPage } = require('.') as typeof import('.')
 
+  beforeEach(() => {
+    mockUserType(UserType.CASTING)
+    mockVerify(true)
+  })
+
   afterEach(() => {
     jest.clearAllMocks()
   })
+
   describe('normal behavior', () => {
     it('should render correctly when API return correct data', async () => {
       mockGetReturn(mockData)

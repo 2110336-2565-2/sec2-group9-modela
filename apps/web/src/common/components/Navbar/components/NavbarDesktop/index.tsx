@@ -13,7 +13,7 @@ const NavbarDesktop = () => {
   return (
     <NavbarContainer>
       <Image src={logo} alt="logo" width={108} height={48} />
-      {menu.map(({ label, onClick, focusKey }, idx) => {
+      {menu.map(({ label, onClick, focusKey, icon, desktopIconOnly }, idx) => {
         if (label === 'divider')
           return <div style={{ flexGrow: 1 }} key={idx} />
         return (
@@ -21,8 +21,11 @@ const NavbarDesktop = () => {
             focus={!!focusKey && navbarFocus === focusKey}
             onClick={onClick}
             key={idx}
-            sx={{ pointerEvents: onClick ? 'auto' : 'none' }}
+            sx={{
+              pointerEvents: onClick ? 'auto' : 'none',
+            }}
           >
+            {desktopIconOnly && icon}
             {label}
           </NavbarItem>
         )
