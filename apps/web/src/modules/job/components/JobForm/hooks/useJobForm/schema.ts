@@ -6,13 +6,51 @@ const shootingSchema = z
   .object({
     shootingLocation: z.string({ required_error: 'กรุณากรอกสถานที่ถ่ายทำ' }),
     startDate: z
-      .instanceof(dayjs as unknown as typeof Dayjs)
+      .instanceof(dayjs as unknown as typeof Dayjs, {
+        message: 'กรุณากรอกวันที่เริ่มต้นการถ่ายทำ',
+      })
       .refine((arg) => arg.isAfter(dayjs()), {
         message: 'วันที่เริ่มต้นการถ่ายทำต้องมากกว่าวันที่ปัจจุบัน',
       }),
-    endDate: z.instanceof(dayjs as unknown as typeof Dayjs),
-    startTime: z.instanceof(dayjs as unknown as typeof Dayjs),
-    endTime: z.instanceof(dayjs as unknown as typeof Dayjs),
+    endDate: z.instanceof(dayjs as unknown as typeof Dayjs, {
+      message: 'กรุณากรอกวันที่สิ้นสุดการถ่ายทำ',
+    }),
+    startTime: z.instanceof(dayjs as unknown as typeof Dayjs, {
+      message: 'กรุณากรอกเวลาเริ่มต้นการถ่ายทำ',
+    }),
+    endTime: z.instanceof(dayjs as unknown as typeof Dayjs, {
+      message: 'กรุณากรอกเวลาสิ้นสุดการถ่ายทำ',
+    }),
+  })
+  .superRefine(({ startTime, endTime, startDate, endDate }, ctx) => {
+    if (!startTime.isValid()) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['startTime'],
+        message: 'รูปแบบเวลาไม่ถูกต้อง',
+      })
+    }
+    if (!endTime.isValid()) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['endTime'],
+        message: 'รูปแบบเวลาไม่ถูกต้อง',
+      })
+    }
+    if (!startDate.isValid()) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['startDate'],
+        message: 'รูปแบบวันที่ไม่ถูกต้อง',
+      })
+    }
+    if (!endDate.isValid()) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['endDate'],
+        message: 'รูปแบบวันที่ไม่ถูกต้อง',
+      })
+    }
   })
   .superRefine(({ startTime, endTime, startDate, endDate }, ctx) => {
     if (startTime && endTime && startTime.isAfter(endTime)) {
@@ -36,7 +74,9 @@ const postJobSchema = z
     title: z.string({ required_error: 'กรุณากรอกตำแหน่งงาน' }),
     description: z.string({ required_error: 'กรุณากรอกรายละเอียดงาน' }),
     applicationDeadline: z
-      .instanceof(dayjs as unknown as typeof Dayjs)
+      .instanceof(dayjs as unknown as typeof Dayjs, {
+        message: 'กรุณากรอกวันปิดรับสมัคร',
+      })
       .refine((arg) => arg.isAfter(dayjs()), {
         message: 'วันที่สิ้นสุดการรับสมัครต้องอยู่หลังวันที่ปัจจุบัน',
       }),
@@ -94,6 +134,15 @@ const postJobSchema = z
               'วันที่เริ่มต้นการถ่ายทำต้องอยู่หลังวันที่สิ้นสุดการรับสมัคร',
           })
         }
+      })
+    }
+  })
+  .superRefine(({ applicationDeadline }, ctx) => {
+    if (!applicationDeadline.isValid()) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['applicationDeadline'],
+        message: 'รูปแบบวันที่ไม่ถูกต้อง',
       })
     }
   })

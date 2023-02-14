@@ -1,2 +1,1 @@
-import PostJobPage from 'modules/job/components/JobForm'
-export default PostJobPage
+export { default } from 'modules/job/post/pages'
