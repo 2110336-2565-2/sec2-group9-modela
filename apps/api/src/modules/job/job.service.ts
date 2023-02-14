@@ -113,7 +113,9 @@ export class JobService {
 
         wage: {
           gte: Number(searchJobDto.minWage) || defaultMinWageGte,
-          lte: Number(searchJobDto.maxWage) || defaultMaxWageLte,
+          lte: searchJobDto.maxWage
+            ? Number(searchJobDto.maxWage)
+            : defaultMaxWageLte,
         },
 
         status: undefined,
