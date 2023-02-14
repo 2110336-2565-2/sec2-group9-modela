@@ -21,7 +21,8 @@ describe('<JobCardFooter />', () => {
     'Money',
     'PersonOutlined',
   ])
-  const { mockUserType } = mockUser()
+  mockUser(UserType.ACTOR)
+
   jest.spyOn(window, 'alert').mockImplementation(() => {})
 
   const { default: JobCardFooter } = require('.') as typeof import('.')
@@ -32,7 +33,6 @@ describe('<JobCardFooter />', () => {
 
   describe('normal behavior', () => {
     it('should render correctly', () => {
-      mockUserType(UserType.ACTOR)
       const { getByText } = render(
         <JobCardFooter status={JobStatus.OPEN} {...footerProps} />,
       )
@@ -42,7 +42,6 @@ describe('<JobCardFooter />', () => {
     })
 
     it('should render correctly when status is closed', () => {
-      mockUserType(UserType.ACTOR)
       const { getByText } = render(
         <JobCardFooter status={JobStatus.FINISHED} {...footerProps} />,
       )

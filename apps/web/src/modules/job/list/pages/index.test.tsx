@@ -3,14 +3,13 @@ import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { render, waitFor } from '@testing-library/react'
 import { mockAndSpy, mockApiClient, mockUser } from 'common/utils/testing'
+import { mockRouter } from 'common/utils/testing/mockRouter'
 import React from 'react'
 
 describe('<JobListlPage />', () => {
-  jest.mock('next/router', () => ({
-    useRouter: jest.fn(),
-  }))
-
   const { mockUserType, mockVerify } = mockUser()
+  mockRouter()
+
   const JobCardContainerMock = mockAndSpy(
     'modules/job/list/components/JobCardContainer',
   )
