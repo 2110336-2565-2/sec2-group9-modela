@@ -88,7 +88,15 @@ const JobList = () => {
             loadMore={fetchData}
             hasMore={hasMore}
             loader={
-              <div className="loader" key={0}>
+              <div
+                className="loader"
+                key={0}
+                style={{
+                  display: 'flex',
+                  alignItems: 'column',
+                  justifyContent: 'center',
+                }}
+              >
                 <CircularProgress color="primary" />
               </div>
             }
