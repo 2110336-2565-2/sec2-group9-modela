@@ -22,10 +22,10 @@ const castingSignupSchema = z
       .min(1, 'กรุณากรอกนามสกุล'),
     companyName: z
       .string({
-        required_error: 'กรุณากรอกสัญชาติ',
+        required_error: 'กรุณากรอกชื่อบริษัท',
       })
       .trim()
-      .min(1, 'กรุณากรอกสัญชาติ'),
+      .min(1, 'กรุณากรอกชื่อบริษัท'),
     password: z.string({
       required_error: 'กรุณากรอกรหัสผ่าน',
     }),
@@ -34,7 +34,7 @@ const castingSignupSchema = z
     }),
     companyId: z
       .string({
-        required_error: 'กรุณากรอกเลขบัตรประชาชน / เลขพาสปอร์ต',
+        required_error: 'กรุณากรอกเลขจดทะเบียน',
       })
       .refine((arg) => /^[0-9]{13}$/.test(arg), 'รูปแบบไม่ถูกต้อง'),
     employmentCertUrl: z.string({
