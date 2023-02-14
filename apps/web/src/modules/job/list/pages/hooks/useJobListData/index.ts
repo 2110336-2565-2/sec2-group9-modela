@@ -8,6 +8,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { IFilter, initialIFilter, initialISearch, ISearch } from '../../types'
 
 const useJobListData = () => {
+  const [isOpen, setOpen] = useState(false)
   const [job, setJob] = useState<GetJobCardWithMaxPageDto>()
   const [hasMore, setHasMore] = useState(true)
   const router = useRouter()
@@ -15,6 +16,8 @@ const useJobListData = () => {
   const pageControl = useRef(1)
   const [search, setSearch] = useState<ISearch>(initialISearch)
   const [state, setState] = useState<IFilter>(initialIFilter)
+  const open = useCallback(() => setOpen(true), [])
+  const close = useCallback(() => setOpen(false), [])
   const filterData = useCallback(
     async (state: IFilter) => {
       let newStatus = []
@@ -119,7 +122,9 @@ const useJobListData = () => {
   }, [state.age])
 
   useEffect(() => {
-    filterData(state)
+    if (!isOpen) {
+      filterData(state)
+    }
   }, [
     state.maleCheck,
     state.femaleCheck,
@@ -140,6 +145,9 @@ const useJobListData = () => {
     createPostPage,
     state,
     setState,
+    isOpen,
+    open,
+    close,
   }
 }
 

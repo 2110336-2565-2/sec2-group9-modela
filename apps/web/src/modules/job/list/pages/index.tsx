@@ -4,7 +4,6 @@ import { Button, CircularProgress, Typography } from '@mui/material'
 import { useUser } from 'common/context/UserContext'
 import withGuard from 'common/hoc/withGuard'
 import useNavbarSearch from 'common/hooks/useNavbarSearch'
-import useSwitch from 'common/hooks/useSwitch'
 import React, { useCallback } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 
@@ -30,8 +29,10 @@ const JobList = () => {
     createPostPage,
     state,
     setState,
+    isOpen,
+    open,
+    close,
   } = useJobListData()
-  const { isOpen, open, close } = useSwitch()
   const { user } = useUser()
   useNavbarSearch(
     useCallback(() => {
