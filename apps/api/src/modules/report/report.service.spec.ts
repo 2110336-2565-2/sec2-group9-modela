@@ -31,7 +31,7 @@ describe('ReportService', () => {
   })
 
   describe('postReport', () => {
-    const postReportDTO = {
+    const postReportDto = {
       reason: 'Insert reason',
     }
 
@@ -51,11 +51,11 @@ describe('ReportService', () => {
       jest.spyOn(repository, 'createReport').mockResolvedValue()
       jest.spyOn(jobRepository, 'getJobById').mockResolvedValue(MOCK_JOB)
 
-      await service.postReport(MOCK_JOB_ID, postReportDTO, MOCK_USER_ID)
+      await service.postReport(MOCK_JOB_ID, postReportDto, MOCK_USER_ID)
       expect(repository.createReport).toBeCalledWith(
         MOCK_JOB_ID,
         MOCK_USER_ID,
-        postReportDTO.reason,
+        postReportDto.reason,
       )
     })
   })

@@ -236,7 +236,7 @@ export class GetJobDto extends EditJobDto {
   status: JobStatus
 }
 
-export class JobIdDTO {
+export class JobIdDto {
   @ApiProperty()
   jobId: number
 }

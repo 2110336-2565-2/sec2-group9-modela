@@ -3,7 +3,7 @@ import {
   EditJobDto,
   GetJobCardWithMaxPageDto,
   GetJobDto,
-  JobIdDTO,
+  JobIdDto,
   JwtDto,
   SearchJobDto,
   UserType,
@@ -54,7 +54,7 @@ export class JobController {
 
   @Put(':id')
   @ApiOperation({ summary: 'update job by id' })
-  @ApiCreatedResponse({ type: JobIdDTO })
+  @ApiCreatedResponse({ type: JobIdDto })
   @UseTypeAuthGuard(UserType.CASTING)
   @ApiUnauthorizedResponse({ description: 'User is not login' })
   @ApiForbiddenResponse({ description: 'User is not owner' })
@@ -69,7 +69,7 @@ export class JobController {
   }
 
   @Post()
-  @ApiCreatedResponse({ type: JobIdDTO })
+  @ApiCreatedResponse({ type: JobIdDto })
   @UseTypeAuthGuard(UserType.CASTING)
   @ApiUnauthorizedResponse({ description: 'User is not logged in' })
   @ApiForbiddenResponse({ description: 'User is not a casting' })

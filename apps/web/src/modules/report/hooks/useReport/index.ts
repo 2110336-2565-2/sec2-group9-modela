@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { GetJobDto, PostReportDTO } from '@modela/dtos'
+import { GetJobDto, PostReportDto } from '@modela/dtos'
 import { useSnackbar } from 'common/context/SnackbarContext'
 import { apiClient } from 'common/utils/api'
 import { useRouter } from 'next/router'
@@ -32,7 +32,7 @@ const useReport = () => {
     async (data) => {
       setLoading(true)
       try {
-        const postBody: PostReportDTO = {
+        const postBody: PostReportDto = {
           reason: data.description,
         }
         await apiClient.post('report/job/' + jid, postBody)
