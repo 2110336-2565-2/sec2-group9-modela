@@ -1,5 +1,5 @@
-import { JobIdDTO, JwtDto } from '@modela/dtos'
-import { PostReportDTO } from '@modela/dtos'
+import { JobIdDto, JwtDto } from '@modela/dtos'
+import { PostReportDto } from '@modela/dtos'
 import { Body, Controller, Param, Post } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
@@ -21,7 +21,7 @@ export class ReportController {
   constructor(private readonly reportService: ReportService) {}
 
   @Post('job/:id')
-  @ApiCreatedResponse({ type: JobIdDTO })
+  @ApiCreatedResponse({ type: JobIdDto })
   @UseTypeAuthGuard('ACTOR')
   @ApiUnauthorizedResponse({ description: 'User is not login' })
   @ApiForbiddenResponse({ description: 'User is not actor' })
@@ -30,9 +30,9 @@ export class ReportController {
   @ApiOperation({ summary: 'write report' })
   postReport(
     @Param('id') id: string,
-    @Body() postReportDTO: PostReportDTO,
+    @Body() postReportDto: PostReportDto,
     @User() user: JwtDto,
   ) {
-    return this.reportService.postReport(+id, postReportDTO, user.userId)
+    return this.reportService.postReport(+id, postReportDto, user.userId)
   }
 }

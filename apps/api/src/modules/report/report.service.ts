@@ -1,4 +1,4 @@
-import { PostReportDTO } from '@modela/dtos'
+import { PostReportDto } from '@modela/dtos'
 import {
   Injectable,
   InternalServerErrorException,
@@ -15,14 +15,14 @@ export class ReportService {
     private readonly jobRepository: JobRepository,
   ) {}
 
-  async postReport(id: number, postReportDTO: PostReportDTO, userId: number) {
+  async postReport(id: number, postReportDto: PostReportDto, userId: number) {
     const job = await this.jobRepository.getJobById(id)
     if (!job) {
       throw new NotFoundException()
     }
 
     try {
-      await this.reportRepository.createReport(id, userId, postReportDTO.reason)
+      await this.reportRepository.createReport(id, userId, postReportDto.reason)
     } catch (e) {
       console.log(e)
       throw new InternalServerErrorException()

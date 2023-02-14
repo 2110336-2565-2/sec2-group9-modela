@@ -12,7 +12,7 @@ import {
   Max,
   Min,
 } from 'class-validator'
-import { Casting, Gender, Job, JobStatus, Shooting } from '@modela/database'
+import { Gender, Job, JobStatus, Shooting } from '@modela/database'
 
 export enum SearchJobStatus {
   'OPEN' = 'OPEN',
@@ -109,25 +109,35 @@ export class SearchJobDto {
 }
 
 export class ShootingDto implements Partial<Shooting> {
+  @IsString()
+  @IsNotEmpty()
   @ApiProperty()
   shootingLocation: string
 
+  @IsNotEmpty()
+  @IsDateString()
   @ApiProperty()
   startDate: Date
 
+  @IsNotEmpty()
+  @IsDateString()
   @ApiProperty()
   endDate: Date
 
+  @IsNotEmpty()
+  @IsDateString()
   @ApiProperty()
   startTime: Date
 
+  @IsNotEmpty()
+  @IsDateString()
   @ApiProperty()
   endTime: Date
 }
 
 type EditJobType = Partial<Job> & { shooting: ShootingDto[] }
 
-export class CreateJobDto  implements EditJobType {
+export class CreateJobDto implements EditJobType {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
@@ -183,9 +193,7 @@ export class CreateJobDto  implements EditJobType {
   shooting: ShootingDto[]
 }
 
-export class EditJobDto extends CreateJobDto{
-  
-}
+export class EditJobDto extends CreateJobDto {}
 
 export class GetJobCardDto extends OmitType(EditJobDto, [
   'role',
@@ -228,7 +236,7 @@ export class GetJobDto extends EditJobDto {
   status: JobStatus
 }
 
-export class JobIdDTO {
+export class JobIdDto {
   @ApiProperty()
   jobId: number
 }
