@@ -9,7 +9,7 @@ import { HeaderRow, ProfileImageContainer } from './styled'
 import { HeaderProps } from './types'
 
 const JobCardHeader = (prop: HeaderProps) => {
-  const { castingImage, companyName, title, status, jobId } = prop
+  const { castingImage, companyName, title, status, jobId, isDetail } = prop
   const { user } = useUser()
 
   return (
@@ -17,9 +17,15 @@ const JobCardHeader = (prop: HeaderProps) => {
       <ProfileImageContainer>
         <img src={castingImage} alt="casting pic" width="100%" height="100%" />
       </ProfileImageContainer>
-      <div>
-        <Typography variant="h6">{title}</Typography>
-        <Typography fontWeight={400}>{companyName}</Typography>
+      <div style={{ maxWidth: '80%' }}>
+        <Typography variant="h6" sx={{ wordBreak: 'break-word' }}>
+          {!isDetail &&
+            `${title.substring(0, 50)}${title.length >= 50 ? '...' : ''}`}
+          {isDetail && title}
+        </Typography>
+        <Typography fontWeight={400} sx={{ wordBreak: 'break-word' }}>
+          {companyName}
+        </Typography>
       </div>
       {user?.type === UserType.ACTOR && (
         <Tooltip title="Report job">

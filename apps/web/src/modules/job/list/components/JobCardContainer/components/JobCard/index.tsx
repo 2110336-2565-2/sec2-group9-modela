@@ -37,9 +37,15 @@ export default function JobCard(prop: CardProps) {
         />
         <Typography
           variant="subtitle2"
-          sx={{ color: 'rgba(0,0,0,0.6)', paddingBottom: '12px' }}
+          sx={{
+            color: 'rgba(0,0,0,0.6)',
+            paddingBottom: '12px',
+            wordBreak: 'break-word',
+          }}
         >
-          {description}
+          {`${description.substring(0, 200)}${
+            description.length >= 200 ? '...' : ''
+          }`}
         </Typography>
 
         <Divider variant="fullWidth" sx={{ width: '100%' }} />

@@ -120,7 +120,8 @@ const JobList = () => {
               variant="contained"
               sx={{
                 borderRadius: '12px',
-                width: '75%',
+                width: '100%',
+                maxWidth: '250px',
                 marginLeft: '1rem',
                 fontSize: '16px',
               }}

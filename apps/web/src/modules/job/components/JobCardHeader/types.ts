@@ -6,4 +6,5 @@ export interface HeaderProps {
   castingImage: string
   status: JobStatus
   jobId: number
+  isDetail?: boolean
 }
