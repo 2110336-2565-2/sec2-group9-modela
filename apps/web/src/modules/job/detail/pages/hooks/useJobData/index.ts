@@ -21,7 +21,7 @@ const useJobData = () => {
     if (router.isReady) {
       fetchData()
     }
-  }, [jobId])
+  }, [jobId, router])
 
   return { job }
 }

@@ -47,7 +47,7 @@ const useReport = () => {
         setLoading(false)
       }
     },
-    [router],
+    [displaySnackbar, jid, router],
   )
 
   const handleClickSubmit: FormEventHandler<HTMLFormElement> = useMemo(
@@ -68,7 +68,7 @@ const useReport = () => {
     if (router.isReady) {
       fetchData()
     }
-  }, [jid])
+  }, [jid, router.isReady])
 
   return {
     jid,
