@@ -98,30 +98,6 @@ const useJobListData = () => {
   }, [router])
 
   useEffect(() => {
-    if (state.wage !== null) {
-      if (state.wage < 0) {
-        setState({ ...state, wage: -state.wage })
-      }
-    }
-  }, [state.wage])
-
-  useEffect(() => {
-    if (state.deviant !== null) {
-      if (state.deviant < 0) {
-        setState({ ...state, deviant: -state.deviant })
-      }
-    }
-  }, [state.deviant])
-
-  useEffect(() => {
-    if (state.age !== null) {
-      if (state.age < 0) {
-        setState({ ...state, age: -state.age })
-      }
-    }
-  }, [state.age])
-
-  useEffect(() => {
     if (!isOpen) {
       filterData(state)
     }

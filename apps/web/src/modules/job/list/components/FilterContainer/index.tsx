@@ -126,6 +126,7 @@ export default function FilterContainer(props: FilterContainerProps) {
       <TextField
         fullWidth
         type="number"
+        inputProps={{ min: 0 }}
         label="กรอกอายุนักแสดง"
         value={state.age}
         onChange={(event) => {
@@ -142,6 +143,7 @@ export default function FilterContainer(props: FilterContainerProps) {
       <TextField
         fullWidth
         type="number"
+        inputProps={{ min: 0 }}
         onChange={(event) => {
           if (event.target.value != '') {
             setState({ ...state, wage: Number(event.target.value) })
@@ -159,6 +161,7 @@ export default function FilterContainer(props: FilterContainerProps) {
       <TextField
         fullWidth
         type="number"
+        inputProps={{ min: 0 }}
         onChange={(event) => {
           if (event.target.value != '') {
             setState({ ...state, deviant: Number(event.target.value) })
