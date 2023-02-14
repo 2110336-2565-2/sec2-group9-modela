@@ -24,6 +24,10 @@ function createValidJob() {
   MOCK_APPLICATION_DEADLINE.setFullYear(
     MOCK_APPLICATION_DEADLINE.getFullYear() + 1,
   )
+  const MOCK_START_TIME = new Date()
+  MOCK_START_TIME.setHours(1)
+  const MOCK_END_TIME = new Date()
+  MOCK_END_TIME.setHours(16)
 
   const MOCK_JOB = {
     ...mock('job')
@@ -31,7 +35,12 @@ function createValidJob() {
       .override({ applicationDeadline: MOCK_APPLICATION_DEADLINE })
       .get(),
     shooting: mock('shooting')
-      .override({ startDate: MOCK_START_DATE, endDate: MOCK_END_DATE })
+      .override({
+        startDate: MOCK_START_DATE,
+        endDate: MOCK_END_DATE,
+        startTime: MOCK_START_TIME,
+        endTime: MOCK_END_TIME,
+      })
       .get(3),
   }
 
