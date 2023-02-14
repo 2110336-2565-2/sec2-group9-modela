@@ -23,6 +23,7 @@ const JobCard = (prop: GetJobDto) => {
     status,
     title,
     wage,
+    jobId,
   } = prop
 
   const genderThai = genderTranslationMap[gender]
@@ -34,6 +35,7 @@ const JobCard = (prop: GetJobDto) => {
         companyName={companyName}
         castingImage={jobCastingImageUrl}
         status={status}
+        jobId={jobId}
       />
       <CorporateRow>
         <Typography variant="subtitle2" sx={{ color: 'rgba(0,0,0,0.6)' }}>

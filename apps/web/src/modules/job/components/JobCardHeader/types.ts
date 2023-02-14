@@ -5,4 +5,5 @@ export interface HeaderProps {
   companyName: string
   castingImage: string
   status: JobStatus
+  jobId: number
 }

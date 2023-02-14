@@ -2,17 +2,15 @@ import { JobStatus, UserType } from '@modela/dtos'
 import { EditOutlined, ReportOutlined } from '@mui/icons-material'
 import { Tooltip, Typography } from '@mui/material'
 import { useUser } from 'common/context/UserContext'
-import { useRouter } from 'next/router'
+import Link from 'next/link'
 import React from 'react'
 
 import { HeaderRow, ProfileImageContainer } from './styled'
 import { HeaderProps } from './types'
 
 const JobCardHeader = (prop: HeaderProps) => {
-  const { castingImage, companyName, title, status } = prop
+  const { castingImage, companyName, title, status, jobId } = prop
   const { user } = useUser()
-  const router = useRouter()
-  const { jobId } = router.query
 
   return (
     <HeaderRow>
@@ -25,22 +23,24 @@ const JobCardHeader = (prop: HeaderProps) => {
       </div>
       {user?.type === UserType.ACTOR && (
         <Tooltip title="Report job">
-          <ReportOutlined
-            fontSize="small"
-            color="error"
+          <Link
+            href={`/report/${jobId}`}
+            passHref
             style={{ cursor: 'pointer', marginLeft: 'auto' }}
-            onClick={() => router.push('/report/' + jobId)}
-          />
+          >
+            <ReportOutlined fontSize="small" color="error" />
+          </Link>
         </Tooltip>
       )}
       {user?.type === UserType.CASTING && status === JobStatus.OPEN && (
         <Tooltip title="Edit job">
-          <EditOutlined
-            fontSize="small"
-            color="primary"
+          <Link
+            href={`/job/${jobId}/edit`}
+            passHref
             style={{ cursor: 'pointer', marginLeft: 'auto' }}
-            onClick={() => router.push('/job/' + jobId + '/edit')}
-          />
+          >
+            <EditOutlined fontSize="small" color="primary" />
+          </Link>
         </Tooltip>
       )}
     </HeaderRow>

@@ -22,13 +22,18 @@ export default function JobCard(prop: CardProps) {
   } = prop
 
   return (
-    <Link href={`/job/${jobId}`} passHref>
+    <Link
+      href={`/job/${jobId}`}
+      passHref
+      style={{ textDecoration: 'none', color: 'inherit' }}
+    >
       <CardContainer>
         <Header
           title={title}
           companyName={companyName}
           castingImage={jobCastingImageUrl}
           status={status}
+          jobId={jobId}
         />
         <Typography
           variant="subtitle2"
