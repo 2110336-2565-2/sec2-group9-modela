@@ -57,6 +57,9 @@ export const FORM_LAYOUT:
     name: 'wage',
     sm: 6,
     xs: 6,
+    inputProps: {
+      min: 1,
+    },
   },
   {
     type: 'shooting',
@@ -74,6 +77,9 @@ export const FORM_LAYOUT:
     name: 'actorCount',
     sm: 6,
     xs: 6,
+    inputProps: {
+      min: 1,
+    },
   },
   {
     type: 'select',
@@ -89,6 +95,9 @@ export const FORM_LAYOUT:
     name: 'minAge',
     sm: 6,
     xs: 6,
+    inputProps: {
+      min: 1,
+    },
   },
   {
     type: 'number',
@@ -96,6 +105,9 @@ export const FORM_LAYOUT:
     name: 'maxAge',
     sm: 6,
     xs: 6,
+    inputProps: {
+      min: 1,
+    },
   },
   {
     type: 'textField',
