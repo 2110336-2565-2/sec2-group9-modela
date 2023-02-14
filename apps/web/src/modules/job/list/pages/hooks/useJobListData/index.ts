@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { GetJobCardWithMaxPageDto } from '@modela/dtos'
 import { apiClient } from 'common/utils/api'
@@ -101,7 +100,7 @@ const useJobListData = () => {
         setState({ ...state, wage: -state.wage })
       }
     }
-  }, [ state.wage])
+  }, [state.wage])
 
   useEffect(() => {
     if (state.deviant !== null) {
@@ -109,7 +108,7 @@ const useJobListData = () => {
         setState({ ...state, deviant: -state.deviant })
       }
     }
-  }, [ state.deviant])
+  }, [state.deviant])
 
   useEffect(() => {
     if (state.age !== null) {
@@ -117,7 +116,7 @@ const useJobListData = () => {
         setState({ ...state, age: -state.age })
       }
     }
-  }, [ state.age])
+  }, [state.age])
 
   useEffect(() => {
     filterData(state)
