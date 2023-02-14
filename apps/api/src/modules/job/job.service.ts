@@ -101,25 +101,7 @@ export class JobService {
       //filtering
       where: {
         //job always have shooting
-        Shooting: {
-          every: {
-            startDate: {
-              gte: searchJobDto.startDate || defaultStartDate,
-            },
-            endDate: {
-              lte: searchJobDto.endDate || defaultEndDate,
-            },
-            startTime: {
-              gte: searchJobDto.startTime || defaultStartTime,
-            },
-            endTime: {
-              lte: searchJobDto.endTime || defaultEndTime,
-            },
-          },
-          some: {
-            shootingLocation: undefined,
-          },
-        },
+        Shooting: undefined,
 
         title: undefined,
         minAge: {
@@ -186,12 +168,50 @@ export class JobService {
         }
       }
     }
-    //handle location substring query
-    if (searchJobDto.location) {
-      params.where.Shooting.some = {
-        shootingLocation: {
-          contains: searchJobDto.location,
-          mode: 'insensitive',
+    //handle shooting query
+    console.log(
+      'shooting :',
+      searchJobDto.location,
+      searchJobDto.startDate,
+      searchJobDto.endDate,
+      searchJobDto.startTime,
+      searchJobDto.endTime,
+    )
+    if (
+      searchJobDto.location ||
+      searchJobDto.startDate ||
+      searchJobDto.endDate ||
+      searchJobDto.startTime ||
+      searchJobDto.endTime
+    ) {
+      console.log(
+        'shooting in if :',
+        searchJobDto.location,
+        searchJobDto.startDate,
+        searchJobDto.endDate,
+        searchJobDto.startTime,
+        searchJobDto.endTime,
+      )
+      params.where.Shooting = {
+        every: {
+          startDate: {
+            gte: searchJobDto.startDate || defaultStartDate,
+          },
+          endDate: {
+            lte: searchJobDto.endDate || defaultEndDate,
+          },
+          startTime: {
+            gte: searchJobDto.startTime || defaultStartTime,
+          },
+          endTime: {
+            lte: searchJobDto.endTime || defaultEndTime,
+          },
+        },
+        some: {
+          shootingLocation: {
+            contains: searchJobDto.location,
+            mode: 'insensitive',
+          },
         },
       }
     }
