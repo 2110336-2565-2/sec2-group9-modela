@@ -125,6 +125,7 @@ const FormController = <T extends FieldValues>(
               return (
                 <TimePicker
                   label={label}
+                  ampm={false}
                   inputRef={ref}
                   {...field}
                   onChange={(newValue) => field.onChange(newValue)}

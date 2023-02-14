@@ -17,9 +17,9 @@ export const mockUser = (
 
   let returnUser: GetUserDto = {
     ...MOCK_USER,
-    companyName: undefined,
-    isVerified: isVerified,
-    type: type,
+    companyName: type === UserType.CASTING ? MOCK_USER.companyName : undefined,
+    isVerified,
+    type,
   }
 
   const useUserSpy = jest.fn()

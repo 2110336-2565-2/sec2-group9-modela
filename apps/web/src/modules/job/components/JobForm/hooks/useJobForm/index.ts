@@ -33,7 +33,6 @@ const useJobForm = (defaultValues: IPostJobSchemaType, edit?: boolean) => {
   const handleSuccess: SubmitHandler<IPostJobSchemaType> = useCallback(
     async (data) => {
       const payload = fieldToPayload(data)
-      console.log('success')
       if (edit) {
         const { jobId } = router.query as { jobId: string }
         await apiClient.put<unknown, unknown, EditJobDto>(
