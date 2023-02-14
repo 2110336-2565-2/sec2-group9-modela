@@ -20,50 +20,7 @@ const JobCardFooter = (prop: FooterProps) => {
   const genderThai = genderTranslationMap[gender]
 
   return (
-    <FooterRow>
-      <SameDiv>
-        <Tooltip title={genderThai}>
-          <Person
-            fontSize="small"
-            sx={{
-              color:
-                gender === Gender.MALE
-                  ? '#144A9B'
-                  : gender === Gender.FEMALE
-                  ? '#F57CD4'
-                  : gender === Gender.ANY
-                  ? 'rgba(0, 0, 0, 0.6)'
-                  : '#00c853',
-              fill:
-                gender === Gender.MALE ||
-                gender === Gender.FEMALE ||
-                gender === Gender.ANY
-                  ? ''
-                  : 'url(#linearColors)',
-            }}
-          />
-        </Tooltip>
-        <Typography variant="subtitle1">{actorCount}</Typography>
-      </SameDiv>
-
-      <SameDiv>
-        <Money fontSize="small" />
-        <Typography variant="subtitle1">{wage.toLocaleString()}</Typography>
-      </SameDiv>
-
-      <SameDiv>
-        <EventBusy
-          fontSize="small"
-          sx={{
-            color:
-              status == JobStatus.OPEN
-                ? theme.palette.success.main
-                : theme.palette.error.main,
-          }}
-        />
-        <Typography variant="subtitle1">{formatDate(dueDate)}</Typography>
-      </SameDiv>
-
+    <>
       <svg width={0} height={0}>
         <linearGradient id="linearColors" x1={1} y1={0} x2={1} y2={1}>
           <stop offset={0} stopColor="#ff0000" />
@@ -75,18 +32,62 @@ const JobCardFooter = (prop: FooterProps) => {
           <stop offset={1} stopColor="#ff00ff" />
         </linearGradient>
       </svg>
+      <FooterRow>
+        <SameDiv>
+          <Tooltip title={genderThai}>
+            <Person
+              fontSize="small"
+              sx={{
+                color:
+                  gender === Gender.MALE
+                    ? '#144A9B'
+                    : gender === Gender.FEMALE
+                    ? '#F57CD4'
+                    : gender === Gender.ANY
+                    ? 'rgba(0, 0, 0, 0.6)'
+                    : '#00c853',
+                fill:
+                  gender === Gender.MALE ||
+                  gender === Gender.FEMALE ||
+                  gender === Gender.ANY
+                    ? ''
+                    : 'url(#linearColors)',
+              }}
+            />
+          </Tooltip>
+          <Typography variant="subtitle1">{actorCount}</Typography>
+        </SameDiv>
 
-      {status === JobStatus.OPEN && user?.type === UserType.ACTOR && (
-        <Typography
-          variant="subtitle1"
-          color="primary"
-          sx={{ cursor: 'pointer', marginLeft: 'auto' }}
-          onClick={() => apply()}
-        >
-          สมัครงาน
-        </Typography>
-      )}
-    </FooterRow>
+        <SameDiv>
+          <Money fontSize="small" />
+          <Typography variant="subtitle1">{wage.toLocaleString()}</Typography>
+        </SameDiv>
+
+        <SameDiv>
+          <EventBusy
+            fontSize="small"
+            sx={{
+              color:
+                status == JobStatus.OPEN
+                  ? theme.palette.success.main
+                  : theme.palette.error.main,
+            }}
+          />
+          <Typography variant="subtitle1">{formatDate(dueDate)}</Typography>
+        </SameDiv>
+
+        {status === JobStatus.OPEN && user?.type === UserType.ACTOR && (
+          <Typography
+            variant="subtitle1"
+            color="primary"
+            sx={{ cursor: 'pointer', marginLeft: 'auto' }}
+            onClick={() => apply()}
+          >
+            สมัครงาน
+          </Typography>
+        )}
+      </FooterRow>
+    </>
   )
 }
 

@@ -15,3 +15,7 @@ export const ProfileImageContainer = styled('div')`
   height: 50px;
   overflow: hidden;
 `
+
+export const TitleContainer = styled('div')`
+  max-width: 80%;
+`

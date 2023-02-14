@@ -5,7 +5,7 @@ import { useUser } from 'common/context/UserContext'
 import Link from 'next/link'
 import React from 'react'
 
-import { HeaderRow, ProfileImageContainer } from './styled'
+import { HeaderRow, ProfileImageContainer, TitleContainer } from './styled'
 import { HeaderProps } from './types'
 
 const JobCardHeader = (prop: HeaderProps) => {
@@ -17,7 +17,7 @@ const JobCardHeader = (prop: HeaderProps) => {
       <ProfileImageContainer>
         <img src={castingImage} alt="casting pic" width="100%" height="100%" />
       </ProfileImageContainer>
-      <div style={{ maxWidth: '80%' }}>
+      <TitleContainer>
         <Typography variant="h6" sx={{ wordBreak: 'break-word' }}>
           {!isDetail &&
             `${title.substring(0, 50)}${title.length >= 50 ? '...' : ''}`}
@@ -26,7 +26,7 @@ const JobCardHeader = (prop: HeaderProps) => {
         <Typography fontWeight={400} sx={{ wordBreak: 'break-word' }}>
           {companyName}
         </Typography>
-      </div>
+      </TitleContainer>
       {user?.type === UserType.ACTOR && (
         <Tooltip title="Report job">
           <Link
