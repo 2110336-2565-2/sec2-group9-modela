@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SignupActorDto } from '@modela/dtos'
+import { useUser } from 'common/context/UserContext'
 import { apiClient } from 'common/utils/api'
 import { useRouter } from 'next/router'
 import {
@@ -15,6 +16,7 @@ import { actorSignupSchema, IActorSignupSchemaType } from './schema'
 
 const useActorForm = () => {
   const router = useRouter()
+  const { refetch } = useUser()
 
   const { register, handleSubmit, control, setValue, getValues, setError } =
     useForm<IActorSignupSchemaType>({
@@ -39,6 +41,7 @@ const useActorForm = () => {
           '/auth/signup/actor',
           postBody,
         )
+        await refetch()
         router.push('/job')
       } catch (err) {
         console.log(err)
@@ -46,7 +49,7 @@ const useActorForm = () => {
         setLoading(false)
       }
     },
-    [router],
+    [refetch, router],
   )
 
   const handleUploadFile = useCallback(
