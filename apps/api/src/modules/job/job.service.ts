@@ -27,44 +27,26 @@ export class JobService {
     if (createJobDto.minAge > createJobDto.maxAge) {
       throw new BadRequestException('minAge is greater than maxAge')
     }
+
+    const { applicationDeadline } = createJobDto
     // for each shooting, if the start time is greater than the end time, throw error
     for (let i = 0; i < createJobDto.shooting.length; i++) {
-      if (
-        createJobDto.shooting[i].startTime > createJobDto.shooting[i].endTime &&
-        createJobDto.shooting[i].startDate === createJobDto.shooting[i].endDate
-      ) {
-        throw new BadRequestException(
-          'startTime is greater than endTime in the same day',
-        )
+      const { startTime, endTime, startDate, endDate } =
+        createJobDto.shooting[i]
+      if (startTime > endTime) {
+        throw new BadRequestException('startTime is greater than endTime')
       }
-      if (
-        createJobDto.shooting[i].startDate > createJobDto.shooting[i].endDate
-      ) {
+      if (startDate > endDate) {
         throw new BadRequestException('startDate is greater than endDate')
       }
-      if (
-        createJobDto.shooting[i].startDate < createJobDto.applicationDeadline
-      ) {
+      if (startDate < applicationDeadline) {
         throw new BadRequestException(
           'startDate is less than applicationDeadline',
         )
       }
     }
-    // actorCount is less than 1
-    if (createJobDto.actorCount < 1) {
-      throw new BadRequestException('actorCount is less than 1')
-    }
-    // minAge is less than 1
-    if (createJobDto.minAge < 1) {
-      throw new BadRequestException('minAge is less than 1')
-    }
-    // wage is less than 0
-    if (createJobDto.wage < 0) {
-      throw new BadRequestException('wage is less than 0')
-    }
-    const applicationDeadline = new Date(createJobDto.applicationDeadline)
     const now = new Date()
-    if (applicationDeadline < now) {
+    if (new Date(applicationDeadline) < now) {
       throw new BadRequestException('applicationDeadline is less than now')
     }
   }
