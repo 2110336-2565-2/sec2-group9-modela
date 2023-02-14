@@ -7,16 +7,25 @@ const castingSignupSchema = z
         required_error: 'กรุณากรอกอีเมล',
       })
       .email('รูปแบบอีเมลไม่ถูกต้อง'),
-    firstName: z.string({
-      required_error: 'กรุณากรอกชื่อ',
-    }),
+    firstName: z
+      .string({
+        required_error: 'กรุณากรอกชื่อ',
+      })
+      .trim()
+      .min(1, 'กรุณากรอกชื่อ'),
     middleName: z.optional(z.string()),
-    lastName: z.string({
-      required_error: 'กรุณากรอกนามสกุล',
-    }),
-    companyName: z.string({
-      required_error: 'กรุณากรอกสัญชาติ',
-    }),
+    lastName: z
+      .string({
+        required_error: 'กรุณากรอกนามสกุล',
+      })
+      .trim()
+      .min(1, 'กรุณากรอกนามสกุล'),
+    companyName: z
+      .string({
+        required_error: 'กรุณากรอกสัญชาติ',
+      })
+      .trim()
+      .min(1, 'กรุณากรอกสัญชาติ'),
     password: z.string({
       required_error: 'กรุณากรอกรหัสผ่าน',
     }),
