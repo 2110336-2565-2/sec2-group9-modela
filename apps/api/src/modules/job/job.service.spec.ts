@@ -81,7 +81,7 @@ describe('JobService', () => {
 
   describe('findAll', () => {
     //generate default where query
-    const minInt32 = -2147483647 //min int32
+    const minInt32 = -2147483648 //min int32
     const maxInt32 = 2147483647 //max int32
     const defaultWhere = {
       Shooting: undefined,

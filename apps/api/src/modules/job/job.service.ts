@@ -89,7 +89,7 @@ export class JobService {
     const defaultStartTime = new Date('1970-01-01T00:00:00Z')
     const defaultEndTime = new Date('1970-01-01T23:59:59Z')
 
-    const minInt32 = -2147483647 //min int32
+    const minInt32 = -2147483648 //min int32
     const maxInt32 = 2147483647 //max int32
     const defaultminAgeLte = maxInt32
     const defaultMaxAgeGte = minInt32
