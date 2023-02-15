@@ -22,12 +22,6 @@ const useJobListData = () => {
     async (state: IFilter) => {
       let newStatus = []
       let newGender = []
-      let wage: number | null
-      if (state.wage == null) {
-        wage = null
-      } else {
-        wage = state.wage
-      }
 
       if (state.openCheck) {
         newStatus.push('OPEN')
@@ -58,8 +52,8 @@ const useJobListData = () => {
           ? dayjs(state.startTime).toISOString()
           : null,
         endTime: state.endTime ? dayjs(state.endTime).toISOString() : null,
-        minWage: wage ? Number(state.wage) - Number(state.deviant) : null,
-        maxWage: wage ? Number(state.wage) + Number(state.deviant) : null,
+        minWage: state.wage ? Number(state.wage) - Number(state.deviant) : null,
+        maxWage: state.wage ? Number(state.wage) + Number(state.deviant) : null,
         status: newStatus,
         gender: newGender,
       })
