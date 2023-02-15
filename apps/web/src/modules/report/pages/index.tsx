@@ -27,7 +27,7 @@ const ReportPage = () => {
         <Link
           variant="body1"
           color="primary"
-          sx={{ cursor: 'pointer' }}
+          sx={{ cursor: 'pointer', wordBreak: 'break-word' }}
           href={`/job/${jid}`}
         >
           {jobName}
