@@ -117,7 +117,10 @@ const postJobSchema = z
       })
       .positive('กรุณากรอกอายุสูงสุดเป็นจำนวนเต็มบวก')
       .multipleOf(1, 'กรุณากรอกอายุสูงสุดเป็นจำนวนเต็มบวก'),
-    role: z.string({ required_error: 'กรุณากรอกบทบาท' }),
+    role: z
+      .string({ required_error: 'กรุณากรอกบทบาท' })
+      .trim()
+      .min(1, 'กรุณากรอกบทบาท'),
     shooting: z.array(shootingSchema),
   })
   .superRefine(({ minAge, maxAge }, ctx) => {
