@@ -1,4 +1,5 @@
 import { Gender } from '@modela/dtos'
+import { formatTime } from 'common/utils/formatter'
 import dayjs, { type Dayjs } from 'dayjs'
 import { z } from 'zod'
 
@@ -56,14 +57,18 @@ const shootingSchema = z
     }
   })
   .superRefine(({ startTime, endTime, startDate, endDate }, ctx) => {
-    if (startTime && endTime && startTime.isAfter(endTime)) {
+    if (
+      startTime &&
+      endTime &&
+      formatTime(startTime.toDate()) >= formatTime(endTime.toDate())
+    ) {
       ctx.addIssue({
         code: 'custom',
         path: ['endTime'],
         message: 'เวลาสิ้นสุดการถ่ายทำต้องอยู่หลังเวลาเริ่มต้น',
       })
     }
-    if (startDate && endDate && startDate.isAfter(endDate)) {
+    if (startDate && endDate && startDate.isAfter(endDate, 'D')) {
       ctx.addIssue({
         code: 'custom',
         path: ['endDate'],

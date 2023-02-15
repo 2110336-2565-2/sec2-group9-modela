@@ -9,12 +9,20 @@ export const fieldToPayload = (
   return {
     ...rest,
     applicationDeadline: applicationDeadline.toDate(),
-    shooting: shooting.map((shooting) => ({
-      ...shooting,
-      startDate: shooting.startDate.toDate(),
-      endDate: shooting.endDate.toDate(),
-      startTime: shooting.startTime.toDate(),
-      endTime: shooting.endTime.toDate(),
-    })),
+    shooting: shooting.map((shooting) => {
+      let endTime = shooting.endTime
+
+      if (endTime.isBefore(shooting.startTime)) {
+        endTime = endTime.add(1, 'day')
+      }
+
+      return {
+        ...shooting,
+        startDate: shooting.startDate.toDate(),
+        endDate: shooting.endDate.toDate(),
+        startTime: shooting.startTime.toDate(),
+        endTime: endTime.toDate(),
+      }
+    }),
   }
 }
