@@ -5,6 +5,9 @@ export const PageContainer = styled('div')`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  min-height: 100vh;
   background-color: #f5f5f5;
+  min-height: 100vh;
+  min-height: -moz-available;
+  min-height: -webkit-fill-available;
+  min-height: fill-available;
 `
