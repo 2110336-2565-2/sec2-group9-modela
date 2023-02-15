@@ -89,10 +89,10 @@ export class JobService {
     const defaultStartTime = new Date('1970-01-01T00:00:00Z')
     const defaultEndTime = new Date('1970-01-01T23:59:59Z')
 
-    const defaultminAgeLte = 999
-    const defaultMaxAgeGte = 0
-    const defaultMinWageGte = 0
-    const defaultMaxWageLte = 999999999
+    const defaultminAgeLte = Number.MAX_SAFE_INTEGER
+    const defaultMaxAgeGte = Number.MIN_SAFE_INTEGER
+    const defaultMinWageGte = Number.MIN_SAFE_INTEGER
+    const defaultMaxWageLte = Number.MAX_SAFE_INTEGER
 
     const params = {
       //take and skip from limit and page
@@ -169,14 +169,6 @@ export class JobService {
       }
     }
     //handle shooting query
-    console.log(
-      'shooting :',
-      searchJobDto.location,
-      searchJobDto.startDate,
-      searchJobDto.endDate,
-      searchJobDto.startTime,
-      searchJobDto.endTime,
-    )
     if (
       searchJobDto.location ||
       searchJobDto.startDate ||
@@ -184,14 +176,6 @@ export class JobService {
       searchJobDto.startTime ||
       searchJobDto.endTime
     ) {
-      console.log(
-        'shooting in if :',
-        searchJobDto.location,
-        searchJobDto.startDate,
-        searchJobDto.endDate,
-        searchJobDto.startTime,
-        searchJobDto.endTime,
-      )
       params.where.Shooting = {
         every: {
           startDate: {

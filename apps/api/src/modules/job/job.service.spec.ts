@@ -82,39 +82,22 @@ describe('JobService', () => {
   describe('findAll', () => {
     //generate default where query
     const defaultWhere = {
-      Shooting: {
-        every: {
-          endDate: {
-            lte: new Date('9999-12-31T23:59:59.000Z'),
-          },
-          endTime: {
-            lte: new Date('1970-01-01T23:59:59.000Z'),
-          },
-          startDate: {
-            gte: new Date('0001-01-01T00:00:00.000Z'),
-          },
-          startTime: {
-            gte: new Date('1970-01-01T00:00:00.000Z'),
-          },
-        },
-        some: {
-          shootingLocation: undefined,
-        },
-      },
+      Shooting: undefined,
+      title: undefined,
       castingId: undefined,
       gender: undefined,
       maxAge: {
-        gte: 0,
+        gte: Number.MIN_SAFE_INTEGER,
       },
       minAge: {
-        lte: 999,
+        lte: Number.MAX_SAFE_INTEGER,
       },
       status: {
         in: ['OPEN'],
       },
       wage: {
-        gte: 0,
-        lte: 999999999,
+        gte: Number.MIN_SAFE_INTEGER,
+        lte: Number.MAX_SAFE_INTEGER,
       },
     }
     //const for all findAll test
@@ -327,8 +310,8 @@ describe('JobService', () => {
 
         const thisWhere = defaultWhere
         thisWhere.wage = {
-          gte: 0,
-          lte: 999999999,
+          gte: Number.MIN_SAFE_INTEGER,
+          lte: Number.MAX_SAFE_INTEGER,
         }
         thisWhere.castingId = MOCK_CASTING_ID
         const prismaParams = {
