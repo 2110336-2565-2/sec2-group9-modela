@@ -16,7 +16,7 @@ const FilterMobileContainer = (props: FilterContainerProps) => {
           closeFilterPage()
         },
       }),
-      [],
+      [closeFilterPage],
     ),
   )
   return (
@@ -34,7 +34,12 @@ const FilterMobileContainer = (props: FilterContainerProps) => {
             closeFilterPage()
           }}
           variant="contained"
-          sx={{ borderRadius: '12px', width: '25vw', height: '5vh' }}
+          sx={{
+            borderRadius: '12px',
+            width: '100%',
+            maxWidth: '300px',
+            height: '5vh',
+          }}
         >
           ค้นหางาน
         </Button>

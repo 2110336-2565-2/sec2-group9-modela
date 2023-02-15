@@ -23,6 +23,7 @@ const JobCard = (prop: GetJobDto) => {
     status,
     title,
     wage,
+    jobId,
   } = prop
 
   const genderThai = genderTranslationMap[gender]
@@ -34,9 +35,18 @@ const JobCard = (prop: GetJobDto) => {
         companyName={companyName}
         castingImage={jobCastingImageUrl}
         status={status}
+        jobId={jobId}
+        isDetail
       />
       <CorporateRow>
-        <Typography variant="subtitle2" sx={{ color: 'rgba(0,0,0,0.6)' }}>
+        <Typography
+          variant="subtitle2"
+          sx={{
+            color: 'rgba(0,0,0,0.6)',
+            wordBreak: 'break-word',
+            whiteSpace: 'pre-line',
+          }}
+        >
           {description}
         </Typography>
       </CorporateRow>
@@ -50,7 +60,9 @@ const JobCard = (prop: GetJobDto) => {
         >
           รายละเอียดนักแสดงที่ต้องการ
         </Typography>
-        <Typography variant="subtitle2">บทบาทที่ต้องการ: {role}</Typography>
+        <Typography variant="subtitle2" sx={{ wordBreak: 'break-word' }}>
+          บทบาทที่ต้องการ: {role}
+        </Typography>
         <Typography variant="subtitle2">เพศ: {genderThai}</Typography>
         <Typography variant="subtitle2">จำนวนคนที่รับ: {actorCount}</Typography>
         <Typography variant="subtitle2">

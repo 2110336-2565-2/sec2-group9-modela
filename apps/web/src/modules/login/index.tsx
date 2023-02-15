@@ -51,7 +51,7 @@ const Login = () => {
           <Grid item xs={12} sm={12}>
             <Typography variant="subtitle1" sx={{ textAlign: 'center' }}>
               ยังไม่มีบัญชี ?{' '}
-              <Link href="/signup" passHref style={{ textDecoration: 'none' }}>
+              <Link href="/" passHref style={{ textDecoration: 'none' }}>
                 <Typography variant="subtitle1" color="primary" component="a">
                   ลงทะเบียน
                 </Typography>
