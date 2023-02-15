@@ -14,4 +14,5 @@ export const RootContainer = styled('form')`
     width: 95vw;
   }
   margin-bottom: 10vh;
+  background-color: ${({ theme }) => theme.palette.background.paper};
 `
