@@ -13,7 +13,7 @@ const NavbarDesktop = () => {
 
   return (
     <NavbarContainer>
-      <Link href="/">
+      <Link href="/" passHref style={{ display: 'flex' }}>
         <Image src={logo} alt="logo" width={108} height={48} />
       </Link>
       {menu.map(

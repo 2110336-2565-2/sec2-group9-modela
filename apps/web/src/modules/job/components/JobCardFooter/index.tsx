@@ -1,6 +1,6 @@
 import { Gender, JobStatus, UserType } from '@modela/dtos'
 import { EventBusy, Money, Person } from '@mui/icons-material'
-import { Tooltip, Typography } from '@mui/material'
+import { Button, Tooltip, Typography } from '@mui/material'
 import theme from 'common/config/theme'
 import { useUser } from 'common/context/UserContext'
 import { genderTranslationMap } from 'common/types/gender'
@@ -14,9 +14,11 @@ const JobCardFooter = (prop: FooterProps) => {
   const { actorCount, wage, status, dueDate, gender } = prop
   const { user } = useUser()
 
-  const apply = () => {
+  const apply: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault()
     window.alert('applied')
   }
+
   const genderThai = genderTranslationMap[gender]
 
   return (
@@ -77,14 +79,13 @@ const JobCardFooter = (prop: FooterProps) => {
         </SameDiv>
 
         {status === JobStatus.OPEN && user?.type === UserType.ACTOR && (
-          <Typography
-            variant="subtitle1"
+          <Button
             color="primary"
             sx={{ cursor: 'pointer', marginLeft: 'auto' }}
-            onClick={() => apply()}
+            onClick={apply}
           >
             สมัครงาน
-          </Typography>
+          </Button>
         )}
       </FooterRow>
     </>

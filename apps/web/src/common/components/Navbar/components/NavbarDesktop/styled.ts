@@ -11,6 +11,7 @@ export const NavbarContainer = styled('div')`
   display: flex;
   align-items: center;
   gap: min(50px, 3%);
+  box-shadow: ${({ theme }) => theme.shadows[3]};
 `
 
 export const NavbarItem = styled(Typography, {

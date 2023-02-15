@@ -1,8 +1,7 @@
 import { JobStatus, UserType } from '@modela/dtos'
 import { EditOutlined, ReportOutlined } from '@mui/icons-material'
-import { Tooltip, Typography } from '@mui/material'
+import { IconButton, Tooltip, Typography } from '@mui/material'
 import { useUser } from 'common/context/UserContext'
-import Link from 'next/link'
 import React from 'react'
 
 import { HeaderRow, ProfileImageContainer, TitleContainer } from './styled'
@@ -29,24 +28,16 @@ const JobCardHeader = (prop: HeaderProps) => {
       </TitleContainer>
       {user?.type === UserType.ACTOR && (
         <Tooltip title="Report job">
-          <Link
-            href={`/report/${jobId}`}
-            passHref
-            style={{ cursor: 'pointer', marginLeft: 'auto' }}
-          >
+          <IconButton href={`/report/${jobId}`}>
             <ReportOutlined fontSize="small" color="error" />
-          </Link>
+          </IconButton>
         </Tooltip>
       )}
       {user?.type === UserType.CASTING && status === JobStatus.OPEN && (
         <Tooltip title="Edit job">
-          <Link
-            href={`/job/${jobId}/edit`}
-            passHref
-            style={{ cursor: 'pointer', marginLeft: 'auto' }}
-          >
+          <IconButton href={`/job/${jobId}/edit`}>
             <EditOutlined fontSize="small" color="primary" />
-          </Link>
+          </IconButton>
         </Tooltip>
       )}
     </HeaderRow>

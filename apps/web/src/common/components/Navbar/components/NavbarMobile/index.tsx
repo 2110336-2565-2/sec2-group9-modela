@@ -27,7 +27,7 @@ const NavbarMobile = () => {
 
   return (
     <NavbarContainer>
-      <Link href="/">
+      <Link href="/" passHref style={{ display: 'flex' }}>
         <Image src={logo} alt="logo" width={67.5} height={30} />
       </Link>
       <div style={{ flexGrow: 1 }} />

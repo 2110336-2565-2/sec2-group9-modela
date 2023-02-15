@@ -2,7 +2,6 @@
 import { GetJobCardWithMaxPageDto } from '@modela/dtos'
 import { apiClient } from 'common/utils/api'
 import dayjs from 'dayjs'
-import { useRouter } from 'next/router'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { IFilter, initialIFilter, initialISearch, ISearch } from '../../types'
@@ -11,7 +10,6 @@ const useJobListData = () => {
   const [isOpen, setOpen] = useState(false)
   const [job, setJob] = useState<GetJobCardWithMaxPageDto>()
   const [hasMore, setHasMore] = useState(true)
-  const router = useRouter()
   const [page, setPage] = useState(0)
   const pageControl = useRef(1)
   const [search, setSearch] = useState<ISearch>(initialISearch)
@@ -98,10 +96,6 @@ const useJobListData = () => {
     }
   }, [page, search, setHasMore, setJob, setPage])
 
-  const createPostPage = useCallback(() => {
-    router.push('/job/post')
-  }, [router])
-
   useEffect(() => {
     if (!isOpen) {
       filterData(state)
@@ -123,7 +117,6 @@ const useJobListData = () => {
     hasMore,
     fetchData,
     filterData,
-    createPostPage,
     state,
     setState,
     isOpen,
