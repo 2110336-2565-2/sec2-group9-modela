@@ -58,7 +58,7 @@ export default class RootDocument extends NextDocument {
           <meta name="emotion-insertion-point" content="" />
           {(this.props as any).emotionStyleTags}
         </Head>
-        <body>
+        <body style={{ margin: '0px' }}>
           <Main />
           <NextScript />
         </body>
