@@ -26,7 +26,7 @@ const NavbarDesktop = () => {
               onClick={typeof href === 'undefined' ? onClick : undefined}
               key={idx}
               sx={{
-                pointerEvents: onClick ? 'auto' : 'none',
+                pointerEvents: onClick || href ? 'auto' : 'none',
               }}
             >
               {desktopIconOnly && icon}
