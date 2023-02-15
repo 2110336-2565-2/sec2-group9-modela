@@ -120,12 +120,13 @@ export default function FilterContainer(props: FilterContainerProps) {
         }}
       />
 
-      <Divider variant="middle" sx={{ width: '90%' }} />
+      <Divider sx={{ width: '100%' }} />
 
       <Typography variant="body1"> อายุนักแสดง </Typography>
       <TextField
         fullWidth
         type="number"
+        inputProps={{ min: 0 }}
         label="กรอกอายุนักแสดง"
         value={state.age}
         onChange={(event) => {
@@ -137,11 +138,12 @@ export default function FilterContainer(props: FilterContainerProps) {
         }}
       />
 
-      <Divider variant="middle" sx={{ width: '90%' }} />
+      <Divider sx={{ width: '100%' }} />
       <Typography variant="body1"> ค่าจ้าง </Typography>
       <TextField
         fullWidth
         type="number"
+        inputProps={{ min: 0 }}
         onChange={(event) => {
           if (event.target.value != '') {
             setState({ ...state, wage: Number(event.target.value) })
@@ -159,6 +161,7 @@ export default function FilterContainer(props: FilterContainerProps) {
       <TextField
         fullWidth
         type="number"
+        inputProps={{ min: 0 }}
         onChange={(event) => {
           if (event.target.value != '') {
             setState({ ...state, deviant: Number(event.target.value) })
@@ -170,7 +173,7 @@ export default function FilterContainer(props: FilterContainerProps) {
         placeholder="1000"
       />
 
-      <Divider variant="middle" sx={{ width: '90%' }} />
+      <Divider sx={{ width: '100%' }} />
       <Typography variant="body1"> สถานะการเปิดรับสมัคร </Typography>
       <FormGroup>
         <FormControlLabel
@@ -197,7 +200,7 @@ export default function FilterContainer(props: FilterContainerProps) {
         />
       </FormGroup>
 
-      <Divider variant="middle" sx={{ width: '90%' }} />
+      <Divider sx={{ width: '100%' }} />
       <Typography variant="body1"> เพศ </Typography>
       <FormGroup>
         <FormControlLabel

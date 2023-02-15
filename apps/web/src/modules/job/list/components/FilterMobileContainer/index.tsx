@@ -20,7 +20,9 @@ const FilterMobileContainer = (props: FilterContainerProps) => {
     ),
   )
   return (
-    <FIlterPage sx={{ display: isFilterShow ? 'flex' : 'none' }}>
+    <FIlterPage
+      sx={{ display: isFilterShow ? 'flex' : 'none', background: '#f5f5f5;' }}
+    >
       <FilterPageFilterBox>
         <FilterContainer
           state={state}
