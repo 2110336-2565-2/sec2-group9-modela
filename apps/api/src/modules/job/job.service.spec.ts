@@ -81,23 +81,25 @@ describe('JobService', () => {
 
   describe('findAll', () => {
     //generate default where query
+    const minInt32 = -2147483647 //min int32
+    const maxInt32 = 2147483647 //max int32
     const defaultWhere = {
       Shooting: undefined,
       title: undefined,
       castingId: undefined,
       gender: undefined,
       maxAge: {
-        gte: Number.MIN_SAFE_INTEGER,
+        gte: minInt32,
       },
       minAge: {
-        lte: Number.MAX_SAFE_INTEGER,
+        lte: maxInt32,
       },
       status: {
         in: ['OPEN'],
       },
       wage: {
-        gte: Number.MIN_SAFE_INTEGER,
-        lte: Number.MAX_SAFE_INTEGER,
+        gte: minInt32,
+        lte: maxInt32,
       },
     }
     //const for all findAll test
@@ -310,8 +312,8 @@ describe('JobService', () => {
 
         const thisWhere = defaultWhere
         thisWhere.wage = {
-          gte: Number.MIN_SAFE_INTEGER,
-          lte: Number.MAX_SAFE_INTEGER,
+          gte: minInt32,
+          lte: maxInt32,
         }
         thisWhere.castingId = MOCK_CASTING_ID
         const prismaParams = {

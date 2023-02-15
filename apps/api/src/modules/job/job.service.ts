@@ -89,10 +89,12 @@ export class JobService {
     const defaultStartTime = new Date('1970-01-01T00:00:00Z')
     const defaultEndTime = new Date('1970-01-01T23:59:59Z')
 
-    const defaultminAgeLte = Number.MAX_SAFE_INTEGER
-    const defaultMaxAgeGte = Number.MIN_SAFE_INTEGER
-    const defaultMinWageGte = Number.MIN_SAFE_INTEGER
-    const defaultMaxWageLte = Number.MAX_SAFE_INTEGER
+    const minInt32 = -2147483647 //min int32
+    const maxInt32 = 2147483647 //max int32
+    const defaultminAgeLte = maxInt32
+    const defaultMaxAgeGte = minInt32
+    const defaultMinWageGte = minInt32
+    const defaultMaxWageLte = maxInt32
 
     const params = {
       //take and skip from limit and page
@@ -176,6 +178,20 @@ export class JobService {
       searchJobDto.startTime ||
       searchJobDto.endTime
     ) {
+      //ignore millisecond (Timezone offset is considered as millisecond)
+      //assume that user will not search with millisecond and in database we don't have timezone
+
+      let queryStartTime = defaultStartTime
+      if (searchJobDto.startTime) {
+        queryStartTime = new Date(searchJobDto.startTime)
+        queryStartTime.setMilliseconds(0)
+      }
+      let queryEndTime = defaultEndTime
+      if (searchJobDto.endTime) {
+        queryEndTime = new Date(searchJobDto.endTime)
+        queryEndTime.setMilliseconds(0)
+      }
+
       params.where.Shooting = {
         every: {
           startDate: {
@@ -185,10 +201,10 @@ export class JobService {
             lte: searchJobDto.endDate || defaultEndDate,
           },
           startTime: {
-            gte: searchJobDto.startTime || defaultStartTime,
+            gte: queryStartTime,
           },
           endTime: {
-            lte: searchJobDto.endTime || defaultEndTime,
+            lte: queryEndTime,
           },
         },
         some: {
