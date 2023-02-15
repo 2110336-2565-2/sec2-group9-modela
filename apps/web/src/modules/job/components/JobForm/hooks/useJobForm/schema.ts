@@ -1,10 +1,14 @@
 import { Gender } from '@modela/dtos'
+import { formatTime } from 'common/utils/formatter'
 import dayjs, { type Dayjs } from 'dayjs'
 import { z } from 'zod'
 
 const shootingSchema = z
   .object({
-    shootingLocation: z.string({ required_error: 'กรุณากรอกสถานที่ถ่ายทำ' }),
+    shootingLocation: z
+      .string({ required_error: 'กรุณากรอกสถานที่ถ่ายทำ' })
+      .trim()
+      .min(1, 'กรุณากรอกสถานที่ถ่ายทำ'),
     startDate: z
       .instanceof(dayjs as unknown as typeof Dayjs, {
         message: 'กรุณากรอกวันที่เริ่มต้นการถ่ายทำ',
@@ -53,14 +57,18 @@ const shootingSchema = z
     }
   })
   .superRefine(({ startTime, endTime, startDate, endDate }, ctx) => {
-    if (startTime && endTime && startTime.isAfter(endTime)) {
+    if (
+      startTime &&
+      endTime &&
+      formatTime(startTime.toDate()) >= formatTime(endTime.toDate())
+    ) {
       ctx.addIssue({
         code: 'custom',
         path: ['endTime'],
         message: 'เวลาสิ้นสุดการถ่ายทำต้องอยู่หลังเวลาเริ่มต้น',
       })
     }
-    if (startDate && endDate && startDate.isAfter(endDate)) {
+    if (startDate && endDate && startDate.isAfter(endDate, 'D')) {
       ctx.addIssue({
         code: 'custom',
         path: ['endDate'],
@@ -71,8 +79,14 @@ const shootingSchema = z
 
 const postJobSchema = z
   .object({
-    title: z.string({ required_error: 'กรุณากรอกตำแหน่งงาน' }),
-    description: z.string({ required_error: 'กรุณากรอกรายละเอียดงาน' }),
+    title: z
+      .string({ required_error: 'กรุณากรอกตำแหน่งงาน' })
+      .trim()
+      .min(1, 'กรุณากรอกตำแหน่งงาน'),
+    description: z
+      .string({ required_error: 'กรุณากรอกรายละเอียดงาน' })
+      .trim()
+      .min(1, 'กรุณากรอกรายละเอียดงาน'),
     applicationDeadline: z
       .instanceof(dayjs as unknown as typeof Dayjs, {
         message: 'กรุณากรอกวันปิดรับสมัคร',
@@ -108,7 +122,10 @@ const postJobSchema = z
       })
       .positive('กรุณากรอกอายุสูงสุดเป็นจำนวนเต็มบวก')
       .multipleOf(1, 'กรุณากรอกอายุสูงสุดเป็นจำนวนเต็มบวก'),
-    role: z.string({ required_error: 'กรุณากรอกบทบาท' }),
+    role: z
+      .string({ required_error: 'กรุณากรอกบทบาท' })
+      .trim()
+      .min(1, 'กรุณากรอกบทบาท'),
     shooting: z.array(shootingSchema),
   })
   .superRefine(({ minAge, maxAge }, ctx) => {

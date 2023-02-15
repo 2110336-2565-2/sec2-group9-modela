@@ -67,6 +67,9 @@ const FormController = <T extends FieldValues>(
                     )
                   }
                   type="number"
+                  InputProps={{
+                    inputProps,
+                  }}
                   {...inputProps}
                 />
               )

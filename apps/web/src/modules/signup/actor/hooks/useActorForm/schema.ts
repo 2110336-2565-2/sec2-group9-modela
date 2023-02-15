@@ -8,16 +8,25 @@ const actorSignupSchema = z
         required_error: 'กรุณากรอกอีเมล',
       })
       .email('รูปแบบอีเมลไม่ถูกต้อง'),
-    firstName: z.string({
-      required_error: 'กรุณากรอกชื่อ',
-    }),
+    firstName: z
+      .string({
+        required_error: 'กรุณากรอกชื่อ',
+      })
+      .trim()
+      .min(1, 'กรุณากรอกชื่อ'),
     middleName: z.optional(z.string()),
-    lastName: z.string({
-      required_error: 'กรุณากรอกนามสกุล',
-    }),
-    nationality: z.string({
-      required_error: 'กรุณากรอกสัญชาติ',
-    }),
+    lastName: z
+      .string({
+        required_error: 'กรุณากรอกนามสกุล',
+      })
+      .trim()
+      .min(1, 'กรุณากรอกนามสกุล'),
+    nationality: z
+      .string({
+        required_error: 'กรุณากรอกสัญชาติ',
+      })
+      .trim()
+      .min(1, 'กรุณากรอกสัญชาติ'),
     password: z.string({
       required_error: 'กรุณากรอกรหัสผ่าน',
     }),
@@ -33,9 +42,12 @@ const actorSignupSchema = z
         'รูปแบบเบอร์โทรศัพท์ไม่ถูกต้อง',
       ),
     gender: z.nativeEnum(Gender),
-    prefix: z.string({
-      required_error: 'กรุณากรอกคำนำหน้าชื่อ',
-    }),
+    prefix: z
+      .string({
+        required_error: 'กรุณากรอกคำนำหน้าชื่อ',
+      })
+      .trim()
+      .min(1, 'กรุณากรอกคำนำหน้าชื่อ'),
     ssn: z
       .string({
         required_error: 'กรุณากรอกเลขบัตรประชาชน / เลขพาสปอร์ต',

@@ -1,5 +1,6 @@
 import { Drawer, Typography } from '@mui/material'
 import { useLayout } from 'common/context/LayoutContext'
+import Link from 'next/link'
 import React from 'react'
 
 import useNavMenu from '../../hooks/useNavMenu'
@@ -19,7 +20,7 @@ const NavbarMenu = ({ isOpen, onClose }: NavbarMenuProps) => {
       PaperProps={{ sx: { borderRadius: '12px 12px 0 0' } }}
     >
       <NavbarProfile />
-      {menu.map(({ label, icon, onClick, focusKey }, idx) => {
+      {menu.map(({ label, icon, onClick, focusKey, href }, idx) => {
         if (label === 'divider') return null
         return (
           <MenuItem
@@ -31,7 +32,19 @@ const NavbarMenu = ({ isOpen, onClose }: NavbarMenuProps) => {
             }}
           >
             {icon}
-            <Typography variant="subtitle2"> {label}</Typography>
+            <Typography variant="subtitle2">
+              {typeof href !== 'undefined' ? (
+                <Link
+                  href={href}
+                  passHref
+                  style={{ color: 'inherit', textDecoration: 'none' }}
+                >
+                  {label}
+                </Link>
+              ) : (
+                <>{label}</>
+              )}
+            </Typography>
           </MenuItem>
         )
       })}
