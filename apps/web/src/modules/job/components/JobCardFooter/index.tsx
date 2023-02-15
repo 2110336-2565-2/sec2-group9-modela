@@ -14,9 +14,11 @@ const JobCardFooter = (prop: FooterProps) => {
   const { actorCount, wage, status, dueDate, gender } = prop
   const { user } = useUser()
 
-  const apply = () => {
+  const apply: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault()
     window.alert('applied')
   }
+
   const genderThai = genderTranslationMap[gender]
 
   return (
@@ -80,7 +82,7 @@ const JobCardFooter = (prop: FooterProps) => {
           <Button
             color="primary"
             sx={{ cursor: 'pointer', marginLeft: 'auto' }}
-            onClick={() => apply()}
+            onClick={apply}
           >
             สมัครงาน
           </Button>
