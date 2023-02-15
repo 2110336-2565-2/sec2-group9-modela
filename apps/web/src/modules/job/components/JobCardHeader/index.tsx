@@ -28,14 +28,20 @@ const JobCardHeader = (prop: HeaderProps) => {
       </TitleContainer>
       {user?.type === UserType.ACTOR && (
         <Tooltip title="Report job">
-          <IconButton href={`/report/${jobId}`}>
+          <IconButton
+            href={`/report/${jobId}`}
+            onClick={(ev) => ev.stopPropagation()}
+          >
             <ReportOutlined fontSize="small" color="error" />
           </IconButton>
         </Tooltip>
       )}
       {user?.type === UserType.CASTING && status === JobStatus.OPEN && (
         <Tooltip title="Edit job">
-          <IconButton href={`/job/${jobId}/edit`}>
+          <IconButton
+            href={`/job/${jobId}/edit`}
+            onClick={(ev) => ev.stopPropagation()}
+          >
             <EditOutlined fontSize="small" color="primary" />
           </IconButton>
         </Tooltip>

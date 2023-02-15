@@ -3,7 +3,7 @@ import { styled } from '@mui/material'
 export const RootContainer = styled('form')`
   display: flex;
   flex-direction: column;
-  width: 35vw;
+  width: 40vw;
   border-radius: 10px;
   padding: 12px;
   gap: 12px;
