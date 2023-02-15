@@ -30,7 +30,7 @@ const useNavMenu = (isMobile: boolean) => {
     () => [
       {
         label: 'สร้างงาน',
-        onClick: () => router.push('/job/post'),
+        href: '/job/post',
         icon: <PostAddOutlined />,
         mobileOnly: true,
         focusKey: 'createJob',
@@ -38,13 +38,13 @@ const useNavMenu = (isMobile: boolean) => {
       },
       {
         label: 'งานของฉัน',
-        onClick: () => router.push(''),
+        href: '/',
         icon: <ArticleOutlined />,
         focusKey: 'jobs',
       },
       {
         label: 'การแจ้งเตือน',
-        onClick: () => router.push(''),
+        href: '/',
         icon: <NotificationsNoneOutlined />,
         focusKey: 'notification',
       },
@@ -56,7 +56,7 @@ const useNavMenu = (isMobile: boolean) => {
       },
       {
         label: 'โปรไฟล์',
-        onClick: () => router.push(''),
+        href: '/',
         icon: <AccountCircleOutlined />,
         focusKey: 'profile',
       },
@@ -76,14 +76,14 @@ const useNavMenu = (isMobile: boolean) => {
       },
       {
         label: 'เข้าสู่ระบบ',
-        onClick: () => router.push('/login'),
+        href: '/login',
         icon: <LoginOutlined />,
         allowNotVerified: true,
         onlyNotLoggedIn: true,
         desktopIconOnly: true,
       },
     ],
-    [handleLogout, router, user?.firstName],
+    [handleLogout, user?.firstName],
   )
 
   const getMenuByUser = useCallback(() => {

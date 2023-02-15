@@ -16,23 +16,35 @@ const NavbarDesktop = () => {
       <Link href="/">
         <Image src={logo} alt="logo" width={108} height={48} />
       </Link>
-      {menu.map(({ label, onClick, focusKey, icon, desktopIconOnly }, idx) => {
-        if (label === 'divider')
-          return <div style={{ flexGrow: 1 }} key={idx} />
-        return (
-          <NavbarItem
-            focus={!!focusKey && navbarFocus === focusKey}
-            onClick={onClick}
-            key={idx}
-            sx={{
-              pointerEvents: onClick ? 'auto' : 'none',
-            }}
-          >
-            {desktopIconOnly && icon}
-            {label}
-          </NavbarItem>
-        )
-      })}
+      {menu.map(
+        ({ label, onClick, focusKey, icon, desktopIconOnly, href }, idx) => {
+          if (label === 'divider')
+            return <div style={{ flexGrow: 1 }} key={idx} />
+          return (
+            <NavbarItem
+              focus={!!focusKey && navbarFocus === focusKey}
+              onClick={typeof href === 'undefined' ? onClick : undefined}
+              key={idx}
+              sx={{
+                pointerEvents: onClick ? 'auto' : 'none',
+              }}
+            >
+              {desktopIconOnly && icon}
+              {typeof href !== 'undefined' ? (
+                <Link
+                  href={href}
+                  passHref
+                  style={{ color: 'inherit', textDecoration: 'none' }}
+                >
+                  {label}
+                </Link>
+              ) : (
+                <>{label}</>
+              )}
+            </NavbarItem>
+          )
+        },
+      )}
     </NavbarContainer>
   )
 }
