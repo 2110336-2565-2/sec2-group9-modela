@@ -38,7 +38,6 @@ const useJobListData = () => {
       if (state.otherCheck) {
         newGender.push('OTHER')
       }
-
       setSearch({
         ...search,
         title: state.title,
@@ -52,8 +51,14 @@ const useJobListData = () => {
           ? dayjs(state.startTime).toISOString()
           : null,
         endTime: state.endTime ? dayjs(state.endTime).toISOString() : null,
-        minWage: state.wage ? Number(state.wage) - Number(state.deviant) : null,
-        maxWage: state.wage ? Number(state.wage) + Number(state.deviant) : null,
+        minWage:
+          state.wage || state.wage === 0
+            ? Number(state.wage) - Number(state.deviant)
+            : null,
+        maxWage:
+          state.wage || state.wage === 0
+            ? Number(state.wage) + Number(state.deviant)
+            : null,
         status: newStatus,
         gender: newGender,
       })
