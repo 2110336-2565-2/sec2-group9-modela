@@ -19,7 +19,6 @@ export enum SearchJobStatus {
   'CLOSE' = 'CLOSE',
 }
 
-const minInt32 = -2147483648 //min int32
 const maxInt32 = 2147483647 //max int32
 export class SearchJobDto {
   @IsOptional()
@@ -78,7 +77,7 @@ export class SearchJobDto {
   @IsOptional()
   @Type(() => Number)
   @IsNumber()
-  @Min(minInt32)
+  @Min(0)
   @Max(maxInt32)
   @ApiPropertyOptional()
   age?: number
@@ -86,7 +85,7 @@ export class SearchJobDto {
   @IsOptional()
   @Type(() => Number)
   @IsNumber()
-  @Min(minInt32)
+  @Min(0)
   @Max(maxInt32)
   @ApiPropertyOptional()
   minWage?: number
@@ -94,7 +93,7 @@ export class SearchJobDto {
   @IsOptional()
   @Type(() => Number)
   @IsNumber()
-  @Min(minInt32)
+  @Min(0)
   @Max(maxInt32)
   @ApiPropertyOptional()
   maxWage?: number

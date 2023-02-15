@@ -81,7 +81,6 @@ describe('JobService', () => {
 
   describe('findAll', () => {
     //generate default where query
-    const minInt32 = -2147483648 //min int32
     const maxInt32 = 2147483647 //max int32
     const defaultWhere = {
       Shooting: undefined,
@@ -89,7 +88,7 @@ describe('JobService', () => {
       castingId: undefined,
       gender: undefined,
       maxAge: {
-        gte: minInt32,
+        gte: 0,
       },
       minAge: {
         lte: maxInt32,
@@ -98,7 +97,7 @@ describe('JobService', () => {
         in: ['OPEN'],
       },
       wage: {
-        gte: minInt32,
+        gte: 0,
         lte: maxInt32,
       },
     }
@@ -312,7 +311,7 @@ describe('JobService', () => {
 
         const thisWhere = defaultWhere
         thisWhere.wage = {
-          gte: minInt32,
+          gte: 0,
           lte: maxInt32,
         }
         thisWhere.castingId = MOCK_CASTING_ID
