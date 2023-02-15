@@ -55,7 +55,7 @@ export const initialISearch: ISearch = {
   location: null,
   startTime: null,
   endTime: null,
-  minWage: 0,
+  minWage: null,
   maxWage: null,
   age: null,
   status: [],
