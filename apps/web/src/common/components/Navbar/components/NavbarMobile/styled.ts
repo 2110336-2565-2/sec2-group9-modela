@@ -12,6 +12,7 @@ export const NavbarContainer = styled('div')`
   align-items: center;
   gap: 24px;
   color: white;
+  box-shadow: ${({ theme }) => theme.shadows[3]};
 `
 
 export const LoginButton = styled('div')`
