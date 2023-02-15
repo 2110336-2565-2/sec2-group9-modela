@@ -26,7 +26,6 @@ const JobList = () => {
     hasMore,
     fetchData,
     filterData,
-    createPostPage,
     state,
     setState,
     isOpen,
@@ -116,7 +115,7 @@ const JobList = () => {
         >
           {user?.type === UserType.CASTING && (
             <Button
-              onClick={createPostPage}
+              href="/job/post"
               variant="contained"
               sx={{
                 borderRadius: '12px',
@@ -127,7 +126,7 @@ const JobList = () => {
               }}
               startIcon={<Add />}
             >
-              สร้างโพสต์
+              สร้างงาน
             </Button>
           )}
           <FilterContainer
