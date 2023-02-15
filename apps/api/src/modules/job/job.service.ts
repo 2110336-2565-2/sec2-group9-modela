@@ -71,10 +71,11 @@ export class JobService {
     const defaultStartTime = new Date('1970-01-01T00:00:00Z')
     const defaultEndTime = new Date('1970-01-01T23:59:59Z')
 
-    const defaultminAgeLte = 999
+    const maxInt32 = 2147483647 //max int32
+    const defaultminAgeLte = maxInt32
     const defaultMaxAgeGte = 0
     const defaultMinWageGte = 0
-    const defaultMaxWageLte = 999999999
+    const defaultMaxWageLte = maxInt32
 
     const params = {
       //take and skip from limit and page
@@ -83,25 +84,7 @@ export class JobService {
       //filtering
       where: {
         //job always have shooting
-        Shooting: {
-          every: {
-            startDate: {
-              gte: searchJobDto.startDate || defaultStartDate,
-            },
-            endDate: {
-              lte: searchJobDto.endDate || defaultEndDate,
-            },
-            startTime: {
-              gte: searchJobDto.startTime || defaultStartTime,
-            },
-            endTime: {
-              lte: searchJobDto.endTime || defaultEndTime,
-            },
-          },
-          some: {
-            shootingLocation: undefined,
-          },
-        },
+        Shooting: undefined,
 
         title: undefined,
         minAge: {
@@ -170,12 +153,48 @@ export class JobService {
         }
       }
     }
-    //handle location substring query
-    if (searchJobDto.location) {
-      params.where.Shooting.some = {
-        shootingLocation: {
-          contains: searchJobDto.location,
-          mode: 'insensitive',
+    //handle shooting query
+    if (
+      searchJobDto.location ||
+      searchJobDto.startDate ||
+      searchJobDto.endDate ||
+      searchJobDto.startTime ||
+      searchJobDto.endTime
+    ) {
+      //ignore millisecond (Timezone offset is considered as millisecond)
+      //assume that user will not search with millisecond and in database we don't have timezone
+
+      let queryStartTime = defaultStartTime
+      if (searchJobDto.startTime) {
+        queryStartTime = new Date(searchJobDto.startTime)
+        queryStartTime.setMilliseconds(0)
+      }
+      let queryEndTime = defaultEndTime
+      if (searchJobDto.endTime) {
+        queryEndTime = new Date(searchJobDto.endTime)
+        queryEndTime.setMilliseconds(0)
+      }
+
+      params.where.Shooting = {
+        every: {
+          startDate: {
+            gte: searchJobDto.startDate || defaultStartDate,
+          },
+          endDate: {
+            lte: searchJobDto.endDate || defaultEndDate,
+          },
+          startTime: {
+            gte: queryStartTime,
+          },
+          endTime: {
+            lte: queryEndTime,
+          },
+        },
+        some: {
+          shootingLocation: {
+            contains: searchJobDto.location,
+            mode: 'insensitive',
+          },
         },
       }
     }

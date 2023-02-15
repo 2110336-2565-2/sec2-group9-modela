@@ -19,15 +19,16 @@ export enum SearchJobStatus {
   'CLOSE' = 'CLOSE',
 }
 
+const maxInt32 = 2147483647 //max int32
 export class SearchJobDto {
   @IsOptional()
   @Type(() => Number)
   @IsNumber()
   @Min(1)
   @Max(20)
-  @ApiPropertyOptional({
+  @ApiPropertyOptional({ 
     default: 20,
-  }) //Will set default again in job.service.ts
+  }) //Only for test in swagger, will set default again in job.service.ts
   limit: number
 
   @IsOptional()
@@ -36,7 +37,7 @@ export class SearchJobDto {
   @Min(1)
   @ApiPropertyOptional({
     default: 1,
-  }) //Will set default again in job.service.ts
+  }) //Only for test in swagger, Will set default again in job.service.ts
   page: number
 
   @IsOptional()
@@ -76,18 +77,24 @@ export class SearchJobDto {
   @IsOptional()
   @Type(() => Number)
   @IsNumber()
+  @Min(0)
+  @Max(maxInt32)
   @ApiPropertyOptional()
   age?: number
 
   @IsOptional()
   @Type(() => Number)
   @IsNumber()
+  @Min(0)
+  @Max(maxInt32)
   @ApiPropertyOptional()
   minWage?: number
 
   @IsOptional()
   @Type(() => Number)
   @IsNumber()
+  @Min(0)
+  @Max(maxInt32)
   @ApiPropertyOptional()
   maxWage?: number
 
