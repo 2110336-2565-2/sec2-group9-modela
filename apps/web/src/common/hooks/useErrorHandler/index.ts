@@ -22,8 +22,6 @@ export const useErrorHandler = () => {
       if (error.response) {
         const { data, status } = error.response
 
-        console.log(status)
-        console.log(status === 401)
         if (status === 400) {
           showError?.(overrideMessage?.[400] || 'กรุณากรอกข้อมูลให้ถูกต้อง')
         } else if (status === 401) {
