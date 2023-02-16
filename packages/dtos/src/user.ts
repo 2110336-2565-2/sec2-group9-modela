@@ -22,4 +22,7 @@ export class GetUserDto implements Partial<User & Casting> {
 
   @ApiProperty()
   companyName?: string
+
+  @ApiProperty()
+  userId: number
 }

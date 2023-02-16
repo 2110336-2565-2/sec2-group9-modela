@@ -24,6 +24,7 @@ export class UserService {
       profileImageUrl,
       isVerified,
       type,
+      userId,
     }
 
     const company = await this.repository.getCastingById(userId)
