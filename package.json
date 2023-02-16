@@ -13,7 +13,7 @@
     "test:cov": "turbo run test:cov",
     "lib:build": "turbo run lib:build",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "prepare": "husky install"
+    "postinstall": "husky install && pnpm lib:build"
   },
   "dependencies": {
     "@modela/database": "workspace:*",
