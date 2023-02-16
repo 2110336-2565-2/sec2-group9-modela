@@ -257,7 +257,8 @@ export class JobService {
         "You don't have permission to update this job",
       )
     }
-
+    if (job.status !== JobStatus.OPEN)
+      throw new BadRequestException("You can't update job that is not open.")
     this.validateJobDto(updateJobDto)
     return this.repository.updateJob(id, updateJobDto)
   }
