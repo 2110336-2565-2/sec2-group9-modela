@@ -258,7 +258,7 @@ export class JobService {
       )
     }
     if (job.status !== JobStatus.OPEN)
-      throw new BadRequestException("You can't update job that is not open.")
+      throw new ForbiddenException("You can't update job that is not open.")
     this.validateJobDto(updateJobDto)
     return this.repository.updateJob(id, updateJobDto)
   }
