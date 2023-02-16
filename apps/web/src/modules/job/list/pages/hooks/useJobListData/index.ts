@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { GetJobCardWithMaxPageDto } from '@modela/dtos'
+import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
 import dayjs from 'dayjs'
 import { useCallback, useEffect, useRef, useState } from 'react'
@@ -16,6 +17,8 @@ const useJobListData = () => {
   const [state, setState] = useState<IFilter>(initialIFilter)
   const open = useCallback(() => setOpen(true), [])
   const close = useCallback(() => setOpen(false), [])
+  const { handleError } = useErrorHandler()
+
   const filterData = useCallback(
     async (state: IFilter) => {
       let newStatus = []
@@ -91,8 +94,8 @@ const useJobListData = () => {
         setHasMore(res.maxPage > page)
       }
       setPage((prev) => prev + 1)
-    } catch (e) {
-      console.log(e)
+    } catch (err) {
+      handleError(err)
     }
   }, [page, search, setHasMore, setJob, setPage])
 

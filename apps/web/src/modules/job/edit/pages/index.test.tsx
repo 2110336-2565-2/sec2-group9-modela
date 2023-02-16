@@ -6,7 +6,6 @@ import {
   mockAndSpyMany,
   mockUser,
 } from 'common/utils/testing'
-import { mockRouter } from 'common/utils/testing/mockRouter'
 import React from 'react'
 
 describe('<EditPage />', () => {
@@ -20,8 +19,6 @@ describe('<EditPage />', () => {
   const JobFormSpy = mockAndSpy('modules/job/components/JobForm')
 
   mockUser(UserType.CASTING)
-
-  mockRouter()
 
   const { default: EditPage } = require('.') as typeof import('.')
 

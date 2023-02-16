@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SignupActorDto } from '@modela/dtos'
 import { useUser } from 'common/context/UserContext'
+import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
 import { useRouter } from 'next/router'
 import {
@@ -17,6 +18,7 @@ import { actorSignupSchema, IActorSignupSchemaType } from './schema'
 const useActorForm = () => {
   const router = useRouter()
   const { refetch } = useUser()
+  const { handleError } = useErrorHandler()
 
   const { register, handleSubmit, control, setValue, getValues, setError } =
     useForm<IActorSignupSchemaType>({
@@ -44,12 +46,12 @@ const useActorForm = () => {
         await refetch()
         router.push('/job')
       } catch (err) {
-        console.log(err)
+        handleError(err, { 409: 'อีเมลนี้ถูกใช้ไปแล้ว' })
       } finally {
         setLoading(false)
       }
     },
-    [refetch, router],
+    [handleError, refetch, router],
   )
 
   const handleUploadFile = useCallback(

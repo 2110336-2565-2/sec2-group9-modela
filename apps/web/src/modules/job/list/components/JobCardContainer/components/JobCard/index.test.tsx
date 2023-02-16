@@ -1,7 +1,6 @@
 import { GetJobCardDto, mock } from '@modela/dtos'
 import { render } from '@testing-library/react'
 import { mockAndSpy } from 'common/utils/testing'
-import { mockRouter } from 'common/utils/testing/mockRouter'
 import React from 'react'
 
 describe('<JobCard/>', () => {
@@ -10,8 +9,6 @@ describe('<JobCard/>', () => {
     companyName: mock('casting').get().companyName,
     jobCastingImageUrl: mock('user').get().profileImageUrl || '',
   }
-
-  mockRouter()
 
   const jobCardFooterMock = mockAndSpy('modules/job/components/JobCardFooter')
   const jobCardHeaderMock = mockAndSpy('modules/job/components/JobCardHeader')

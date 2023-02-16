@@ -25,7 +25,7 @@ module.exports = {
     ),
   },
   // Add more setup options before each test is run
-  // setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  setupFilesAfterEnv: ['<rootDir>/__mock__/jest.setup.js'],
   testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
   testEnvironment: 'jsdom',
   transform: {
@@ -48,7 +48,7 @@ module.exports = {
       },
     ],
     '^.+\\.(png|jpg|jpeg|gif|webp|avif|ico|bmp|svg)$':
-      '<rootDir>/fileTransform.js',
+      '<rootDir>/__mock__/fileTransform.js',
   },
   transformIgnorePatterns: [
     '/node_modules/',
