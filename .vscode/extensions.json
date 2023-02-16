@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "wix.vscode-import-cost",
+    "VisualStudioExptTeam.vscodeintellicode",
+    "formulahendry.auto-rename-tag",
+    "naumovs.color-highlight",
+    "usernamehw.errorlens",
+    "eamodio.gitlens",
+    "firsttris.vscode-jest-runner",
+    "ecmel.vscode-html-css",
+    "styled-components.vscode-styled-components"
+  ]
+}

@@ -1,7 +1,15 @@
+let withBundleAnalyzer = (obj) => obj
+
+if (process.env.ANALYZE === 'true') {
+  withBundleAnalyzer = require('@next/bundle-analyzer')({
+    enabled: true,
+  })
+}
+
 /**
  * @type {import('next').NextConfig}
  */
-module.exports = {
+module.exports = withBundleAnalyzer({
   images: {
     domains: ['cloudflare-ipfs.com'],
   },
@@ -14,7 +22,8 @@ module.exports = {
   },
   webpack: (config) => {
     Object.assign(config.resolve.alias, {
-      '@nestjs/swagger': '@modela/swagger-utils',
+      '@nestjs/swagger': '@modela/frontend-optimizer',
+      '@faker-js/faker': '@modela/frontend-optimizer',
     })
 
     return config
@@ -28,4 +37,4 @@ module.exports = {
       },
     ]
   },
-}
+})
