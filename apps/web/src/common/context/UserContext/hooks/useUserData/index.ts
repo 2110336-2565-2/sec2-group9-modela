@@ -1,21 +1,25 @@
 import { GetUserDto } from '@modela/dtos'
+import { AxiosError } from 'axios'
+import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
 import React, { useCallback, useEffect } from 'react'
 
 const useUserData = () => {
   const [user, setUser] = React.useState<GetUserDto | null>(null)
   const [isLoading, setLoading] = React.useState(true)
+  const { handleError } = useErrorHandler()
 
   const refetch = useCallback(async () => {
     try {
       const res = await apiClient.get<GetUserDto>('/user/me')
       setUser(res.data)
-    } catch (e) {
-      // TODO handle error
-      console.log(e)
+    } catch (err) {
+      if ((err as AxiosError).response?.status !== 401) {
+        handleError(err)
+      }
     }
     setLoading(false)
-  }, [])
+  }, [handleError])
 
   const reset = useCallback(() => {
     setUser(null)

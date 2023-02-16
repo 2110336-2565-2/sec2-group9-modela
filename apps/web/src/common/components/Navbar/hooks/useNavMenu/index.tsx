@@ -8,6 +8,7 @@ import {
   PostAddOutlined,
 } from '@mui/icons-material'
 import { useUser } from 'common/context/UserContext'
+import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
 import { useRouter } from 'next/router'
 import { useCallback, useMemo } from 'react'
@@ -15,6 +16,7 @@ import { useCallback, useMemo } from 'react'
 const useNavMenu = (isMobile: boolean) => {
   const router = useRouter()
   const { user, reset } = useUser()
+  const { handleError } = useErrorHandler()
 
   const handleLogout = useCallback(async () => {
     try {
@@ -22,9 +24,9 @@ const useNavMenu = (isMobile: boolean) => {
       reset()
       router.push('/login')
     } catch (err) {
-      console.log(err)
+      handleError(err)
     }
-  }, [reset, router])
+  }, [handleError, reset, router])
 
   const VERIFIED_MENU = useMemo(
     () => [
