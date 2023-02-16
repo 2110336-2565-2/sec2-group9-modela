@@ -10,5 +10,6 @@ export {
   ApplicationStatus,
   JobStatus,
   Gender,
+  mock,
+  getBaseMock,
 } from '@modela/database'
-export { mock, getBaseMock } from '@modela/database'

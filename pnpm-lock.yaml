@@ -8,7 +8,7 @@ importers:
       '@commitlint/config-conventional': ^17.4.2
       '@modela/database': workspace:*
       '@modela/dtos': workspace:*
-      '@modela/swagger-utils': workspace:*
+      '@modela/frontend-optimizer': workspace:*
       eslint-config-custom: workspace:*
       husky: ^8.0.3
       lint-staged: ^13.1.0
@@ -18,7 +18,7 @@ importers:
     dependencies:
       '@modela/database': link:packages/database
       '@modela/dtos': link:packages/dtos
-      '@modela/swagger-utils': link:packages/swagger-utils
+      '@modela/frontend-optimizer': link:packages/frontend-optimizer
     devDependencies:
       '@commitlint/cli': 17.4.2
       '@commitlint/config-conventional': 17.4.2
@@ -133,7 +133,7 @@ importers:
       '@emotion/styled': ^11.10.5
       '@hookform/resolvers': ^2.9.10
       '@modela/dtos': workspace:*
-      '@modela/swagger-utils': workspace:*
+      '@modela/frontend-optimizer': workspace:*
       '@mui/icons-material': ^5.11.0
       '@mui/material': ^5.11.4
       '@mui/x-date-pickers': ^5.0.17
@@ -185,7 +185,7 @@ importers:
     devDependencies:
       '@babel/core': 7.20.12
       '@babel/runtime': 7.20.13
-      '@modela/swagger-utils': link:../../packages/swagger-utils
+      '@modela/frontend-optimizer': link:../../packages/frontend-optimizer
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
       '@types/jest': 29.2.4
@@ -265,7 +265,7 @@ importers:
       eslint-plugin-simple-import-sort: 9.0.0_eslint@7.32.0
       typescript: 4.9.4
 
-  packages/swagger-utils:
+  packages/frontend-optimizer:
     specifiers:
       tsconfig: workspace:*
       typescript: ^4.9.5

@@ -18,7 +18,7 @@
   "dependencies": {
     "@modela/database": "workspace:*",
     "@modela/dtos": "workspace:*",
-    "@modela/swagger-utils": "workspace:*"
+    "@modela/frontend-optimizer": "workspace:*"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.2",

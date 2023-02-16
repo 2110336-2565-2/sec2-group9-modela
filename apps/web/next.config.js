@@ -14,7 +14,8 @@ module.exports = {
   },
   webpack: (config) => {
     Object.assign(config.resolve.alias, {
-      '@nestjs/swagger': '@modela/swagger-utils',
+      '@nestjs/swagger': '@modela/frontend-optimizer',
+      '@faker-js/faker': '@modela/frontend-optimizer',
     })
 
     return config
