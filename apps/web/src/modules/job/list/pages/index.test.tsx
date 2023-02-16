@@ -1,8 +1,14 @@
 import { GetJobCardWithMaxPageDto, mock, UserType } from '@modela/dtos'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { fireEvent, render, waitFor } from '@testing-library/react'
-import { mockAndSpy, mockApiClient, mockUser } from 'common/utils/testing'
+import { render, waitFor } from '@testing-library/react'
+import {
+  expectToBeCalledWith,
+  mockAndSpy,
+  mockAndSpyMany,
+  mockApiClient,
+  mockUser,
+} from 'common/utils/testing'
 import { mockRouter } from 'common/utils/testing/mockRouter'
 import React from 'react'
 
@@ -13,6 +19,7 @@ describe('<JobListlPage />', () => {
   const JobCardContainerMock = mockAndSpy(
     'modules/job/list/components/JobCardContainer',
   )
+  const [ButtonSpy] = mockAndSpyMany('@mui/material', ['Button'])
   const { mockGetReturn } = mockApiClient()
   const mockData: GetJobCardWithMaxPageDto = {
     maxPage: 1,
@@ -62,15 +69,14 @@ describe('<JobListlPage />', () => {
       })
     })
     it('should call page correctly when button is click', async () => {
-      const { getByText } = render(
+      render(
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <JobListPage />
         </LocalizationProvider>,
       )
-      const createJobPostButton = getByText('สร้างโพสต์')
-      fireEvent.click(createJobPostButton)
-      expect(createJobPostButton).toBeDefined()
-      expect(createPostPageSpy).toHaveBeenCalled()
+      expectToBeCalledWith(ButtonSpy, {
+        href: '/job/post',
+      })
     })
   })
 })

@@ -618,6 +618,7 @@ describe('JobService', () => {
           .mockResolvedValue({ jobId: result.jobId })
 
         const newId = 98094832
+
         jest.spyOn(repository, 'getJobById').mockResolvedValue(null)
 
         MOCK_JOB.title = MOCK_UPDATED_TITLE

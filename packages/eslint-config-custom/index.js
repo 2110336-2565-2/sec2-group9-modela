@@ -11,9 +11,8 @@ module.exports = {
     'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error',
     '@typescript-eslint/no-unused-vars': 'error',
-    '@next/next/no-html-link-for-pages': 'off',
-    'react/jsx-key': 'off',
     'turbo/no-undeclared-env-vars': 'off',
+    'no-unused-vars': 'off',
   },
   env: {
     jest: true,
