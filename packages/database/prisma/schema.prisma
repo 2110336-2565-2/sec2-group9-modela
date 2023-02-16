@@ -1,0 +1,189 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Example {
+  id   Int    @id @default(autoincrement())
+  name String
+}
+
+model User {
+  userId     Int      @id @default(autoincrement())
+  email      String   @unique
+  password   String
+  type       UserType
+  isVerified Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  // basic info
+  profileImageUrl String?
+  phoneNumber     String?
+  bankName        String?
+  bankAccount     String?
+  firstName       String
+  middleName      String?
+  lastName        String
+
+  Actor        Actor?
+  Casting      Casting?
+  Report       Report[]
+  Notification Notification[]
+}
+
+enum UserType {
+  ACTOR
+  CASTING
+  ADMIN
+}
+
+model Actor {
+  actorId           Int       @id
+  idCardImageUrl    String
+  age               Int?
+  prefix            String?
+  nickname          String?
+  nationality       String?
+  ssn               String?
+  gender            Gender?
+  ethnicity         String?
+  birthDate         DateTime?
+  religion          String?
+  description       String?
+  hairColor         String?
+  eyeColor          String?
+  height            Float?
+  weight            Float?
+  bust              Float?
+  waist             Float?
+  hips              Float?
+  shoeSize          Int?
+  skinShade         String?
+  bodyModifications String?
+
+  User        User          @relation(fields: [actorId], references: [userId])
+  Resume      Resume[]
+  Application Application[]
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+  ANY
+}
+
+model Casting {
+  castingId         Int    @id
+  User              User   @relation(fields: [castingId], references: [userId])
+  companyName       String
+  companyId         String
+  employmentCertUrl String
+  Job               Job[]
+}
+
+model Resume {
+  resumeId  Int    @id @default(autoincrement())
+  name      String
+  actorId   Int
+  resumeUrl String
+
+  Actor       Actor         @relation(fields: [actorId], references: [actorId])
+  Application Application[]
+}
+
+model Job {
+  jobId               Int       @id @default(autoincrement())
+  castingId           Int
+  title               String
+  description         String
+  status              JobStatus
+  role                String
+  minAge              Int
+  maxAge              Int
+  gender              Gender
+  actorCount          Int
+  wage                Int
+  applicationDeadline DateTime
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  Casting     Casting       @relation(fields: [castingId], references: [castingId])
+  Application Application[]
+  Report      Report[]
+  Shooting    Shooting[]
+}
+
+model Shooting {
+  shootingId       Int      @id @default(autoincrement())
+  jobId            Int
+  shootingLocation String
+  startDate        DateTime @db.Date
+  endDate          DateTime @db.Date
+  startTime        DateTime @db.Time
+  endTime          DateTime @db.Time
+
+  Job Job @relation(fields: [jobId], references: [jobId])
+}
+
+enum JobStatus {
+  OPEN
+  SELECTING
+  SELECTION_ENDED
+  FINISHED
+  CANCELLED
+}
+
+model Application {
+  applicationId Int               @id @default(autoincrement())
+  jobId         Int
+  actorId       Int
+  resumeId      Int
+  status        ApplicationStatus
+  createdAt     DateTime          @default(now())
+
+  Job    Job    @relation(fields: [jobId], references: [jobId])
+  Actor  Actor  @relation(fields: [actorId], references: [actorId])
+  Resume Resume @relation(fields: [resumeId], references: [resumeId])
+}
+
+enum ApplicationStatus {
+  PENDING
+  OFFER_SENT
+  REJECTED
+  OFFER_ACCEPTED
+  OFFER_REJECTED
+}
+
+model Report {
+  reportId   Int      @id @default(autoincrement())
+  reporterId Int
+  jobId      Int
+  reason     String
+  createdAt  DateTime @default(now())
+
+  User User @relation(fields: [reporterId], references: [userId])
+  Job  Job  @relation(fields: [jobId], references: [jobId])
+}
+
+model Notification {
+  notificationId Int      @id @default(autoincrement())
+  userId         Int
+  message        String
+  link           String
+  isRead         Boolean  @default(false)
+  createdAt      DateTime @default(now())
+
+  User User @relation(fields: [userId], references: [userId])
+}

@@ -11,6 +11,7 @@ coverage
 # next.js
 .next/
 out/
+dist/
 build
 
 # misc
@@ -24,6 +25,7 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # local env files
+.env
 .env.local
 .env.development.local
 .env.test.local

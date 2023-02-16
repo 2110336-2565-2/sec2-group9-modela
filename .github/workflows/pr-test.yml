@@ -1,0 +1,43 @@
+name: Build on pull request
+
+on:
+  pull_request:
+    branches:
+      - main
+      - beta
+
+permissions:
+  actions: read
+  checks: read
+  contents: write
+  deployments: read
+  issues: write
+  discussions: read
+  packages: write
+  pull-requests: write
+  repository-projects: write
+  security-events: read
+  statuses: write
+
+jobs:
+  build-test:
+    strategy:
+      matrix:
+        node-version: [16.x]
+        platform: [ubuntu-latest]
+      
+    uses: ./.github/workflows/reusable-ci.yml
+    with:
+      target: build
+      runs-on: ${{ matrix.platform }}
+
+  coverage-test:
+    strategy:
+      matrix:
+        node-version: [16.x]
+        platform: [ubuntu-latest]
+    
+    uses: ./.github/workflows/reusable-ci.yml
+    with:
+      target: test
+      runs-on: ${{ matrix.platform }}

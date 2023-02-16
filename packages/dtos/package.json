@@ -1,0 +1,25 @@
+{
+  "name": "@modela/dtos",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.js",
+  "scripts": {
+    "lib:build": "tsc --build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@modela/database": "workspace:*",
+    "@nestjs/common": "^9.0.0",
+    "@nestjs/swagger": "^6.1.4",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.0",
+    "reflect-metadata": "^0.1.13"
+  },
+  "devDependencies": {
+    "tsconfig": "workspace:*",
+    "typescript": "^4.7.4"
+  }
+}

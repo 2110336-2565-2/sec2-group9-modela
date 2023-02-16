@@ -2,13 +2,21 @@
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^lib:build", "^build"],
       "outputs": ["dist/**", ".next/**"]
     },
     "lint": {
       "outputs": []
     },
     "dev": {
+      "cache": false
+    },
+    "test:cov": {
+      "dependsOn": ["^lib:build"],
+      "cache": false
+    },
+    "lib:build": {
+      "dependsOn": ["^lib:build"],
       "cache": false
     }
   }
