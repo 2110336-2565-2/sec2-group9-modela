@@ -1,7 +1,15 @@
+let withBundleAnalyzer = (obj) => obj
+
+if (process.env.ANALYZE === 'true') {
+  withBundleAnalyzer = require('@next/bundle-analyzer')({
+    enabled: true,
+  })
+}
+
 /**
  * @type {import('next').NextConfig}
  */
-module.exports = {
+module.exports = withBundleAnalyzer({
   images: {
     domains: ['cloudflare-ipfs.com'],
   },
@@ -29,4 +37,4 @@ module.exports = {
       },
     ]
   },
-}
+})
