@@ -11,6 +11,7 @@ describe('useErrorHandler()', () => {
       displaySnackbar: displaySnackbarSpy,
     }),
   }))
+  jest.dontMock('common/hooks/useErrorHandler')
 
   const { useErrorHandler } = require('.') as typeof import('.')
 

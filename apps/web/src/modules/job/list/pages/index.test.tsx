@@ -9,12 +9,10 @@ import {
   mockApiClient,
   mockUser,
 } from 'common/utils/testing'
-import { mockRouter } from 'common/utils/testing/mockRouter'
 import React from 'react'
 
 describe('<JobListlPage />', () => {
   const { mockUserType, mockVerify } = mockUser()
-  mockRouter()
 
   const JobCardContainerMock = mockAndSpy(
     'modules/job/list/components/JobCardContainer',
