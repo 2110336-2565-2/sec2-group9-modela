@@ -29,13 +29,14 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.0",
-    "zod": "^3.20.2",
-    "react-infinite-scroller": "^1.2.6"
+    "react-infinite-scroller": "^1.2.6",
+    "zod": "^3.20.2"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "@babel/runtime": "^7.20.13",
     "@modela/frontend-optimizer": "workspace:*",
+    "@next/bundle-analyzer": "^13.1.6",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@types/jest": "29.2.4",
