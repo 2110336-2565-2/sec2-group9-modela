@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material'
-import Image from 'next/image'
+import ProfileImage from 'common/components/ProfileImage'
 import React from 'react'
 
 import { HeaderRow } from './styled'
@@ -10,7 +10,7 @@ export default function Header(prop: HeaderProps) {
 
   return (
     <HeaderRow>
-      <Image src={castingImage} height={40} width={40} alt="casting pic" />
+      <ProfileImage src={castingImage} firstName="HelloWorld" userId={123} />
       <div>
         <Typography variant="h6">{title}</Typography>
         <Typography variant="body1">{companyName}</Typography>
