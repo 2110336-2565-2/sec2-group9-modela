@@ -126,7 +126,7 @@ export class JobService {
         JobStatus.SELECTION_ENDED,
         JobStatus.FINISHED,
       )
-      if (user.type != UserType.ACTOR) {
+      if (user.type !== UserType.ACTOR) {
         statusQuery.push(JobStatus.CANCELLED)
       }
     }
@@ -243,7 +243,7 @@ export class JobService {
 
     if (!job) throw new NotFoundException()
 
-    if (user.type == UserType.CASTING && user.userId != job.castingId)
+    if (user.type === UserType.CASTING && user.userId !== job.castingId)
       throw new ForbiddenException()
 
     return job

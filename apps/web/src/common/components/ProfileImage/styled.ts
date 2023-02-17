@@ -1,4 +1,4 @@
-import { styled } from '@mui/system'
+import { styled } from '@mui/material'
 
 export const ProfileImageContainer = styled('div')`
   border-radius: 50%;
