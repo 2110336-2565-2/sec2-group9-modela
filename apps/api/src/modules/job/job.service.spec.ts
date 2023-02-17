@@ -66,6 +66,7 @@ function createValidJobWithID(userId: number, jobId: number) {
     companyName: 'test',
     jobCastingImageUrl: 'test',
     status: JobStatus.OPEN,
+    castingName: 'test',
   }
   return MOCK_JOB
 }
@@ -127,6 +128,7 @@ describe('JobService', () => {
           ...mock('job').omit(['jobId']).get(),
           ...mock('casting').pick(['companyName']).get(),
           jobCastingImageUrl: userData.profileImageUrl,
+          castingName: mock('user').get().firstName,
         }
       },
     )
@@ -215,26 +217,32 @@ describe('JobService', () => {
       const itMockedJobDataNotEqualCastingId = Array.from(
         { length: Math.ceil(jobDataLength / 2) },
         (v, i) => {
-          const userData = mock('user').pick(['profileImageUrl']).get()
+          const userData = mock('user')
+            .pick(['profileImageUrl', 'firstName'])
+            .get()
           return {
             jobId: i + Math.floor(jobDataLength / 2) + 1,
             ...mock('job').omit(['jobId']).get(),
             castingId: MOCK_CASTING_ID + 1,
             ...mock('casting').pick(['companyName']).get(),
             jobCastingImageUrl: userData.profileImageUrl,
+            castingName: userData.firstName,
           }
         },
       )
       const itMockedJobData = Array.from(
         { length: Math.floor(jobDataLength / 2) },
         (v, i) => {
-          const userData = mock('user').pick(['profileImageUrl']).get()
+          const userData = mock('user')
+            .pick(['profileImageUrl', 'firstName'])
+            .get()
           return {
             jobId: i + 1,
             ...mock('job').omit(['jobId']).get(),
             castingId: MOCK_CASTING_ID,
             ...mock('casting').pick(['companyName']).get(),
             jobCastingImageUrl: userData.profileImageUrl,
+            castingName: userData.firstName,
           }
         },
       ).concat(itMockedJobDataNotEqualCastingId)
@@ -342,6 +350,7 @@ describe('JobService', () => {
       shooting: mock('shooting').get(3),
       companyName: mock('casting').get().companyName,
       jobCastingImageUrl: mock('user').get().profileImageUrl,
+      castingName: mock('user').get().firstName,
     }
 
     const MOCK_USER = {
@@ -353,11 +362,8 @@ describe('JobService', () => {
       it('should get job by id successfully', async () => {
         jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_JOB)
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { castingId, ...result } = MOCK_JOB
-
         await expect(service.findOne(MOCK_JOB_ID, MOCK_USER)).resolves.toEqual(
-          result,
+          MOCK_JOB,
         )
         expect(repository.getJobById).toBeCalledWith(MOCK_JOB_ID)
       })

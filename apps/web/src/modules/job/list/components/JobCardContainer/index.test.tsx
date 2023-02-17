@@ -11,6 +11,7 @@ describe('<JobCardContainer/>', () => {
       .map((job) => ({
         companyName: mock('casting').get().companyName,
         jobCastingImageUrl: mock('user').get().profileImageUrl || '',
+        castingName: mock('user').get().firstName,
         ...job,
       })),
   }

@@ -26,7 +26,7 @@ export class SearchJobDto {
   @IsNumber()
   @Min(1)
   @Max(20)
-  @ApiPropertyOptional({ 
+  @ApiPropertyOptional({
     default: 20,
   }) //Only for test in swagger, will set default again in job.service.ts
   limit: number
@@ -218,6 +218,12 @@ export class GetJobCardDto extends OmitType(EditJobDto, [
   jobCastingImageUrl: string
 
   @ApiProperty()
+  castingId: number
+
+  @ApiProperty()
+  castingName: string
+
+  @ApiProperty()
   status: JobStatus
 }
 
@@ -241,6 +247,12 @@ export class GetJobDto extends EditJobDto {
 
   @ApiProperty()
   status: JobStatus
+
+  @ApiProperty()
+  castingId: number
+
+  @ApiProperty()
+  castingName: string
 }
 
 export class JobIdDto {

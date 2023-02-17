@@ -1,21 +1,34 @@
 import { JobStatus, UserType } from '@modela/dtos'
 import { EditOutlined, ReportOutlined } from '@mui/icons-material'
 import { IconButton, Tooltip, Typography } from '@mui/material'
+import ProfileImage from 'common/components/ProfileImage'
 import { useUser } from 'common/context/UserContext'
 import React from 'react'
 
-import { HeaderRow, ProfileImageContainer, TitleContainer } from './styled'
+import { HeaderRow, TitleContainer } from './styled'
 import { HeaderProps } from './types'
 
 const JobCardHeader = (prop: HeaderProps) => {
-  const { castingImage, companyName, title, status, jobId, isDetail } = prop
+  const {
+    jobCastingImageUrl,
+    companyName,
+    title,
+    status,
+    jobId,
+    isDetail,
+    castingId,
+    castingName,
+  } = prop
   const { user } = useUser()
 
   return (
     <HeaderRow>
-      <ProfileImageContainer>
-        <img src={castingImage} alt="casting pic" width="100%" height="100%" />
-      </ProfileImageContainer>
+      <ProfileImage
+        src={jobCastingImageUrl}
+        firstName={castingName}
+        userId={castingId}
+        sx={{ marginTop: '4px' }}
+      />
       <TitleContainer>
         <Typography variant="h6" sx={{ wordBreak: 'break-word' }}>
           {!isDetail &&
