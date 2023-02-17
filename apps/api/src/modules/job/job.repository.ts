@@ -91,6 +91,8 @@ export class JobRepository {
       wage: job.wage,
       applicationDeadline: job.applicationDeadline,
       jobCastingImageUrl: job.Casting.User.profileImageUrl,
+      castingId: job.castingId,
+      castingName: job.Casting.User.firstName,
     }))
     return selectedFields
   }
@@ -118,6 +120,7 @@ export class JobRepository {
       shooting: Shooting,
       companyName: Casting.companyName,
       jobCastingImageUrl: Casting.User.profileImageUrl,
+      castingName: Casting.User.firstName,
     }
   }
 }

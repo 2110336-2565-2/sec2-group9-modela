@@ -207,6 +207,7 @@ export class JobService {
     }
     return params
   }
+
   async findAll(searchJobDto: SearchJobDto, user: JwtDto) {
     //set Default value for limit and page
     searchJobDto.limit = searchJobDto.limit || 20
@@ -242,11 +243,10 @@ export class JobService {
 
     if (!job) throw new NotFoundException()
 
-    const { castingId, ...jobDetail } = job
-    if (user.type == UserType.CASTING && user.userId != castingId)
+    if (user.type == UserType.CASTING && user.userId != job.castingId)
       throw new ForbiddenException()
 
-    return jobDetail
+    return job
   }
 
   async update(id: number, updateJobDto: EditJobDto, userId: number) {
