@@ -8,6 +8,7 @@ describe('<JobCard/>', () => {
     ...mock('job').get(),
     companyName: mock('casting').get().companyName,
     jobCastingImageUrl: mock('user').get().profileImageUrl || '',
+    castingName: mock('user').get().firstName,
   }
 
   const jobCardFooterMock = mockAndSpy('modules/job/components/JobCardFooter')

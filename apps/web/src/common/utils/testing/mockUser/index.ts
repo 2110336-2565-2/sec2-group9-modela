@@ -5,6 +5,7 @@ export const mockUser = (
   isVerified: boolean = true,
 ) => {
   const MOCK_USER = {
+    userId: 1,
     firstName: 'Ayaka',
     middleName: '<3',
     lastName: 'Kamisato',

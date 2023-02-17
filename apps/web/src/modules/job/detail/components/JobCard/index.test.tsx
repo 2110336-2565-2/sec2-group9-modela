@@ -10,6 +10,7 @@ describe('<JobCard />', () => {
     companyName: mock('casting').get().companyName,
     jobCastingImageUrl: mock('user').get().profileImageUrl || '',
     shooting: mock('shooting').get(2),
+    castingName: mock('user').get().firstName,
   }
 
   mockRouter(true, { jobId: 1 })

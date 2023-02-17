@@ -16,6 +16,7 @@ describe('<JobDetailPage />', () => {
     companyName: mock('casting').get().companyName,
     jobCastingImageUrl: mock('user').get().profileImageUrl || '',
     shooting: mock('shooting').get(1),
+    castingName: mock('user').get().firstName,
   }
 
   const { default: JobDetailPage } = require('.') as typeof import('.')

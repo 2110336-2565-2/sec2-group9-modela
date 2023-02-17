@@ -10,10 +10,13 @@ describe('<JobCardHeader />', () => {
   const MOCK_CASTING_IMAGE = mock('user').get().profileImageUrl || ''
   const MOCK_STATUS = JobStatus.OPEN
   const headerProps = {
-    castingImage: MOCK_CASTING_IMAGE,
+    jobId: 1,
+    jobCastingImageUrl: MOCK_CASTING_IMAGE,
     companyName: MOCK_COMPANY_NAME,
     title: MOCK_TITLE,
     status: MOCK_STATUS,
+    castingId: 1,
+    castingName: mock('user').get().firstName,
   }
   const { mockUserType } = mockUser()
 
