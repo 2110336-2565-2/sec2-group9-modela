@@ -7,7 +7,7 @@ import { getRandomColor } from './utils/getRandomColor'
 
 const ProfileImage = ({ src, userId, firstName, sx }: ProfileImageProps) => {
   const backgroundColor = getRandomColor(userId)
-  console.log(backgroundColor)
+  console.log({ backgroundColor, src })
 
   return (
     <ProfileImageContainer sx={{ backgroundColor, ...sx }}>
