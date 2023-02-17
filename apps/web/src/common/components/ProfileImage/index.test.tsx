@@ -19,7 +19,7 @@ describe('<ProfileImage />', () => {
       it('should render ProfileImage correctly', () => {
         render(<ProfileImage {...defaultProps} />)
 
-        // TODO: expect image to be rendered ater changed to next image
+        // TODO: expect image to be rendered after changed to next image
       })
     })
   })
