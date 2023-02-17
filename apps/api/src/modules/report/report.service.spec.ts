@@ -45,6 +45,7 @@ describe('ReportService', () => {
       shooting: mock('shooting').get(3),
       companyName: mock('casting').get().companyName,
       jobCastingImageUrl: mock('user').get().profileImageUrl,
+      castingName: mock('user').get().firstName,
     }
 
     it('should post report correctly', async () => {
