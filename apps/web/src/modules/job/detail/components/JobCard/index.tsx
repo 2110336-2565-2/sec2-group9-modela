@@ -11,8 +11,6 @@ import { CardContainer, CorporateRow, DescriptionRow } from './styled'
 const JobCard = (prop: GetJobDto) => {
   const {
     actorCount,
-    jobCastingImageUrl,
-    companyName,
     description,
     gender,
     minAge,
@@ -20,24 +18,16 @@ const JobCard = (prop: GetJobDto) => {
     applicationDeadline,
     role,
     shooting,
-    status,
-    title,
     wage,
-    jobId,
+    status,
+    ...headerProps
   } = prop
 
   const genderThai = genderTranslationMap[gender]
 
   return (
     <CardContainer>
-      <JobCardHeader
-        title={title}
-        companyName={companyName}
-        castingImage={jobCastingImageUrl}
-        status={status}
-        jobId={jobId}
-        isDetail
-      />
+      <JobCardHeader {...headerProps} status={status} isDetail />
       <CorporateRow>
         <Typography
           variant="subtitle2"
