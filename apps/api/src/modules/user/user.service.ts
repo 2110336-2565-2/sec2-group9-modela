@@ -4,7 +4,10 @@ import {
   UserUpdateVerificationStatus,
 } from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
-import { BadRequestException } from '@nestjs/common/exceptions'
+import {
+  BadRequestException,
+  NotFoundException,
+} from '@nestjs/common/exceptions'
 
 import { UserRepository } from './user.repository'
 
@@ -39,6 +42,10 @@ export class UserService {
     userId: number,
     updateUserVerificationDto: UpdateUserVerificationDto,
   ): Promise<GetUserDto> {
+    //check if user exist
+    const user = await this.repository.getUserById(userId)
+    if (!user) throw new NotFoundException()
+
     //accept user
     if (
       updateUserVerificationDto.status === UserUpdateVerificationStatus.ACCEPT
