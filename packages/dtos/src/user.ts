@@ -44,36 +44,20 @@ export class UpdateUserVerificationDto {
   reason?: string
 }
 
-export class PendingUserDto implements Partial<User & Actor & Casting> {
-  @ApiProperty()
-  userId: number
-
-  @ApiProperty()
-  firstName: string
-
-  @ApiProperty()
-  middleName?: string
-
-  @ApiProperty()
-  lastName: string
-
+export class PendingUserDto {
   @ApiProperty()
   type: UserType
 
-  //casting fields
   @ApiProperty()
-  companyName?: string
-
-  @ApiProperty()
-  companyId?: string;
-
-  @ApiProperty()
-  employmentCertUrl?: string;
-
-  //actor fields
-  @ApiProperty()
-  idCardImageUrl?: string;
-
-  @ApiProperty()
-  ssn?: string;
+  data: {
+    userId: number;
+    firstName: string;
+    middleName?: string;
+    lastName: string;
+    companyName?: string;
+    companyId?: string;
+    employmentCertUrl?: string;
+    idCardImageUrl?: string;
+    ssn?: string;
+  }
 }

@@ -47,26 +47,27 @@ export class UserRepository {
         Casting: true,
         Actor: true,
       },
-      //TODO: filter ??????????????????
     })
     const pendingUsers: PendingUserDto[] = []
     for (let i = 0; i < users.length; i++) {
       const user = users[i]
       const aPendingUser = {
-        userId: user.userId,
-        firstName: user.firstName,
-        middleName: user.middleName,
-        lastName: user.lastName,
-        type: user.Casting ? UserType.CASTING : UserType.ACTOR, //TODO: does we need to verify admin?
-        ...(user.Casting && {
-          companyName: user.Casting.companyName,
-          companyId: user.Casting.companyId,
-          employmentCertUrl: user.Casting.employmentCertUrl,
-        }),
-        ...(user.Actor && {
-          idCardImageUrl: user.Actor.idCardImageUrl,
-          ssn: user.Actor.ssn,
-        }),
+        type: user.Casting ? UserType.CASTING : UserType.ACTOR,
+        data: {
+          userId: user.userId,
+          firstName: user.firstName,
+          middleName: user.middleName,
+          lastName: user.lastName,
+          ...(user.Casting && {
+            companyName: user.Casting.companyName,
+            companyId: user.Casting.companyId,
+            employmentCertUrl: user.Casting.employmentCertUrl,
+          }),
+          ...(user.Actor && {
+            idCardImageUrl: user.Actor.idCardImageUrl,
+            ssn: user.Actor.ssn,
+          }),
+        },
       }
       pendingUsers.push(aPendingUser)
     }
