@@ -38,6 +38,15 @@ export class UserService {
     return userData
   }
 
+  async getPendingUsers(): Promise<GetUserDto[]> {
+    const params = {
+      where: {
+        isVerified: false,
+      },
+    }
+    const users = await this.repository.getUsers(params)
+    return users
+  }
   async updateUserVerification(
     userId: number,
     updateUserVerificationDto: UpdateUserVerificationDto,

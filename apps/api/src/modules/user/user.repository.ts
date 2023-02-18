@@ -1,4 +1,4 @@
-import { Casting, User } from '@modela/database'
+import { Casting, Prisma, User } from '@modela/database'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
 
@@ -15,6 +15,18 @@ export class UserRepository {
   async getCastingById(castingId: number): Promise<Casting> {
     return await this.prisma.casting.findUnique({
       where: { castingId },
+    })
+  }
+
+  async getUsers(params: {
+    skip?: number
+    take?: number
+    cursor?: Prisma.UserWhereUniqueInput
+    where?: Prisma.UserWhereInput
+    orderBy?: Prisma.UserOrderByWithRelationInput
+  }): Promise<User[]> {
+    return await this.prisma.user.findMany({
+      ...params,
     })
   }
 

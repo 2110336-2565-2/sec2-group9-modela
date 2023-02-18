@@ -34,6 +34,14 @@ export class UserController {
     return this.userService.getUserData(user.userId)
   }
 
+  @Get('pending')
+  @UseTypeAuthGuard(UserType.ADMIN)
+  @ApiOperation({ summary: 'get all user pending for admin' })
+  @ApiOkResponse({ type: GetUserDto, isArray: true })
+  getPendingUser() {
+    return this.userService.getPendingUsers()
+  }
+
   @Put(':id/verification')
   @UseTypeAuthGuard(UserType.ADMIN)
   @ApiOperation({ summary: 'accept or reject user with id' })
