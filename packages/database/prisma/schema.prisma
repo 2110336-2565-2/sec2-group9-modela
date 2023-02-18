@@ -20,12 +20,13 @@ model Example {
 }
 
 model User {
-  userId     Int      @id @default(autoincrement())
-  email      String   @unique
-  password   String
-  type       UserType
-  isVerified Boolean  @default(false)
-  createdAt  DateTime @default(now())
+  userId    Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  type      UserType
+  createdAt DateTime @default(now())
+
+  status UserStatus @default(PENDING)
 
   // basic info
   profileImageUrl String?
@@ -40,6 +41,12 @@ model User {
   Casting      Casting?
   Report       Report[]
   Notification Notification[]
+}
+
+enum UserStatus {
+  ACCEPTED
+  PENDING
+  REJECTED
 }
 
 enum UserType {
