@@ -1,7 +1,8 @@
 import { UserType } from '@modela/database'
-import { GetAppliedActorDto } from '@modela/dtos'
+import { GetAppliedActorDto, JwtDto } from '@modela/dtos'
 import { Controller, Get, Param } from '@nestjs/common'
 import {
+  ApiForbiddenResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -9,6 +10,7 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
 import { UseTypeAuthGuard } from 'src/modules/auth/misc/jwt.decorator'
+import { User } from 'src/modules/auth/misc/user.decorator'
 
 import { ApplicationService } from './application.service'
 
@@ -23,7 +25,10 @@ export class ApplicationController {
   @ApiOkResponse({ type: GetAppliedActorDto })
   @ApiUnauthorizedResponse({ description: 'User is not login' })
   @ApiNotFoundResponse({ description: 'Job not found' })
-  findOne(@Param('id') id: string) {
-    return this.applicationService.findByJobId(+id)
+  @ApiForbiddenResponse({
+    description: 'User is not Casting or User is not the owner of this job',
+  })
+  findOne(@Param('id') id: string, @User() user: JwtDto) {
+    return this.applicationService.findByJobId(+id, user.userId)
   }
 }

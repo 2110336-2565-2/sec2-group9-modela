@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { GetAppliedActorDto } from '@modela/dtos'
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common'
 
 import { JobRepository } from '../job.repository'
 import { ApplicationRepository } from './application.repository'
@@ -10,10 +15,13 @@ export class ApplicationService {
     private jobRepository: JobRepository,
   ) {}
 
-  async findByJobId(id: number) {
-    if (!(await this.jobRepository.getJobById(id)))
-      throw new NotFoundException('Job not found')
+  async findByJobId(id: number, userId: number): Promise<GetAppliedActorDto> {
+    const job = await this.jobRepository.getJobById(id)
 
-    return this.repository.getApplicationByJobId(id)
+    if (!job) throw new NotFoundException('Job not found')
+    if (job.castingId !== userId)
+      throw new ForbiddenException('User is not the owner of this job')
+
+    return { actors: await this.repository.getApplicationByJobId(id) }
   }
 }
