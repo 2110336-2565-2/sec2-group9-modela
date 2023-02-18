@@ -17,6 +17,7 @@ export class ApplicationRepository {
                 firstName: true,
                 middleName: true,
                 lastName: true,
+                profileImageUrl: true,
               },
             },
           },

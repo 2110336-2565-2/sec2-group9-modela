@@ -16,6 +16,9 @@ export class ActorDto implements Partial<Actor & User & Resume> {
 
   @ApiProperty()
   resumeId: number
+
+  @ApiProperty()
+  profileImageUrl?: string
 }
 
 export class GetAppliedActorDto {
