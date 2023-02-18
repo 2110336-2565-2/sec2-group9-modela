@@ -12,8 +12,9 @@ Table User {
   email String [unique, not null]
   password String [not null]
   type UserType [not null]
-  isVerified Boolean [not null, default: false]
   createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  status UserStatus [not null, default: 'PENDING']
   profileImageUrl String
   phoneNumber String
   bankName String
@@ -21,6 +22,7 @@ Table User {
   firstName String [not null]
   middleName String
   lastName String [not null]
+  description String
   Actor Actor
   Casting Casting
   Report Report [not null]
@@ -39,7 +41,6 @@ Table Actor {
   ethnicity String
   birthDate DateTime
   religion String
-  description String
   hairColor String
   eyeColor String
   height Float
@@ -49,7 +50,6 @@ Table Actor {
   hips Float
   shoeSize Int
   skinShade String
-  bodyModifications String
   User User [not null]
   Resume Resume [not null]
   Application Application [not null]
@@ -135,6 +135,12 @@ Table Notification {
   isRead Boolean [not null, default: false]
   createdAt DateTime [default: `now()`, not null]
   User User [not null]
+}
+
+Enum UserStatus {
+  ACCEPTED
+  PENDING
+  REJECTED
 }
 
 Enum UserType {
