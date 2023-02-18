@@ -8,6 +8,7 @@ RUN apk update
 ENV PNPM_HOME="/root/.local/share/pnpm"
 ENV PATH="${PATH}:${PNPM_HOME}"
 RUN npm install -g pnpm
+
 # Set working directory
 WORKDIR /app
 RUN pnpm add -g turbo@1.7.0
@@ -48,6 +49,8 @@ RUN pnpm prune --prod --config.ignore-scripts=true
 
 FROM node:alpine AS runner
 
+ARG stage
+
 RUN apk add --no-cache libc6-compat
 RUN apk update
 ENV PNPM_HOME="/root/.local/share/pnpm"
@@ -58,7 +61,7 @@ WORKDIR /app
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nestjs
 
-RUN pnpm add -g prisma
+RUN pnpm add -g prisma@4.9.0 dotenv-cli ts-node
 
 COPY --from=installer /app/node_modules ./node_modules
 COPY --from=installer --chown=nestjs:nodejs  /app/apps ./apps
@@ -69,4 +72,4 @@ COPY --from=installer --chown=nestjs:nodejs /app/pnpm-lock.yaml ./pnpm-lock.yaml
 RUN sed -i '/generator dbml.*{/,/^}/d' ./packages/database/prisma/schema.prisma
 
 EXPOSE 8080
-CMD cd ./packages/database && pnpm exec prisma generate && pnpm migrate:prod && cd ../../apps/api && pnpm start:prod
+CMD cd ./packages/database && pnpm exec prisma generate && if [[ "$stage" != "latest" ]] ; then pnpm db:seed ; fi && cd ../../apps/api && pnpm start:prod
