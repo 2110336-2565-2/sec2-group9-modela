@@ -28,7 +28,7 @@ export class ApplicationController {
   @ApiForbiddenResponse({
     description: 'User is not Casting or User is not the owner of this job',
   })
-  findOne(@Param('id') id: string, @User() user: JwtDto) {
+  findByJobId(@Param('id') id: string, @User() user: JwtDto) {
     return this.applicationService.findByJobId(+id, user.userId)
   }
 }
