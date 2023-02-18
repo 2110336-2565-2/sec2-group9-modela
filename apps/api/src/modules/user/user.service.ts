@@ -1,5 +1,6 @@
 import {
   GetUserDto,
+  PendingUserDto,
   UpdateUserVerificationDto,
   UserUpdateVerificationStatus,
 } from '@modela/dtos'
@@ -38,13 +39,8 @@ export class UserService {
     return userData
   }
 
-  async getPendingUsers(): Promise<GetUserDto[]> {
-    const params = {
-      where: {
-        isVerified: false,
-      },
-    }
-    const users = await this.repository.getUsers(params)
+  async getPendingUsers(): Promise<PendingUserDto[]> {
+    const users = await this.repository.getPendingUsers({})
     return users
   }
   async updateUserVerification(
