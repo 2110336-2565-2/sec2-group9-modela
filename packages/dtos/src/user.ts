@@ -1,5 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger'
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import { Casting, User, UserStatus, UserType } from '@modela/database'
+import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator'
 
 export class GetUserDto implements Partial<User & Casting> {
   @ApiProperty()
@@ -25,4 +26,20 @@ export class GetUserDto implements Partial<User & Casting> {
 
   @ApiProperty()
   userId: number
+}
+
+export enum UserUpdateVerificationStatus {
+  'ACCEPT' = 'ACCEPT',
+  'REJECT' = 'REJECT',
+}
+export class UpdateUserVerificationDto {
+  @IsNotEmpty()
+  @IsEnum(UserUpdateVerificationStatus)
+  @ApiProperty({enum: UserUpdateVerificationStatus})
+  status: UserUpdateVerificationStatus
+
+  @IsOptional()
+  @IsString()
+  @ApiPropertyOptional()
+  reason?: string
 }

@@ -1,5 +1,10 @@
-import { GetUserDto } from '@modela/dtos'
+import {
+  GetUserDto,
+  UpdateUserVerificationDto,
+  UserUpdateVerificationStatus,
+} from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
+import { BadRequestException } from '@nestjs/common/exceptions'
 
 import { UserRepository } from './user.repository'
 
@@ -28,5 +33,23 @@ export class UserService {
         companyName: company.companyName,
       }
     return userData
+  }
+
+  async updateUserVerification(
+    userId: number,
+    updateUserVerificationDto: UpdateUserVerificationDto,
+  ): Promise<GetUserDto> {
+    //accept user
+    if (
+      updateUserVerificationDto.status === UserUpdateVerificationStatus.ACCEPT
+    ) {
+      const user = await this.repository.updateUserVerification(userId)
+      return user
+    }
+    //TODO : reject user
+    else {
+      //throw bad request response
+      throw new BadRequestException('Wrong format')
+    }
   }
 }

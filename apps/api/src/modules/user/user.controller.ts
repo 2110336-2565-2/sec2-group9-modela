@@ -1,14 +1,21 @@
-import { GetUserDto, JwtDto } from '@modela/dtos'
-import { Controller, Get, UseGuards } from '@nestjs/common'
+import {
+  GetUserDto,
+  JwtDto,
+  UpdateUserVerificationDto,
+  UserType,
+} from '@modela/dtos'
+import { Controller, Get, Param, Put, Query, UseGuards } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
 import {
   ApiBadRequestResponse,
+  ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
 
+import { UseTypeAuthGuard } from '../auth/misc/jwt.decorator'
 import { User } from '../auth/misc/user.decorator'
 import { UserService } from './user.service'
 
@@ -25,5 +32,20 @@ export class UserController {
   @ApiBadRequestResponse({ description: 'Wrong format' })
   getUserData(@User() user: JwtDto) {
     return this.userService.getUserData(user.userId)
+  }
+
+  @Put(':id/verification')
+  @UseTypeAuthGuard(UserType.ADMIN)
+  @ApiOperation({ summary: 'accept or reject user with id' })
+  @ApiOkResponse({ type: GetUserDto })
+  @ApiNotFoundResponse({ description: 'user not found' })
+  updateExample(
+    @Param('id') id: number,
+    @Query() updateUserVerificationDto: UpdateUserVerificationDto,
+  ) {
+    return this.userService.updateUserVerification(
+      +id,
+      updateUserVerificationDto,
+    )
   }
 }

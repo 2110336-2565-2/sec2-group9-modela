@@ -17,4 +17,14 @@ export class UserRepository {
       where: { castingId },
     })
   }
+
+  async updateUserVerification(userId: number): Promise<User> {
+    //accept user
+    return await this.prisma.user.update({
+      where: { userId },
+      data: {
+        isVerified: true,
+      },
+    })
+  }
 }
