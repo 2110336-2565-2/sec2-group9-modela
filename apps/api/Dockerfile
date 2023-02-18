@@ -72,4 +72,4 @@ COPY --from=installer --chown=nestjs:nodejs /app/pnpm-lock.yaml ./pnpm-lock.yaml
 RUN sed -i '/generator dbml.*{/,/^}/d' ./packages/database/prisma/schema.prisma
 
 EXPOSE 8080
-CMD cd ./packages/database && pnpm exec prisma generate && if [[ "$stage" != "latest" ]] ; then pnpm db:seed ; fi && cd ../../apps/api && pnpm start:prod
+CMD cd ./packages/database && pnpm exec prisma generate && if [[ "$stage" != "latest" ]] ; then pnpm db:seed --force ; fi && cd ../../apps/api && pnpm start:prod
