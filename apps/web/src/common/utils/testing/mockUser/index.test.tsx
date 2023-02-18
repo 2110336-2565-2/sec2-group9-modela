@@ -1,3 +1,4 @@
+import { UserStatus } from '@modela/database'
 import { UserType } from '@modela/dtos'
 import { renderHook } from '@testing-library/react'
 
@@ -17,7 +18,7 @@ describe('mockUser()', () => {
         ...MOCK_USER,
         companyName: undefined,
         type: UserType.ACTOR,
-        isVerified: true,
+        status: UserStatus.ACCEPTED,
       },
       refetch: expect.any(Function),
       reset: expect.any(Function),
@@ -48,12 +49,12 @@ describe('mockUser()', () => {
   })
 
   it('should mock user verification correctly', () => {
-    mockVerify(false)
+    mockVerify(UserStatus.REJECTED)
     const { result } = renderHook(() => useUser())
 
     expect(result.current).toMatchObject({
       user: {
-        isVerified: false,
+        status: UserStatus.REJECTED,
       },
     })
   })

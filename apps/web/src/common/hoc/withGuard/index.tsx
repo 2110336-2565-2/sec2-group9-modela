@@ -1,3 +1,4 @@
+import { UserStatus } from '@modela/database'
 import { UserType } from '@modela/dtos'
 import { useUser } from 'common/context/UserContext'
 import { useRouter } from 'next/router'
@@ -18,7 +19,7 @@ const withGuard = (
       return null
     }
 
-    if (!user.isVerified) {
+    if (user.status !== UserStatus.ACCEPTED) {
       // TODO change path
       router.replace('/waiting')
       return null

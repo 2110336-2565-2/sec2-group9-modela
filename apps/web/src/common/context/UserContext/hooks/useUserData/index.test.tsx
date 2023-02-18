@@ -6,7 +6,7 @@ describe('useUserData()', () => {
   const { getSpy, mockGetReturn } = mockApiClient()
 
   const MOCK_USER_DATA = mock('user')
-    .pick(['firstName', 'isVerified', 'type'])
+    .pick(['firstName', 'status', 'type'])
     .get()
 
   mockGetReturn({ user: MOCK_USER_DATA })

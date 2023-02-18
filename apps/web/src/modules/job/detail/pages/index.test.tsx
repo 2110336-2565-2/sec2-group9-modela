@@ -1,3 +1,4 @@
+import { UserStatus } from '@modela/database'
 import { GetJobDto, mock, UserType } from '@modela/dtos'
 import { render, waitFor } from '@testing-library/react'
 import { mockAndSpy, mockApiClient, mockUser } from 'common/utils/testing'
@@ -9,7 +10,7 @@ describe('<JobDetailPage />', () => {
   const JobCardMock = mockAndSpy('modules/job/detail/components/JobCard')
   const { mockGetReturn } = mockApiClient()
 
-  mockUser(UserType.ACTOR, true)
+  mockUser(UserType.ACTOR, UserStatus.ACCEPTED)
 
   const mockData: GetJobDto = {
     ...mock('job').get(),

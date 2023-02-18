@@ -1,4 +1,4 @@
-import { JobStatus, mock, UserType } from '@modela/database'
+import { JobStatus, mock, UserStatus, UserType } from '@modela/database'
 import {
   GetJobCardDto,
   GetJobCardWithMaxPageDto,
@@ -136,12 +136,12 @@ describe('JobService', () => {
     const MOCK_USER_ACTOR = {
       userId: 1,
       type: UserType.ACTOR,
-      isVerified: true,
+      status: UserStatus.ACCEPTED,
     }
     const MOCK_USER_CASTING = {
       userId: MOCK_CASTING_ID,
       type: UserType.CASTING,
-      isVerified: true,
+      status: UserStatus.ACCEPTED,
     }
 
     //begin each findAll test
@@ -356,7 +356,7 @@ describe('JobService', () => {
     const MOCK_USER = {
       userId: 2,
       type: UserType.ACTOR,
-      isVerified: true,
+      status: UserStatus.ACCEPTED,
     }
     describe('normal behavior', () => {
       it('should get job by id successfully', async () => {

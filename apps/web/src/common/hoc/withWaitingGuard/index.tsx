@@ -1,3 +1,4 @@
+import { UserStatus } from '@modela/database'
 import { useUser } from 'common/context/UserContext'
 import { useRouter } from 'next/router'
 import React from 'react'
@@ -13,7 +14,7 @@ const withWaitingGuard = (WrappedComponent: React.ComponentType) => {
       return null
     }
 
-    if (user.isVerified) {
+    if (user.status === UserStatus.ACCEPTED) {
       // TODO change path
       router.replace('/job')
       return null

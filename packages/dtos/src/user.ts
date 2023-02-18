@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { Casting, User, UserType } from '@modela/database'
+import { Casting, User, UserStatus, UserType } from '@modela/database'
 
 export class GetUserDto implements Partial<User & Casting> {
   @ApiProperty()
@@ -12,7 +12,7 @@ export class GetUserDto implements Partial<User & Casting> {
   lastName: string
 
   @ApiProperty()
-  isVerified: boolean
+  status: UserStatus
 
   @ApiProperty()
   type: UserType

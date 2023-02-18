@@ -1,3 +1,4 @@
+import { UserStatus } from '@modela/database'
 import { render } from '@testing-library/react'
 import { mockComponent, mockUser } from 'common/utils/testing'
 import { mockRouter } from 'common/utils/testing/mockRouter'
@@ -29,7 +30,7 @@ describe('withGuard', () => {
 
   describe('user is logged in but not verified', () => {
     it('should redirect to waiting page', () => {
-      mockVerify(false)
+      mockVerify(UserStatus.PENDING)
 
       const WithNotLoggedInGuard = withNotLoggedInGuard(MockChildren)
       render(<WithNotLoggedInGuard />)
@@ -40,7 +41,7 @@ describe('withGuard', () => {
 
   describe('user is logged in and is verified', () => {
     it('should redirect to job page', () => {
-      mockVerify(true)
+      mockVerify(UserStatus.ACCEPTED)
 
       const WithNotLoggedInGuard = withNotLoggedInGuard(MockChildren)
       render(<WithNotLoggedInGuard />)

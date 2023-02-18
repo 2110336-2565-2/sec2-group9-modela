@@ -1,3 +1,4 @@
+import { UserStatus } from '@modela/database'
 import { UserType } from '@modela/dtos'
 import { render } from '@testing-library/react'
 import { mockComponent, mockUser } from 'common/utils/testing'
@@ -39,7 +40,7 @@ describe('withGuard', () => {
 
   describe('user is not verified', () => {
     it('should redirect to waiting page', () => {
-      mockVerify(false)
+      mockVerify(UserStatus.PENDING)
 
       const WithGuard = withGuard(MockChildren, [UserType.ACTOR])
       render(<WithGuard />)
@@ -51,7 +52,7 @@ describe('withGuard', () => {
   describe('user is not allowed', () => {
     it('should render not allowed page', () => {
       mockUserType(UserType.ACTOR)
-      mockVerify(true)
+      mockVerify(UserStatus.ACCEPTED)
 
       const WithGuard = withGuard(MockChildren, [UserType.ADMIN])
       render(<WithGuard />)

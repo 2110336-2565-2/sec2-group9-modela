@@ -1,3 +1,4 @@
+import { UserStatus } from '@modela/database'
 import { GetJobCardWithMaxPageDto, mock, UserType } from '@modela/dtos'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
@@ -47,7 +48,7 @@ describe('<JobListlPage />', () => {
 
   beforeEach(() => {
     mockUserType(UserType.CASTING)
-    mockVerify(true)
+    mockVerify(UserStatus.ACCEPTED)
   })
 
   afterEach(() => {
