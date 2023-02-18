@@ -1,4 +1,4 @@
-import { JobStatus, Prisma } from '@modela/database'
+import { Job, JobStatus, Prisma } from '@modela/database'
 import {
   CreateJobDto,
   EditJobDto,
@@ -122,5 +122,11 @@ export class JobRepository {
       jobCastingImageUrl: Casting.User.profileImageUrl,
       castingName: Casting.User.firstName,
     }
+  }
+
+  async getBaseJobById(id: number): Promise<Job> {
+    return this.prisma.job.findUnique({
+      where: { jobId: id },
+    })
   }
 }

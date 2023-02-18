@@ -16,7 +16,7 @@ export class ApplicationService {
   ) {}
 
   async findByJobId(id: number, userId: number): Promise<GetAppliedActorDto> {
-    const job = await this.jobRepository.getJobById(id)
+    const job = await this.jobRepository.getBaseJobById(id)
 
     if (!job) throw new NotFoundException('Job not found')
     if (job.castingId !== userId)
