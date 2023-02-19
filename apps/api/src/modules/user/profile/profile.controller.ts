@@ -13,7 +13,7 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
-import { UseTypeAuthGuard } from 'src/modules/auth/misc/jwt.decorator'
+import { UseAuthGuard } from 'src/modules/auth/misc/jwt.decorator'
 import { User } from 'src/modules/auth/misc/user.decorator'
 
 import { ProfileService } from './profile.service'
@@ -24,7 +24,7 @@ export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
 
   @Put('/actor')
-  @UseTypeAuthGuard(UserType.ACTOR)
+  @UseAuthGuard(UserType.ACTOR)
   @ApiOperation({ summary: `edit actor's profile` })
   @ApiOkResponse()
   @ApiForbiddenResponse({ description: 'User is not an actor' })
@@ -37,7 +37,7 @@ export class ProfileController {
   }
 
   @Put('/casting')
-  @UseTypeAuthGuard(UserType.CASTING)
+  @UseAuthGuard(UserType.CASTING)
   @ApiOperation({ summary: `edit casting's profile` })
   @ApiOkResponse()
   @ApiForbiddenResponse({ description: 'User is not an casting' })
@@ -50,7 +50,7 @@ export class ProfileController {
   }
 
   @Get()
-  @UseTypeAuthGuard(UserType.CASTING, UserType.ACTOR)
+  @UseAuthGuard(UserType.CASTING, UserType.ACTOR)
   @ApiOperation({
     summary: `get user's profile (only editable field for initail data in editing page)`,
   })

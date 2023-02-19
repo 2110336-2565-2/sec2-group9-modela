@@ -20,7 +20,7 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
 
-import { UseAuthGuard, UseTypeAuthGuard } from '../auth/misc/jwt.decorator'
+import { UseAuthGuard } from '../auth/misc/jwt.decorator'
 import { User } from '../auth/misc/user.decorator'
 import { JobService } from './job.service'
 
@@ -55,7 +55,7 @@ export class JobController {
   @Put(':id')
   @ApiOperation({ summary: 'update job by id' })
   @ApiCreatedResponse({ type: JobIdDto })
-  @UseTypeAuthGuard(UserType.CASTING)
+  @UseAuthGuard(UserType.CASTING)
   @ApiUnauthorizedResponse({ description: 'User is not login' })
   @ApiForbiddenResponse({ description: 'User is not owner' })
   @ApiBadRequestResponse({ description: 'Wrong format' })
@@ -70,7 +70,7 @@ export class JobController {
 
   @Post()
   @ApiCreatedResponse({ type: JobIdDto })
-  @UseTypeAuthGuard(UserType.CASTING)
+  @UseAuthGuard(UserType.CASTING)
   @ApiUnauthorizedResponse({ description: 'User is not logged in' })
   @ApiForbiddenResponse({ description: 'User is not a casting' })
   @ApiBadRequestResponse({ description: 'Wrong format' })

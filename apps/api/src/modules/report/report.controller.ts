@@ -1,4 +1,4 @@
-import { JobIdDto, JwtDto } from '@modela/dtos'
+import { JobIdDto, JwtDto, UserType } from '@modela/dtos'
 import { PostReportDto } from '@modela/dtos'
 import { Body, Controller, Param, Post } from '@nestjs/common'
 import {
@@ -11,7 +11,7 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
 
-import { UseTypeAuthGuard } from '../auth/misc/jwt.decorator'
+import { UseAuthGuard } from '../auth/misc/jwt.decorator'
 import { User } from '../auth/misc/user.decorator'
 import { ReportService } from './report.service'
 
@@ -22,7 +22,7 @@ export class ReportController {
 
   @Post('job/:id')
   @ApiCreatedResponse({ type: JobIdDto })
-  @UseTypeAuthGuard('ACTOR')
+  @UseAuthGuard(UserType.ACTOR)
   @ApiUnauthorizedResponse({ description: 'User is not login' })
   @ApiForbiddenResponse({ description: 'User is not actor' })
   @ApiBadRequestResponse({ description: 'Wrong format' })

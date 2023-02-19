@@ -1,6 +1,5 @@
 import { GetUserDto, JwtDto, UpdateUserStatusDto, UserType } from '@modela/dtos'
-import { Body, Controller, Get, Param, Put, UseGuards } from '@nestjs/common'
-import { AuthGuard } from '@nestjs/passport'
+import { Body, Controller, Get, Param, Put } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
   ApiNotFoundResponse,
@@ -10,7 +9,7 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
 
-import { UseTypeAuthGuard } from '../auth/misc/jwt.decorator'
+import { UseAuthGuard, UseUnverifyGuard } from '../auth/misc/jwt.decorator'
 import { User } from '../auth/misc/user.decorator'
 import { UserService } from './user.service'
 
@@ -20,9 +19,11 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get('me')
-  @UseGuards(AuthGuard('jwt'))
+  @UseUnverifyGuard()
   @ApiOperation({ summary: 'fetch for user data' })
-  @ApiOkResponse({ type: GetUserDto })
+  @ApiOkResponse({
+    type: GetUserDto,
+  })
   @ApiUnauthorizedResponse({ description: 'User is not login' })
   @ApiBadRequestResponse({ description: 'Wrong format' })
   getUserData(@User() user: JwtDto) {
@@ -30,7 +31,7 @@ export class UserController {
   }
 
   @Get('pending')
-  @UseTypeAuthGuard(UserType.ADMIN)
+  @UseAuthGuard(UserType.ADMIN)
   @ApiOperation({ summary: 'get all user pending for admin' })
   @ApiOkResponse({ type: GetUserDto, isArray: true })
   getPendingUser() {
@@ -38,7 +39,7 @@ export class UserController {
   }
 
   @Put(':id/verification')
-  @UseTypeAuthGuard(UserType.ADMIN)
+  @UseAuthGuard(UserType.ADMIN)
   @ApiOperation({ summary: 'accept or reject user with id' })
   @ApiOkResponse({ type: GetUserDto })
   @ApiNotFoundResponse({ description: 'user not found' })
