@@ -1,4 +1,4 @@
-import { Actor, User } from '@modela/database'
+import { Actor, Casting, User, UserType } from '@modela/database'
 import { ApiProperty } from '@nestjs/swagger'
 import {
   IsDateString,
@@ -101,4 +101,39 @@ export class EditActorProfileDto implements Partial<User & Actor> {
   @IsOptional()
   @IsString()
   bankAccount?: string
+}
+
+export class EditCastingProfileDto implements Partial<User> {
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  profileImageUrl?: string
+
+  @ApiProperty()
+  @IsPhoneNumber('TH')
+  @IsOptional()
+  phoneNumber?: string
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  description?: string
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  bankName?: string
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  bankAccount?: string
+}
+
+export class GetProfileForEditingDto {
+  @ApiProperty()
+  type: UserType
+
+  @ApiProperty()
+  data: EditActorProfileDto | EditCastingProfileDto
 }
