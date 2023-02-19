@@ -1,7 +1,6 @@
 import { Actor, User } from '@modela/database'
 import { ApiProperty } from '@nestjs/swagger'
 import {
-  IsDate,
   IsDateString,
   IsInt,
   IsNumber,
@@ -12,6 +11,11 @@ import {
 } from 'class-validator'
 
 export class EditActorProfileDto implements Partial<User & Actor> {
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  nickname?: string
+
   @ApiProperty()
   @IsUrl()
   @IsOptional()
