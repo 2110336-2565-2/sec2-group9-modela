@@ -1,5 +1,5 @@
 import { GetUserDto, JwtDto, UpdateUserStatusDto, UserType } from '@modela/dtos'
-import { Controller, Get, Param, Put, Query, UseGuards } from '@nestjs/common'
+import { Body, Controller, Get, Param, Put, UseGuards } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
 import {
   ApiBadRequestResponse,
@@ -43,8 +43,8 @@ export class UserController {
   @ApiOkResponse({ type: GetUserDto })
   @ApiNotFoundResponse({ description: 'user not found' })
   updateUserStatus(
-    @Param('id') id: number,
-    @Query() updateUserStatusDto: UpdateUserStatusDto,
+    @Param('id') id: string,
+    @Body() updateUserStatusDto: UpdateUserStatusDto,
   ) {
     return this.userService.updateUserStatus(+id, updateUserStatusDto)
   }

@@ -56,9 +56,7 @@ export class UserService {
       return user
     }
     //TODO : reject user
-    else {
-      //throw bad request response
-      throw new BadRequestException('Wrong format')
-    }
+    //throw bad request response
+    throw new BadRequestException('Wrong format')
   }
 }
