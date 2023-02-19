@@ -35,22 +35,14 @@ describe('ReportService', () => {
       reason: 'Insert reason',
     }
 
-    const MOCK_CASTING_ID = 22
     const MOCK_JOB_ID = 1
     const MOCK_USER_ID = 2
 
-    const MOCK_JOB = {
-      ...mock('job').omit(['castingId', 'createdAt', 'updatedAt']).get(),
-      castingId: MOCK_CASTING_ID,
-      shooting: mock('shooting').get(3),
-      companyName: mock('casting').get().companyName,
-      jobCastingImageUrl: mock('user').get().profileImageUrl,
-      castingName: mock('user').get().firstName,
-    }
-
     it('should post report correctly', async () => {
       jest.spyOn(repository, 'createReport').mockResolvedValue()
-      jest.spyOn(jobRepository, 'getJobById').mockResolvedValue(MOCK_JOB)
+      jest
+        .spyOn(jobRepository, 'getBaseJobById')
+        .mockResolvedValue(mock('job').get())
 
       await service.postReport(MOCK_JOB_ID, postReportDto, MOCK_USER_ID)
       expect(repository.createReport).toBeCalledWith(
