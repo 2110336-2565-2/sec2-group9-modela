@@ -175,5 +175,8 @@ export function PickType<T, K extends keyof T>(
 ): Type<Pick<T, (typeof keys)[number]>> {
   return classRef as Type<Pick<T, (typeof keys)[number]>>
 }
+export function refs(...props: any[]) {
+  return props
+}
 
 export const faker = {}
