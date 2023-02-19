@@ -24,13 +24,8 @@ export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
 
   @Put('/actor')
-<<<<<<< beta
-  @UseTypeAuthGuard(UserType.ACTOR)
-  @ApiOperation({ summary: `edit actor's profile` })
-=======
   @UseAuthGuard(UserType.ACTOR)
-  @ApiOperation({ summary: `update actor's profile` })
->>>>>>> feat: remove UseTypeAuthGuard and add UseUnverifyGuard
+  @ApiOperation({ summary: `edit actor's profile` })
   @ApiOkResponse()
   @ApiForbiddenResponse({ description: 'User is not an actor' })
   @ApiUnauthorizedResponse({ description: 'User is not login' })
@@ -42,7 +37,7 @@ export class ProfileController {
   }
 
   @Put('/casting')
-  @UseTypeAuthGuard(UserType.CASTING)
+  @UseAuthGuard(UserType.CASTING)
   @ApiOperation({ summary: `edit casting's profile` })
   @ApiOkResponse()
   @ApiForbiddenResponse({ description: 'User is not an casting' })
@@ -55,7 +50,7 @@ export class ProfileController {
   }
 
   @Get()
-  @UseTypeAuthGuard(UserType.CASTING, UserType.ACTOR)
+  @UseAuthGuard(UserType.CASTING, UserType.ACTOR)
   @ApiOperation({
     summary: `get user's profile (only editable field for initail data in editing page)`,
   })
