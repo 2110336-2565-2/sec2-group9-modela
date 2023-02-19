@@ -51,24 +51,37 @@ export const getBaseMock = (
         name: faker.name.firstName(),
       }
     case 'user':
+      const type =
+        index <= NUMBER_OF_ADMIN
+          ? UserType.ADMIN
+          : index <= NUMBER_OF_ADMIN + NUMBER_OF_ACTOR
+          ? UserType.ACTOR
+          : UserType.CASTING
+
+      const getType = () => {
+        if (type === UserType.ADMIN) return `admin`
+        if (type === UserType.ACTOR) return `actor`
+        if (type === UserType.CASTING) return `casting`
+      }
+
+      const getStatus = () => {
+        if (type === UserType.ADMIN) return UserStatus.ACCEPTED
+        if (index % 10 === 0) return UserStatus.REJECTED
+        if (index % 10 === 9) return UserStatus.PENDING
+        return UserStatus.ACCEPTED
+      }
+
+      const status = getStatus()
+
       return {
         userId: index,
-        email:
-          index <= NUMBER_OF_ADMIN
-            ? `admin${((index - 1) % 10) + 1}@gmail.com`
-            : index <= NUMBER_OF_ADMIN + NUMBER_OF_ACTOR
-            ? `actor${((index - 1) % 10) + 1}@gmail.com`
-            : `casting${((index - 1) % 10) + 1}@gmail.com`,
+        email: `${getType()}${((index - 1) % 10) + 1}@gmail.com`,
         password:
           '$2a$10$jikY3o7Apw/.NMTQjtLC1OMLUwEM73dpWaM7T5WEmjB5lguG/wZce',
-        type:
-          index <= NUMBER_OF_ADMIN
-            ? UserType.ADMIN
-            : index <= NUMBER_OF_ADMIN + NUMBER_OF_ACTOR
-            ? UserType.ACTOR
-            : UserType.CASTING,
-        status: UserStatus.ACCEPTED,
-        rejectedReason: faker.lorem.sentence(),
+        type,
+        status,
+        rejectedReason:
+          status === UserStatus.REJECTED ? faker.lorem.sentence() : null,
         profileImageUrl: faker.image.avatar(),
         phoneNumber: faker.phone.number(),
         bankName: faker.company.name(),
