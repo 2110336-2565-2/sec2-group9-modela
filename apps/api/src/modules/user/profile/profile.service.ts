@@ -1,4 +1,9 @@
-import { EditActorProfileDto, EditCastingProfileDto } from '@modela/dtos'
+import {
+  EditActorProfileDto,
+  EditCastingProfileDto,
+  GetProfileForEditingDto,
+  UserType,
+} from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
 
 import { ProfileRepository } from './profile.repository'
@@ -7,10 +12,44 @@ export class ProfileService {
   constructor(private repository: ProfileRepository) {}
 
   async editActor(id: number, editActorProfileDto: EditActorProfileDto) {
-    await this.repository.editActor(id, editActorProfileDto)
+    const {
+      profileImageUrl,
+      phoneNumber,
+      bankName,
+      bankAccount,
+      description,
+      ...rest
+    } = editActorProfileDto
+
+    await this.repository.editUser(id, {
+      profileImageUrl,
+      phoneNumber,
+      bankName,
+      bankAccount,
+      description,
+    })
+
+    await this.repository.editActor(id, rest)
   }
 
   async editCasting(id: number, editCastingProfileDto: EditCastingProfileDto) {
-    await this.repository.editCasting(id, editCastingProfileDto)
+    await this.repository.editUser(id, editCastingProfileDto)
+  }
+
+  async getProfileForEditing(
+    id: number,
+    type: UserType,
+  ): Promise<GetProfileForEditingDto> {
+    const data = await this.repository.getUserProfileForEditing(id)
+    if (type === UserType.CASTING) {
+      return { type: UserType.CASTING, data }
+    }
+    return {
+      type: UserType.ACTOR,
+      data: {
+        ...data,
+        ...(await this.repository.getActorProfileForEditing(id)),
+      },
+    }
   }
 }

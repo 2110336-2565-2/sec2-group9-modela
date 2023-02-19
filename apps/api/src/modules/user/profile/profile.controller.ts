@@ -1,10 +1,11 @@
 import {
   EditActorProfileDto,
   EditCastingProfileDto,
+  GetProfileForEditingDto,
   JwtDto,
   UserType,
 } from '@modela/dtos'
-import { Body, Controller, Put } from '@nestjs/common'
+import { Body, Controller, Get, Put } from '@nestjs/common'
 import {
   ApiForbiddenResponse,
   ApiOkResponse,
@@ -46,5 +47,17 @@ export class ProfileController {
     @User() user: JwtDto,
   ) {
     return this.profileService.editCasting(+user.userId, editProfileDto)
+  }
+
+  @Get()
+  @UseTypeAuthGuard(UserType.CASTING, UserType.ACTOR)
+  @ApiOperation({
+    summary: `get user's profile (only editable field for initail data in editing page)`,
+  })
+  @ApiOkResponse({ type: GetProfileForEditingDto })
+  @ApiForbiddenResponse({ description: 'User is not an casting or actor' })
+  @ApiUnauthorizedResponse({ description: 'User is not login' })
+  getProfile(@User() user: JwtDto) {
+    return this.profileService.getProfileForEditing(+user.userId, user.type)
   }
 }

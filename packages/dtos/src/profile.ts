@@ -1,5 +1,5 @@
 import { Actor, Casting, User, UserType } from '@modela/database'
-import { ApiProperty } from '@nestjs/swagger'
+import { ApiProperty, refs } from '@nestjs/swagger'
 import {
   IsDateString,
   IsInt,
@@ -7,19 +7,42 @@ import {
   IsOptional,
   IsPhoneNumber,
   IsString,
-  IsUrl,
 } from 'class-validator'
 
-export class EditActorProfileDto implements Partial<User & Actor> {
+export class EditUserProfileDto implements Partial<User> {
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  profileImageUrl?: string
+
+  @ApiProperty()
+  @IsPhoneNumber('TH')
+  @IsOptional()
+  phoneNumber?: string
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  description?: string
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  bankName?: string
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  bankAccount?: string
+}
+
+export class EditCastingProfileDto extends EditUserProfileDto {}
+
+export class EditActorProfileDto extends EditUserProfileDto {
   @ApiProperty()
   @IsString()
   @IsOptional()
   nickname?: string
-
-  @ApiProperty()
-  @IsUrl()
-  @IsOptional()
-  profileImageUrl?: string
 
   @ApiProperty()
   @IsNumber()
@@ -70,11 +93,6 @@ export class EditActorProfileDto implements Partial<User & Actor> {
   @ApiProperty()
   @IsOptional()
   @IsString()
-  description?: string
-
-  @ApiProperty()
-  @IsOptional()
-  @IsString()
   ethnicity?: string
 
   @ApiProperty()
@@ -83,57 +101,17 @@ export class EditActorProfileDto implements Partial<User & Actor> {
   religion?: string
 
   @ApiProperty()
-  @IsPhoneNumber('TH')
-  phoneNumber: string
-
-  @ApiProperty()
   @IsOptional()
   @IsDateString()
   birthDate?: Date
-
-  @ApiProperty()
-  @IsOptional()
-  @IsString()
-  bankName?: string
-
-  // I don't know the format so just let it be string
-  @ApiProperty()
-  @IsOptional()
-  @IsString()
-  bankAccount?: string
-}
-
-export class EditCastingProfileDto implements Partial<User> {
-  @ApiProperty()
-  @IsString()
-  @IsOptional()
-  profileImageUrl?: string
-
-  @ApiProperty()
-  @IsPhoneNumber('TH')
-  @IsOptional()
-  phoneNumber?: string
-
-  @ApiProperty()
-  @IsOptional()
-  @IsString()
-  description?: string
-
-  @ApiProperty()
-  @IsOptional()
-  @IsString()
-  bankName?: string
-
-  @ApiProperty()
-  @IsOptional()
-  @IsString()
-  bankAccount?: string
 }
 
 export class GetProfileForEditingDto {
-  @ApiProperty()
+  @ApiProperty({ enum: UserType, example: UserType.ACTOR })
   type: UserType
 
-  @ApiProperty()
+  @ApiProperty({
+    oneOf: refs(EditActorProfileDto, EditCastingProfileDto),
+  })
   data: EditActorProfileDto | EditCastingProfileDto
 }
