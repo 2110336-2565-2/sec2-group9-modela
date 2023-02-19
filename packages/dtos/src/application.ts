@@ -22,6 +22,6 @@ export class ActorDto implements Partial<Actor & User & Resume> {
 }
 
 export class GetAppliedActorDto {
-  @ApiProperty()
+  @ApiProperty({ type: ActorDto, isArray: true })
   actors: ActorDto[]
 }

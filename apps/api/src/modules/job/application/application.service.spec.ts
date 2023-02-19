@@ -37,7 +37,7 @@ describe('ApplicationService', () => {
     const MOCK_ACTORS = mock('user')
       .pick(['firstName', 'middleName', 'lastName', 'profileImageUrl'])
       .get(3)
-      .map((actor) => ({ ...actor, actorId: 1, resumeId: 1 }))
+      .map((actor, idx) => ({ ...actor, actorId: idx + 2, resumeId: idx + 2 }))
 
     beforeEach(() => {
       jest
