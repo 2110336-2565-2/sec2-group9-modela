@@ -1,9 +1,5 @@
-import {
-  GetUserDto,
-  PendingUserDto,
-  UpdateUserVerificationDto,
-  UserUpdateVerificationStatus,
-} from '@modela/dtos'
+import { UserStatus } from '@modela/database'
+import { GetUserDto, PendingUserDto, UpdateUserStatusDto } from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
 import {
   BadRequestException,
@@ -43,19 +39,20 @@ export class UserService {
     const users = await this.repository.getPendingUsers({})
     return users
   }
-  async updateUserVerification(
+  async updateUserStatus(
     userId: number,
-    updateUserVerificationDto: UpdateUserVerificationDto,
+    updateUserStatusDto: UpdateUserStatusDto,
   ): Promise<GetUserDto> {
     //check if user exist
     const user = await this.repository.getUserById(userId)
     if (!user) throw new NotFoundException()
 
     //accept user
-    if (
-      updateUserVerificationDto.status === UserUpdateVerificationStatus.ACCEPT
-    ) {
-      const user = await this.repository.updateUserVerification(userId)
+    if (updateUserStatusDto.status === UserStatus.ACCEPTED) {
+      const user = await this.repository.updateUserStatus(
+        userId,
+        updateUserStatusDto,
+      )
       return user
     }
     //TODO : reject user

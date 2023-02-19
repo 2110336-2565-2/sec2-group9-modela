@@ -28,15 +28,11 @@ export class GetUserDto implements Partial<User & Casting> {
   userId: number
 }
 
-export enum UserUpdateVerificationStatus {
-  'ACCEPT' = 'ACCEPT',
-  'REJECT' = 'REJECT',
-}
-export class UpdateUserVerificationDto {
+export class UpdateUserStatusDto {
   @IsNotEmpty()
-  @IsEnum(UserUpdateVerificationStatus)
-  @ApiProperty({enum: UserUpdateVerificationStatus})
-  status: UserUpdateVerificationStatus
+  @IsEnum(UserStatus)
+  @ApiProperty({enum: UserStatus})
+  status: UserStatus
 
   @IsOptional()
   @IsString()

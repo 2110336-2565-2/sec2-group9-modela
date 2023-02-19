@@ -1,5 +1,5 @@
 import { Casting, Prisma, User, UserType } from '@modela/database'
-import { PendingUserDto } from '@modela/dtos'
+import { PendingUserDto, UpdateUserStatusDto } from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
 
@@ -41,7 +41,7 @@ export class UserRepository {
     const users = await this.prisma.user.findMany({
       ...params,
       orderBy: {
-        userId: Prisma.SortOrder.desc,
+        updatedAt: Prisma.SortOrder.desc,
       },
       include: {
         Casting: true,
@@ -74,12 +74,15 @@ export class UserRepository {
     return pendingUsers
   }
 
-  async updateUserVerification(userId: number): Promise<User> {
+  async updateUserStatus(
+    userId: number,
+    updateUserStatusDto: UpdateUserStatusDto,
+  ): Promise<User> {
     //accept user
     return await this.prisma.user.update({
       where: { userId },
       data: {
-        isVerified: true,
+        status: updateUserStatusDto.status,
       },
     })
   }
