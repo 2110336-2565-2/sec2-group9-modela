@@ -41,7 +41,7 @@ export class UserRepository {
     const users = await this.prisma.user.findMany({
       ...params,
       orderBy: {
-        updatedAt: Prisma.SortOrder.desc,
+        updatedAt: Prisma.SortOrder.asc,
       },
       include: {
         Casting: true,
