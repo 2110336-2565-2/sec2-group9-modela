@@ -59,7 +59,7 @@ WORKDIR /app
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nestjs
 
-RUN pnpm add -g prisma@4.9.0 dotenv-cli ts-node
+RUN pnpm add -g prisma@4.9.0 dotenv-cli ts-node typescript
 
 COPY --from=installer /app/node_modules ./node_modules
 COPY --from=installer --chown=nestjs:nodejs  /app/apps ./apps
