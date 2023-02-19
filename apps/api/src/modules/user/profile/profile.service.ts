@@ -1,4 +1,4 @@
-import { EditActorProfileDto } from '@modela/dtos'
+import { EditActorProfileDto, EditCastingProfileDto } from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
 
 import { ProfileRepository } from './profile.repository'
@@ -8,5 +8,9 @@ export class ProfileService {
 
   async editActor(id: number, editActorProfileDto: EditActorProfileDto) {
     await this.repository.editActor(id, editActorProfileDto)
+  }
+
+  async editCasting(id: number, editCastingProfileDto: EditCastingProfileDto) {
+    await this.repository.editCasting(id, editCastingProfileDto)
   }
 }

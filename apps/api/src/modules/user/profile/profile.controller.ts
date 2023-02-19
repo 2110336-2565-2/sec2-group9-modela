@@ -1,4 +1,9 @@
-import { EditActorProfileDto, JwtDto, UserType } from '@modela/dtos'
+import {
+  EditActorProfileDto,
+  EditCastingProfileDto,
+  JwtDto,
+  UserType,
+} from '@modela/dtos'
 import { Body, Controller, Put } from '@nestjs/common'
 import {
   ApiForbiddenResponse,
@@ -28,5 +33,18 @@ export class ProfileController {
     @User() user: JwtDto,
   ) {
     return this.profileService.editActor(+user.userId, editProfileDto)
+  }
+
+  @Put('/casting')
+  @UseTypeAuthGuard(UserType.CASTING)
+  @ApiOperation({ summary: `edit casting's profile` })
+  @ApiOkResponse()
+  @ApiForbiddenResponse({ description: 'User is not an casting' })
+  @ApiUnauthorizedResponse({ description: 'User is not login' })
+  editCastingProfile(
+    @Body() editProfileDto: EditCastingProfileDto,
+    @User() user: JwtDto,
+  ) {
+    return this.profileService.editCasting(+user.userId, editProfileDto)
   }
 }

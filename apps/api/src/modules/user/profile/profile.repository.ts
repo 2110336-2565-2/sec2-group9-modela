@@ -1,4 +1,4 @@
-import { EditActorProfileDto } from '@modela/dtos'
+import { EditActorProfileDto, EditCastingProfileDto } from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
 
@@ -30,6 +30,13 @@ export class ProfileRepository {
         bankAccount,
         description,
       },
+    })
+  }
+
+  async editCasting(id: number, editCastingProfileDto: EditCastingProfileDto) {
+    await this.prisma.user.update({
+      where: { userId: id },
+      data: editCastingProfileDto,
     })
   }
 }
