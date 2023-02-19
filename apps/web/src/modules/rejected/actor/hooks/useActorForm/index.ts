@@ -11,14 +11,26 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { editActorInfoSchema, IEditActorInfoSchema } from './schema'
 
-const useActorForm = () => {
+const useActorForm = (defaultValues: any) => {
   const { handleError } = useErrorHandler()
 
-  const { register, handleSubmit, control, setValue, getValues, setError } =
-    useForm<IEditActorInfoSchema>({
-      criteriaMode: 'all',
-      resolver: zodResolver(editActorInfoSchema),
-    })
+  const {
+    register,
+    handleSubmit,
+    control,
+    setValue,
+    getValues,
+    setError,
+    reset,
+  } = useForm<IEditActorInfoSchema>({
+    criteriaMode: 'all',
+    resolver: zodResolver(editActorInfoSchema),
+    defaultValues: defaultValues,
+  })
+
+  useEffect(() => {
+    reset(defaultValues)
+  }, [defaultValues, reset])
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   const [file, setFile] = useState<Blob | null>(null)

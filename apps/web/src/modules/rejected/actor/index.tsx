@@ -5,10 +5,11 @@ import { Control, FieldValues } from 'react-hook-form'
 
 import { FORM_LAYOUT } from './constants'
 import useActorForm from './hooks/useActorForm'
+import { EditActorInfoFormProps } from './types'
 
-const EditActorInfoForm = () => {
+const EditActorInfoForm = ({ initialData }: EditActorInfoFormProps) => {
   const { loading, control, handleClickSubmit, handleUploadFile } =
-    useActorForm()
+    useActorForm(initialData)
 
   return (
     <form onSubmit={handleClickSubmit}>
