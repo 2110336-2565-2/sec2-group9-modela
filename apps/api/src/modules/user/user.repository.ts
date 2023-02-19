@@ -62,6 +62,7 @@ export class UserRepository {
       where: { userId },
       data: {
         status: updateUserStatusDto.status,
+        rejectedReason: updateUserStatusDto.rejectedReason,
       },
     })
   }

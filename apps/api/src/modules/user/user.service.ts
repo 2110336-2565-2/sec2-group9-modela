@@ -46,19 +46,25 @@ export class UserService {
     //check if user exist
     const user = await this.repository.getUserById(userId)
     if (!user) throw new NotFoundException()
+
     if (user.status !== UserStatus.PENDING)
       throw new BadRequestException('User is not pending')
 
-    //accept user
-    if (updateUserStatusDto.status === UserStatus.ACCEPTED) {
-      const user = await this.repository.updateUserStatus(
-        userId,
-        updateUserStatusDto,
-      )
-      return user
+    if (updateUserStatusDto.status === UserStatus.PENDING)
+      throw new BadRequestException('Cannot set user status to pending')
+
+    if (updateUserStatusDto.status === UserStatus.REJECTED) {
+      if (!updateUserStatusDto.rejectedReason)
+        throw new BadRequestException('Reason is required')
+    } else {
+      //UserStatus.ACCEPTED
+      updateUserStatusDto.rejectedReason = null
     }
-    //TODO : reject user
-    //throw bad request response
-    throw new BadRequestException('Wrong format')
+
+    const updatedUser = await this.repository.updateUserStatus(
+      userId,
+      updateUserStatusDto,
+    )
+    return updatedUser
   }
 }
