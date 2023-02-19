@@ -37,7 +37,7 @@ export class UpdateUserStatusDto {
   @IsOptional()
   @IsString()
   @ApiPropertyOptional()
-  reason?: string
+  rejectedReason?: string
 }
 
 export class PendingUserDto {

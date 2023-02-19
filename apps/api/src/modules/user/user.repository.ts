@@ -1,4 +1,4 @@
-import { Casting, Prisma, User, UserType } from '@modela/database'
+import { Casting, Prisma, User, UserStatus, UserType } from '@modela/database'
 import { PendingUserDto, UpdateUserStatusDto } from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
@@ -47,30 +47,28 @@ export class UserRepository {
         Casting: true,
         Actor: true,
       },
+      where: {
+        status: UserStatus.PENDING,
+      },
     })
-    const pendingUsers: PendingUserDto[] = []
-    for (let i = 0; i < users.length; i++) {
-      const user = users[i]
-      const aPendingUser = {
-        type: user.Casting ? UserType.CASTING : UserType.ACTOR,
-        data: {
-          userId: user.userId,
-          firstName: user.firstName,
-          middleName: user.middleName,
-          lastName: user.lastName,
-          ...(user.Casting && {
-            companyName: user.Casting.companyName,
-            companyId: user.Casting.companyId,
-            employmentCertUrl: user.Casting.employmentCertUrl,
-          }),
-          ...(user.Actor && {
-            idCardImageUrl: user.Actor.idCardImageUrl,
-            ssn: user.Actor.ssn,
-          }),
-        },
-      }
-      pendingUsers.push(aPendingUser)
-    }
+    const pendingUsers = users.map((user) => ({
+      type: user.Casting ? UserType.CASTING : UserType.ACTOR,
+      data: {
+        userId: user.userId,
+        firstName: user.firstName,
+        middleName: user.middleName,
+        lastName: user.lastName,
+        ...(user.Casting && {
+          companyName: user.Casting.companyName,
+          companyId: user.Casting.companyId,
+          employmentCertUrl: user.Casting.employmentCertUrl,
+        }),
+        ...(user.Actor && {
+          idCardImageUrl: user.Actor.idCardImageUrl,
+          ssn: user.Actor.ssn,
+        }),
+      },
+    }))
     return pendingUsers
   }
 
