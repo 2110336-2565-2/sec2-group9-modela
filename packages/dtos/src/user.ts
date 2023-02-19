@@ -1,5 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger'
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import { Casting, User, UserStatus, UserType } from '@modela/database'
+import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator'
 
 export class GetUserDto implements Partial<User & Casting> {
   @ApiProperty()
@@ -25,4 +26,53 @@ export class GetUserDto implements Partial<User & Casting> {
 
   @ApiProperty()
   userId: number
+}
+
+export class UpdateUserStatusDto {
+  @IsNotEmpty()
+  @IsEnum(UserStatus)
+  @ApiProperty({enum: UserStatus})
+  status: UserStatus
+
+  @IsOptional()
+  @IsString()
+  @ApiPropertyOptional()
+  rejectedReason?: string
+}
+
+export class PendingUserDataDto{
+  @ApiProperty()
+  userId: number;
+
+  @ApiProperty()
+  firstName: string;
+
+  @ApiProperty()
+  middleName?: string;
+
+  @ApiProperty()
+  lastName: string;
+
+  @ApiProperty()
+  companyName?: string;
+
+  @ApiProperty()
+  companyId?: string;
+
+  @ApiProperty()
+  employmentCertUrl?: string;
+
+  @ApiProperty()
+  idCardImageUrl?: string;
+
+  @ApiProperty()
+  ssn?: string;
+}
+
+export class PendingUserDto {
+  @ApiProperty()
+  type: UserType
+
+  @ApiProperty()
+  data: PendingUserDataDto
 }

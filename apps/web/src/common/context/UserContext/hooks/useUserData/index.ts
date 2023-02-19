@@ -11,7 +11,7 @@ const useUserData = () => {
 
   const refetch = useCallback(async () => {
     try {
-      const res = await apiClient.get<GetUserDto>('/user/me')
+      const res = await apiClient.get<GetUserDto>('/users/me')
       setUser(res.data)
     } catch (err) {
       if ((err as AxiosError).response?.status !== 401) {
