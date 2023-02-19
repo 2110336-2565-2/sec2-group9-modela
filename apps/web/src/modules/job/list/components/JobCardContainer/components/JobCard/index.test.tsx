@@ -5,7 +5,7 @@ import React from 'react'
 
 describe('<JobCard/>', () => {
   const cardProps: GetJobCardDto = {
-    ...mock('job').get(),
+    ...mock('job').override({ description: 'hello world' }).get(),
     companyName: mock('casting').get().companyName,
     jobCastingImageUrl: mock('user').get().profileImageUrl || '',
     castingName: mock('user').get().firstName,

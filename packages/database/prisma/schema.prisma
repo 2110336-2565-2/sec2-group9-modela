@@ -20,12 +20,14 @@ model Example {
 }
 
 model User {
-  userId     Int      @id @default(autoincrement())
-  email      String   @unique
-  password   String
-  type       UserType
-  isVerified Boolean  @default(false)
-  createdAt  DateTime @default(now())
+  userId    Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  type      UserType
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  status UserStatus @default(PENDING)
 
   // basic info
   profileImageUrl String?
@@ -35,11 +37,18 @@ model User {
   firstName       String
   middleName      String?
   lastName        String
+  description     String?
 
   Actor        Actor?
   Casting      Casting?
   Report       Report[]
   Notification Notification[]
+}
+
+enum UserStatus {
+  ACCEPTED
+  PENDING
+  REJECTED
 }
 
 enum UserType {
@@ -49,28 +58,26 @@ enum UserType {
 }
 
 model Actor {
-  actorId           Int       @id
-  idCardImageUrl    String
-  age               Int?
-  prefix            String?
-  nickname          String?
-  nationality       String?
-  ssn               String?
-  gender            Gender?
-  ethnicity         String?
-  birthDate         DateTime?
-  religion          String?
-  description       String?
-  hairColor         String?
-  eyeColor          String?
-  height            Float?
-  weight            Float?
-  bust              Float?
-  waist             Float?
-  hips              Float?
-  shoeSize          Int?
-  skinShade         String?
-  bodyModifications String?
+  actorId        Int       @id
+  idCardImageUrl String
+  age            Int?
+  prefix         String?
+  nickname       String?
+  nationality    String?
+  ssn            String?
+  gender         Gender?
+  ethnicity      String?
+  birthDate      DateTime?
+  religion       String?
+  hairColor      String?
+  eyeColor       String?
+  height         Float?
+  weight         Float?
+  bust           Float?
+  waist          Float?
+  hips           Float?
+  shoeSize       Int?
+  skinShade      String?
 
   User        User          @relation(fields: [actorId], references: [userId])
   Resume      Resume[]

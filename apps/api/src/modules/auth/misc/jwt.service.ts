@@ -1,3 +1,4 @@
+import { UserStatus } from '@modela/database'
 import { JwtDto } from '@modela/dtos'
 import { ForbiddenException, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
@@ -29,16 +30,16 @@ export class JwtAnyStrategy extends PassportStrategy(Strategy, 'jwt') {
   }
 
   async validate(req, payload: JwtDto): Promise<JwtDto> {
-    if (!payload.isVerified) {
+    if (payload.status !== UserStatus.ACCEPTED) {
       const user = await this.prismaService.user.findUnique({
         where: {
           userId: payload.userId,
         },
       })
-      if (!user || !user.isVerified) return payload
+      if (!user || user.status !== UserStatus.ACCEPTED) return payload
       this.authService.createJwtToken(user, req.res)
       return {
-        isVerified: user.isVerified,
+        status: user.status,
         ...payload,
       }
     }
@@ -63,17 +64,17 @@ export class JwtVerifiedStrategy extends PassportStrategy(
     })
   }
   async validate(req, payload: JwtDto): Promise<JwtDto> {
-    if (!payload.isVerified) {
+    if (payload.status !== UserStatus.ACCEPTED) {
       const user = await this.prismaService.user.findUnique({
         where: {
           userId: payload.userId,
         },
       })
-      if (!user || !user.isVerified)
+      if (!user || user.status !== UserStatus.ACCEPTED)
         throw new ForbiddenException('Not verified')
       this.authService.createJwtToken(user, req.res)
       return {
-        isVerified: user.isVerified,
+        status: user.status,
         ...payload,
       }
     }

@@ -13,7 +13,14 @@ import {
   IsUrl,
   Length,
 } from 'class-validator'
-import { Actor, Casting, Gender, User, UserType } from '@modela/database'
+import {
+  Actor,
+  Casting,
+  Gender,
+  User,
+  UserStatus,
+  UserType,
+} from '@modela/database'
 
 export class SignupActorDto implements Partial<Actor & User> {
   @IsEmail()
@@ -124,9 +131,9 @@ export class JwtDto implements Partial<User> {
   @ApiProperty()
   userId: number
 
-  @IsBoolean()
+  @IsEnum({ enum: UserStatus })
   @ApiProperty()
-  isVerified: boolean
+  status: UserStatus
 
   @IsEnum({ enum: UserType })
   @IsNotEmpty()

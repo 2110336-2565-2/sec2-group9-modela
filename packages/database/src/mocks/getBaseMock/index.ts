@@ -1,5 +1,11 @@
 import { faker } from '@faker-js/faker'
-import { ApplicationStatus, Gender, JobStatus, UserType } from '@prisma/client'
+import {
+  ApplicationStatus,
+  Gender,
+  JobStatus,
+  UserStatus,
+  UserType,
+} from '@prisma/client'
 
 import {
   NUMBER_OF_ACTOR,
@@ -47,7 +53,12 @@ export const getBaseMock = (
     case 'user':
       return {
         userId: index,
-        email: faker.helpers.unique(faker.internet.email),
+        email:
+          index <= NUMBER_OF_ADMIN
+            ? `admin${((index - 1) % 10) + 1}@gmail.com`
+            : index <= NUMBER_OF_ADMIN + NUMBER_OF_ACTOR
+            ? `actor${((index - 1) % 10) + 1}@gmail.com`
+            : `casting${((index - 1) % 10) + 1}@gmail.com`,
         password:
           '$2a$10$jikY3o7Apw/.NMTQjtLC1OMLUwEM73dpWaM7T5WEmjB5lguG/wZce',
         type:
@@ -56,7 +67,7 @@ export const getBaseMock = (
             : index <= NUMBER_OF_ADMIN + NUMBER_OF_ACTOR
             ? UserType.ACTOR
             : UserType.CASTING,
-        isVerified: index % 2 === 0,
+        status: UserStatus.ACCEPTED,
         profileImageUrl: faker.image.avatar(),
         phoneNumber: faker.phone.number(),
         bankName: faker.company.name(),
@@ -65,6 +76,7 @@ export const getBaseMock = (
         middleName: faker.name.middleName(),
         lastName: faker.name.lastName(),
         createdAt: faker.date.past(),
+        description: faker.lorem.paragraph(),
       }
     case 'actor':
       return {
@@ -83,7 +95,6 @@ export const getBaseMock = (
         ethnicity: faker.address.country(),
         birthDate: faker.date.birthdate(),
         religion: faker.word.noun(),
-        description: faker.lorem.paragraph(),
         hairColor: faker.color.human(),
         eyeColor: faker.color.human(),
         height: faker.datatype.number({ min: 100, max: 200 }),
@@ -93,7 +104,6 @@ export const getBaseMock = (
         hips: faker.datatype.number({ min: 20, max: 40 }),
         shoeSize: faker.datatype.number({ min: 40, max: 50 }),
         skinShade: faker.color.human(),
-        bodyModifications: faker.lorem.sentence(),
       }
     case 'casting':
       return {
@@ -117,7 +127,7 @@ export const getBaseMock = (
         jobId: index,
         castingId: getCastingId(true),
         title: faker.name.jobTitle(),
-        description: faker.name.jobDescriptor(),
+        description: faker.lorem.paragraphs(),
         status: faker.helpers.arrayElement([
           JobStatus.CANCELLED,
           JobStatus.FINISHED,

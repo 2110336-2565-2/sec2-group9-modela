@@ -1,3 +1,4 @@
+import { UserStatus } from '@modela/database'
 import { UserType } from '@modela/dtos'
 import {
   AccountCircleOutlined,
@@ -93,7 +94,7 @@ const useNavMenu = (isMobile: boolean) => {
       return VERIFIED_MENU.filter(
         (item) => item.allowNotLoggedIn || item.onlyNotLoggedIn,
       )
-    if (!user.isVerified)
+    if (user.status !== UserStatus.ACCEPTED)
       return VERIFIED_MENU.filter(
         (item) => item.allowNotVerified && !item.onlyNotLoggedIn,
       )
