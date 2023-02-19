@@ -44,7 +44,6 @@ COPY turbo.json turbo.json
 # Unused mock (Should not be compiled on frontend)
 RUN mv ./apps/web/.env.${stage} ./apps/web/.env
 RUN rm ./apps/web/.env.* ./packages/database/prisma/seed.ts
-RUN rm -rf ./packages/database/src/mocks
 
 RUN pnpm turbo run build --scope=web
 RUN pnpm prune --prod --config.ignore-scripts=true

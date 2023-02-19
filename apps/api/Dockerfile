@@ -8,6 +8,7 @@ RUN apk update
 ENV PNPM_HOME="/root/.local/share/pnpm"
 ENV PATH="${PATH}:${PNPM_HOME}"
 RUN npm install -g pnpm
+
 # Set working directory
 WORKDIR /app
 RUN pnpm add -g turbo@1.7.0
@@ -58,7 +59,7 @@ WORKDIR /app
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nestjs
 
-RUN pnpm add -g prisma
+RUN pnpm add -g prisma@4.9.0 dotenv-cli ts-node typescript
 
 COPY --from=installer /app/node_modules ./node_modules
 COPY --from=installer --chown=nestjs:nodejs  /app/apps ./apps
