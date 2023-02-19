@@ -49,8 +49,6 @@ RUN pnpm prune --prod --config.ignore-scripts=true
 
 FROM node:alpine AS runner
 
-ARG stage
-
 RUN apk add --no-cache libc6-compat
 RUN apk update
 ENV PNPM_HOME="/root/.local/share/pnpm"
@@ -72,4 +70,4 @@ COPY --from=installer --chown=nestjs:nodejs /app/pnpm-lock.yaml ./pnpm-lock.yaml
 RUN sed -i '/generator dbml.*{/,/^}/d' ./packages/database/prisma/schema.prisma
 
 EXPOSE 8080
-CMD cd ./packages/database && pnpm exec prisma generate && if [[ "$stage" != "latest" ]] ; then pnpm db:seed --force ; fi && cd ../../apps/api && pnpm start:prod
+CMD cd ./packages/database && pnpm exec prisma generate && pnpm migrate:prod && cd ../../apps/api && pnpm start:prod
