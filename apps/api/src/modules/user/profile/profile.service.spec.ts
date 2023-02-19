@@ -1,4 +1,4 @@
-import { EditActorProfileDto, EditCastingProfileDto, mock } from '@modela/dtos'
+import { EditActorProfileDto, mock, UserType } from '@modela/dtos'
 import { Test, TestingModule } from '@nestjs/testing'
 import { PrismaService } from 'src/database/prisma.service'
 
@@ -22,55 +22,101 @@ describe('ProfileService', () => {
     expect(service).toBeDefined()
   })
 
-  describe('editActor', () => {
-    it('should edit actor profile correctly', () => {
-      const MOCK_USER_ID = 1
-      const payload: EditActorProfileDto = {
-        ...mock('actor')
-          .omit([
-            'actorId',
-            'idCardImageUrl',
-            'prefix',
-            'nationality',
-            'ssn',
-            'gender',
-          ])
-          .get(),
-        ...mock('user')
-          .pick([
-            'profileImageUrl',
-            'phoneNumber',
-            'description',
-            'bankAccount',
-            'bankName',
-          ])
-          .get(),
-      }
+  describe('editProfile', () => {
+    const MOCK_USER_ID = 1
+    const MOCK_USER_PROFILE = mock('user')
+      .pick([
+        'profileImageUrl',
+        'phoneNumber',
+        'description',
+        'bankAccount',
+        'bankName',
+      ])
+      .get()
+    const MOCK_ACTOR_ONLY_PROFILE = mock('actor')
+      .omit([
+        'actorId',
+        'idCardImageUrl',
+        'prefix',
+        'nationality',
+        'ssn',
+        'gender',
+      ])
+      .get()
 
-      jest.spyOn(repository, 'editActor').mockResolvedValue()
-      service.editActor(MOCK_USER_ID, payload)
-      expect(repository.editActor).toBeCalledWith(MOCK_USER_ID, payload)
+    describe('editActor', () => {
+      it('should edit actor profile correctly', async () => {
+        const payload: EditActorProfileDto = {
+          ...MOCK_USER_PROFILE,
+          ...MOCK_ACTOR_ONLY_PROFILE,
+        }
+
+        jest.spyOn(repository, 'editActor').mockResolvedValue()
+        jest.spyOn(repository, 'editUser').mockResolvedValue()
+
+        await service.editActor(MOCK_USER_ID, payload)
+        expect(repository.editUser).toBeCalledWith(
+          MOCK_USER_ID,
+          MOCK_USER_PROFILE,
+        )
+        expect(repository.editActor).toBeCalledWith(
+          MOCK_USER_ID,
+          MOCK_ACTOR_ONLY_PROFILE,
+        )
+      })
     })
-  })
 
-  describe('editCasting', () => {
-    it('should edit casting profile correctly', () => {
-      const MOCK_USER_ID = 1
-      const payload: EditCastingProfileDto = {
-        ...mock('user')
-          .pick([
-            'profileImageUrl',
-            'phoneNumber',
-            'description',
-            'bankAccount',
-            'bankName',
-          ])
-          .get(),
-      }
+    describe('editCasting', () => {
+      it('should edit casting profile correctly', async () => {
+        jest.spyOn(repository, 'editUser').mockResolvedValue()
 
-      jest.spyOn(repository, 'editCasting').mockResolvedValue()
-      service.editCasting(MOCK_USER_ID, payload)
-      expect(repository.editCasting).toBeCalledWith(MOCK_USER_ID, payload)
+        await service.editCasting(MOCK_USER_ID, MOCK_USER_PROFILE)
+
+        expect(repository.editUser).toBeCalledWith(
+          MOCK_USER_ID,
+          MOCK_USER_PROFILE,
+        )
+      })
+    })
+
+    describe('getProfileForEditing', () => {
+      it('should get casting profile correctly', async () => {
+        jest
+          .spyOn(repository, 'getUserProfileForEditing')
+          .mockResolvedValue(MOCK_USER_PROFILE)
+
+        const result = await service.getProfileForEditing(
+          MOCK_USER_ID,
+          UserType.CASTING,
+        )
+
+        expect(repository.getUserProfileForEditing).toBeCalledWith(MOCK_USER_ID)
+        expect(result).toEqual({
+          type: UserType.CASTING,
+          data: MOCK_USER_PROFILE,
+        })
+      })
+
+      it('should get casting profile correctly', async () => {
+        jest
+          .spyOn(repository, 'getUserProfileForEditing')
+          .mockResolvedValue(MOCK_USER_PROFILE)
+
+        jest
+          .spyOn(repository, 'getActorProfileForEditing')
+          .mockResolvedValue(MOCK_ACTOR_ONLY_PROFILE)
+
+        const result = await service.getProfileForEditing(
+          MOCK_USER_ID,
+          UserType.ACTOR,
+        )
+
+        expect(repository.getUserProfileForEditing).toBeCalledWith(MOCK_USER_ID)
+        expect(result).toEqual({
+          type: UserType.ACTOR,
+          data: { ...MOCK_USER_PROFILE, ...MOCK_ACTOR_ONLY_PROFILE },
+        })
+      })
     })
   })
 })
