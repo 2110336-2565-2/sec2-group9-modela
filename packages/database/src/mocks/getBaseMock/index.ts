@@ -68,6 +68,7 @@ export const getBaseMock = (
             ? UserType.ACTOR
             : UserType.CASTING,
         status: UserStatus.ACCEPTED,
+        rejectedReason: faker.lorem.sentence(),
         profileImageUrl: faker.image.avatar(),
         phoneNumber: faker.phone.number(),
         bankName: faker.company.name(),
@@ -82,7 +83,6 @@ export const getBaseMock = (
       return {
         actorId: index + NUMBER_OF_ADMIN,
         idCardImageUrl: faker.image.image(640, 480, true),
-        age: faker.datatype.number({ min: 10, max: 80 }),
         prefix: faker.name.prefix(),
         nickname: faker.internet.userName(),
         nationality: faker.address.country(),

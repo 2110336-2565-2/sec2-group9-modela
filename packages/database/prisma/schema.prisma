@@ -27,7 +27,8 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  status UserStatus @default(PENDING)
+  status         UserStatus @default(PENDING)
+  rejectedReason String?
 
   // basic info
   profileImageUrl String?
@@ -60,7 +61,6 @@ enum UserType {
 model Actor {
   actorId        Int       @id
   idCardImageUrl String
-  age            Int?
   prefix         String?
   nickname       String?
   nationality    String?
