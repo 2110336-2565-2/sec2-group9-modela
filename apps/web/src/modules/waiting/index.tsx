@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material'
-import withWaitingGuard from 'common/hoc/withWaitingGuard'
+import withGuard from 'common/hoc/withGuard'
 
 import { CardContainer, CardDivider, RootContainer } from './styled'
 
@@ -20,4 +20,4 @@ const Waiting = () => {
   )
 }
 
-export default withWaitingGuard(Waiting)
+export default withGuard(Waiting, 'pending')

@@ -1,4 +1,3 @@
-import { UserType } from '@modela/database'
 import withGuard from 'common/hoc/withGuard'
 import React from 'react'
 
@@ -12,8 +11,4 @@ const JobDetailPage = () => {
   return <RootContainer>{job && <JobCard {...job} />}</RootContainer>
 }
 
-export default withGuard(JobDetailPage, [
-  UserType.ACTOR,
-  UserType.ADMIN,
-  UserType.CASTING,
-])
+export default withGuard(JobDetailPage, 'verified')

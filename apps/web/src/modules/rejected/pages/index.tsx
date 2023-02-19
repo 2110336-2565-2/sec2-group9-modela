@@ -1,7 +1,7 @@
 import { UserType } from '@modela/database'
 import { CircularProgress, Divider, Typography } from '@mui/material'
 import { useUser } from 'common/context/UserContext'
-import withRejectedGuard from 'common/hoc/withRejectedGuard'
+import withGuard from 'common/hoc/withGuard'
 import React from 'react'
 
 import EditActorInfoForm from '../actor'
@@ -42,4 +42,4 @@ const RejectedPage = () => {
   )
 }
 
-export default withRejectedGuard(RejectedPage)
+export default withGuard(RejectedPage, 'rejected')

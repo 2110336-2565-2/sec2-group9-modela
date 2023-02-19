@@ -66,4 +66,4 @@ const ReportPage = () => {
   )
 }
 
-export default withGuard(ReportPage, [UserType.ACTOR])
+export default withGuard(ReportPage, 'verified', [UserType.ACTOR])

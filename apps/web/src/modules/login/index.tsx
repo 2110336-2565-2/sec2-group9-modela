@@ -1,6 +1,6 @@
 import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material'
 import FormController from 'common/components/FormController'
-import withNotLoggedInGuard from 'common/hoc/withNotLoggedInGuard'
+import withGuard from 'common/hoc/withGuard'
 import Link from 'next/link'
 import React from 'react'
 import { Control, FieldValues } from 'react-hook-form'
@@ -64,4 +64,4 @@ const Login = () => {
   )
 }
 
-export default withNotLoggedInGuard(Login)
+export default withGuard(Login, 'notLoggedIn')
