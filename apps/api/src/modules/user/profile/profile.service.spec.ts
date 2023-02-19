@@ -1,4 +1,4 @@
-import { EditActorProfileDto, mock } from '@modela/dtos'
+import { EditActorProfileDto, EditCastingProfileDto, mock } from '@modela/dtos'
 import { Test, TestingModule } from '@nestjs/testing'
 import { PrismaService } from 'src/database/prisma.service'
 
@@ -50,6 +50,27 @@ describe('ProfileService', () => {
       jest.spyOn(repository, 'editActor').mockResolvedValue()
       service.editActor(MOCK_USER_ID, payload)
       expect(repository.editActor).toBeCalledWith(MOCK_USER_ID, payload)
+    })
+  })
+
+  describe('editCasting', () => {
+    it('should edit casting profile correctly', () => {
+      const MOCK_USER_ID = 1
+      const payload: EditCastingProfileDto = {
+        ...mock('user')
+          .pick([
+            'profileImageUrl',
+            'phoneNumber',
+            'description',
+            'bankAccount',
+            'bankName',
+          ])
+          .get(),
+      }
+
+      jest.spyOn(repository, 'editCasting').mockResolvedValue()
+      service.editCasting(MOCK_USER_ID, payload)
+      expect(repository.editCasting).toBeCalledWith(MOCK_USER_ID, payload)
     })
   })
 })
