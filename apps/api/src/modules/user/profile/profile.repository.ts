@@ -6,7 +6,7 @@ import { PrismaService } from 'src/database/prisma.service'
 export class ProfileRepository {
   constructor(private prisma: PrismaService) {}
 
-  async updateActor(id: number, editActorProfileDto: EditActorProfileDto) {
+  async editActor(id: number, editActorProfileDto: EditActorProfileDto) {
     const {
       profileImageUrl,
       phoneNumber,

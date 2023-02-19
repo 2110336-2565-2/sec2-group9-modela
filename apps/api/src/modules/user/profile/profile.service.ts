@@ -6,7 +6,7 @@ import { ProfileRepository } from './profile.repository'
 export class ProfileService {
   constructor(private repository: ProfileRepository) {}
 
-  async updateActor(id: number, editActorProfileDto: EditActorProfileDto) {
-    await this.repository.updateActor(id, editActorProfileDto)
+  async editActor(id: number, editActorProfileDto: EditActorProfileDto) {
+    await this.repository.editActor(id, editActorProfileDto)
   }
 }

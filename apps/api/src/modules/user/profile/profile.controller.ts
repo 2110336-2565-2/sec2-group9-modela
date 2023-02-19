@@ -19,14 +19,14 @@ export class ProfileController {
 
   @Put('/actor')
   @UseTypeAuthGuard(UserType.ACTOR)
-  @ApiOperation({ summary: `update actor's profile` })
+  @ApiOperation({ summary: `edit actor's profile` })
   @ApiOkResponse()
   @ApiForbiddenResponse({ description: 'User is not an actor' })
   @ApiUnauthorizedResponse({ description: 'User is not login' })
-  updateActorProfile(
+  editActorProfile(
     @Body() editProfileDto: EditActorProfileDto,
     @User() user: JwtDto,
   ) {
-    return this.profileService.updateActor(+user.userId, editProfileDto)
+    return this.profileService.editActor(+user.userId, editProfileDto)
   }
 }

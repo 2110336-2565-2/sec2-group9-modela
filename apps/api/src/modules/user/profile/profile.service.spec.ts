@@ -22,8 +22,8 @@ describe('ProfileService', () => {
     expect(service).toBeDefined()
   })
 
-  describe('updateActor', () => {
-    it('should update actor profile correctly', () => {
+  describe('editActor', () => {
+    it('should edit actor profile correctly', () => {
       const MOCK_USER_ID = 1
       const payload: EditActorProfileDto = {
         ...mock('actor')
@@ -47,9 +47,9 @@ describe('ProfileService', () => {
           .get(),
       }
 
-      jest.spyOn(repository, 'updateActor').mockResolvedValue()
-      service.updateActor(MOCK_USER_ID, payload)
-      expect(repository.updateActor).toBeCalledWith(MOCK_USER_ID, payload)
+      jest.spyOn(repository, 'editActor').mockResolvedValue()
+      service.editActor(MOCK_USER_ID, payload)
+      expect(repository.editActor).toBeCalledWith(MOCK_USER_ID, payload)
     })
   })
 })
