@@ -20,10 +20,14 @@ const RejectedPage = () => {
         <FormHeader>
           <Typography variant="h5">การสมัครสมาชิกถูกปฎิเสธ</Typography>
           <Divider sx={{ width: '100%' }} />
-          <Typography variant="subtitle1" color="#0000009A">
+          <Typography
+            variant="subtitle1"
+            color="#0000009A"
+            sx={{ textAlign: 'center' }}
+          >
             เหตุผล: {initialData.reason}
           </Typography>
-          <Typography variant="subtitle1">
+          <Typography variant="subtitle1" sx={{ textAlign: 'center' }}>
             กรุณาแก้ไขข้อมูลและส่งให้แอดมินตรวจสอบอีกครั้ง
           </Typography>
           <Divider sx={{ width: '100%' }} />
