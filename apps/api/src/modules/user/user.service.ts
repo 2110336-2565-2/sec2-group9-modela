@@ -46,6 +46,8 @@ export class UserService {
     //check if user exist
     const user = await this.repository.getUserById(userId)
     if (!user) throw new NotFoundException()
+    if (user.status !== UserStatus.PENDING)
+      throw new BadRequestException('User is not pending')
 
     //accept user
     if (updateUserStatusDto.status === UserStatus.ACCEPTED) {

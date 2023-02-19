@@ -40,7 +40,7 @@ export class UpdateUserStatusDto {
   rejectedReason?: string
 }
 
-export class pendingUserDataDto{
+export class PendingUserDataDto{
   @ApiProperty()
   userId: number;
 
@@ -74,5 +74,5 @@ export class PendingUserDto {
   type: UserType
 
   @ApiProperty()
-  data: pendingUserDataDto
+  data: PendingUserDataDto
 }
