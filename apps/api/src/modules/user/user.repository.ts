@@ -1,4 +1,4 @@
-import { Casting, Prisma, User, UserStatus, UserType } from '@modela/database'
+import { Casting, Prisma, User, UserStatus } from '@modela/database'
 import { PendingUserDto, UpdateUserStatusDto } from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
@@ -19,27 +19,8 @@ export class UserRepository {
     })
   }
 
-  async getUsers(params: {
-    skip?: number
-    take?: number
-    cursor?: Prisma.UserWhereUniqueInput
-    where?: Prisma.UserWhereInput
-    orderBy?: Prisma.UserOrderByWithRelationInput
-  }): Promise<User[]> {
-    return await this.prisma.user.findMany({
-      ...params,
-    })
-  }
-
-  async getPendingUsers(params: {
-    skip?: number
-    take?: number
-    cursor?: Prisma.UserWhereUniqueInput
-    where?: Prisma.UserWhereInput
-    orderBy?: Prisma.UserOrderByWithRelationInput
-  }): Promise<PendingUserDto[]> {
+  async getPendingUsers(): Promise<PendingUserDto[]> {
     const users = await this.prisma.user.findMany({
-      ...params,
       orderBy: {
         updatedAt: Prisma.SortOrder.asc,
       },
@@ -52,7 +33,7 @@ export class UserRepository {
       },
     })
     const pendingUsers = users.map((user) => ({
-      type: user.Casting ? UserType.CASTING : UserType.ACTOR,
+      type: user.type,
       data: {
         userId: user.userId,
         firstName: user.firstName,

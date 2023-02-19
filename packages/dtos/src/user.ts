@@ -40,20 +40,39 @@ export class UpdateUserStatusDto {
   rejectedReason?: string
 }
 
+export class pendingUserDataDto{
+  @ApiProperty()
+  userId: number;
+
+  @ApiProperty()
+  firstName: string;
+
+  @ApiProperty()
+  middleName?: string;
+
+  @ApiProperty()
+  lastName: string;
+
+  @ApiProperty()
+  companyName?: string;
+
+  @ApiProperty()
+  companyId?: string;
+
+  @ApiProperty()
+  employmentCertUrl?: string;
+
+  @ApiProperty()
+  idCardImageUrl?: string;
+
+  @ApiProperty()
+  ssn?: string;
+}
+
 export class PendingUserDto {
   @ApiProperty()
   type: UserType
 
   @ApiProperty()
-  data: {
-    userId: number;
-    firstName: string;
-    middleName?: string;
-    lastName: string;
-    companyName?: string;
-    companyId?: string;
-    employmentCertUrl?: string;
-    idCardImageUrl?: string;
-    ssn?: string;
-  }
+  data: pendingUserDataDto
 }

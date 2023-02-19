@@ -36,7 +36,7 @@ export class UserService {
   }
 
   async getPendingUsers(): Promise<PendingUserDto[]> {
-    const users = await this.repository.getPendingUsers({})
+    const users = await this.repository.getPendingUsers()
     return users
   }
   async updateUserStatus(
