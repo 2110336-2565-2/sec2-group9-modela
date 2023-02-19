@@ -42,7 +42,7 @@ export class UserController {
   @ApiOperation({ summary: 'accept or reject user with id' })
   @ApiOkResponse({ type: GetUserDto })
   @ApiNotFoundResponse({ description: 'user not found' })
-  updateExample(
+  updateUserStatus(
     @Param('id') id: number,
     @Query() updateUserStatusDto: UpdateUserStatusDto,
   ) {
