@@ -8,8 +8,13 @@ const withNotLoggedInGuard = (WrappedComponent: React.ComponentType) => {
     const router = useRouter()
     const { user } = useUser()
 
-    if (user && user.status !== UserStatus.ACCEPTED) {
+    if (user && user.status === UserStatus.PENDING) {
       router.replace('/waiting')
+      return null
+    }
+
+    if (user && user.status === UserStatus.REJECTED) {
+      router.replace('/rejected')
       return null
     }
 

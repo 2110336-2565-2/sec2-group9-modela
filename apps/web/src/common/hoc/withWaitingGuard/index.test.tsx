@@ -28,8 +28,8 @@ describe('withWaitingGuard', () => {
     })
   })
 
-  describe('user is logged in and is verified', () => {
-    it('should render waiting page', () => {
+  describe('user is logged in and is pending', () => {
+    it('should render children correctly', () => {
       mockVerify(UserStatus.PENDING)
 
       const WithWaitingGuard = withWaitingGuard(MockChildren)
@@ -39,7 +39,7 @@ describe('withWaitingGuard', () => {
     })
   })
 
-  describe('user is logged in and is not verified', () => {
+  describe('user is logged in and is verified', () => {
     it('should redirect to job page', () => {
       mockVerify(UserStatus.ACCEPTED)
 
@@ -47,6 +47,17 @@ describe('withWaitingGuard', () => {
       render(<WithWaitingGuard />)
 
       expect(replaceSpy).toBeCalledWith('/job')
+    })
+  })
+
+  describe('user is logged in and is rejected', () => {
+    it('should redirect to rejected page', () => {
+      mockVerify(UserStatus.REJECTED)
+
+      const WithWaitingGuard = withWaitingGuard(MockChildren)
+      render(<WithWaitingGuard />)
+
+      expect(replaceSpy).toBeCalledWith('/rejected')
     })
   })
 })

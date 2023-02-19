@@ -38,7 +38,7 @@ describe('withGuard', () => {
     })
   })
 
-  describe('user is not verified', () => {
+  describe('user is pending', () => {
     it('should redirect to waiting page', () => {
       mockVerify(UserStatus.PENDING)
 
@@ -46,6 +46,17 @@ describe('withGuard', () => {
       render(<WithGuard />)
 
       expect(replaceSpy).toBeCalledWith('/waiting')
+    })
+  })
+
+  describe('user is rejected', () => {
+    it('should redirect to rejected page', () => {
+      mockVerify(UserStatus.REJECTED)
+
+      const WithGuard = withGuard(MockChildren, [UserType.ACTOR])
+      render(<WithGuard />)
+
+      expect(replaceSpy).toBeCalledWith('/rejected')
     })
   })
 
@@ -57,8 +68,7 @@ describe('withGuard', () => {
       const WithGuard = withGuard(MockChildren, [UserType.ADMIN])
       render(<WithGuard />)
 
-      // TODO fix this test when 403 page is implemented
-      expect(ChildrenSpy).toBeCalledTimes(0)
+      expect(replaceSpy).toBeCalledWith('/')
     })
   })
 })

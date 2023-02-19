@@ -9,14 +9,17 @@ const withWaitingGuard = (WrappedComponent: React.ComponentType) => {
     const { user } = useUser()
 
     if (!user) {
-      // TODO change path
       router.replace('/login')
       return null
     }
 
     if (user.status === UserStatus.ACCEPTED) {
-      // TODO change path
       router.replace('/job')
+      return null
+    }
+
+    if (user.status === UserStatus.REJECTED) {
+      router.replace('/rejected')
       return null
     }
 

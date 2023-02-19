@@ -1,7 +1,7 @@
 import { UserType } from '@modela/database'
 import { CircularProgress, Divider, Typography } from '@mui/material'
 import { useUser } from 'common/context/UserContext'
-import withWaitingGuard from 'common/hoc/withWaitingGuard'
+import withRejectedGuard from 'common/hoc/withRejectedGuard'
 import React from 'react'
 
 import EditActorInfoForm from '../actor'
@@ -38,4 +38,4 @@ const RejectedPage = () => {
   )
 }
 
-export default withWaitingGuard(RejectedPage)
+export default withRejectedGuard(RejectedPage)

@@ -12,22 +12,24 @@ const withGuard = (
     const { user } = useUser()
     const router = useRouter()
 
-    // not login
     if (!user) {
-      // TODO change path
       router.replace('/login')
       return null
     }
 
-    if (user.status !== UserStatus.ACCEPTED) {
-      // TODO change path
+    if (user.status === UserStatus.PENDING) {
       router.replace('/waiting')
       return null
     }
 
-    // TODO implement error page
+    if (user.status === UserStatus.REJECTED) {
+      router.replace('/rejected')
+      return null
+    }
+
     if (!allowedType.includes(user.type)) {
-      return <>Not allowed (will implement after this)</>
+      router.replace('/')
+      return null
     }
 
     return <WrappedComponent {...props} />

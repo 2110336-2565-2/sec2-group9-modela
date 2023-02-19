@@ -28,7 +28,7 @@ describe('withGuard', () => {
     })
   })
 
-  describe('user is logged in but not verified', () => {
+  describe('user is logged in but is pending', () => {
     it('should redirect to waiting page', () => {
       mockVerify(UserStatus.PENDING)
 
@@ -36,6 +36,17 @@ describe('withGuard', () => {
       render(<WithNotLoggedInGuard />)
 
       expect(replaceSpy).toBeCalledWith('/waiting')
+    })
+  })
+
+  describe('user is logged in but is rejected', () => {
+    it('should redirect to waiting page', () => {
+      mockVerify(UserStatus.REJECTED)
+
+      const WithNotLoggedInGuard = withNotLoggedInGuard(MockChildren)
+      render(<WithNotLoggedInGuard />)
+
+      expect(replaceSpy).toBeCalledWith('/rejected')
     })
   })
 
