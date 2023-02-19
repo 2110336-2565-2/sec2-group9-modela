@@ -1,6 +1,11 @@
+<<<<<<< beta
 import { GetUserDto, JwtDto, UpdateUserStatusDto, UserType } from '@modela/dtos'
 import { Body, Controller, Get, Param, Put, UseGuards } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
+=======
+import { GetUserDto, JwtDto } from '@modela/dtos'
+import { Controller, Get } from '@nestjs/common'
+>>>>>>> feat: remove UseTypeAuthGuard and add UseUnverifyGuard
 import {
   ApiBadRequestResponse,
   ApiNotFoundResponse,
@@ -10,7 +15,11 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
 
+<<<<<<< beta
 import { UseTypeAuthGuard } from '../auth/misc/jwt.decorator'
+=======
+import { UseUnverifyGuard } from '../auth/misc/jwt.decorator'
+>>>>>>> feat: remove UseTypeAuthGuard and add UseUnverifyGuard
 import { User } from '../auth/misc/user.decorator'
 import { UserService } from './user.service'
 
@@ -20,9 +29,11 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get('me')
-  @UseGuards(AuthGuard('jwt'))
+  @UseUnverifyGuard()
   @ApiOperation({ summary: 'fetch for user data' })
-  @ApiOkResponse({ type: GetUserDto })
+  @ApiOkResponse({
+    type: GetUserDto,
+  })
   @ApiUnauthorizedResponse({ description: 'User is not login' })
   @ApiBadRequestResponse({ description: 'Wrong format' })
   getUserData(@User() user: JwtDto) {

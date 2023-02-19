@@ -9,7 +9,7 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
-import { UseTypeAuthGuard } from 'src/modules/auth/misc/jwt.decorator'
+import { UseAuthGuard } from 'src/modules/auth/misc/jwt.decorator'
 import { User } from 'src/modules/auth/misc/user.decorator'
 
 import { ApplicationService } from './application.service'
@@ -20,7 +20,7 @@ export class ApplicationController {
   constructor(private readonly applicationService: ApplicationService) {}
 
   @Get(':id/actors')
-  @UseTypeAuthGuard(UserType.CASTING)
+  @UseAuthGuard(UserType.CASTING)
   @ApiOperation({ summary: 'get all actors that applied in jobs with jobid' })
   @ApiOkResponse({ type: GetAppliedActorDto })
   @ApiUnauthorizedResponse({ description: 'User is not login' })

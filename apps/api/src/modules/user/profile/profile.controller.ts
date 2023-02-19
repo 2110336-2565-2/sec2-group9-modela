@@ -13,7 +13,7 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
-import { UseTypeAuthGuard } from 'src/modules/auth/misc/jwt.decorator'
+import { UseAuthGuard } from 'src/modules/auth/misc/jwt.decorator'
 import { User } from 'src/modules/auth/misc/user.decorator'
 
 import { ProfileService } from './profile.service'
@@ -24,8 +24,13 @@ export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
 
   @Put('/actor')
+<<<<<<< beta
   @UseTypeAuthGuard(UserType.ACTOR)
   @ApiOperation({ summary: `edit actor's profile` })
+=======
+  @UseAuthGuard(UserType.ACTOR)
+  @ApiOperation({ summary: `update actor's profile` })
+>>>>>>> feat: remove UseTypeAuthGuard and add UseUnverifyGuard
   @ApiOkResponse()
   @ApiForbiddenResponse({ description: 'User is not an actor' })
   @ApiUnauthorizedResponse({ description: 'User is not login' })
