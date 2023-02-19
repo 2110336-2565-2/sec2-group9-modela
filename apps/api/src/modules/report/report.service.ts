@@ -16,7 +16,7 @@ export class ReportService {
   ) {}
 
   async postReport(id: number, postReportDto: PostReportDto, userId: number) {
-    const job = await this.jobRepository.getJobById(id)
+    const job = await this.jobRepository.getBaseJobById(id)
     if (!job) {
       throw new NotFoundException()
     }

@@ -57,20 +57,6 @@ function createValidJob() {
   return MOCK_JOB
 }
 
-function createValidJobWithID(userId: number, jobId: number) {
-  const BASE_JOB = createValidJob()
-  const MOCK_JOB = {
-    ...BASE_JOB,
-    castingId: userId,
-    jobId: jobId,
-    companyName: 'test',
-    jobCastingImageUrl: 'test',
-    status: JobStatus.OPEN,
-    castingName: 'test',
-  }
-  return MOCK_JOB
-}
-
 describe('JobService', () => {
   let service: JobService
   let repository: JobRepository
@@ -437,20 +423,29 @@ describe('JobService', () => {
   describe('updateJob', () => {
     const MOCK_CASTING_ID = 1
     const MOCK_UPDATED_TITLE = 'updated title'
+    const result = mock('job').get()
+
+    beforeEach(() => {
+      jest.spyOn(repository, 'getBaseJobById').mockResolvedValue(
+        mock('job')
+          .override({
+            castingId: MOCK_CASTING_ID,
+            jobId: result.jobId,
+            status: JobStatus.OPEN,
+          })
+          .get(),
+      )
+    })
 
     describe('normal behavior', () => {
       it('should update the job successfully', async () => {
         const MOCK_JOB = createValidJob()
 
-        const result = mock('job').get()
         jest
           .spyOn(repository, 'updateJob')
           .mockResolvedValue({ jobId: result.jobId })
 
         const newId = result.jobId
-
-        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
-        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
 
         MOCK_JOB.title = MOCK_UPDATED_TITLE
         await service.update(newId, MOCK_JOB, MOCK_CASTING_ID)
@@ -462,16 +457,11 @@ describe('JobService', () => {
         const MOCK_INVALID_USER_ID = 2394082
         const MOCK_JOB = createValidJob()
 
-        const result = mock('job').get()
-
         jest
           .spyOn(repository, 'updateJob')
           .mockResolvedValue({ jobId: result.jobId })
 
         const newId = result.jobId
-
-        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
-        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
 
         MOCK_JOB.title = MOCK_UPDATED_TITLE
 
@@ -489,16 +479,11 @@ describe('JobService', () => {
           MOCK_JOB.shooting[0].endDate.getHours() - 1,
         )
 
-        const result = mock('job').get()
-
         jest
           .spyOn(repository, 'updateJob')
           .mockResolvedValue({ jobId: result.jobId })
 
         const newId = result.jobId
-
-        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
-        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
 
         MOCK_JOB.title = MOCK_UPDATED_TITLE
 
@@ -516,16 +501,11 @@ describe('JobService', () => {
           MOCK_JOB.shooting[0].endDate.getDate() - 1,
         )
 
-        const result = mock('job').get()
-
         jest
           .spyOn(repository, 'updateJob')
           .mockResolvedValue({ jobId: result.jobId })
 
         const newId = result.jobId
-
-        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
-        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
 
         MOCK_JOB.title = MOCK_UPDATED_TITLE
 
@@ -541,16 +521,11 @@ describe('JobService', () => {
         MOCK_JOB.minAge = 100
         MOCK_JOB.maxAge = 10
 
-        const result = mock('job').get()
-
         jest
           .spyOn(repository, 'updateJob')
           .mockResolvedValue({ jobId: result.jobId })
 
         const newId = result.jobId
-
-        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
-        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
 
         MOCK_JOB.title = MOCK_UPDATED_TITLE
 
@@ -568,16 +543,11 @@ describe('JobService', () => {
           MOCK_JOB.shooting[0].startDate.getDate() - 1,
         )
 
-        const result = mock('job').get()
-
         jest
           .spyOn(repository, 'updateJob')
           .mockResolvedValue({ jobId: result.jobId })
 
         const newId = result.jobId
-
-        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
-        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
 
         MOCK_JOB.title = MOCK_UPDATED_TITLE
 
@@ -594,16 +564,11 @@ describe('JobService', () => {
           MOCK_JOB.applicationDeadline.getDate() - 1,
         )
 
-        const result = mock('job').get()
-
         jest
           .spyOn(repository, 'updateJob')
           .mockResolvedValue({ jobId: result.jobId })
 
         const newId = result.jobId
-
-        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
-        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
 
         MOCK_JOB.title = MOCK_UPDATED_TITLE
 
@@ -617,15 +582,13 @@ describe('JobService', () => {
       it('should be not found due to giving an ID which should not exist', async () => {
         const MOCK_JOB = createValidJob()
 
-        const result = mock('job').get()
-
         jest
           .spyOn(repository, 'updateJob')
           .mockResolvedValue({ jobId: result.jobId })
 
         const newId = 98094832
 
-        jest.spyOn(repository, 'getJobById').mockResolvedValue(null)
+        jest.spyOn(repository, 'getBaseJobById').mockResolvedValue(null)
 
         MOCK_JOB.title = MOCK_UPDATED_TITLE
 
@@ -643,16 +606,11 @@ describe('JobService', () => {
           MOCK_JOB.shooting[0].endDate.getMinutes() - 1,
         )
 
-        const result = mock('job').get()
-
         jest
           .spyOn(repository, 'updateJob')
           .mockResolvedValue({ jobId: result.jobId })
 
         const newId = result.jobId
-
-        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
-        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
 
         MOCK_JOB.title = MOCK_UPDATED_TITLE
 
