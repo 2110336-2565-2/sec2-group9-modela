@@ -2,6 +2,7 @@ import { Actor, User } from '@modela/database'
 import { ApiProperty } from '@nestjs/swagger'
 import {
   IsDate,
+  IsDateString,
   IsInt,
   IsNumber,
   IsOptional,
@@ -44,7 +45,7 @@ export class EditActorProfileDto implements Partial<User & Actor> {
   @ApiProperty()
   @IsOptional()
   @IsNumber()
-  chest?: number
+  bust?: number
 
   @ApiProperty()
   @IsOptional()
@@ -83,7 +84,7 @@ export class EditActorProfileDto implements Partial<User & Actor> {
 
   @ApiProperty()
   @IsOptional()
-  @IsDate()
+  @IsDateString()
   birthDate?: Date
 
   @ApiProperty()
