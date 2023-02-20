@@ -1,1 +1,1 @@
-export { default } from 'modules/profile/edit/casting'
+export { default } from 'modules/profile/edit/pages/'

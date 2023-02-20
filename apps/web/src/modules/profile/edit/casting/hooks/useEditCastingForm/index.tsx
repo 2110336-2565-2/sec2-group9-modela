@@ -1,25 +1,25 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { EditCastingProfileDto } from '@modela/dtos'
-import { useUser } from 'common/context/UserContext'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
 import { useRouter } from 'next/router'
-import { FormEventHandler, useCallback, useState } from 'react'
+import { FormEventHandler, useCallback, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import {
+  EditCastingProfileDefault,
   EditCastingProfileSchema,
   IEditCastingProfileSchemaType,
 } from './schema'
 
 const useEditCastingForm = () => {
   const router = useRouter()
-  const { refetch } = useUser()
 
-  const { handleSubmit, setValue, getValues, control } =
+  const { handleSubmit, setValue, getValues, control, reset } =
     useForm<IEditCastingProfileSchemaType>({
       criteriaMode: 'all',
       resolver: zodResolver(EditCastingProfileSchema),
+      defaultValues: EditCastingProfileDefault,
     })
 
   const [, setProfileImage] = useState<Blob | null>(null)
@@ -33,9 +33,8 @@ const useEditCastingForm = () => {
         try {
           await apiClient.put<unknown, unknown, EditCastingProfileDto>(
             '/profile/casting',
-            { ...data, profileImageUrl: '' },
+            { ...data, profileImageUrl: 'https://via.placeholder.com/150 ' },
           )
-          await refetch()
           router.push('/profile')
         } catch (err) {
           handleError(err)
@@ -43,7 +42,7 @@ const useEditCastingForm = () => {
           setLoading(false)
         }
       },
-      [handleError, refetch, router],
+      [handleError, router],
     )
 
   const handleClickSubmit: FormEventHandler<HTMLFormElement> =
@@ -61,6 +60,17 @@ const useEditCastingForm = () => {
     },
     [getValues, setValue],
   )
+
+  useEffect(() => {
+    const getInitialValue = async () => {
+      const res = (
+        await apiClient.get<{ data: EditCastingProfileDto }>('/profile')
+      ).data
+      reset(res.data)
+    }
+
+    getInitialValue()
+  }, [reset])
 
   return {
     loading,

@@ -17,7 +17,15 @@ const EditCastingProfileSchema = z.object({
   ),
 })
 
+const EditCastingProfileDefault = {
+  bankAccount: '',
+  bankName: '',
+  description: '',
+  phoneNumber: '',
+  profileImageUrl: '',
+}
+
 export type IEditCastingProfileSchemaType = z.infer<
   typeof EditCastingProfileSchema
 >
-export { EditCastingProfileSchema }
+export { EditCastingProfileDefault, EditCastingProfileSchema }
