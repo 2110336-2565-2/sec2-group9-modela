@@ -4,4 +4,4 @@ import JobForm from 'modules/job/components/JobForm'
 
 const PostJobPage = () => <JobForm />
 
-export default withGuard(PostJobPage, [UserType.CASTING])
+export default withGuard(PostJobPage, 'verified', [UserType.CASTING])

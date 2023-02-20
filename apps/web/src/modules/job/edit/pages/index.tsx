@@ -13,4 +13,4 @@ const EditJobPage = () => {
   return <JobForm edit initialValues={initialValues} />
 }
 
-export default withGuard(EditJobPage, [UserType.CASTING])
+export default withGuard(EditJobPage, 'verified', [UserType.CASTING])

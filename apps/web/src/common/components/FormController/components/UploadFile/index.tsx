@@ -13,7 +13,12 @@ const UploadFile: FC<IUploadFileProps> = (props) => {
 
   return (
     <UploadFileContainer>
-      <Button variant="text" disableRipple component="label">
+      <Button
+        variant="text"
+        disableRipple
+        component="label"
+        sx={{ textAlign: 'center' }}
+      >
         <FileUploadOutlined sx={{ marginRight: '4px' }} />
         {label}
         <input

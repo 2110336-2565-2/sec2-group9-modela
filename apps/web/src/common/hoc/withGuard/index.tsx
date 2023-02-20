@@ -4,30 +4,48 @@ import { useUser } from 'common/context/UserContext'
 import { useRouter } from 'next/router'
 import React from 'react'
 
+import { GuardType } from './types'
+
 const withGuard = (
   WrappedComponent: React.ComponentType,
-  allowedType: UserType[],
+  guardType: GuardType,
+  allowedType?: UserType[],
 ) => {
   const WithGuard = (props: any) => {
     const { user } = useUser()
     const router = useRouter()
 
-    // not login
-    if (!user) {
-      // TODO change path
+    if (!user && guardType !== 'notLoggedIn') {
       router.replace('/login')
       return null
     }
 
-    if (user.status !== UserStatus.ACCEPTED) {
-      // TODO change path
+    if (user && user.status === UserStatus.PENDING && guardType !== 'pending') {
       router.replace('/waiting')
       return null
     }
 
-    // TODO implement error page
-    if (!allowedType.includes(user.type)) {
-      return <>Not allowed (will implement after this)</>
+    if (
+      user &&
+      user.status === UserStatus.REJECTED &&
+      guardType !== 'rejected'
+    ) {
+      router.replace('/rejected')
+      return null
+    }
+
+    if (
+      user &&
+      user.status === UserStatus.ACCEPTED &&
+      guardType !== 'verified'
+    ) {
+      router.replace('/job')
+      return null
+    }
+
+    if (user && allowedType && !allowedType.includes(user.type)) {
+      router.replace('/')
+      return null
     }
 
     return <WrappedComponent {...props} />
