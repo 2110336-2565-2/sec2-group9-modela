@@ -1,4 +1,5 @@
-import { GetJobDto } from '@modela/dtos'
+import { GetJobDto, UserType } from '@modela/dtos'
+import { useUser } from 'common/context/UserContext'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api/axiosInstance'
 import { useRouter } from 'next/router'
@@ -7,6 +8,7 @@ import { useEffect, useState } from 'react'
 const useJobData = () => {
   const router = useRouter()
   const { jobId } = router.query
+  const { user } = useUser()
   const [job, setJob] = useState<GetJobDto>()
   const { handleError } = useErrorHandler()
 
@@ -23,6 +25,11 @@ const useJobData = () => {
       fetchData()
     }
   }, [handleError, jobId, router.isReady])
+
+  //TODO: check if job has report
+  if (user?.type === UserType.ADMIN) {
+    router.push(`/job/${jobId}/reports`)
+  }
 
   return { job }
 }
