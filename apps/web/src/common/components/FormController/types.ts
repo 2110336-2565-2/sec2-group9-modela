@@ -11,7 +11,8 @@ export interface IFormControllerProps<T extends FieldValues> {
     | 'select'
     | 'date'
     | 'time'
-    | 'typography'
+    | 'title'
+    | 'label'
   xs?: number
   sm?: number
   name?: Path<T>
@@ -19,6 +20,7 @@ export interface IFormControllerProps<T extends FieldValues> {
   control?: Control<T>
   optional?: boolean
   fullWidth?: boolean
+  hideLink?: boolean
   selectProps?: MenuItemProps[]
   handleUploadFile?(file: Blob): void
   inputProps?: { [key: string]: any }

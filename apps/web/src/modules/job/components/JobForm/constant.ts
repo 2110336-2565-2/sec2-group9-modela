@@ -29,7 +29,7 @@ export const FORM_LAYOUT:
       | Omit<IFormControllerProps<IPostJobSchemaType>, 'control'>
       | { type: 'shooting' }
     )[] = [
-  { type: 'typography', label: 'รายละเอียดงาน' },
+  { type: 'title', label: 'รายละเอียดงาน' },
   {
     type: 'textField',
     label: 'ชื่องาน',
@@ -65,7 +65,7 @@ export const FORM_LAYOUT:
     type: 'shooting',
   },
   {
-    type: 'typography',
+    type: 'title',
     label: 'รายละเอียดนักแสดง',
   },
   {

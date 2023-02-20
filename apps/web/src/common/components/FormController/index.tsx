@@ -23,16 +23,19 @@ const FormController = <T extends FieldValues>(
     optional,
     selectProps,
     inputProps,
+    hideLink = false,
   } = props
 
   return (
     <Grid item xs={xs} sm={sm}>
       {type === 'divider' ? (
         <Divider />
-      ) : type === 'typography' ? (
+      ) : type === 'title' ? (
         <Typography variant="h5" sx={{ textAlign: 'center' }}>
           {label}
         </Typography>
+      ) : type === 'label' ? (
+        <Typography>{label}</Typography>
       ) : (
         <Controller
           name={name!}
@@ -77,6 +80,7 @@ const FormController = <T extends FieldValues>(
               return (
                 <UploadFile
                   label={label}
+                  hideLink={hideLink}
                   handleSelectFile={handleUploadFile!}
                   error={props.fieldState.invalid}
                   errorMessage={props.fieldState.error?.message}

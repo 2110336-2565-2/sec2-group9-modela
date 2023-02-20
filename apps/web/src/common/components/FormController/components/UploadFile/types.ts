@@ -4,4 +4,5 @@ export interface IUploadFileProps {
   handleSelectFile: (file: Blob) => void
   label?: string
   url?: string
+  hideLink?: boolean
 }
