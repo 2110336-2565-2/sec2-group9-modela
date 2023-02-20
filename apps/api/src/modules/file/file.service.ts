@@ -4,7 +4,11 @@ import {
   S3Client,
 } from '@aws-sdk/client-s3'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
-import { Injectable, InternalServerErrorException } from '@nestjs/common'
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { Express } from 'express'
 
@@ -13,7 +17,7 @@ export class FileService {
   private s3Client: S3Client
   constructor(private configService: ConfigService) {
     this.s3Client = new S3Client({
-      region: 'us-west-2',
+      region: configService.get('aws.region'),
       credentials: {
         accessKeyId: configService.get('aws.accessKeyId'),
         secretAccessKey: configService.get('aws.secretAccessKey'),
@@ -25,7 +29,7 @@ export class FileService {
     try {
       const command = new PutObjectCommand({
         Bucket: 'fridge-agile',
-        Key: fileName,
+        Key: this.configService.get('aws.rootPath') + fileName,
       })
       const signed = await getSignedUrl(this.s3Client, command, {
         expiresIn: 3600,
@@ -39,10 +43,12 @@ export class FileService {
   }
 
   async postUploadFile(file: Express.Multer.File, fileName: string) {
+    if (!file) throw new BadRequestException('No File Upload')
+    const ext = file.originalname.split('.').at(-1)
     try {
       const command = new PutObjectCommand({
         Bucket: 'fridge-agile',
-        Key: fileName,
+        Key: this.configService.get('aws.rootPath') + fileName + '.' + ext,
         Body: file.buffer,
       })
       return await this.s3Client.send(command)
@@ -52,11 +58,12 @@ export class FileService {
     }
   }
 
-  async getDownloadUrl(fileName: string) {
+  async getDownloadUrl(fileName: string): Promise<string> {
+    if (!fileName) return null
     try {
       const command = new GetObjectCommand({
         Bucket: 'fridge-agile',
-        Key: fileName,
+        Key: this.configService.get('aws.rootPath') + fileName,
       })
       const signed = await getSignedUrl(this.s3Client, command, {
         expiresIn: 3600,

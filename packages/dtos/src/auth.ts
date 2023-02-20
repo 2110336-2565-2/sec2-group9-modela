@@ -75,6 +75,11 @@ export class SignupActorDto implements Partial<Actor & User> {
   idCardImageUrl: string
 }
 
+export class SignupActorWithFileDto extends SignupActorDto {
+  @ApiPropertyOptional({ type: 'string', format: 'binary' })
+  file: Express.Multer.File
+}
+
 export class SignupCastingDto implements Partial<Casting & User> {
   @IsEmail()
   @ApiProperty()
@@ -113,6 +118,11 @@ export class SignupCastingDto implements Partial<Casting & User> {
   @IsUrl()
   @ApiProperty()
   employmentCertUrl: string
+}
+
+export class SignupCastingWithFileDto extends SignupCastingDto {
+  @ApiPropertyOptional({ type: 'string', format: 'binary' })
+  file: Express.Multer.File
 }
 
 export class LoginDto implements Partial<User> {

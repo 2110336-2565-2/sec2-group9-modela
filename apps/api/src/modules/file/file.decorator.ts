@@ -12,10 +12,10 @@ import { ApiConsumes } from '@nestjs/swagger'
 export const CheckedFile = () => {
   return UploadedFile(
     new ParseFilePipe({
-      fileIsRequired: false,
+      fileIsRequired: true,
       validators: [
-        new MaxFileSizeValidator({ maxSize: 1024 * 1024 }),
-        new FileTypeValidator({ fileType: 'image/*' }),
+        new MaxFileSizeValidator({ maxSize: 5 * 1024 * 1024 }),
+        new FileTypeValidator({ fileType: '(application/pdf|image/*)' }),
       ],
     }),
   )
