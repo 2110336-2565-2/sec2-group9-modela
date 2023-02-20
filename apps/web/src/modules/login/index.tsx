@@ -3,7 +3,6 @@ import FormController from 'common/components/FormController'
 import withGuard from 'common/hoc/withGuard'
 import Link from 'next/link'
 import React from 'react'
-import { Control, FieldValues } from 'react-hook-form'
 
 import { FORM_LAYOUT } from './constants'
 import useLoginForm from './hooks/useLoginForm'
@@ -27,7 +26,7 @@ const Login = () => {
           {FORM_LAYOUT.map((props) => (
             <FormController
               // I do not know why I cannot directly pass control
-              control={control as unknown as Control<FieldValues>}
+              control={control as any}
               key={JSON.stringify(props)}
               {...props}
             />

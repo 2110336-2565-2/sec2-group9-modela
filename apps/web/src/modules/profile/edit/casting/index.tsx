@@ -2,7 +2,6 @@ import { Button, CircularProgress, Grid } from '@mui/material'
 import FormController from 'common/components/FormController'
 import ProfileImage from 'common/components/ProfileImage'
 import { Fragment } from 'react'
-import { Control, FieldValues } from 'react-hook-form'
 
 import { FORM_LAYOUT } from './constants'
 import useEditCastingForm from './hooks/useEditCastingForm'
@@ -34,7 +33,7 @@ const EditCastingProfile = () => {
               )}
               <FormController
                 // I do not know why I cannot directly pass control
-                control={control as unknown as Control<FieldValues>}
+                control={control as any}
                 handleUploadFile={handleUploadImage}
                 {...props}
               />

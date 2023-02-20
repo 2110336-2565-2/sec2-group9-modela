@@ -25,10 +25,7 @@ export const GENDER_CHOICE: MenuItemProps[] = [
 ]
 
 export const FORM_LAYOUT:
-  | (
-      | Omit<IFormControllerProps<IPostJobSchemaType>, 'control'>
-      | { type: 'shooting' }
-    )[] = [
+  | (IFormControllerProps<IPostJobSchemaType> | { type: 'shooting' })[] = [
   { type: 'title', label: 'รายละเอียดงาน' },
   {
     type: 'textField',

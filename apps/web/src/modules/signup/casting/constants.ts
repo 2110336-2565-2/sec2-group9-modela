@@ -2,10 +2,7 @@ import { IFormControllerProps } from 'common/components/FormController/types'
 
 import { ICastingSignupSchemaType } from './hooks/useCastingForm/schema'
 
-export const FORM_LAYOUT: Omit<
-  IFormControllerProps<ICastingSignupSchemaType>,
-  'control'
->[] = [
+export const FORM_LAYOUT: IFormControllerProps<ICastingSignupSchemaType>[] = [
   {
     type: 'divider',
   },
