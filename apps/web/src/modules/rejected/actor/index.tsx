@@ -1,7 +1,6 @@
 import { Box, Button, CircularProgress, Grid } from '@mui/material'
 import FormController from 'common/components/FormController'
 import React from 'react'
-import { Control, FieldValues } from 'react-hook-form'
 
 import { FORM_LAYOUT } from './constants'
 import useActorForm from './hooks/useActorForm'
@@ -16,7 +15,7 @@ const EditActorInfoForm = ({ initialData }: EditActorInfoFormProps) => {
       <Grid container spacing={2} sx={{ padding: '12px' }}>
         {FORM_LAYOUT.map((props) => (
           <FormController
-            control={control as unknown as Control<FieldValues>}
+            control={control as any}
             key={JSON.stringify(props)}
             handleUploadFile={
               props.type === 'uploadFile' ? handleUploadFile : undefined
