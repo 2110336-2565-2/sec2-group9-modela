@@ -22,7 +22,7 @@ const RejectedPage = () => {
           <Divider sx={{ width: '100%' }} />
           <Typography
             variant="subtitle1"
-            color="#0000009A"
+            color="error"
             sx={{ textAlign: 'center' }}
           >
             เหตุผล: {initialData.reason}
