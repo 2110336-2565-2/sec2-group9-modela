@@ -22,8 +22,10 @@ module.exports = withBundleAnalyzer({
   },
   webpack: (config) => {
     Object.assign(config.resolve.alias, {
-      '@nestjs/swagger': '@modela/frontend-optimizer',
-      '@faker-js/faker': '@modela/frontend-optimizer',
+      '@nestjs/swagger': '@modela/frontend-optimizer/src/swagger',
+      '@faker-js/faker': '@modela/frontend-optimizer/src/faker',
+      'class-validator': '@modela/frontend-optimizer/src/class-decorators',
+      'class-transformer': '@modela/frontend-optimizer/src/class-decorators',
     })
 
     return config
