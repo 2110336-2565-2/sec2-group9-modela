@@ -32,7 +32,7 @@ const FormController = <T extends FieldValues>(
               return (
                 <TextField
                   required={!props.optional}
-                  fullWidth={props.fullWidth}
+                  fullWidth={props.fullWidth ?? true}
                   label={props.label}
                   inputRef={ref}
                   {...field}
@@ -45,7 +45,7 @@ const FormController = <T extends FieldValues>(
               return (
                 <TextField
                   required={!props.optional}
-                  fullWidth={props.fullWidth}
+                  fullWidth={props.fullWidth ?? true}
                   label={props.label}
                   inputRef={ref}
                   {...field}
@@ -80,7 +80,7 @@ const FormController = <T extends FieldValues>(
                 <TextField
                   select
                   required={!props.optional}
-                  fullWidth={props.fullWidth}
+                  fullWidth={props.fullWidth ?? true}
                   label={props.label}
                   inputRef={ref}
                   {...field}
@@ -136,7 +136,7 @@ const FormController = <T extends FieldValues>(
             return (
               <PasswordTextField
                 required={!props.optional}
-                fullWidth={props.fullWidth}
+                fullWidth={props.fullWidth ?? true}
                 label={props.label}
                 {...field}
                 inputRef={ref}
