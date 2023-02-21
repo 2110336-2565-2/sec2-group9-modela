@@ -622,4 +622,44 @@ describe('JobService', () => {
       })
     })
   })
+
+  describe('get job summary by id', () => {
+    const MOCK_JOB_SUMMARY = {
+      status: JobStatus.OPEN,
+      pendingActorCount: 1,
+      castingId: 1,
+    }
+    const MOCK_JOB_ID = 1
+    const MOCK_USER_ID = 1
+
+    it('should return job summary', async () => {
+      jest
+        .spyOn(repository, 'getJobSummaryById')
+        .mockResolvedValue(MOCK_JOB_SUMMARY)
+
+      const result = await service.getJobSummaryById(MOCK_JOB_ID, MOCK_USER_ID)
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { castingId, ...rest } = MOCK_JOB_SUMMARY
+      expect(result).toEqual(rest)
+    })
+
+    it('should throw not found exception', async () => {
+      jest.spyOn(repository, 'getJobSummaryById').mockResolvedValue(null)
+
+      await expect(
+        service.getJobSummaryById(MOCK_JOB_ID, MOCK_USER_ID),
+      ).rejects.toThrow(NotFoundException)
+    })
+
+    it('should throw forbidden exception', async () => {
+      jest
+        .spyOn(repository, 'getJobSummaryById')
+        .mockResolvedValue({ ...MOCK_JOB_SUMMARY, castingId: 2 })
+
+      await expect(
+        service.getJobSummaryById(MOCK_JOB_ID, MOCK_USER_ID),
+      ).rejects.toThrow(ForbiddenException)
+    })
+  })
 })
