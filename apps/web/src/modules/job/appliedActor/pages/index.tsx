@@ -6,10 +6,16 @@ import React from 'react'
 
 import ActorCard from '../components/ActorCard'
 import ActorFilter from '../components/ActorFilter'
+import ActorFilterModal from '../components/ActorFilterModal'
+import useFilter from './hooks/useFilter'
 import { CardsContainer, PageContainer } from './styled'
 
 const AppliedActorPage = () => {
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
+  const { modal } = useFilter()
+
+  if (isMobile && modal.isOpen)
+    return <ActorFilterModal onClose={modal.close} />
 
   return (
     <PageContainer>
