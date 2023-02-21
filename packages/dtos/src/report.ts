@@ -25,6 +25,7 @@ export class ReportDto {
 export class PostReportDto extends OmitType(ReportDto, [
   'reportId',
   'reporterId',
+  'reporterName',
 ]) {}
 
 export class GetReportDto extends ReportDto {}
