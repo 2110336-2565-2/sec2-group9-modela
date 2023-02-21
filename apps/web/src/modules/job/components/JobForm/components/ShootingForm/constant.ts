@@ -4,7 +4,7 @@ import { IPostJobSchemaType } from '../../hooks/useJobForm/schema'
 
 export const formLayout = (
   index: number,
-): Omit<IFormControllerProps<IPostJobSchemaType>, 'control'>[] => [
+): IFormControllerProps<IPostJobSchemaType>[] => [
   {
     type: 'textField',
     label: 'สถานที่ถ่ายทำ',

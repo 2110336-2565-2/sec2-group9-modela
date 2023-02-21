@@ -19,12 +19,9 @@ const GENDER_CHOICE: MenuItemProps[] = [
   },
 ]
 
-export const FORM_LAYOUT: Omit<
-  IFormControllerProps<IEditActorInfoSchema>,
-  'control'
->[] = [
+export const FORM_LAYOUT: IFormControllerProps<IEditActorInfoSchema>[] = [
   {
-    type: 'typography',
+    type: 'title',
     label: 'แก้ไขข้อมูลนักแสดง',
   },
   {

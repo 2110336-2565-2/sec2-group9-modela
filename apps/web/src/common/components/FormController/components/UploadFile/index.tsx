@@ -7,7 +7,7 @@ import { UploadFileContainer } from './styled'
 import { IUploadFileProps } from './types'
 
 const UploadFile: FC<IUploadFileProps> = (props) => {
-  const { error, url, errorMessage, handleSelectFile, label } = props
+  const { error, url, errorMessage, handleSelectFile, label, hideLink } = props
   const { handleUploadFile, name, removeSameFile } =
     useUploadFile(handleSelectFile)
 
@@ -38,7 +38,7 @@ const UploadFile: FC<IUploadFileProps> = (props) => {
           {errorMessage}
         </Typography>
       )}
-      {name && !error && (
+      {name && !hideLink && !error && (
         <Typography sx={{ textAlign: 'center' }} variant="subtitle2">
           <Link
             href={url}

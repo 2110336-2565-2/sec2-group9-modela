@@ -92,15 +92,7 @@ describe('FormController', () => {
   })
   test('should render Divider if type is divider', () => {
     const { default: FormController } = require('.') as typeof import('.')
-    render(
-      <FormController
-        label="Hello"
-        fullWidth={false}
-        sm={12}
-        xs={12}
-        type="divider"
-      />,
-    )
+    render(<FormController sm={12} xs={12} type="divider" />)
 
     expect(mockDivider).toBeCalled()
   })

@@ -19,10 +19,7 @@ const GENDER_CHOICE: MenuItemProps[] = [
   },
 ]
 
-export const FORM_LAYOUT: Omit<
-  IFormControllerProps<IActorSignupSchemaType>,
-  'control'
->[] = [
+export const FORM_LAYOUT: IFormControllerProps<IActorSignupSchemaType>[] = [
   {
     type: 'divider',
   },

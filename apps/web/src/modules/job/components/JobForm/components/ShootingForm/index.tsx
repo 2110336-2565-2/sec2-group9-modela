@@ -2,7 +2,6 @@ import { Remove } from '@mui/icons-material'
 import { Grid, Typography } from '@mui/material'
 import FormController from 'common/components/FormController'
 import React from 'react'
-import { Control, FieldValues } from 'react-hook-form'
 
 import { formLayout } from './constant'
 import { ShootingFormProps } from './types'
@@ -27,7 +26,7 @@ const ShootingForm = (prop: ShootingFormProps) => {
       </Grid>
       {formLayout(index).map((props) => (
         <FormController
-          control={control as unknown as Control<FieldValues>}
+          control={control as any}
           key={JSON.stringify(props)}
           {...props}
         />
