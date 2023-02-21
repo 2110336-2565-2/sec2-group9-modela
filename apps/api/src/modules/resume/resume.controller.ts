@@ -13,8 +13,8 @@ import { UseAuthGuard } from '../auth/misc/jwt.decorator'
 import { User } from '../auth/misc/user.decorator'
 import { ResumeService } from './resume.service'
 
-@ApiTags('resume')
-@Controller('resume')
+@ApiTags('resumes')
+@Controller('resumes')
 export class ResumeController {
   constructor(private readonly resumeService: ResumeService) {}
 
