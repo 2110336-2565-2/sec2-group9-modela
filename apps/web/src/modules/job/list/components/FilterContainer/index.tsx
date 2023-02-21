@@ -185,7 +185,7 @@ export default function FilterContainer(props: FilterContainerProps) {
               }
             />
           }
-          label="เปิดรับสมัคร"
+          label={<Typography variant="subtitle2">เปิดรับสมัคร</Typography>}
         />
         <FormControlLabel
           control={
@@ -196,7 +196,7 @@ export default function FilterContainer(props: FilterContainerProps) {
               }
             />
           }
-          label="ปิดรับสมัคร"
+          label={<Typography variant="subtitle2">ปิดรับสมัคร</Typography>}
         />
       </FormGroup>
 
@@ -212,7 +212,7 @@ export default function FilterContainer(props: FilterContainerProps) {
               }
             />
           }
-          label="ชาย"
+          label={<Typography variant="subtitle2">ชาย</Typography>}
         />
         <FormControlLabel
           control={
@@ -223,7 +223,7 @@ export default function FilterContainer(props: FilterContainerProps) {
               }
             />
           }
-          label="หญิง"
+          label={<Typography variant="subtitle2">หญิง</Typography>}
         />
         <FormControlLabel
           control={
@@ -234,7 +234,7 @@ export default function FilterContainer(props: FilterContainerProps) {
               }
             />
           }
-          label="อื่นๆ"
+          label={<Typography variant="subtitle2">อื่นๆ</Typography>}
         />
       </FormGroup>
       <Button type="submit" sx={{ display: 'none' }}>
