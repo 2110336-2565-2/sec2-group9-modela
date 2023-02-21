@@ -51,7 +51,6 @@ describe('withGuard', () => {
           render(<WithGuard />)
 
           if (key === guardType) {
-            console.log({ value, key, guardType })
             expect(ChildrenSpy).toBeCalledTimes(1)
           } else {
             expect(replaceSpy).toBeCalledWith(replaceKey[key as GuardType])

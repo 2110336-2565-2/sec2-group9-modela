@@ -10,7 +10,6 @@ export class ApplicationRepository {
     jobId: number,
     query: GetAppliedActorQuery,
   ): Promise<ActorDto[]> {
-    console.log(query)
     const application = await this.prisma.application.findMany({
       where: { jobId, status: { in: query.status } },
       select: {

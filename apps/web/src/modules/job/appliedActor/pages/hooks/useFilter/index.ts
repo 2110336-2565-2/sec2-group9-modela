@@ -33,11 +33,9 @@ const useFilter = () => {
     (event?: React.FormEvent) => {
       event?.preventDefault()
       handleSubmit((value) => {
-        console.log(value)
         const status = Object.values(ApplicationStatus).filter(
           (status) => value[status],
         )
-        console.log({ name: value.name, status })
         setQuery({ name: value.name, status })
       })()
     },
