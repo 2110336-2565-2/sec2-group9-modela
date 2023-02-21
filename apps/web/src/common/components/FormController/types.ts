@@ -3,7 +3,7 @@ import { Control, FieldValues, Path } from 'react-hook-form'
 
 export type IFormControllerProps<T extends FieldValues> = {
   control?: Control<T>
-  handleUploadFile?(file: Blob): void
+  handleUploadFile?(file: Blob, filename: string): void
 } & (
   | IDivider
   | ITitle

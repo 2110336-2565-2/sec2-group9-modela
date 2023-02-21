@@ -8,6 +8,12 @@ export interface Configuration {
     secure: boolean
   }
   enableCors: boolean
+  aws: {
+    accessKeyId: string
+    secretAccessKey: string
+    region: string
+    rootPath: string
+  }
 }
 
 export const configuration = (): Configuration => {
@@ -21,5 +27,11 @@ export const configuration = (): Configuration => {
       secure: process.env.COOKIE_SECURE === 'true',
     },
     enableCors: process.env.ENABLE_CORS === 'true',
+    aws: {
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+      region: process.env.AWS_REGION,
+      rootPath: process.env.AWS_ROOT_PATH + '/',
+    },
   }
 }

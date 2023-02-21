@@ -3,9 +3,14 @@ import { PendingUserDto, UpdateUserStatusDto } from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
 
+import { FileService } from '../file/file.service'
+
 @Injectable()
 export class UserRepository {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private fileService: FileService,
+  ) {}
 
   async getUserById(userId: number): Promise<User> {
     return await this.prisma.user.findUnique({
@@ -32,7 +37,7 @@ export class UserRepository {
         status: UserStatus.PENDING,
       },
     })
-    const pendingUsers = users.map((user) => ({
+    const pendingUsers = users.map(async (user) => ({
       type: user.type,
       data: {
         userId: user.userId,
@@ -42,15 +47,19 @@ export class UserRepository {
         ...(user.Casting && {
           companyName: user.Casting.companyName,
           companyId: user.Casting.companyId,
-          employmentCertUrl: user.Casting.employmentCertUrl,
+          employmentCertUrl: await this.fileService.getDownloadUrl(
+            user.Casting.employmentCertUrl,
+          ),
         }),
         ...(user.Actor && {
-          idCardImageUrl: user.Actor.idCardImageUrl,
+          idCardImageUrl: await this.fileService.getDownloadUrl(
+            user.Actor.idCardImageUrl,
+          ),
           ssn: user.Actor.ssn,
         }),
       },
     }))
-    return pendingUsers
+    return await Promise.all(pendingUsers)
   }
 
   async updateUserStatus(
