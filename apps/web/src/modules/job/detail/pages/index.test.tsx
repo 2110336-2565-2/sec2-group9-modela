@@ -8,6 +8,7 @@ import React from 'react'
 describe('<JobDetailPage />', () => {
   mockRouter(true, { jobId: 1 })
   const JobCardMock = mockAndSpy('modules/job/detail/components/JobCard')
+  const JobMenuSpy = mockAndSpy('modules/job/components/JobMenu')
   const { mockGetReturn } = mockApiClient()
 
   mockUser(UserType.ACTOR, UserStatus.ACCEPTED)
@@ -32,6 +33,7 @@ describe('<JobDetailPage />', () => {
       render(<JobDetailPage />)
       await waitFor(() => {
         expect(JobCardMock).toBeCalledTimes(1)
+        expect(JobMenuSpy).toBeCalledTimes(1)
       })
     })
 
@@ -41,6 +43,7 @@ describe('<JobDetailPage />', () => {
       render(<JobDetailPage />)
       await waitFor(() => {
         expect(JobCardMock).not.toBeCalled()
+        expect(JobMenuSpy).not.toBeCalled()
       })
     })
   })
