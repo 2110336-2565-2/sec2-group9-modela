@@ -67,6 +67,12 @@ const useCastingForm = () => {
 
   const handleUploadFile = useCallback(
     (file: Blob, filename: string) => {
+      if (file.size > 5 * 1024 * 1024) {
+        setError('employmentCertUrl', {
+          message: 'ขนาดไฟล์เกิน 5 MB',
+        })
+        return
+      }
       const blobUrl = URL.createObjectURL(file)
 
       setFile(file)
@@ -75,7 +81,7 @@ const useCastingForm = () => {
         shouldValidate: true,
       })
     },
-    [setValue],
+    [setValue, setError],
   )
 
   const handleClickSubmit: FormEventHandler<HTMLFormElement> =

@@ -67,6 +67,12 @@ const useActorForm = () => {
 
   const handleUploadFile = useCallback(
     (file: Blob, filename: string) => {
+      if (file.size > 5 * 1024 * 1024) {
+        setError('idCardImageUrl', {
+          message: 'ขนาดไฟล์เกิน 5 MB',
+        })
+        return
+      }
       const blobUrl = URL.createObjectURL(file)
 
       setFile(file)
@@ -75,7 +81,7 @@ const useActorForm = () => {
         shouldValidate: true,
       })
     },
-    [setValue],
+    [setError, setValue],
   )
 
   const handleClickSubmit: FormEventHandler<HTMLFormElement> =
