@@ -11,10 +11,13 @@ import {
 
 import { UseAuthGuard } from '../auth/misc/jwt.decorator'
 import { User } from '../auth/misc/user.decorator'
+import { ResumeService } from './resume.service'
 
 @ApiTags('resume')
 @Controller('resume')
 export class ResumeController {
+  constructor(private readonly resumeService: ResumeService) {}
+
   @Post()
   @UseAuthGuard()
   @UseAuthGuard(UserType.ACTOR)
@@ -23,7 +26,6 @@ export class ResumeController {
   @ApiBadRequestResponse({ description: 'Wrong format' })
   @ApiOperation({ summary: 'adds resume to user profile' })
   createJob(@Body() postResumeDto: PostResumeDto, @User() user: JwtDto) {
-    // placeholder so eslint doesn't complain
-    return postResumeDto.name + user.userId
+    return this.resumeService.createResume(postResumeDto, user)
   }
 }
