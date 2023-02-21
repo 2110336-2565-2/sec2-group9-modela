@@ -6,7 +6,7 @@ import React from 'react'
 
 import { HeaderContainer } from './styled'
 
-const ActorCardHeader = (props: Omit<ActorDto, 'resumeId'>) => {
+const ActorCardHeader = (props: Omit<ActorDto, 'resumeUrl'>) => {
   const { firstName, middleName, lastName, profileImageUrl, actorId } = props
   return (
     <HeaderContainer>

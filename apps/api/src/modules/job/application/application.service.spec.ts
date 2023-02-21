@@ -1,4 +1,4 @@
-import { mock } from '@modela/database'
+import { ApplicationStatus, mock } from '@modela/database'
 import { ForbiddenException, NotFoundException } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import { PrismaService } from 'src/database/prisma.service'
@@ -37,7 +37,13 @@ describe('ApplicationService', () => {
     const MOCK_ACTORS = mock('user')
       .pick(['firstName', 'middleName', 'lastName', 'profileImageUrl'])
       .get(3)
-      .map((actor, idx) => ({ ...actor, actorId: idx + 2, resumeId: idx + 2 }))
+      .map((actor, idx) => ({
+        ...actor,
+        actorId: idx + 2,
+        resumeId: idx + 2,
+        resumeUrl: '',
+        status: ApplicationStatus.PENDING,
+      }))
 
     beforeEach(() => {
       jest

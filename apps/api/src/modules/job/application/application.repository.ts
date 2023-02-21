@@ -22,14 +22,20 @@ export class ApplicationRepository {
             },
           },
         },
-        resumeId: true,
+        Resume: {
+          select: {
+            resumeUrl: true,
+          },
+        },
+        status: true,
         actorId: true,
       },
     })
 
-    return application.map(({ Actor: { User }, ...rest }) => ({
+    return application.map(({ Actor: { User }, Resume, ...rest }) => ({
       ...rest,
       ...User,
+      ...Resume,
     }))
   }
 }

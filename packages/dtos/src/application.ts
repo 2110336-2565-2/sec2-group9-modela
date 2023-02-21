@@ -1,7 +1,7 @@
-import { Actor, Resume, User } from '@modela/database'
+import { ApplicationStatus } from '@modela/database'
 import { ApiProperty } from '@nestjs/swagger'
 
-export class ActorDto implements Partial<Actor & User & Resume> {
+export class ActorDto {
   @ApiProperty()
   actorId: number
 
@@ -15,10 +15,16 @@ export class ActorDto implements Partial<Actor & User & Resume> {
   lastName: string
 
   @ApiProperty()
-  resumeId: number
+  resumeUrl: string
 
   @ApiProperty()
   profileImageUrl?: string
+
+  @ApiProperty()
+  description?: string
+
+  @ApiProperty()
+  status?: ApplicationStatus
 }
 
 export class GetAppliedActorDto {
