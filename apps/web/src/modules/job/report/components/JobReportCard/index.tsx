@@ -2,7 +2,12 @@ import { GetReportsDto } from '@modela/dtos'
 import { Divider, Typography } from '@mui/material'
 
 import ReportDetail from './components/ReportDetail'
-import { ButtonContainer, CardContainer, StyledButton } from './styled'
+import {
+  AcceptButton,
+  ButtonContainer,
+  CardContainer,
+  RejectButton,
+} from './styled'
 
 const JobReportCard = (prop: GetReportsDto) => {
   const { jobTitle, reports } = prop
@@ -21,12 +26,8 @@ const JobReportCard = (prop: GetReportsDto) => {
         <ReportDetail key={idx} {...report} />
       ))}
       <ButtonContainer>
-        <StyledButton sx={{ backgroundColor: '#66A373' }}>
-          ยกเลิกการแจ้งปัญหาทั้งหมด
-        </StyledButton>
-        <StyledButton sx={{ backgroundColor: '#AA5B5B' }}>
-          ยืนยันยกเลิกงาน
-        </StyledButton>
+        <RejectButton>ยกเลิกการแจ้งปัญหาทั้งหมด</RejectButton>
+        <AcceptButton>ยืนยันยกเลิกงาน</AcceptButton>
       </ButtonContainer>
     </CardContainer>
   )
