@@ -12,6 +12,11 @@ describe('<EditCastingProfile />', () => {
     handleClickSubmit: handleClickSubmitMock,
     control: {},
     imageUrl: '',
+    user: {
+      userId: 123,
+      firstName: 'asd',
+      profileImageUrl: 'asdsa',
+    },
     isDataLoading: false,
     handleUploadImage: jest.fn(),
     loading: false,
