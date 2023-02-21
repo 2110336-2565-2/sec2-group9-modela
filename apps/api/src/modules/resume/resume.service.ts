@@ -7,12 +7,7 @@ import { ResumeRepository } from './resume.respository'
 export class ResumeService {
   constructor(private readonly repository: ResumeRepository) {}
 
-  private validateResumeDto() {
-    return true
-  }
-
   async createResume(postResumeDto: PostResumeDto, user: JwtDto) {
-    this.validateResumeDto()
     return this.repository.createResume(postResumeDto, user)
   }
 }
