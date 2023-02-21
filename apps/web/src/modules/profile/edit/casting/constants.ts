@@ -29,7 +29,6 @@ export const FORM_LAYOUT: IFormControllerProps<IEditCastingProfileSchemaType>[] 
     },
     {
       type: 'textField',
-      fullWidth: true,
       label: 'เบอร์โทรศัพท์',
       name: 'phoneNumber',
       optional: true,
@@ -38,7 +37,6 @@ export const FORM_LAYOUT: IFormControllerProps<IEditCastingProfileSchemaType>[] 
     },
     {
       type: 'textField',
-      fullWidth: true,
       label: 'ข้อมูลอื่น ๆ',
       name: 'description',
       optional: true,
