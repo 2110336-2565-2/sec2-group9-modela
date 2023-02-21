@@ -59,7 +59,7 @@ const EditCastingProfile = () => {
                   loading && <CircularProgress size="24px" color="primary" />
                 }
               >
-                สมัครสมาชิก
+                บันทึกข้อมูล
               </Button>
             </Grid>
           </Grid>
