@@ -1,7 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import {
   IsAlphanumeric,
-  IsBoolean,
   IsEmail,
   IsEnum,
   IsNotEmpty,
@@ -10,7 +9,6 @@ import {
   IsOptional,
   IsPhoneNumber,
   IsString,
-  IsUrl,
   Length,
 } from 'class-validator'
 import {
@@ -69,10 +67,6 @@ export class SignupActorDto implements Partial<Actor & User> {
   @IsPhoneNumber('TH')
   @ApiProperty()
   phoneNumber: string
-
-  @IsUrl()
-  @ApiProperty()
-  idCardImageUrl: string
 }
 
 export class SignupActorWithFileDto extends SignupActorDto {
@@ -114,10 +108,6 @@ export class SignupCastingDto implements Partial<Casting & User> {
   @IsNotEmpty()
   @ApiProperty()
   companyName: string
-
-  @IsUrl()
-  @ApiProperty()
-  employmentCertUrl: string
 }
 
 export class SignupCastingWithFileDto extends SignupCastingDto {

@@ -14,8 +14,12 @@ export class AuthRepository {
   ) {}
 
   async createCasting(payload: SignupCastingDto, file: Express.Multer.File) {
-    const { companyId, companyName, employmentCertUrl, ...userData } = payload
-    const castingData = { companyId, companyName, employmentCertUrl }
+    const { companyId, companyName, ...userData } = payload
+    const castingData = {
+      companyId,
+      companyName,
+      employmentCertUrl: '',
+    }
     return await this.prisma.$transaction(async (tx) => {
       const user = await tx.user.create({
         data: {
@@ -27,7 +31,7 @@ export class AuthRepository {
         },
       })
       const fileName = 'user/credential/' + user.userId
-      this.fileService.postUploadFile(file, fileName)
+      await this.fileService.postUploadFile(file, fileName)
 
       return await tx.user.update({
         where: {
@@ -45,9 +49,14 @@ export class AuthRepository {
   }
 
   async createActor(payload: SignupActorDto, file: Express.Multer.File) {
-    const { prefix, nationality, ssn, gender, idCardImageUrl, ...userData } =
-      payload
-    const actorData = { prefix, nationality, ssn, gender, idCardImageUrl }
+    const { prefix, nationality, ssn, gender, ...userData } = payload
+    const actorData = {
+      prefix,
+      nationality,
+      ssn,
+      gender,
+      idCardImageUrl: '',
+    }
     return await this.prisma.$transaction(async (tx) => {
       const user = await this.prisma.user.create({
         data: {
@@ -57,7 +66,7 @@ export class AuthRepository {
         },
       })
       const fileName = 'user/credential/' + user.userId
-      this.fileService.postUploadFile(file, fileName)
+      await this.fileService.postUploadFile(file, fileName)
 
       return await tx.user.update({
         where: {

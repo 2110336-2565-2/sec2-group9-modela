@@ -1,6 +1,8 @@
 import { ChangeEvent, MouseEventHandler, useCallback, useState } from 'react'
 
-const useUploadFile = (setUploadFile: (file: Blob) => void) => {
+const useUploadFile = (
+  setUploadFile: (file: Blob, filename: string) => void,
+) => {
   const [name, setName] = useState('')
 
   const handleUploadFile = useCallback(
@@ -8,7 +10,7 @@ const useUploadFile = (setUploadFile: (file: Blob) => void) => {
       if (e.target.files && e.target.files.length > 0) {
         const file = e.target.files[0]
 
-        setUploadFile(file)
+        setUploadFile(file, file.name)
         setName(file.name)
       }
     },

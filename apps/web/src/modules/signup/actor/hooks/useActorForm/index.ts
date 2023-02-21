@@ -1,5 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { SignupActorDto } from '@modela/dtos'
 import { useUser } from 'common/context/UserContext'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
@@ -28,20 +27,32 @@ const useActorForm = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   const [file, setFile] = useState<Blob | null>(null)
+  const [filename, setFilename] = useState<string>()
   const [loading, setLoading] = useState(false)
 
   const handleSuccess: SubmitHandler<IActorSignupSchemaType> = useCallback(
     // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-    async ({ confirmPassword, ...data }) => {
+    async ({ confirmPassword, idCardImageUrl, ...data }) => {
       setLoading(true)
       try {
-        const postBody = {
-          ...data,
-          idCardImageUrl: 'https://via.placeholder.com/150',
-        }
-        await apiClient.post<unknown, unknown, SignupActorDto>(
+        const formData = new FormData()
+        Object.entries(data).forEach(([key, val]) => {
+          formData.append(key, val)
+        })
+
+        formData.append(
+          'file',
+          new File([file!], filename!, { type: file?.type }),
+        )
+
+        await apiClient.post<unknown, unknown, FormData>(
           '/auth/signup/actor',
-          postBody,
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          },
         )
         await refetch()
         router.push('/job')
@@ -51,14 +62,15 @@ const useActorForm = () => {
         setLoading(false)
       }
     },
-    [handleError, refetch, router],
+    [file, filename, handleError, refetch, router],
   )
 
   const handleUploadFile = useCallback(
-    (file: Blob) => {
+    (file: Blob, filename: string) => {
       const blobUrl = URL.createObjectURL(file)
 
       setFile(file)
+      setFilename(filename)
       setValue('idCardImageUrl', blobUrl, {
         shouldValidate: true,
       })
