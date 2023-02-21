@@ -17,8 +17,9 @@ import { Gender, Job, JobStatus, Shooting } from '@modela/database'
 export enum SearchJobStatus {
   'OPEN' = 'OPEN',
   'CLOSE' = 'CLOSE',
+  'CANCELLED' = 'CANCELLED',
+  'REPORTED' = 'REPORTED',
 }
-
 const maxInt32 = 2147483647 //max int32
 export class SearchJobDto {
   @IsOptional()
@@ -227,9 +228,22 @@ export class GetJobCardDto extends OmitType(EditJobDto, [
   status: JobStatus
 }
 
+export class GetJobCardByAdminDto extends GetJobCardDto {
+  @ApiProperty()
+  isReported: Boolean
+}
+
 export class GetJobCardWithMaxPageDto {
   @ApiProperty({ type: GetJobCardDto, isArray: true })
   jobs: GetJobCardDto[]
+
+  @ApiProperty()
+  maxPage: number
+}
+
+export class GetJobCardByAdminWithMaxPageDto {
+  @ApiProperty({ type: GetJobCardByAdminDto, isArray: true })
+  jobs: GetJobCardByAdminDto[]
 
   @ApiProperty()
   maxPage: number

@@ -3,6 +3,7 @@ import {
   CreateJobDto,
   EditJobDto,
   Gender,
+  GetJobCardByAdminWithMaxPageDto,
   GetJobCardWithMaxPageDto,
   JobSummaryDto,
   JwtDto,
@@ -16,6 +17,7 @@ import {
   ForbiddenException,
   InternalServerErrorException,
 } from '@nestjs/common/exceptions'
+import console from 'console'
 
 import { JobRepository } from './job.repository'
 
@@ -84,8 +86,9 @@ export class JobService {
       skip: (searchJobDto.page - 1) * searchJobDto.limit,
       //filtering
       where: {
-        //job always have shooting
+        //joined filter
         Shooting: undefined,
+        Report: undefined,
 
         title: undefined,
         minAge: {
@@ -116,8 +119,13 @@ export class JobService {
 
     //handle status qyery
     const statusQuery = []
+
     //make OPEN for default
     searchJobDto.status = searchJobDto.status || [SearchJobStatus.OPEN]
+    if (!Array.isArray(searchJobDto.status)) {
+      searchJobDto.status = [searchJobDto.status]
+    }
+
     if (searchJobDto.status.includes(SearchJobStatus.OPEN)) {
       statusQuery.push(JobStatus.OPEN)
     }
@@ -127,12 +135,33 @@ export class JobService {
         JobStatus.SELECTION_ENDED,
         JobStatus.FINISHED,
       )
-      if (user.type !== UserType.ACTOR) {
+      if (user.type === UserType.CASTING) {
         statusQuery.push(JobStatus.CANCELLED)
       }
     }
-    params.where.status = {
-      in: statusQuery,
+    if (searchJobDto.status.includes(SearchJobStatus.CANCELLED)) {
+      statusQuery.push(JobStatus.CANCELLED)
+    }
+    if (searchJobDto.status.includes(SearchJobStatus.REPORTED)) {
+      //filter only reported job (by create after 1970)
+      params.where.Report = {
+        some: {
+          createdAt: {
+            gte: new Date('1970-01-01T00:00:00Z'),
+          },
+        },
+      }
+    }
+    if (
+      searchJobDto.status.length == 1 &&
+      searchJobDto.status.includes(SearchJobStatus.REPORTED)
+    ) {
+      params.where.status = undefined
+      console.log('only reported')
+    } else {
+      params.where.status = {
+        in: statusQuery,
+      }
     }
 
     //handle gender qyery
@@ -228,6 +257,38 @@ export class JobService {
     const jobsJoinCasting = await this.repository.getJobJoined(params)
     const result = new GetJobCardWithMaxPageDto()
     result.jobs = jobsJoinCasting
+
+    //calculate maxPage
+    const allJobsCount = await this.repository.getJobCount({
+      where: params.where,
+    })
+    result.maxPage = Math.ceil(allJobsCount / searchJobDto.limit)
+
+    //return jobs
+    return result
+  }
+
+  async findAllByAdmin(searchJobDto: SearchJobDto, user: JwtDto) {
+    //set Default value for limit and page
+    searchJobDto.limit = searchJobDto.limit || 20
+    searchJobDto.page = searchJobDto.page || 1
+
+    //check if castingId is not equal to user.userId
+    if (user.type == UserType.CASTING) {
+      if (searchJobDto.castingId == undefined)
+        searchJobDto.castingId = user.userId
+      if (searchJobDto.castingId != user.userId) throw new ForbiddenException()
+    }
+
+    //set params for getJob
+    const params = this.convertRequestToParams(searchJobDto, user)
+
+    //get jobs with params from repository
+    const jobsJoinCastingReport = await this.repository.getJobJoinedByAdmin(
+      params,
+    )
+    const result = new GetJobCardByAdminWithMaxPageDto()
+    result.jobs = jobsJoinCastingReport
 
     //calculate maxPage
     const allJobsCount = await this.repository.getJobCount({
