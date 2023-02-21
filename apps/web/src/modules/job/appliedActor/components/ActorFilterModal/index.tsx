@@ -5,7 +5,7 @@ import ActorFilter from '../ActorFilter'
 import { ModalContainer } from './styled'
 import { ActorFilterModalProps } from './types'
 
-const ActorFilterModal = ({ onClose }: ActorFilterModalProps) => {
+const ActorFilterModal = ({ onClose, control }: ActorFilterModalProps) => {
   const override = useMemo(
     () => ({
       title: 'ค้นหานักแสดง',
@@ -17,7 +17,7 @@ const ActorFilterModal = ({ onClose }: ActorFilterModalProps) => {
 
   return (
     <ModalContainer>
-      <ActorFilter />
+      <ActorFilter control={control} />
     </ModalContainer>
   )
 }

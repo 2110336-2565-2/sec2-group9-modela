@@ -13,11 +13,11 @@ import { CardsContainer, PageContainer } from './styled'
 
 const AppliedActorPage = () => {
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
-  const { modal } = useFilter()
+  const { modal, control } = useFilter()
   const actorData = useActorData()
 
   if (isMobile && modal.isOpen)
-    return <ActorFilterModal onClose={modal.close} />
+    return <ActorFilterModal onClose={modal.close} control={control} />
 
   return (
     <PageContainer>
@@ -29,7 +29,7 @@ const AppliedActorPage = () => {
           <CircularProgress />
         )}
       </CardsContainer>
-      {!isMobile && <ActorFilter />}
+      {!isMobile && <ActorFilter control={control} />}
     </PageContainer>
   )
 }
