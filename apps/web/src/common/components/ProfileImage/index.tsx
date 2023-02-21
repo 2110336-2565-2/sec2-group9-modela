@@ -9,7 +9,9 @@ const ProfileImage = ({ src, userId, firstName, sx }: ProfileImageProps) => {
   const backgroundColor = getRandomColor(userId)
 
   return (
-    <ProfileImageContainer sx={{ backgroundColor, ...sx }}>
+    <ProfileImageContainer
+      sx={{ backgroundColor: src ? 'none' : backgroundColor, ...sx }}
+    >
       {src ? (
         // will change to next image after task 64, 65 is done
         // eslint-disable-next-line @next/next/no-img-element
