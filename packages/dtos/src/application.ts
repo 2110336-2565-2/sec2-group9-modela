@@ -1,5 +1,5 @@
 import { ApplicationStatus } from '@modela/database'
-import { ApiProperty } from '@nestjs/swagger'
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import { Type } from 'class-transformer'
 import {
   IsArray,
@@ -44,12 +44,12 @@ export class GetAppliedActorDto {
 }
 
 export class GetAppliedActorQuery {
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsString()
   name?: string
 
-  @ApiProperty({ type: ApplicationStatus, isArray: true })
+  @ApiPropertyOptional({ enum: ApplicationStatus, isArray: true })
   @IsOptional()
   @IsEnum(ApplicationStatus, { each: true })
   status?: ApplicationStatus[]
