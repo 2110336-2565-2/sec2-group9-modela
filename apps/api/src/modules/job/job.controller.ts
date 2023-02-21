@@ -4,6 +4,7 @@ import {
   GetJobCardWithMaxPageDto,
   GetJobDto,
   JobIdDto,
+  JobSummaryDto,
   JwtDto,
   SearchJobDto,
   UserType,
@@ -77,5 +78,17 @@ export class JobController {
   @ApiOperation({ summary: 'create job' })
   createJob(@Body() createJobDto: CreateJobDto, @User() user: JwtDto) {
     return this.jobService.createJob(createJobDto, user.userId)
+  }
+
+  @Get('/:id/summary')
+  @ApiOkResponse({ type: JobSummaryDto })
+  @UseAuthGuard(UserType.CASTING)
+  @ApiUnauthorizedResponse({ description: 'User is not logged in' })
+  @ApiForbiddenResponse({
+    description: 'User is not a casting or User is not the owner of the job',
+  })
+  @ApiOperation({ summary: 'get summary status of job by jobId' })
+  getJobSummary(@Param('id') jobId: string, @User() user: JwtDto) {
+    return this.jobService.getJobSummaryById(+jobId, user.userId)
   }
 }

@@ -1,9 +1,10 @@
-import { Job, JobStatus, Prisma } from '@modela/database'
+import { ApplicationStatus, Job, JobStatus, Prisma } from '@modela/database'
 import {
   CreateJobDto,
   EditJobDto,
   GetJobCardDto,
   GetJobDto,
+  JobSummaryDto,
 } from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
@@ -128,5 +129,29 @@ export class JobRepository {
     return this.prisma.job.findUnique({
       where: { jobId: id },
     })
+  }
+
+  async getJobSummaryById(
+    jobId: number,
+  ): Promise<JobSummaryDto & { castingId: number }> {
+    const job = await this.prisma.job.findUnique({
+      where: { jobId },
+      select: { status: true, castingId: true },
+    })
+
+    if (!job) return null
+
+    const pendingActorCount = await this.prisma.application.count({
+      where: {
+        jobId,
+        status: ApplicationStatus.PENDING,
+      },
+    })
+
+    return {
+      castingId: job.castingId,
+      status: job.status,
+      pendingActorCount,
+    }
   }
 }
