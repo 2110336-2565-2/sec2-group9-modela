@@ -7,6 +7,7 @@ export * from './src/report'
 export * from './src/user'
 export * from './src/application'
 export * from './src/profile'
+export * from './src/resume'
 
 export {
   UserType,
