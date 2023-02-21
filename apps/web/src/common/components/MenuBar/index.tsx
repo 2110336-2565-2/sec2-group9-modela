@@ -7,7 +7,7 @@ const MenuBar = ({ menu, focus, sx }: MenuBarProps) => {
   return (
     <MenuContainer variant="outlined" sx={sx}>
       {menu.map(({ icon, label, href }) => (
-        <MenuItem href={href} isFocused={label === focus}>
+        <MenuItem href={href} isFocused={label === focus} key={label}>
           {icon} {label}
         </MenuItem>
       ))}
