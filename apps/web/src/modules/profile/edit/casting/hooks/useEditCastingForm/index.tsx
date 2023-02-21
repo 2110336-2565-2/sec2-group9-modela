@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { EditCastingProfileDto } from '@modela/dtos'
+import { useUser } from 'common/context/UserContext'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
 import { useRouter } from 'next/router'
@@ -26,6 +27,7 @@ const useEditCastingForm = () => {
   const [loading, setLoading] = useState(false)
   const [isDataLoading, setDataLoading] = useState(true)
   const { handleError } = useErrorHandler()
+  const { user } = useUser()
 
   const handleSuccess: SubmitHandler<IEditCastingProfileSchemaType> =
     useCallback(
@@ -86,7 +88,8 @@ const useEditCastingForm = () => {
     getValues,
     control,
     isDataLoading,
-    imageUrl: getValues('profileImageUrl'),
+    user,
+    imageUrl: getValues('profileImageUrl') || user?.profileImageUrl,
   }
 }
 

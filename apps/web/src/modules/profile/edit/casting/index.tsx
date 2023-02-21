@@ -15,6 +15,7 @@ const EditCastingProfile = () => {
     isDataLoading,
     handleUploadImage,
     loading,
+    user,
   } = useEditCastingForm()
 
   return (
@@ -30,8 +31,8 @@ const EditCastingProfile = () => {
                   <Grid item width="100%">
                     <ProfileImage
                       src={imageUrl}
-                      userId={123}
-                      firstName="hello"
+                      userId={user!.userId}
+                      firstName={user!.firstName}
                       sx={{
                         margin: 'auto',
                         width: '150px',
