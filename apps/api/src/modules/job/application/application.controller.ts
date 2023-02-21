@@ -1,6 +1,7 @@
 import { UserType } from '@modela/database'
-import { GetAppliedActorDto, JwtDto } from '@modela/dtos'
+import { GetAppliedActorDto, GetAppliedActorQuery, JwtDto } from '@modela/dtos'
 import { Controller, Get, Param } from '@nestjs/common'
+import { Query } from '@nestjs/common/decorators'
 import {
   ApiForbiddenResponse,
   ApiNotFoundResponse,
@@ -28,7 +29,11 @@ export class ApplicationController {
   @ApiForbiddenResponse({
     description: 'User is not Casting or User is not the owner of this job',
   })
-  findByJobId(@Param('id') id: string, @User() user: JwtDto) {
-    return this.applicationService.findByJobId(+id, user.userId)
+  findByJobId(
+    @Param('id') id: string,
+    @User() user: JwtDto,
+    @Query() query: GetAppliedActorQuery,
+  ) {
+    return this.applicationService.findByJobId(+id, user.userId, query)
   }
 }

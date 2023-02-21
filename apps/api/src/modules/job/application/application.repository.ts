@@ -1,4 +1,4 @@
-import { ActorDto } from '@modela/dtos'
+import { ActorDto, GetAppliedActorQuery } from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
 
@@ -6,9 +6,13 @@ import { PrismaService } from 'src/database/prisma.service'
 export class ApplicationRepository {
   constructor(private prisma: PrismaService) {}
 
-  async getApplicationByJobId(jobId: number): Promise<ActorDto[]> {
+  async getApplicationByJobId(
+    jobId: number,
+    query: GetAppliedActorQuery,
+  ): Promise<ActorDto[]> {
+    console.log(query)
     const application = await this.prisma.application.findMany({
-      where: { jobId },
+      where: { jobId, status: { in: query.status } },
       select: {
         Actor: {
           select: {
@@ -32,10 +36,20 @@ export class ApplicationRepository {
       },
     })
 
-    return application.map(({ Actor: { User }, Resume, ...rest }) => ({
+    let result = application.map(({ Actor: { User }, Resume, ...rest }) => ({
       ...rest,
       ...User,
       ...Resume,
     }))
+
+    if (query.name && query.name !== '') {
+      result = result.filter(({ firstName, middleName, lastName }) =>
+        `${firstName} ${middleName} ${lastName}`
+          .toLocaleLowerCase()
+          .includes(query.name.toLocaleLowerCase()),
+      )
+    }
+
+    return result
   }
 }

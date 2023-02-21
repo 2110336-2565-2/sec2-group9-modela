@@ -1,4 +1,4 @@
-import { GetAppliedActorDto } from '@modela/dtos'
+import { GetAppliedActorDto, GetAppliedActorQuery } from '@modela/dtos'
 import {
   ForbiddenException,
   Injectable,
@@ -15,13 +15,17 @@ export class ApplicationService {
     private jobRepository: JobRepository,
   ) {}
 
-  async findByJobId(id: number, userId: number): Promise<GetAppliedActorDto> {
+  async findByJobId(
+    id: number,
+    userId: number,
+    query: GetAppliedActorQuery,
+  ): Promise<GetAppliedActorDto> {
     const job = await this.jobRepository.getBaseJobById(id)
 
     if (!job) throw new NotFoundException('Job not found')
     if (job.castingId !== userId)
       throw new ForbiddenException('User is not the owner of this job')
 
-    return { actors: await this.repository.getApplicationByJobId(id) }
+    return { actors: await this.repository.getApplicationByJobId(id, query) }
   }
 }
