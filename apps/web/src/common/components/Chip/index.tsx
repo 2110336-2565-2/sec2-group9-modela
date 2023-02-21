@@ -1,14 +1,14 @@
 import { Typography } from '@mui/material'
 import React from 'react'
 
+import { BASE_COLOR, TEXT_COLOR } from './constants'
 import { ChipContainer } from './styled'
 import { ChipProps } from './types'
-import { getBaseColor, getTextColor } from './utils/getColor'
 
 const Chip = ({ label, variant }: ChipProps) => {
   return (
-    <ChipContainer sx={{ backgroundColor: getBaseColor(variant) }}>
-      <Typography variant="subtitle2" sx={{ color: getTextColor(variant) }}>
+    <ChipContainer sx={{ backgroundColor: BASE_COLOR[variant] }}>
+      <Typography variant="subtitle2" sx={{ color: TEXT_COLOR[variant] }}>
         {label}
       </Typography>
     </ChipContainer>
