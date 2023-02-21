@@ -1,11 +1,14 @@
-import { ActorDto, GetAppliedActorDto } from '@modela/dtos'
+import { JobSummaryDto } from '@modela/dtos'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-const useActorData = () => {
-  const [actorData, setActorData] = useState<ActorDto[] | null>(null)
+const useSummaryData = () => {
+  const [summary, setSummary] = useState<Partial<JobSummaryDto>>({
+    status: undefined,
+    pendingActorCount: undefined,
+  })
 
   const { handleError } = useErrorHandler()
 
@@ -15,10 +18,8 @@ const useActorData = () => {
   useEffect(() => {
     const fetchActorData = async () => {
       try {
-        const res = await apiClient.get<GetAppliedActorDto>(
-          `/jobs/${jobId}/actors`,
-        )
-        setActorData(res.data.actors)
+        const res = await apiClient.get<JobSummaryDto>(`/job/${jobId}/summary`)
+        setSummary(res.data)
       } catch (err) {
         handleError(err)
       }
@@ -27,7 +28,7 @@ const useActorData = () => {
     if (router.isReady) fetchActorData()
   }, [handleError, jobId, router.isReady])
 
-  return actorData
+  return summary
 }
 
-export default useActorData
+export default useSummaryData
