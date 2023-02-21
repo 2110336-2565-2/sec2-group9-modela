@@ -1,20 +1,11 @@
+import { GetReportsDto } from '@modela/dtos'
 import { Divider, Typography } from '@mui/material'
 
 import ReportDetail from './components/ReportDetail'
-import { ReportDetailProps } from './components/ReportDetail/type'
 import { ButtonContainer, CardContainer, StyledButton } from './styled'
 
-const JobReportCard = () => {
-  const mockReport: ReportDetailProps[] = [
-    {
-      reporter: 'ธนพล สุขสวัสดิ์',
-      reason: 'ไม่มีเครื่องเสียง',
-    },
-    {
-      reporter: 'ธนพล สุขสวัสดิ์',
-      reason: 'ไม่มีเครื่องเสียง',
-    },
-  ]
+const JobReportCard = (prop: GetReportsDto) => {
+  const { jobTitle, reports } = prop
 
   return (
     <CardContainer>
@@ -22,9 +13,11 @@ const JobReportCard = () => {
         รายละเอียดปัญหา
       </Typography>
       <Divider />
-      <Typography variant="body1">งานที่ได้รับการแจ้งปัญหา</Typography>
+      <Typography variant="body1">
+        งานที่ได้รับการแจ้งปัญหา: {jobTitle}
+      </Typography>
       <Typography variant="body1">มีการแจ้งปัญหา 2 ครั้ง</Typography>
-      {mockReport.map((report, idx) => (
+      {reports.map((report, idx) => (
         <ReportDetail key={idx} {...report} />
       ))}
       <ButtonContainer>
