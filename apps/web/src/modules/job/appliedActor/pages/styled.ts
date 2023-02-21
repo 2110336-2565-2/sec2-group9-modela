@@ -18,10 +18,11 @@ export const PageContainer = styled('div')`
 export const CardsContainer = styled('div')`
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  align-items: center;
+  gap: 24px;
   flex-grow: 1;
 
   ${(props) => props.theme.breakpoints.down('sm')} {
-    gap: 24px;
+    gap: 16px;
   }
 `
