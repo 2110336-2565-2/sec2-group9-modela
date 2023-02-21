@@ -6,7 +6,6 @@ export const PageContainer = styled('form')`
   width: 100%;
   gap: 64px;
   align-items: flex-start;
-  justify-content: center;
   max-width: 1200px;
 
   ${(props) => props.theme.breakpoints.down('md')} {
@@ -17,10 +16,14 @@ export const PageContainer = styled('form')`
     margin: 25px 15px;
   }
 `
+export const CardsContainer = styled('div')`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  flex-grow: 1;
 
-export const JobCardContainer = styled('div')`
-  width: 50vw;
-  ${(props) => props.theme.breakpoints.down('md')} {
-    width: 90vw;
+  ${(props) => props.theme.breakpoints.down('sm')} {
+    gap: 16px;
   }
 `

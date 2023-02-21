@@ -1,7 +1,18 @@
-import { Actor, Resume, User } from '@modela/database'
-import { ApiProperty } from '@nestjs/swagger'
+import { ApplicationStatus } from '@modela/database'
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
+import { Type } from 'class-transformer'
+import {
+  IsArray,
+  IsEnum,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator'
 
-export class ActorDto implements Partial<Actor & User & Resume> {
+export class ActorDto {
+  @ApiProperty()
+  applicationId: number
+
   @ApiProperty()
   actorId: number
 
@@ -15,13 +26,31 @@ export class ActorDto implements Partial<Actor & User & Resume> {
   lastName: string
 
   @ApiProperty()
-  resumeId: number
+  resumeUrl: string
 
   @ApiProperty()
   profileImageUrl?: string
+
+  @ApiProperty()
+  description?: string
+
+  @ApiProperty()
+  status?: ApplicationStatus
 }
 
 export class GetAppliedActorDto {
   @ApiProperty({ type: ActorDto, isArray: true })
   actors: ActorDto[]
+}
+
+export class GetAppliedActorQuery {
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  name?: string
+
+  @ApiPropertyOptional({ enum: ApplicationStatus, isArray: true })
+  @IsOptional()
+  @IsEnum(ApplicationStatus, { each: true })
+  status?: ApplicationStatus[]
 }

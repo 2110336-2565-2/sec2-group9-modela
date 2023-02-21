@@ -4,6 +4,7 @@ import {
   EditJobDto,
   Gender,
   GetJobCardWithMaxPageDto,
+  JobSummaryDto,
   JwtDto,
   SearchJobDto,
   SearchJobStatus,
@@ -263,7 +264,15 @@ export class JobService {
     return this.repository.updateJob(id, updateJobDto)
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} job`
+  async getJobSummaryById(
+    jobId: number,
+    userId: number,
+  ): Promise<JobSummaryDto> {
+    const job = await this.repository.getJobSummaryById(jobId)
+    if (!job) throw new NotFoundException()
+    const { castingId, ...summary } = job
+    if (castingId !== userId) throw new ForbiddenException()
+
+    return summary
   }
 }

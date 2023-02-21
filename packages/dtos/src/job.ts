@@ -259,3 +259,11 @@ export class JobIdDto {
   @ApiProperty()
   jobId: number
 }
+
+export class JobSummaryDto {
+  @ApiProperty()
+  status: JobStatus
+
+  @ApiProperty()
+  pendingActorCount: number
+}
