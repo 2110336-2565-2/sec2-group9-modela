@@ -1,4 +1,4 @@
-import { UserStatus, UserType } from '@modela/database'
+import { mock, UserStatus, UserType } from '@modela/database'
 import { Test, TestingModule } from '@nestjs/testing'
 import { PrismaService } from 'src/database/prisma.service'
 
@@ -39,9 +39,17 @@ describe('ResumeService', () => {
     }
 
     it('should post resume correctly', async () => {
+      const MOCK_DB_ACTOR = mock('actor').get()
       jest.spyOn(repository, 'createResume').mockResolvedValue({ resumeId: 11 })
+      jest
+        .spyOn(repository, 'getActorFromUser')
+        .mockResolvedValue(MOCK_DB_ACTOR)
       const result = await service.createResume(postResumeDto, MOCK_ACTOR)
-      expect(repository.createResume).toBeCalledWith(postResumeDto, MOCK_ACTOR)
+      expect(repository.createResume).toBeCalledWith(
+        postResumeDto,
+        MOCK_DB_ACTOR,
+        MOCK_ACTOR.userId,
+      )
       expect(result).toEqual({ resumeId: 11 })
     })
   })
