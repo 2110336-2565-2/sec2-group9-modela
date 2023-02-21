@@ -47,10 +47,10 @@ export class GetAppliedActorQuery {
   @ApiProperty()
   @IsOptional()
   @IsString()
-  name: string
+  name?: string
 
   @ApiProperty({ type: ApplicationStatus, isArray: true })
   @IsOptional()
   @IsEnum(ApplicationStatus, { each: true })
-  status: ApplicationStatus[]
+  status?: ApplicationStatus[]
 }

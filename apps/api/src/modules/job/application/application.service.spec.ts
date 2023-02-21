@@ -43,6 +43,7 @@ describe('ApplicationService', () => {
         resumeId: idx + 2,
         resumeUrl: '',
         status: ApplicationStatus.PENDING,
+        applicationId: idx + 2,
       }))
 
     beforeEach(() => {
@@ -58,15 +59,15 @@ describe('ApplicationService', () => {
           mock('job').override({ castingId: MOCK_CASTING_ID }).get(),
         )
       expect(
-        service.findByJobId(MOCK_JOB_ID, MOCK_CASTING_ID),
+        service.findByJobId(MOCK_JOB_ID, MOCK_CASTING_ID, {}),
       ).resolves.toEqual({ actors: MOCK_ACTORS })
     })
 
     it('should throw not found error if job not found', async () => {
       jest.spyOn(jobRepository, 'getBaseJobById').mockResolvedValue(null)
-      expect(service.findByJobId(MOCK_JOB_ID, MOCK_CASTING_ID)).rejects.toThrow(
-        NotFoundException,
-      )
+      expect(
+        service.findByJobId(MOCK_JOB_ID, MOCK_CASTING_ID, {}),
+      ).rejects.toThrow(NotFoundException)
     })
 
     it('should throw forbidden error if user is not owener of this job', async () => {
@@ -75,9 +76,9 @@ describe('ApplicationService', () => {
           .override({ castingId: MOCK_CASTING_ID + 1 })
           .get(),
       )
-      expect(service.findByJobId(MOCK_JOB_ID, MOCK_CASTING_ID)).rejects.toThrow(
-        ForbiddenException,
-      )
+      expect(
+        service.findByJobId(MOCK_JOB_ID, MOCK_CASTING_ID, {}),
+      ).rejects.toThrow(ForbiddenException)
     })
   })
 })
