@@ -1,4 +1,4 @@
-import { SxProps } from '@mui/material'
+import { SxPropsWithTheme } from 'common/types/mui'
 import { ReactNode } from 'react'
 
 export interface MenuBarProps {
@@ -8,5 +8,5 @@ export interface MenuBarProps {
     href: string
   }[]
   focus?: string
-  sx?: SxProps
+  sx?: SxPropsWithTheme
 }

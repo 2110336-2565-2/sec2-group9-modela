@@ -1,4 +1,4 @@
-import { UserType } from '@modela/database'
+import { UserType } from '@modela/dtos'
 import {
   CircularProgress,
   Theme,

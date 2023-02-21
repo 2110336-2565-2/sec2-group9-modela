@@ -24,6 +24,7 @@ const ActorCard = (props: ActorDto) => {
         </Typography>
         <ResumeDownloadButton
           target="_blank"
+          rel="noopener"
           href="https://www.google.com"
           onClick={(e) => {
             e.stopPropagation()
