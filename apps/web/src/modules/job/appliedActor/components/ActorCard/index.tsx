@@ -9,7 +9,7 @@ import ActorCardHeader from '../ActorCardHeader'
 import { CardContainer, ResumeDownloadButton } from './styled'
 
 const ActorCard = (props: ActorDto) => {
-  const { actorId, status, ...headerProps } = props
+  const { actorId, status, description, resumeUrl, ...headerProps } = props
   return (
     <Link
       passHref
@@ -20,12 +20,12 @@ const ActorCard = (props: ActorDto) => {
         <ActorCardHeader {...headerProps} actorId={actorId} status={status} />
 
         <Typography variant="subtitle2" color="#00000099">
-          คำอธิบายสั้นๆ เกี่ยวกับตัวฉัน
+          {description}
         </Typography>
         <ResumeDownloadButton
           target="_blank"
           rel="noopener"
-          href="https://www.google.com"
+          href={resumeUrl}
           onClick={(e) => {
             e.stopPropagation()
           }}

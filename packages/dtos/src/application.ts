@@ -20,7 +20,7 @@ export class ActorDto {
   firstName: string
 
   @ApiProperty()
-  middleName: string
+  middleName?: string
 
   @ApiProperty()
   lastName: string

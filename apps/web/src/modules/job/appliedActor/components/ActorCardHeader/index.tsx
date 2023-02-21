@@ -7,7 +7,9 @@ import React from 'react'
 import { CHIP_VARINTS } from './constants'
 import { HeaderContainer } from './styled'
 
-const ActorCardHeader = (props: Omit<ActorDto, 'resumeUrl'>) => {
+const ActorCardHeader = (
+  props: Omit<ActorDto, 'resumeUrl' | 'applicationId'>,
+) => {
   const { firstName, middleName, lastName, profileImageUrl, actorId, status } =
     props
   return (
