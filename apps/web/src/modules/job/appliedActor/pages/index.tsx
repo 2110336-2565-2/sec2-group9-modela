@@ -26,7 +26,9 @@ const AppliedActorPage = () => {
       <CardsContainer>
         <SearchField control={control} onSubmit={onSubmit} />
         {actorData ? (
-          actorData.map((actor) => <ActorCard key={actor.actorId} {...actor} />)
+          actorData.map((actor) => (
+            <ActorCard key={actor.applicationId} {...actor} />
+          ))
         ) : (
           <CircularProgress />
         )}

@@ -14,12 +14,12 @@ export const CHIP_VARINTS: { [key in ApplicationStatus]: ChipProps } = {
     label: 'ไม่ผ่านการคัดเลือก',
     variant: 'red',
   },
-  [ApplicationStatus.OFFER_REJECTED]: {
+  [ApplicationStatus.OFFER_ACCEPTED]: {
     label: 'ยอมรับข้อเสนอ',
     variant: 'green',
     outlined: true,
   },
-  [ApplicationStatus.OFFER_ACCEPTED]: {
+  [ApplicationStatus.OFFER_REJECTED]: {
     label: 'ปฏิเสธข้อเสนอ',
     variant: 'red',
     outlined: true,

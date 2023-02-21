@@ -11,6 +11,9 @@ import {
 
 export class ActorDto {
   @ApiProperty()
+  applicationId: number
+
+  @ApiProperty()
   actorId: number
 
   @ApiProperty()

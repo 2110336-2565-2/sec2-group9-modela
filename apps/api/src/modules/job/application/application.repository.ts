@@ -33,6 +33,7 @@ export class ApplicationRepository {
         },
         status: true,
         actorId: true,
+        applicationId: true,
       },
     })
 
