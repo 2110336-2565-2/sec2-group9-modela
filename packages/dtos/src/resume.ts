@@ -35,3 +35,10 @@ export class GetResumesDto {
     @ApiProperty({ type: ResumeDto, isArray: true })
     resumes: ResumeDto[]
 }
+
+export class ResumeIdDto {
+    @IsInt()
+    @IsNotEmpty()
+    @ApiProperty()
+    resumeId: number
+}

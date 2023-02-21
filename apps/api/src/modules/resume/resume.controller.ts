@@ -1,8 +1,9 @@
 import { UserType } from '@modela/database'
-import { JwtDto, PostResumeDto } from '@modela/dtos'
+import { JwtDto, PostResumeDto, ResumeIdDto } from '@modela/dtos'
 import { Body, Controller, Post } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
+  ApiCreatedResponse,
   ApiForbiddenResponse,
   ApiOperation,
   ApiTags,
@@ -20,6 +21,7 @@ export class ResumeController {
 
   @Post()
   @UseAuthGuard(UserType.ACTOR)
+  @ApiCreatedResponse({ type: ResumeIdDto })
   @ApiUnauthorizedResponse({ description: 'User is not logged in' })
   @ApiForbiddenResponse({ description: 'User is not an actor' })
   @ApiBadRequestResponse({ description: 'Wrong format' })
