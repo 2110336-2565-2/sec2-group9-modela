@@ -19,7 +19,6 @@ export class ResumeController {
   constructor(private readonly resumeService: ResumeService) {}
 
   @Post()
-  @UseAuthGuard()
   @UseAuthGuard(UserType.ACTOR)
   @ApiUnauthorizedResponse({ description: 'User is not logged in' })
   @ApiForbiddenResponse({ description: 'User is not an actor' })
