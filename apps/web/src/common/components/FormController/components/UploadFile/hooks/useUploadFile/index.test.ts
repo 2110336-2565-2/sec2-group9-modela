@@ -34,7 +34,7 @@ describe('useUploadFile', () => {
 
     rerender()
 
-    expect(setUploadFileMock).toBeCalledWith(MOCK_BLOB)
+    expect(setUploadFileMock).toBeCalledWith(MOCK_BLOB, 'HelloWorld.png')
     expect(result.current.name).toStrictEqual('HelloWorld.png')
   })
 
