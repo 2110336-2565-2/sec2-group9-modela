@@ -1,6 +1,6 @@
 import { styled } from '@mui/material'
 
-export const PageContainer = styled('div')`
+export const PageContainer = styled('form')`
   display: flex;
   margin: 50px;
   width: 100%;

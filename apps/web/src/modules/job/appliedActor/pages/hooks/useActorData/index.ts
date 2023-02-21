@@ -1,10 +1,13 @@
-import { ActorDto, GetAppliedActorDto } from '@modela/dtos'
+import { ActorDto, ApplicationStatus, GetAppliedActorDto } from '@modela/dtos'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-const useActorData = () => {
+const useActorData = (query: {
+  name?: string
+  status?: ApplicationStatus[]
+}) => {
   const [actorData, setActorData] = useState<ActorDto[] | null>(null)
 
   const { handleError } = useErrorHandler()
@@ -17,6 +20,7 @@ const useActorData = () => {
       try {
         const res = await apiClient.get<GetAppliedActorDto>(
           `/jobs/${jobId}/actors`,
+          { params: query },
         )
         setActorData(res.data.actors)
       } catch (err) {
@@ -25,7 +29,7 @@ const useActorData = () => {
     }
 
     if (router.isReady) fetchActorData()
-  }, [handleError, jobId, router.isReady])
+  }, [handleError, jobId, router.isReady, query])
 
   return actorData
 }
