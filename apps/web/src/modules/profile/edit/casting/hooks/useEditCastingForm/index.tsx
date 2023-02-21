@@ -24,6 +24,7 @@ const useEditCastingForm = () => {
 
   const [, setProfileImage] = useState<Blob | null>(null)
   const [loading, setLoading] = useState(false)
+  const [isDataLoading, setDataLoading] = useState(true)
   const { handleError } = useErrorHandler()
 
   const handleSuccess: SubmitHandler<IEditCastingProfileSchemaType> =
@@ -61,16 +62,22 @@ const useEditCastingForm = () => {
     [getValues, setValue],
   )
 
-  useEffect(() => {
-    const getInitialValue = async () => {
+  const getInitialValue = useCallback(async () => {
+    try {
       const res = (
         await apiClient.get<{ data: EditCastingProfileDto }>('/profile')
       ).data
       reset(res.data)
+    } catch (err) {
+      handleError(err)
+    } finally {
+      setDataLoading(false)
     }
+  }, [reset, handleError])
 
+  useEffect(() => {
     getInitialValue()
-  }, [reset])
+  }, [getInitialValue])
 
   return {
     loading,
@@ -78,6 +85,7 @@ const useEditCastingForm = () => {
     handleUploadImage,
     getValues,
     control,
+    isDataLoading,
     imageUrl: getValues('profileImageUrl'),
   }
 }
