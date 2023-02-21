@@ -7,6 +7,7 @@ export const PageContainer = styled('form')`
   gap: 64px;
   align-items: flex-start;
   justify-content: center;
+  max-width: 1200px;
 
   ${(props) => props.theme.breakpoints.down('md')} {
     margin: 40px 30px;
