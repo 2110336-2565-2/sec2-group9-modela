@@ -95,7 +95,7 @@ export const getBaseMock = (
     case 'actor':
       return {
         actorId: index + NUMBER_OF_ADMIN,
-        idCardImageUrl: faker.image.image(640, 480, true),
+        idCardImageUrl: `user/credential/${index + NUMBER_OF_ADMIN}`,
         prefix: faker.name.prefix(),
         nickname: faker.internet.userName(),
         nationality: faker.address.country(),
@@ -123,7 +123,9 @@ export const getBaseMock = (
         castingId: index + NUMBER_OF_ADMIN + NUMBER_OF_ACTOR,
         companyName: faker.company.name(),
         companyId: faker.random.numeric(13),
-        employmentCertUrl: faker.internet.url(),
+        employmentCertUrl: `user/credential/${
+          index + NUMBER_OF_ADMIN + NUMBER_OF_ACTOR
+        }`,
       }
     case 'resume': {
       const actorId = getActorId(true)
