@@ -1,12 +1,18 @@
 import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger'
 import {
+  IsInt,
   IsNotEmpty,
   IsString,
   IsUrl,
 } from 'class-validator'
 const maxInt32 = 2147483647 //max int32
 
-export class PostResumeDto{
+export class ResumeDto{
+
+    @IsInt()
+    @IsNotEmpty()
+    @ApiProperty()
+    resumeId: number
 
     @IsString()
     @IsNotEmpty()
@@ -19,4 +25,13 @@ export class PostResumeDto{
     @ApiProperty()
     resumeUrl: string
 
+}
+
+export class PostResumeDto extends OmitType(ResumeDto, ['resumeId']) {}
+
+export class GetResumeDto extends ResumeDto {}
+
+export class GetResumesDto {
+    @ApiProperty({ type: ResumeDto, isArray: true })
+    resumes: ResumeDto[]
 }
