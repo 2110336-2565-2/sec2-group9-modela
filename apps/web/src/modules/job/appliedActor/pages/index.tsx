@@ -1,5 +1,10 @@
 import { UserType } from '@modela/database'
-import { CircularProgress, Theme, useMediaQuery } from '@mui/material'
+import {
+  CircularProgress,
+  Theme,
+  Typography,
+  useMediaQuery,
+} from '@mui/material'
 import withGuard from 'common/hoc/withGuard'
 import JobMenu from 'modules/job/components/JobMenu'
 import React from 'react'
@@ -26,9 +31,13 @@ const AppliedActorPage = () => {
       <CardsContainer>
         <SearchField control={control} onSubmit={onSubmit} />
         {actorData ? (
-          actorData.map((actor) => (
-            <ActorCard key={actor.applicationId} {...actor} />
-          ))
+          actorData.length === 0 ? (
+            <Typography color="#00000061">ไม่พบนักแสดง</Typography>
+          ) : (
+            actorData.map((actor) => (
+              <ActorCard key={actor.applicationId} {...actor} />
+            ))
+          )
         ) : (
           <CircularProgress />
         )}
