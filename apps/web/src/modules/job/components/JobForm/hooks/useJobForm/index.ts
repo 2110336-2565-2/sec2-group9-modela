@@ -36,7 +36,7 @@ const useJobForm = (defaultValues: IPostJobSchemaType, edit?: boolean) => {
       const { jobId } = router.query as { jobId: string }
       if (edit) {
         await apiClient.put<unknown, unknown, EditJobDto>(
-          `/job/${jobId}`,
+          `/jobs/${jobId}`,
           payload,
         )
         displaySnackbar('แก้ไขงานสำเร็จ', 'success')
@@ -44,7 +44,7 @@ const useJobForm = (defaultValues: IPostJobSchemaType, edit?: boolean) => {
       }
       //post job
       else {
-        await apiClient.post<unknown, unknown, CreateJobDto>('/job/', payload)
+        await apiClient.post<unknown, unknown, CreateJobDto>('/jobs/', payload)
         displaySnackbar('ลงประกาศงานสำเร็จ', 'success')
         router.push('/job')
       }

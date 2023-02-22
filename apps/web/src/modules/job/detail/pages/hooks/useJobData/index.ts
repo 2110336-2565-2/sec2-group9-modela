@@ -13,7 +13,7 @@ const useJobData = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = (await apiClient.get<GetJobDto>('/job/' + jobId)).data
+        const res = (await apiClient.get<GetJobDto>('/jobs/' + jobId)).data
         setJob(res)
       } catch (err) {
         handleError(err)

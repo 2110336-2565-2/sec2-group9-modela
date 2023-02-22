@@ -78,7 +78,7 @@ const useJobListData = () => {
       if (pageControl.current <= page) {
         pageControl.current = page + 1
         const res = (
-          await apiClient.get<GetJobCardWithMaxPageDto>(`/job`, {
+          await apiClient.get<GetJobCardWithMaxPageDto>(`/jobs`, {
             params: {
               limit: 5,
               page,
