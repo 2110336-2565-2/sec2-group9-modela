@@ -61,7 +61,7 @@ const useReport = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = (await apiClient.get<GetJobDto>('/job/' + jid)).data
+        const res = (await apiClient.get<GetJobDto>('/jobs/' + jid)).data
         setJobName(res.title)
       } catch (err) {
         handleError(err)

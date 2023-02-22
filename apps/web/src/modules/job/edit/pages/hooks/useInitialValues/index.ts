@@ -16,7 +16,7 @@ const useInitialValues = () => {
   useEffect(() => {
     const fetchPostData = async () => {
       if (!router.isReady) return null
-      const res = await apiClient.get<GetJobDto>(`/job/${jobId}`)
+      const res = await apiClient.get<GetJobDto>(`/jobs/${jobId}`)
       const { applicationDeadline, shooting, ...rest } = res.data
 
       setInitialValues({
