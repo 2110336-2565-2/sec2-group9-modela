@@ -37,7 +37,7 @@ const useReport = () => {
         const postBody: PostReportDto = {
           reason: data.description,
         }
-        await apiClient.post('report/job/' + jid, postBody)
+        await apiClient.post('reports/jobs/' + jid, postBody)
         displaySnackbar(
           'ขอบคุณที่แจ้งปัญหา ทางทีมงานจะดำเนินการตรวจสอบต่อไป',
           'success',

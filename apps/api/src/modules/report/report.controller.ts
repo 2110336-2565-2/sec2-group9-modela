@@ -15,12 +15,12 @@ import { UseAuthGuard } from '../auth/misc/jwt.decorator'
 import { User } from '../auth/misc/user.decorator'
 import { ReportService } from './report.service'
 
-@ApiTags('report')
-@Controller('report')
+@ApiTags('reports')
+@Controller('reports')
 export class ReportController {
   constructor(private readonly reportService: ReportService) {}
 
-  @Post('job/:id')
+  @Post('jobs/:id')
   @ApiCreatedResponse({ type: JobIdDto })
   @UseAuthGuard(UserType.ACTOR)
   @ApiUnauthorizedResponse({ description: 'User is not login' })
