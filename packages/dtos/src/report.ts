@@ -1,8 +1,7 @@
 import { ApiProperty, OmitType } from '@nestjs/swagger'
 import { IsInt, IsNotEmpty, IsString } from 'class-validator'
 
-export class ReportDto{
-
+export class ReportDto {
   @IsInt()
   @IsNotEmpty()
   @ApiProperty()
@@ -11,20 +10,27 @@ export class ReportDto{
   @IsInt()
   @IsNotEmpty()
   @ApiProperty()
-  reporterId: number  
+  reporterId: number
 
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  reporterName: string
 
   @ApiProperty()
   @IsString()
   reason: string
-
 }
 
-export class PostReportDto extends OmitType(ReportDto, ['reportId', 'reporterId']) {}
+export class PostReportDto extends OmitType(ReportDto, [
+  'reportId',
+  'reporterId',
+  'reporterName',
+]) {}
 
 export class GetReportDto extends ReportDto {}
 
-export class GetReportsDto{
+export class GetReportsDto {
   @ApiProperty({ type: GetReportDto, isArray: true })
   reports: GetReportDto[]
 
@@ -32,4 +38,9 @@ export class GetReportsDto{
   @IsNotEmpty()
   @ApiProperty()
   jobId: number
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  jobTitle: string
 }
