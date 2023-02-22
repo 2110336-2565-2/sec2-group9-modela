@@ -1,10 +1,18 @@
 import { UserType } from '@modela/database'
-import { JwtDto, PostResumeDto, ResumeIdDto } from '@modela/dtos'
-import { Body, Controller, Post } from '@nestjs/common'
+import {
+  GetResumeDto,
+  GetResumesDto,
+  JwtDto,
+  PostResumeDto,
+  ResumeIdDto,
+} from '@modela/dtos'
+import { Body, Controller, Get, Param, Post } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
   ApiForbiddenResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
   ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
@@ -26,7 +34,28 @@ export class ResumeController {
   @ApiForbiddenResponse({ description: 'User is not an actor' })
   @ApiBadRequestResponse({ description: 'Wrong format' })
   @ApiOperation({ summary: 'adds resume to user profile' })
-  createJob(@Body() postResumeDto: PostResumeDto, @User() user: JwtDto) {
+  createResume(@Body() postResumeDto: PostResumeDto, @User() user: JwtDto) {
     return this.resumeService.createResume(postResumeDto, user)
+  }
+
+  @Get()
+  @UseAuthGuard(UserType.ACTOR)
+  @ApiOkResponse({ type: GetResumesDto })
+  @ApiUnauthorizedResponse({ description: 'User is not logged in' })
+  @ApiForbiddenResponse({ description: 'User is not an actor' })
+  @ApiOperation({ summary: 'gets all resumes from user profile' })
+  getResumes(@User() user: JwtDto) {
+    return this.resumeService.getResumesByUser(user)
+  }
+
+  @Get(':resumeId')
+  @UseAuthGuard(UserType.ACTOR, UserType.CASTING)
+  @ApiOkResponse({ type: GetResumeDto })
+  @ApiUnauthorizedResponse({ description: 'User is not logged in' })
+  @ApiForbiddenResponse({ description: 'User is not an actor' })
+  @ApiNotFoundResponse({ description: 'Resume not found' })
+  @ApiOperation({ summary: 'gets resume from user profile' })
+  getResume(@Param('resumeId') resumeId: number, @User() user: JwtDto) {
+    return this.resumeService.getResumeById(+resumeId, user)
   }
 }

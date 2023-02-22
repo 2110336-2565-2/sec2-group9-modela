@@ -1,5 +1,9 @@
-import { JwtDto, PostResumeDto } from '@modela/dtos'
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { JwtDto, PostResumeDto, UserType } from '@modela/dtos'
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common'
 
 import { ResumeRepository } from './resume.respository'
 
@@ -8,10 +12,25 @@ export class ResumeService {
   constructor(private readonly repository: ResumeRepository) {}
 
   async createResume(postResumeDto: PostResumeDto, user: JwtDto) {
-    const actor = await this.repository.getActorFromUser(user)
-    if (!actor) {
-      throw new NotFoundException('Actor not found')
+    return this.repository.createResume(postResumeDto, user.userId)
+  }
+
+  async getResumeById(resumeId: number, user: JwtDto) {
+    const resume = await this.repository.getResumeById(resumeId)
+    if (!resume) {
+      throw new NotFoundException('Resume not found')
     }
-    return this.repository.createResume(postResumeDto, actor, user.userId)
+    if (user.type === UserType.ACTOR) {
+      if (resume.actorId !== user.userId) {
+        throw new ForbiddenException(
+          'You are not allowed to access this resume',
+        )
+      }
+    }
+    return resume
+  }
+
+  async getResumesByUser(user: JwtDto) {
+    return this.repository.getResumesByActorId(user.userId)
   }
 }
