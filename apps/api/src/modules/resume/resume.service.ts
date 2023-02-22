@@ -24,12 +24,12 @@ export class ResumeService {
     if (!resume) {
       throw new NotFoundException('Resume not found')
     }
-    if (user.type == UserType.ACTOR) {
+    if (user.type === UserType.ACTOR) {
       const actor = await this.repository.getActorFromUser(user)
       if (!actor) {
         throw new NotFoundException('Actor not found')
       }
-      if (resume.actorId != actor.actorId) {
+      if (resume.actorId !== actor.actorId) {
         throw new ForbiddenException(
           'You are not allowed to access this resume',
         )
