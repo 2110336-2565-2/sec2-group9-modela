@@ -139,7 +139,7 @@ describe('ResumeService', () => {
         .mockResolvedValue(MOCK_ACTOR_DB)
       const result = await service.getResumesByUser(MOCK_ACTOR_USER)
       expect(repository.getResumesByActorId).toBeCalledWith(1)
-      expect(result).toEqual(MOCK_RESUME)
+      expect(result).toEqual({ resumes: [MOCK_RESUME, MOCK_RESUME_ALT] })
     })
   })
 })
