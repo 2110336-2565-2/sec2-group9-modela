@@ -25,8 +25,8 @@ import { UseAuthGuard } from '../auth/misc/jwt.decorator'
 import { User } from '../auth/misc/user.decorator'
 import { JobService } from './job.service'
 
-@ApiTags('job')
-@Controller('job')
+@ApiTags('jobs')
+@Controller('jobs')
 export class JobController {
   constructor(private readonly jobService: JobService) {}
 

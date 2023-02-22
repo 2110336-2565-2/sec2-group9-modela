@@ -27,7 +27,7 @@ describe('useInitialValues()', () => {
       const { result } = renderHook(() => useInitialValues())
       expect(result.current).toBeNull()
 
-      expect(getSpy).toBeCalledWith(`/job/${MOCK_JOB_ID}`)
+      expect(getSpy).toBeCalledWith(`/jobs/${MOCK_JOB_ID}`)
       const correctValue = {
         ...MOCK_JOB,
         applicationDeadline: dayjs(MOCK_JOB.applicationDeadline),

@@ -16,7 +16,7 @@ describe('useSummaryData()', () => {
   describe('normal behavior', () => {
     it('should fetch summary data correctly', async () => {
       const { result } = renderHook(useSummaryData)
-      await waitFor(() => expect(getSpy).toBeCalledWith('/job/1/summary'))
+      await waitFor(() => expect(getSpy).toBeCalledWith('/jobs/1/summary'))
       await waitFor(() =>
         expect(result.current).toEqual({
           status: JobStatus.OPEN,

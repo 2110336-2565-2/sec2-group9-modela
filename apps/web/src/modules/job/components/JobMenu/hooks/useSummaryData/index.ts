@@ -18,7 +18,7 @@ const useSummaryData = () => {
   useEffect(() => {
     const fetchActorData = async () => {
       try {
-        const res = await apiClient.get<JobSummaryDto>(`/job/${jobId}/summary`)
+        const res = await apiClient.get<JobSummaryDto>(`/jobs/${jobId}/summary`)
         setSummary(res.data)
       } catch (err) {
         handleError(err)

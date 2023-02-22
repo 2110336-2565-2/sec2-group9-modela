@@ -11,7 +11,7 @@ describe('<JobDetailPage />', () => {
   const JobMenuSpy = mockAndSpy('modules/job/components/JobMenu')
   const { mockGetReturn } = mockApiClient()
 
-  mockUser(UserType.ACTOR, UserStatus.ACCEPTED)
+  const { mockUserType } = mockUser(UserType.CASTING, UserStatus.ACCEPTED)
 
   const mockData: GetJobDto = {
     ...mock('job').get(),
@@ -43,6 +43,18 @@ describe('<JobDetailPage />', () => {
       render(<JobDetailPage />)
       await waitFor(() => {
         expect(JobCardMock).not.toBeCalled()
+        expect(JobMenuSpy).not.toBeCalled()
+      })
+    })
+  })
+
+  describe('user is actor', () => {
+    it('should not render job menu', async () => {
+      mockUserType(UserType.ACTOR)
+      mockGetReturn(mockData)
+      render(<JobDetailPage />)
+      await waitFor(() => {
+        expect(JobCardMock).toBeCalledTimes(1)
         expect(JobMenuSpy).not.toBeCalled()
       })
     })
