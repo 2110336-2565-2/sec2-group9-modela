@@ -1,5 +1,11 @@
 import { UserType } from '@modela/database'
-import { ActorInfoDto, ActorInfoWithFileDto, JwtDto } from '@modela/dtos'
+import {
+  ActorInfoDto,
+  ActorInfoWithFileDto,
+  CastingInfoDto,
+  CastingInfoWithFileDto,
+  JwtDto,
+} from '@modela/dtos'
 import { Body, Controller, Get, Put } from '@nestjs/common'
 import {
   ApiForbiddenResponse,
@@ -44,5 +50,31 @@ export class InfoController {
   ) {
     delete body.file
     return this.infoService.editActorInfo(body, file, user)
+  }
+
+  @Get('actor')
+  @UseUnverifyGuard(UserType.CASTING)
+  @ApiOkResponse({ type: CastingInfoDto })
+  @ApiUnauthorizedResponse({ description: 'User is not logged in' })
+  @ApiForbiddenResponse({ description: 'User is not an casting' })
+  @ApiOperation({ summary: 'get casting signup info' })
+  getCastingInfo(@User() user: JwtDto) {
+    return this.infoService.getCastingInfo(user)
+  }
+
+  @Put('actor')
+  @UseUnverifyGuard(UserType.CASTING)
+  @UseFileUpload()
+  @ApiOkResponse()
+  @ApiUnauthorizedResponse({ description: 'User is not logged in' })
+  @ApiForbiddenResponse({ description: 'User is not an casting' })
+  @ApiOperation({ summary: 'edit casting signup info' })
+  updateCastingInfo(
+    @Body() body: CastingInfoWithFileDto,
+    @CheckedFile({ fileIsRequired: false }) file: Express.Multer.File,
+    @User() user: JwtDto,
+  ) {
+    delete body.file
+    return this.infoService.editCastingInfo(body, file, user)
   }
 }
