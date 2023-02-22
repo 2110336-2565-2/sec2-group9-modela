@@ -32,9 +32,8 @@ export class ResumeController {
   @ApiUnauthorizedResponse({ description: 'User is not logged in' })
   @ApiForbiddenResponse({ description: 'User is not an actor' })
   @ApiBadRequestResponse({ description: 'Wrong format' })
-  @ApiNotFoundResponse({ description: 'Actor not found' })
   @ApiOperation({ summary: 'adds resume to user profile' })
-  createJob(@Body() postResumeDto: PostResumeDto, @User() user: JwtDto) {
+  createResume(@Body() postResumeDto: PostResumeDto, @User() user: JwtDto) {
     return this.resumeService.createResume(postResumeDto, user)
   }
 
@@ -43,7 +42,6 @@ export class ResumeController {
   @ApiCreatedResponse({ type: GetResumesDto })
   @ApiUnauthorizedResponse({ description: 'User is not logged in' })
   @ApiForbiddenResponse({ description: 'User is not an actor' })
-  @ApiNotFoundResponse({ description: 'Actor not found' })
   @ApiOperation({ summary: 'gets all resumes from user profile' })
   getResumes(@User() user: JwtDto) {
     return this.resumeService.getResumesByUser(user)
