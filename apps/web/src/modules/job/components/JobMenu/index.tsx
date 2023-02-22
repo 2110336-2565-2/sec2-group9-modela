@@ -15,7 +15,7 @@ const JobMenu = ({ focus }: JobMenuProps) => {
   const { status, pendingActorCount } = useSummaryData()
 
   const isTablet = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'))
-  if (isTablet) return <></>
+  if (isTablet) return null
 
   return (
     <MenuContainer>
