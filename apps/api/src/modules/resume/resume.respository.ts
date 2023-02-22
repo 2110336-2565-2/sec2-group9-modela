@@ -45,6 +45,6 @@ export class ResumeRepository {
     const resumes = await this.prisma.resume.findMany({
       where: { actorId },
     })
-    return resumes
+    return { resumes: resumes }
   }
 }

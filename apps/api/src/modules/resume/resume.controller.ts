@@ -50,13 +50,13 @@ export class ResumeController {
   }
 
   @Get(':resumeId')
-  @UseAuthGuard(UserType.ACTOR)
+  @UseAuthGuard(UserType.ACTOR, UserType.CASTING)
   @ApiCreatedResponse({ type: GetResumeDto })
   @ApiUnauthorizedResponse({ description: 'User is not logged in' })
   @ApiForbiddenResponse({ description: 'User is not an actor' })
   @ApiNotFoundResponse({ description: 'Resume not found' })
   @ApiOperation({ summary: 'gets resume from user profile' })
   getResume(@Param('resumeId') resumeId: number, @User() user: JwtDto) {
-    return this.resumeService.getResumeById(resumeId, user)
+    return this.resumeService.getResumeById(+resumeId, user)
   }
 }

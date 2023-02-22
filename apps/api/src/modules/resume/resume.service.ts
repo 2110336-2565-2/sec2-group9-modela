@@ -41,7 +41,7 @@ export class ResumeService {
   async getResumesByUser(user: JwtDto) {
     const actor = await this.repository.getActorFromUser(user)
     if (!actor) {
-      throw new NotFoundException('Actor not found')
+      throw new ForbiddenException('User is not an actor')
     }
     return this.repository.getResumesByActorId(actor.actorId)
   }
