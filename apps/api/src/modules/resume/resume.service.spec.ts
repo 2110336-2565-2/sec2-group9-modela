@@ -50,7 +50,7 @@ describe('ResumeService', () => {
     })
   })
 
-  describe('getResume', () => {
+  describe('getResumeById', () => {
     const MOCK_ACTOR = {
       userId: 1,
       status: UserStatus.ACCEPTED,
@@ -75,15 +75,6 @@ describe('ResumeService', () => {
       resumeUrl: 'github.com',
       actorId: 1,
     }
-
-    const MOCK_RESUME_ALT = {
-      resumeId: 2,
-      name: 'Test Resume',
-      resumeUrl: 'github.com',
-      actorId: 1,
-    }
-
-    // by id
 
     it('should get resume correctly', async () => {
       jest.spyOn(repository, 'getResumeById').mockResolvedValue(MOCK_RESUME)
@@ -112,8 +103,22 @@ describe('ResumeService', () => {
         ForbiddenException,
       )
     })
+  })
 
-    // by actor id
+  describe('getResumeByActorId', () => {
+    const MOCK_RESUME = {
+      resumeId: 1,
+      name: 'Test Resume',
+      resumeUrl: 'github.com',
+      actorId: 1,
+    }
+
+    const MOCK_RESUME_ALT = {
+      resumeId: 2,
+      name: 'Test Resume',
+      resumeUrl: 'github.com',
+      actorId: 1,
+    }
 
     it('should get resume correctly', async () => {
       jest
