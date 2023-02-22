@@ -32,4 +32,19 @@ export class ResumeRepository {
 
     return { resumeId: resume.resumeId }
   }
+
+  async getResumeById(resumeId: number) {
+    const resume = await this.prisma.resume.findUnique({
+      where: { resumeId },
+    })
+
+    return resume
+  }
+
+  async getResumesByActorId(actorId: number) {
+    const resumes = await this.prisma.resume.findMany({
+      where: { actorId },
+    })
+    return resumes
+  }
 }
