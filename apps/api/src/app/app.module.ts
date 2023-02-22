@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { AuthModule } from 'src/modules/auth/auth.module'
+import { InfoModule } from 'src/modules/auth/info/info.module'
 import { ExampleModule } from 'src/modules/example/example.module'
 import { FileModule } from 'src/modules/file/file.module'
 import { ApplicationModule } from 'src/modules/job/application/application.module'
@@ -27,6 +28,7 @@ import { AppService } from './app.service'
     ApplicationModule,
     ResumeModule,
     FileModule,
+    InfoModule,
   ],
   controllers: [AppController],
   providers: [AppService],
