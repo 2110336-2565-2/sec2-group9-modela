@@ -12,6 +12,7 @@ import {
   ApiCreatedResponse,
   ApiForbiddenResponse,
   ApiNotFoundResponse,
+  ApiOkResponse,
   ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
@@ -39,7 +40,7 @@ export class ResumeController {
 
   @Get()
   @UseAuthGuard(UserType.ACTOR)
-  @ApiCreatedResponse({ type: GetResumesDto })
+  @ApiOkResponse({ type: GetResumesDto })
   @ApiUnauthorizedResponse({ description: 'User is not logged in' })
   @ApiForbiddenResponse({ description: 'User is not an actor' })
   @ApiOperation({ summary: 'gets all resumes from user profile' })
@@ -49,7 +50,7 @@ export class ResumeController {
 
   @Get(':resumeId')
   @UseAuthGuard(UserType.ACTOR, UserType.CASTING)
-  @ApiCreatedResponse({ type: GetResumeDto })
+  @ApiOkResponse({ type: GetResumeDto })
   @ApiUnauthorizedResponse({ description: 'User is not logged in' })
   @ApiForbiddenResponse({ description: 'User is not an actor' })
   @ApiNotFoundResponse({ description: 'Resume not found' })
