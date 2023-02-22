@@ -1,4 +1,4 @@
-import { GetJobCardDto } from '@modela/dtos'
+import { GetJobCardDto, JobStatus } from '@modela/dtos'
 import { Divider, Typography } from '@mui/material'
 import Footer from 'modules/job/components/JobCardFooter'
 import Header from 'modules/job/components/JobCardHeader'
@@ -25,7 +25,12 @@ export default function JobCard(prop: GetJobCardDto) {
       passHref
       style={{ textDecoration: 'none', color: 'inherit' }}
     >
-      <CardContainer>
+      <CardContainer
+        sx={{
+          backgroundColor:
+            status === JobStatus.CANCELLED ? 'rgba(33, 33, 33, 0.08)' : '',
+        }}
+      >
         <Header status={status} jobId={jobId} {...headerProps} />
         <Typography
           variant="subtitle2"
