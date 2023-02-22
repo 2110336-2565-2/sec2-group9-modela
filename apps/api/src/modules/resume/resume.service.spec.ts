@@ -81,6 +81,13 @@ describe('ResumeService', () => {
       actorId: 1,
     }
 
+    const MOCK_RESUME_ALT = {
+      resumeId: 2,
+      name: 'Test Resume',
+      resumeUrl: 'github.com',
+      actorId: 1,
+    }
+
     // by id
 
     it('should get resume correctly', async () => {
@@ -117,6 +124,22 @@ describe('ResumeService', () => {
       await expect(service.getResumeById(1, MOCK_ACTOR_ALT)).rejects.toThrow(
         ForbiddenException,
       )
+    })
+
+    // by actor id
+
+    it('should get resume correctly', async () => {
+      jest
+        .spyOn(repository, 'getResumesByActorId')
+        .mockResolvedValue({ resumes: [MOCK_RESUME, MOCK_RESUME_ALT] })
+      const MOCK_ACTOR_DB = mock('actor').override({ actorId: 1 }).get()
+      const MOCK_ACTOR_USER = mock('user').override({ userId: 1 }).get()
+      jest
+        .spyOn(repository, 'getActorFromUser')
+        .mockResolvedValue(MOCK_ACTOR_DB)
+      const result = await service.getResumesByUser(MOCK_ACTOR_USER)
+      expect(repository.getResumesByActorId).toBeCalledWith(1)
+      expect(result).toEqual(MOCK_RESUME)
     })
   })
 })
