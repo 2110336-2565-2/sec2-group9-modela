@@ -31,7 +31,6 @@ export class ResumeService {
   }
 
   async getResumesByUser(user: JwtDto) {
-    const actor = await this.repository.getActorFromUser(user)
-    return this.repository.getResumesByActorId(actor.actorId)
+    return this.repository.getResumesByActorId(user.userId)
   }
 }

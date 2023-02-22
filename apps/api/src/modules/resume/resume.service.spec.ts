@@ -40,15 +40,10 @@ describe('ResumeService', () => {
     }
 
     it('should post resume correctly', async () => {
-      const MOCK_DB_ACTOR = mock('actor').get()
       jest.spyOn(repository, 'createResume').mockResolvedValue({ resumeId: 11 })
-      jest
-        .spyOn(repository, 'getActorFromUser')
-        .mockResolvedValue(MOCK_DB_ACTOR)
       const result = await service.createResume(postResumeDto, MOCK_ACTOR)
       expect(repository.createResume).toBeCalledWith(
         postResumeDto,
-        MOCK_DB_ACTOR,
         MOCK_ACTOR.userId,
       )
       expect(result).toEqual({ resumeId: 11 })
@@ -92,10 +87,6 @@ describe('ResumeService', () => {
 
     it('should get resume correctly', async () => {
       jest.spyOn(repository, 'getResumeById').mockResolvedValue(MOCK_RESUME)
-      const MOCK_ACTOR_DB = mock('actor').override({ actorId: 1 }).get()
-      jest
-        .spyOn(repository, 'getActorFromUser')
-        .mockResolvedValue(MOCK_ACTOR_DB)
       const result = await service.getResumeById(1, MOCK_ACTOR)
       expect(repository.getResumeById).toBeCalledWith(1)
       expect(result).toEqual(MOCK_RESUME)
@@ -117,10 +108,6 @@ describe('ResumeService', () => {
 
     it('should throw error if user is not the owner of the resume', async () => {
       jest.spyOn(repository, 'getResumeById').mockResolvedValue(MOCK_RESUME)
-      const MOCK_ACTOR_ALT_DB = mock('actor').override({ actorId: 2 }).get()
-      jest
-        .spyOn(repository, 'getActorFromUser')
-        .mockResolvedValue(MOCK_ACTOR_ALT_DB)
       await expect(service.getResumeById(1, MOCK_ACTOR_ALT)).rejects.toThrow(
         ForbiddenException,
       )
@@ -132,11 +119,7 @@ describe('ResumeService', () => {
       jest
         .spyOn(repository, 'getResumesByActorId')
         .mockResolvedValue({ resumes: [MOCK_RESUME, MOCK_RESUME_ALT] })
-      const MOCK_ACTOR_DB = mock('actor').override({ actorId: 1 }).get()
       const MOCK_ACTOR_USER = mock('user').override({ userId: 1 }).get()
-      jest
-        .spyOn(repository, 'getActorFromUser')
-        .mockResolvedValue(MOCK_ACTOR_DB)
       const result = await service.getResumesByUser(MOCK_ACTOR_USER)
       expect(repository.getResumesByActorId).toBeCalledWith(1)
       expect(result).toEqual({ resumes: [MOCK_RESUME, MOCK_RESUME_ALT] })
