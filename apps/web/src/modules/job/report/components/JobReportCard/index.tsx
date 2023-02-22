@@ -1,5 +1,5 @@
 import { GetReportsDto } from '@modela/dtos'
-import { Divider, Typography } from '@mui/material'
+import { Divider, Link, Typography } from '@mui/material'
 
 import ReportDetail from './components/ReportDetail'
 import {
@@ -10,7 +10,7 @@ import {
 } from './styled'
 
 const JobReportCard = (prop: GetReportsDto) => {
-  const { jobTitle, reports } = prop
+  const { jobTitle, jobId, reports } = prop
 
   return (
     <CardContainer>
@@ -19,11 +19,19 @@ const JobReportCard = (prop: GetReportsDto) => {
       </Typography>
       <Divider />
       <Typography variant="body1">
-        งานที่ได้รับการแจ้งปัญหา: {jobTitle}
+        {'งานที่ได้รับการแจ้งปัญหา: '}
+        <Link
+          variant="body1"
+          color="primary"
+          sx={{ cursor: 'pointer', textDecoration: 'none' }}
+          href={`/job/${jobId}`}
+        >
+          {jobTitle}
+        </Link>
       </Typography>
       <Typography variant="body1">มีการแจ้งปัญหา 2 ครั้ง</Typography>
-      {reports.map((report, idx) => (
-        <ReportDetail key={idx} {...report} />
+      {reports.map((report) => (
+        <ReportDetail key={report.reportId} {...report} />
       ))}
       <ButtonContainer>
         <RejectButton>ยกเลิกการแจ้งปัญหาทั้งหมด</RejectButton>

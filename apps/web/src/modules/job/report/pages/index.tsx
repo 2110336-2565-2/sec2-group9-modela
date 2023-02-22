@@ -1,5 +1,4 @@
-import { UserType } from '@modela/database'
-import { GetReportsDto } from '@modela/dtos'
+import { GetReportsDto, UserType } from '@modela/dtos'
 import withGuard from 'common/hoc/withGuard'
 import React from 'react'
 
