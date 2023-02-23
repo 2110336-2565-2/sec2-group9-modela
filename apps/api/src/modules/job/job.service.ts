@@ -17,7 +17,6 @@ import {
   ForbiddenException,
   InternalServerErrorException,
 } from '@nestjs/common/exceptions'
-import console from 'console'
 
 import { JobRepository } from './job.repository'
 
@@ -90,7 +89,7 @@ export class JobService {
     const params = {
       //take and skip from limit and page
       take: Number(searchJobDto.limit),
-      skip: (searchJobDto.page - 1) * searchJobDto.limit,
+      skip: (Number(searchJobDto.page) - 1) * Number(searchJobDto.limit),
       //filtering
       where: {
         //joined filter
