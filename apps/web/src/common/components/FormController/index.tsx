@@ -76,8 +76,7 @@ const FormController = <T extends FieldValues>(
                 />
               )
 
-            if (type === 'select') {
-              console.log(field.value)
+            if (type === 'select')
               return (
                 <TextField
                   select
@@ -98,7 +97,6 @@ const FormController = <T extends FieldValues>(
                   ))}
                 </TextField>
               )
-            }
             if (type === 'date')
               return (
                 <DesktopDatePicker

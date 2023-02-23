@@ -34,7 +34,6 @@ const useActorForm = (defaultValues: ActorInfoDto) => {
   const handleSuccess: SubmitHandler<IEditActorInfoSchema> = useCallback(
     // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
     async ({ idCardImageUrl, ...data }) => {
-      console.log(data)
       setLoading(true)
       try {
         const formData = new FormData()
