@@ -154,4 +154,5 @@ const JobList = () => {
 export default withGuard(JobList, 'verified', [
   UserType.ACTOR,
   UserType.CASTING,
+  UserType.ADMIN,
 ])
