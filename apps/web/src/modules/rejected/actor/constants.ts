@@ -83,5 +83,6 @@ export const FORM_LAYOUT: IFormControllerProps<IEditActorInfoSchema>[] = [
     type: 'uploadFile',
     label: 'อัพโหลดรูปถ่ายบัตรประชาชน/พาสปอร์ต',
     name: 'idCardImageUrl',
+    initialName: 'รูปถ่ายบัตรประชาชน/พาสปอร์ต',
   },
 ]

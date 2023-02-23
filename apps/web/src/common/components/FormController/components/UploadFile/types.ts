@@ -5,4 +5,5 @@ export interface IUploadFileProps {
   label?: string
   url?: string
   hideLink?: boolean
+  initialName?: string
 }

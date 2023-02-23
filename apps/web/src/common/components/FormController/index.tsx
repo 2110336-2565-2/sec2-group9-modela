@@ -72,10 +72,12 @@ const FormController = <T extends FieldValues>(
                   error={formProps.fieldState.invalid}
                   errorMessage={formProps.fieldState.error?.message}
                   url={field.value}
+                  initialName={props.initialName}
                 />
               )
 
-            if (type === 'select')
+            if (type === 'select') {
+              console.log(field.value)
               return (
                 <TextField
                   select
@@ -96,6 +98,7 @@ const FormController = <T extends FieldValues>(
                   ))}
                 </TextField>
               )
+            }
             if (type === 'date')
               return (
                 <DesktopDatePicker
