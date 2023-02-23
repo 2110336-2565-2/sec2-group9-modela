@@ -147,7 +147,7 @@ export class JobService {
       params.where.Report = {
         some: {
           createdAt: {
-            gte: new Date('1970-01-01T00:00:00Z'),
+            gte: new Date('0001-01-01T00:00:00Z'),
           },
         },
       }
@@ -157,7 +157,6 @@ export class JobService {
       searchJobDto.status.includes(SearchJobStatus.REPORTED)
     ) {
       params.where.status = undefined
-      console.log('only reported')
     } else {
       params.where.status = {
         in: statusQuery,
@@ -272,13 +271,6 @@ export class JobService {
     //set Default value for limit and page
     searchJobDto.limit = searchJobDto.limit || 20
     searchJobDto.page = searchJobDto.page || 1
-
-    //check if castingId is not equal to user.userId
-    if (user.type == UserType.CASTING) {
-      if (searchJobDto.castingId == undefined)
-        searchJobDto.castingId = user.userId
-      if (searchJobDto.castingId != user.userId) throw new ForbiddenException()
-    }
 
     //set params for getJob
     const params = this.convertRequestToParams(searchJobDto, user)
