@@ -52,7 +52,7 @@ export class InfoController {
     return this.infoService.editActorInfo(body, file, user)
   }
 
-  @Get('actor')
+  @Get('casting')
   @UseUnverifyGuard(UserType.CASTING)
   @ApiOkResponse({ type: CastingInfoDto })
   @ApiUnauthorizedResponse({ description: 'User is not logged in' })
@@ -62,7 +62,7 @@ export class InfoController {
     return this.infoService.getCastingInfo(user)
   }
 
-  @Put('actor')
+  @Put('casting')
   @UseUnverifyGuard(UserType.CASTING)
   @UseFileUpload()
   @ApiOkResponse()
