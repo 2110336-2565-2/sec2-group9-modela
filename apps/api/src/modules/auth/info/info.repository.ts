@@ -1,4 +1,10 @@
-import { ActorInfoDto, ActorInfoWithReasonDto } from '@modela/dtos'
+import { UserStatus } from '@modela/database'
+import {
+  ActorInfoDto,
+  ActorInfoWithReasonDto,
+  CastingInfoDto,
+  CastingInfoWithReasonDto,
+} from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
 import { Express } from 'express'
 import { PrismaService } from 'src/database/prisma.service'
@@ -45,6 +51,32 @@ export class InfoRepository {
     }
   }
 
+  async getCastingInfoById(userId: number): Promise<CastingInfoWithReasonDto> {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        userId,
+      },
+      include: {
+        Casting: true,
+      },
+    })
+    const { firstName, middleName, lastName, rejectedReason, Casting } = user
+    const { companyName, companyId, employmentCertUrl } = Casting
+    return {
+      rejectedReason,
+      data: {
+        firstName,
+        middleName,
+        lastName,
+        companyName,
+        companyId,
+        employmentCertUrl: await this.fileService.getDownloadUrl(
+          employmentCertUrl,
+        ),
+      },
+    }
+  }
+
   async editActorInfo(
     body: ActorInfoDto,
     file: Express.Multer.File,
@@ -62,6 +94,7 @@ export class InfoRepository {
             ssn,
             User: {
               update: {
+                status: UserStatus.PENDING,
                 ...rest,
               },
             },
@@ -78,6 +111,45 @@ export class InfoRepository {
           where: { actorId },
           data: {
             idCardImageUrl,
+          },
+        })
+      },
+      { timeout: 10000 },
+    )
+  }
+
+  async editCastingInfo(
+    body: CastingInfoDto,
+    file: Express.Multer.File,
+    castingId: number,
+  ) {
+    const { companyId, companyName, ...rest } = body
+    await this.prisma.$transaction(
+      async (tx) => {
+        await tx.casting.update({
+          where: { castingId },
+          data: {
+            companyId,
+            companyName,
+            User: {
+              update: {
+                status: UserStatus.PENDING,
+                ...rest,
+              },
+            },
+          },
+        })
+
+        if (!file) return
+        const fileName = 'user/credential/' + castingId
+        const employmentCertUrl = await this.fileService.postUploadFile(
+          file,
+          fileName,
+        )
+        await tx.casting.update({
+          where: { castingId },
+          data: {
+            employmentCertUrl,
           },
         })
       },
