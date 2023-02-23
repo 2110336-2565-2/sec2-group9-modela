@@ -6,6 +6,7 @@ import {
   GetJobCardDto,
   GetJobDto,
   JobSummaryDto,
+  SearchAppliedJobDto,
 } from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
@@ -151,6 +152,52 @@ export class JobRepository {
       isReported: job.Report.length > 0,
     }))
     return selectedFields
+  }
+
+  async getJobApplied(
+    searchAppliedJobDto: SearchAppliedJobDto,
+    userId: number,
+  ): Promise<(GetJobCardDto & { ApplicationStatus })[]> {
+    const jobs = await this.prisma.job.findMany({
+      orderBy: {
+        jobId: Prisma.SortOrder.desc,
+      },
+      include: {
+        Casting: {
+          include: {
+            User: true,
+          },
+        },
+        Shooting: true,
+        Application: true,
+      },
+      where: {
+        Application: {
+          some: {
+            actorId: userId,
+            //applicationStatus: searchAppliedJobDto.applicationStatus,
+          },
+        },
+      },
+    })
+    const jobsWithApplicationStatus = jobs.map((job) => ({
+      jobId: job.jobId,
+      title: job.title,
+      companyName: job.Casting.companyName,
+      description: job.description,
+      status: job.status,
+      actorCount: job.actorCount,
+      gender: job.gender,
+      wage: job.wage,
+      applicationDeadline: job.applicationDeadline,
+      jobCastingImageUrl: job.Casting.User.profileImageUrl,
+      castingId: job.castingId,
+      castingName: job.Casting.User.firstName,
+      ApplicationStatus: job.Application.find(
+        (application) => application.actorId === userId,
+      ).status,
+    }))
+    return jobsWithApplicationStatus
   }
 
   async getJobById(id: number): Promise<GetJobDto & { castingId: number }> {
