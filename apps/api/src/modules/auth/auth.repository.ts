@@ -31,7 +31,10 @@ export class AuthRepository {
         },
       })
       const fileName = 'user/credential/' + user.userId
-      await this.fileService.postUploadFile(file, fileName)
+      const employmentCertUrl = await this.fileService.postUploadFile(
+        file,
+        fileName,
+      )
 
       return await tx.user.update({
         where: {
@@ -40,7 +43,7 @@ export class AuthRepository {
         data: {
           Casting: {
             update: {
-              employmentCertUrl: fileName,
+              employmentCertUrl,
             },
           },
         },
@@ -66,7 +69,10 @@ export class AuthRepository {
         },
       })
       const fileName = 'user/credential/' + user.userId
-      await this.fileService.postUploadFile(file, fileName)
+      const idCardImageUrl = await this.fileService.postUploadFile(
+        file,
+        fileName,
+      )
 
       return await tx.user.update({
         where: {
@@ -75,7 +81,7 @@ export class AuthRepository {
         data: {
           Actor: {
             update: {
-              idCardImageUrl: fileName,
+              idCardImageUrl,
             },
           },
         },

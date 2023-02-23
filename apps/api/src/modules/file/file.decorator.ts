@@ -9,13 +9,24 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express'
 import { ApiConsumes } from '@nestjs/swagger'
 
-export const CheckedFile = () => {
+export const CheckedFile = (
+  options: {
+    fileIsRequired?: boolean
+    maxSize?: number
+    fileType?: string
+  } = {},
+) => {
+  const {
+    fileIsRequired = true,
+    maxSize = 5 * 1024 * 1024,
+    fileType = '(application/pdf|image/*)',
+  } = options
   return UploadedFile(
     new ParseFilePipe({
-      fileIsRequired: true,
+      fileIsRequired,
       validators: [
-        new MaxFileSizeValidator({ maxSize: 5 * 1024 * 1024 }),
-        new FileTypeValidator({ fileType: '(application/pdf|image/*)' }),
+        new MaxFileSizeValidator({ maxSize }),
+        new FileTypeValidator({ fileType }),
       ],
     }),
   )

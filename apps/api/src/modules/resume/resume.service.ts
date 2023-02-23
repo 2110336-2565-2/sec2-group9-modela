@@ -12,8 +12,7 @@ export class ResumeService {
   constructor(private readonly repository: ResumeRepository) {}
 
   async createResume(postResumeDto: PostResumeDto, user: JwtDto) {
-    const actor = await this.repository.getActorFromUser(user)
-    return this.repository.createResume(postResumeDto, actor, user.userId)
+    return this.repository.createResume(postResumeDto, user.userId)
   }
 
   async getResumeById(resumeId: number, user: JwtDto) {
@@ -22,8 +21,7 @@ export class ResumeService {
       throw new NotFoundException('Resume not found')
     }
     if (user.type === UserType.ACTOR) {
-      const actor = await this.repository.getActorFromUser(user)
-      if (resume.actorId !== actor.actorId) {
+      if (resume.actorId !== user.userId) {
         throw new ForbiddenException(
           'You are not allowed to access this resume',
         )
@@ -33,7 +31,6 @@ export class ResumeService {
   }
 
   async getResumesByUser(user: JwtDto) {
-    const actor = await this.repository.getActorFromUser(user)
-    return this.repository.getResumesByActorId(actor.actorId)
+    return this.repository.getResumesByActorId(user.userId)
   }
 }

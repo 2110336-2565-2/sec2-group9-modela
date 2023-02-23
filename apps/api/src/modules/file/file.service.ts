@@ -45,13 +45,15 @@ export class FileService {
   async postUploadFile(file: Express.Multer.File, fileName: string) {
     if (!file) throw new BadRequestException('No File Upload')
     const ext = file.originalname.split('.').at(-1)
+    const fullName = fileName + '.' + ext
     try {
       const command = new PutObjectCommand({
         Bucket: 'fridge-agile',
-        Key: this.configService.get('aws.rootPath') + fileName + '.' + ext,
+        Key: this.configService.get('aws.rootPath') + fullName,
         Body: file.buffer,
       })
-      return await this.s3Client.send(command)
+      await this.s3Client.send(command)
+      return fullName
     } catch (err) {
       console.log(err)
       throw new InternalServerErrorException()

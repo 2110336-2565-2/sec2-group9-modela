@@ -12,6 +12,7 @@ import {
   ApiCreatedResponse,
   ApiForbiddenResponse,
   ApiNotFoundResponse,
+  ApiOkResponse,
   ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
@@ -32,18 +33,16 @@ export class ResumeController {
   @ApiUnauthorizedResponse({ description: 'User is not logged in' })
   @ApiForbiddenResponse({ description: 'User is not an actor' })
   @ApiBadRequestResponse({ description: 'Wrong format' })
-  @ApiNotFoundResponse({ description: 'Actor not found' })
   @ApiOperation({ summary: 'adds resume to user profile' })
-  createJob(@Body() postResumeDto: PostResumeDto, @User() user: JwtDto) {
+  createResume(@Body() postResumeDto: PostResumeDto, @User() user: JwtDto) {
     return this.resumeService.createResume(postResumeDto, user)
   }
 
   @Get()
   @UseAuthGuard(UserType.ACTOR)
-  @ApiCreatedResponse({ type: GetResumesDto })
+  @ApiOkResponse({ type: GetResumesDto })
   @ApiUnauthorizedResponse({ description: 'User is not logged in' })
   @ApiForbiddenResponse({ description: 'User is not an actor' })
-  @ApiNotFoundResponse({ description: 'Actor not found' })
   @ApiOperation({ summary: 'gets all resumes from user profile' })
   getResumes(@User() user: JwtDto) {
     return this.resumeService.getResumesByUser(user)
@@ -51,7 +50,7 @@ export class ResumeController {
 
   @Get(':resumeId')
   @UseAuthGuard(UserType.ACTOR, UserType.CASTING)
-  @ApiCreatedResponse({ type: GetResumeDto })
+  @ApiOkResponse({ type: GetResumeDto })
   @ApiUnauthorizedResponse({ description: 'User is not logged in' })
   @ApiForbiddenResponse({ description: 'User is not an actor' })
   @ApiNotFoundResponse({ description: 'Resume not found' })
