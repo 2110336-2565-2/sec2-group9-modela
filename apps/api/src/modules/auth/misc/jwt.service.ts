@@ -36,7 +36,7 @@ export class JwtAnyStrategy extends PassportStrategy(Strategy, 'jwt') {
           userId: payload.userId,
         },
       })
-      if (!user || user.status !== UserStatus.ACCEPTED) return payload
+      if (!user || user.status === payload.status) return payload
       this.authService.createJwtToken(user, req.res)
       return {
         status: user.status,
