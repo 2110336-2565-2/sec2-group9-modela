@@ -143,7 +143,7 @@ export class JobService {
       statusQuery.push(JobStatus.CANCELLED)
     }
     if (searchJobDto.status.includes(SearchJobStatus.REPORTED)) {
-      //filter only reported job (by create after 1970)
+      //filter only reported job (by create after min date)
       params.where.Report = {
         some: {
           createdAt: {
