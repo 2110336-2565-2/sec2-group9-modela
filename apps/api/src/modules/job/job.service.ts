@@ -126,6 +126,18 @@ export class JobService {
       searchJobDto.status = [searchJobDto.status]
     }
 
+    // Edge case: if only status is reported, return all status except cancelled
+    if (
+      searchJobDto.status.length == 1 &&
+      searchJobDto.status.includes(SearchJobStatus.REPORTED)
+    ) {
+      searchJobDto.status = [
+        SearchJobStatus.OPEN,
+        SearchJobStatus.CLOSE,
+        SearchJobStatus.REPORTED,
+      ]
+    }
+
     if (searchJobDto.status.includes(SearchJobStatus.OPEN)) {
       statusQuery.push(JobStatus.OPEN)
     }
@@ -143,24 +155,14 @@ export class JobService {
       statusQuery.push(JobStatus.CANCELLED)
     }
     if (searchJobDto.status.includes(SearchJobStatus.REPORTED)) {
-      //filter only reported job (by create after min date)
+      //filter only reported job
       params.where.Report = {
-        some: {
-          createdAt: {
-            gte: new Date('0001-01-01T00:00:00Z'),
-          },
-        },
+        some: {},
       }
     }
-    if (
-      searchJobDto.status.length == 1 &&
-      searchJobDto.status.includes(SearchJobStatus.REPORTED)
-    ) {
-      params.where.status = undefined
-    } else {
-      params.where.status = {
-        in: statusQuery,
-      }
+
+    params.where.status = {
+      in: statusQuery,
     }
 
     //handle gender qyery
