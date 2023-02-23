@@ -80,6 +80,13 @@ export class JobService {
     const defaultMinWageGte = 0
     const defaultMaxWageLte = maxInt32
 
+    const defaultLimit = 20
+    const defaultPage = 1
+
+    //set Default value for limit and page
+    searchJobDto.limit = searchJobDto.limit || defaultLimit
+    searchJobDto.page = searchJobDto.page || defaultPage
+
     const params = {
       //take and skip from limit and page
       take: Number(searchJobDto.limit),
@@ -240,10 +247,6 @@ export class JobService {
   }
 
   async findAll(searchJobDto: SearchJobDto, user: JwtDto) {
-    //set Default value for limit and page
-    searchJobDto.limit = searchJobDto.limit || 20
-    searchJobDto.page = searchJobDto.page || 1
-
     //check if castingId is not equal to user.userId
     if (user.type == UserType.CASTING) {
       if (searchJobDto.castingId == undefined)
@@ -270,10 +273,6 @@ export class JobService {
   }
 
   async findAllByAdmin(searchJobDto: SearchJobDto, user: JwtDto) {
-    //set Default value for limit and page
-    searchJobDto.limit = searchJobDto.limit || 20
-    searchJobDto.page = searchJobDto.page || 1
-
     //set params for getJob
     const params = this.convertRequestToParams(searchJobDto, user)
 
