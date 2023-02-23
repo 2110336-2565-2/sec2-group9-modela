@@ -9,6 +9,7 @@ import {
   JwtDto,
   SearchJobByAdminDto,
   SearchJobByAdminStatus,
+  SearchAppliedJobDto,
   SearchJobDto,
   SearchJobStatus,
   UserType,
@@ -342,6 +343,9 @@ export class JobService {
     return result
   }
 
+  async findAllApplied(searchAppliedJobDto: SearchAppliedJobDto, user: JwtDto) {
+    return this.repository.getJobApplied(searchAppliedJobDto, user.userId)
+  }
   async findOne(id: number, user: JwtDto) {
     const job = await this.repository.getJobById(id)
 
