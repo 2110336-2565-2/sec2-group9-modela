@@ -2,12 +2,14 @@ import {
   CreateJobDto,
   EditJobDto,
   GetJobCardByAdminWithMaxPageDto,
+  GetAppliedJobDto,
   GetJobCardWithMaxPageDto,
   GetJobDto,
   JobIdDto,
   JobSummaryDto,
   JwtDto,
   SearchJobByAdminDto,
+  SearchAppliedJobDto,
   SearchJobDto,
   UserType,
 } from '@modela/dtos'
@@ -55,6 +57,20 @@ export class JobController {
     @User() user: JwtDto,
   ) {
     return this.jobService.findAllByAdmin(searchJobByAdminDto, user)
+  }
+
+  @Get('applied')
+  @UseAuthGuard(UserType.ACTOR)
+  @ApiOperation({ summary: 'get all jobs that actor applied' })
+  @ApiOkResponse({ type: GetAppliedJobDto, isArray: true })
+  @ApiUnauthorizedResponse({ description: 'User is not login' })
+  @ApiForbiddenResponse({ description: 'User is not actor' })
+  @ApiBadRequestResponse({ description: 'Wrong format' })
+  findAllApplied(
+    @Query() searchAppliedJobDto: SearchAppliedJobDto,
+    @User() user: JwtDto,
+  ) {
+    return this.jobService.findAllApplied(searchAppliedJobDto, user)
   }
 
   @Get(':id')
