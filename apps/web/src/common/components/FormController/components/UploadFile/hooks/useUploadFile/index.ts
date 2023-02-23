@@ -2,8 +2,9 @@ import { ChangeEvent, MouseEventHandler, useCallback, useState } from 'react'
 
 const useUploadFile = (
   setUploadFile: (file: Blob, filename: string) => void,
+  initialName?: string,
 ) => {
-  const [name, setName] = useState('')
+  const [name, setName] = useState(initialName || '')
 
   const handleUploadFile = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {

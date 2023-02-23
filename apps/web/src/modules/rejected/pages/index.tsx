@@ -25,7 +25,7 @@ const RejectedPage = () => {
             color="error"
             sx={{ textAlign: 'center' }}
           >
-            เหตุผล: {initialData.reason}
+            เหตุผล: {initialData.rejectedReason}
           </Typography>
           <Typography variant="subtitle1" sx={{ textAlign: 'center' }}>
             กรุณาแก้ไขข้อมูลและส่งให้แอดมินตรวจสอบอีกครั้ง
