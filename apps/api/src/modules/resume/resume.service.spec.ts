@@ -1,4 +1,4 @@
-import { mock, UserStatus, UserType } from '@modela/database'
+import { mock, Resume, UserStatus, UserType } from '@modela/database'
 import { ForbiddenException, NotFoundException } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import { PrismaService } from 'src/database/prisma.service'
@@ -128,6 +128,48 @@ describe('ResumeService', () => {
       const result = await service.getResumesByUser(MOCK_ACTOR_USER)
       expect(repository.getResumesByActorId).toBeCalledWith(1)
       expect(result).toEqual({ resumes: [MOCK_RESUME, MOCK_RESUME_ALT] })
+    })
+  })
+  //Resume resume
+  describe('deleteResume', () => {
+    it('should return deleted value', async () => {
+      const mockedResume: Resume = mock('resume').override({ actorId: 1 }).get()
+      const mockedActor = mock('user').override({ userId: 1 }).get()
+
+      jest.spyOn(repository, 'getResumeById').mockResolvedValue(mockedResume)
+      jest.spyOn(repository, 'deleteResume').mockResolvedValue(mockedResume)
+      await expect(
+        service.deleteResume(mockedResume.resumeId, mockedActor),
+      ).resolves.toEqual(mockedResume)
+      expect(repository.getResumeById).toBeCalledWith(mockedResume.resumeId)
+      expect(repository.deleteResume).toBeCalledWith(mockedResume.resumeId)
+    })
+
+    it('should throw not found error when cannot find id', async () => {
+      const mockedExample: Resume = null
+      const queryID = 2
+
+      jest.spyOn(repository, 'getResumeById').mockResolvedValue(mockedExample)
+      jest.spyOn(repository, 'deleteResume').mockResolvedValue(mockedExample)
+      const mockedActor = mock('user').override({ userId: 1 }).get()
+      await expect(service.deleteResume(queryID, mockedActor)).rejects.toThrow(
+        NotFoundException,
+      )
+      expect(repository.getResumeById).toBeCalledWith(queryID)
+      expect(repository.deleteResume).not.toHaveBeenCalled()
+    })
+
+    it('should throw forbidden error when user is not the owner of the resume', async () => {
+      const mockedResume: Resume = mock('resume').override({ actorId: 1 }).get()
+      const mockedActor = mock('user').override({ userId: 2 }).get()
+
+      jest.spyOn(repository, 'getResumeById').mockResolvedValue(mockedResume)
+      jest.spyOn(repository, 'deleteResume').mockResolvedValue(mockedResume)
+      await expect(
+        service.deleteResume(mockedResume.resumeId, mockedActor),
+      ).rejects.toThrow(ForbiddenException)
+      expect(repository.getResumeById).toBeCalledWith(mockedResume.resumeId)
+      expect(repository.deleteResume).not.toHaveBeenCalled()
     })
   })
 })
