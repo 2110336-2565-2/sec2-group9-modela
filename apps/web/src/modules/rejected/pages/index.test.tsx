@@ -16,7 +16,7 @@ describe('<RejectedPage />', () => {
   const { mockUserType } = mockUser(UserType.ACTOR, UserStatus.REJECTED)
 
   const useInitialDataSpy = jest.fn().mockReturnValue({
-    reason: MOCK_REASON,
+    rejectedReason: MOCK_REASON,
     data: MOCK_INITIAL_DATA,
   })
   jest.doMock('./hooks/useInitialData', () => useInitialDataSpy)

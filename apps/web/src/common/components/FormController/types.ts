@@ -61,6 +61,7 @@ interface IUploadFileField<T extends FieldValues> {
   name: Path<T>
   label?: string
   hideLink?: boolean
+  initialName?: string
 }
 
 interface ISelectField<T extends FieldValues>

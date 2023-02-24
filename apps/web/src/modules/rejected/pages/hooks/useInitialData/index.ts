@@ -1,27 +1,27 @@
-import { UserType } from '@modela/database'
+import { ActorInfoWithReasonDto, UserType } from '@modela/dtos'
+import { useErrorHandler } from 'common/hooks/useErrorHandler'
+import { apiClient } from 'common/utils/api'
 import React, { useEffect } from 'react'
 
 const useInitialData = (type: UserType) => {
-  // TODO fix this
-  const [initialData, setInitialData] = React.useState<{
-    reason: string
-    data: any
-  } | null>(null)
+  const [initialData, setInitialData] =
+    React.useState<ActorInfoWithReasonDto | null>(null)
+  const { handleError } = useErrorHandler()
 
   useEffect(() => {
-    setTimeout(() => {
-      if (type === UserType.CASTING)
-        setInitialData({
-          reason: 'Initial Data Casting',
-          data: {},
-        })
-      else
-        setInitialData({
-          reason: 'Initial Data Actor',
-          data: {},
-        })
-    }, 1000)
-  }, [type])
+    const fetchActorData = async () => {
+      const res = await apiClient.get<ActorInfoWithReasonDto>('/info/actor')
+      setInitialData(res.data)
+    }
+
+    try {
+      if (type === UserType.ACTOR) {
+        fetchActorData()
+      }
+    } catch (err) {
+      handleError(err)
+    }
+  }, [handleError, type])
 
   return initialData
 }
