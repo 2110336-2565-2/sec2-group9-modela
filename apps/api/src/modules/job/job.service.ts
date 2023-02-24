@@ -73,7 +73,7 @@ export class JobService {
     const statusQuery = []
 
     //check searchJobByAnyDto is SearchJobByAdminDto or SearchJobDto
-    if (endpoint == '/jobs/admin') {
+    if (endpoint === '/jobs/admin') {
       const searchJobByAdminDto = searchJobByAnyDto as SearchJobByAdminDto
       //make OPEN for default
       searchJobByAdminDto.status = searchJobByAdminDto.status || [
@@ -85,7 +85,7 @@ export class JobService {
 
       // Edge case: if only status is reported, return all status except cancelled
       if (
-        searchJobByAdminDto.status.length == 1 &&
+        searchJobByAdminDto.status.length === 1 &&
         searchJobByAdminDto.status.includes(SearchJobByAdminStatus.REPORTED)
       ) {
         searchJobByAdminDto.status = [
@@ -114,7 +114,7 @@ export class JobService {
         statusQuery.push(JobStatus.CANCELLED)
       }
     }
-    if (endpoint == '/jobs') {
+    if (endpoint === '/jobs') {
       const searchJobByUserDto = searchJobByAnyDto as SearchJobDto
       //make OPEN for default
       searchJobByUserDto.status = searchJobByUserDto.status || [
@@ -304,8 +304,8 @@ export class JobService {
 
   async findAll(searchJobDto: SearchJobDto, user: JwtDto) {
     //check if castingId is not equal to user.userId
-    if (user.type == UserType.CASTING) {
-      if (searchJobDto.castingId == undefined)
+    if (user.type === UserType.CASTING) {
+      if (searchJobDto.castingId === undefined)
         searchJobDto.castingId = user.userId
       if (searchJobDto.castingId != user.userId) throw new ForbiddenException()
     }
