@@ -54,6 +54,9 @@ export class PendingUserDataDto{
   lastName: string;
 
   @ApiProperty()
+  profileImageUrl?: string
+  
+  @ApiProperty()
   companyName?: string;
 
   @ApiProperty()

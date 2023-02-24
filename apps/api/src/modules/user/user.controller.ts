@@ -1,4 +1,10 @@
-import { GetUserDto, JwtDto, UpdateUserStatusDto, UserType } from '@modela/dtos'
+import {
+  GetUserDto,
+  JwtDto,
+  PendingUserDto,
+  UpdateUserStatusDto,
+  UserType,
+} from '@modela/dtos'
 import { Body, Controller, Get, Param, Put } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
@@ -33,7 +39,8 @@ export class UserController {
   @Get('pending')
   @UseAuthGuard(UserType.ADMIN)
   @ApiOperation({ summary: 'get all user pending for admin' })
-  @ApiOkResponse({ type: GetUserDto, isArray: true })
+  @ApiUnauthorizedResponse({ description: 'User is not login' })
+  @ApiOkResponse({ type: PendingUserDto, isArray: true })
   getPendingUser() {
     return this.userService.getPendingUsers()
   }
