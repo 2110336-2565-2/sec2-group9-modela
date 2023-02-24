@@ -44,9 +44,6 @@ export class UserRepository {
         firstName: user.firstName,
         middleName: user.middleName,
         lastName: user.lastName,
-        profileImageUrl: await this.fileService.getDownloadUrl(
-          user.profileImageUrl,
-        ),
         ...(user.Casting && {
           companyName: user.Casting.companyName,
           companyId: user.Casting.companyId,
