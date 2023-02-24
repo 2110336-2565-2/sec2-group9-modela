@@ -17,3 +17,10 @@ export const RootContainer = styled('div')`
   gap: 30px;
   margin: 20px;
 `
+
+export const SideDiv = styled('div')`
+  width: 15vw;
+  ${({ theme }) => theme.breakpoints.down('lg')} {
+    display: none;
+  }
+`

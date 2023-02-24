@@ -124,10 +124,9 @@ export const FORM_LAYOUT: IFormControllerProps<IEditActorProfileSchemaType>[] =
       xs: 12,
     },
     {
-      type: 'textField',
+      type: 'date',
       label: 'วันเกิด',
       name: 'birthDate',
-      optional: true,
       sm: 6,
       xs: 12,
     },
