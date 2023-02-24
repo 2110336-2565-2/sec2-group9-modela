@@ -17,8 +17,6 @@ import { Gender, Job, JobStatus, Shooting } from '@modela/database'
 export enum SearchJobStatus {
   'OPEN' = 'OPEN',
   'CLOSE' = 'CLOSE',
-  'CANCELLED' = 'CANCELLED',
-  'REPORTED' = 'REPORTED',
 }
 
 export enum SearchJobByAdminStatus {
