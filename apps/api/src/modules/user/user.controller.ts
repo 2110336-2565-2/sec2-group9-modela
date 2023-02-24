@@ -1,4 +1,10 @@
-import { GetUserDto, JwtDto, UpdateUserStatusDto, UserType } from '@modela/dtos'
+import {
+  GetUserDto,
+  JwtDto,
+  PendingUserDto,
+  UpdateUserStatusDto,
+  UserType,
+} from '@modela/dtos'
 import { Body, Controller, Get, Param, Put } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
@@ -33,7 +39,7 @@ export class UserController {
   @Get('pending')
   @UseAuthGuard(UserType.ADMIN)
   @ApiOperation({ summary: 'get all user pending for admin' })
-  @ApiOkResponse({ type: GetUserDto, isArray: true })
+  @ApiOkResponse({ type: PendingUserDto, isArray: true })
   getPendingUser() {
     return this.userService.getPendingUsers()
   }
@@ -41,7 +47,7 @@ export class UserController {
   @Put(':id/verification')
   @UseAuthGuard(UserType.ADMIN)
   @ApiOperation({ summary: 'accept or reject user with id' })
-  @ApiOkResponse({ type: GetUserDto })
+  @ApiOkResponse({ type: PendingUserDto })
   @ApiNotFoundResponse({ description: 'user not found' })
   updateUserStatus(
     @Param('id') id: string,

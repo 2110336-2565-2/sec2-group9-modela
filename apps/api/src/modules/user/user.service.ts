@@ -42,7 +42,7 @@ export class UserService {
   async updateUserStatus(
     userId: number,
     updateUserStatusDto: UpdateUserStatusDto,
-  ): Promise<GetUserDto> {
+  ): Promise<PendingUserDto> {
     //check if user exist
     const user = await this.repository.getUserById(userId)
     if (!user) throw new NotFoundException()

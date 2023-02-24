@@ -65,14 +65,42 @@ export class UserRepository {
   async updateUserStatus(
     userId: number,
     updateUserStatusDto: UpdateUserStatusDto,
-  ): Promise<User> {
-    //accept user
-    return await this.prisma.user.update({
+  ): Promise<PendingUserDto> {
+    //update user status
+    const updatedUser = await this.prisma.user.update({
       where: { userId },
       data: {
         status: updateUserStatusDto.status,
         rejectedReason: updateUserStatusDto.rejectedReason,
       },
+      include: {
+        Casting: true,
+        Actor: true,
+      },
     })
+    const respondUpdatedUser = {
+      type: updatedUser.type,
+      data: {
+        userId: updatedUser.userId,
+        firstName: updatedUser.firstName,
+        middleName: updatedUser.middleName,
+        lastName: updatedUser.lastName,
+        rejectedReason: updatedUser.rejectedReason,
+        ...(updatedUser.Casting && {
+          companyName: updatedUser.Casting.companyName,
+          companyId: updatedUser.Casting.companyId,
+          employmentCertUrl: await this.fileService.getDownloadUrl(
+            updatedUser.Casting.employmentCertUrl,
+          ),
+        }),
+        ...(updatedUser.Actor && {
+          idCardImageUrl: await this.fileService.getDownloadUrl(
+            updatedUser.Actor.idCardImageUrl,
+          ),
+          ssn: updatedUser.Actor.ssn,
+        }),
+      },
+    }
+    return respondUpdatedUser
   }
 }
