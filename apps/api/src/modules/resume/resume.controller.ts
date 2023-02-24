@@ -59,13 +59,14 @@ export class ResumeController {
     return this.resumeService.getResumeById(+resumeId, user)
   }
 
-  @Delete(':id')
+  @Delete(':resumeId')
   @UseAuthGuard(UserType.ACTOR)
+  @ApiOkResponse({ type: GetResumeDto })
   @ApiOperation({ summary: 'delete resume by id' })
   @ApiUnauthorizedResponse({ description: 'User is not logged in' })
-  @ApiForbiddenResponse({ description: 'User is not an  owner actor' })
+  @ApiForbiddenResponse({ description: 'User is not an owner actor' })
   @ApiNotFoundResponse({ description: 'Resume not found' })
-  deleteResume(@Param('id') id: number, @User() user: JwtDto) {
-    return this.resumeService.deleteResume(+id, user)
+  deleteResume(@Param('resumeId') resumeId: number, @User() user: JwtDto) {
+    return this.resumeService.deleteResume(+resumeId, user)
   }
 }

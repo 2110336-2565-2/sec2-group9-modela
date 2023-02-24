@@ -38,6 +38,7 @@ export class ResumeRepository {
   }
 
   async deleteResume(resumeId: number): Promise<Resume> {
-    return this.prisma.resume.delete({ where: { resumeId } })
+    const resume = await this.prisma.resume.delete({ where: { resumeId } })
+    return resume
   }
 }
