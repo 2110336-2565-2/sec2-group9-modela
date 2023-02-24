@@ -17,6 +17,7 @@ const ActorResume = () => {
     handleAddNewResume,
     handleCloseDeleteModal,
     handleDeleteResume,
+    handleUpdateResume,
   } = useResumeInfo()
 
   return (
@@ -29,6 +30,7 @@ const ActorResume = () => {
           {...val}
           handleDelete={handleOpenDeleteModal}
           handleCancel={handleCancelUpdate}
+          handleSubmit={handleUpdateResume}
         />
       ))}
       <AddResumeButton variant="text" onClick={handleAddNewResume}>

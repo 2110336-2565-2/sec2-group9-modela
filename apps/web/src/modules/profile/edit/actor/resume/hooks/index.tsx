@@ -1,5 +1,9 @@
+import { GetResumesDto, PostResumeDto, ResumeIdDto } from '@modela/dtos'
+import { AxiosResponse } from 'axios'
+import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import useSwitch from 'common/hooks/useSwitch'
-import { useCallback, useState } from 'react'
+import { apiClient } from 'common/utils/api'
+import { useCallback, useEffect, useState } from 'react'
 
 import { IResumeWithFirstFlag } from './types'
 
@@ -8,6 +12,7 @@ export const useResumeInfo = () => {
   const [resumeId, setResumeId] = useState(0)
   const [resumeName, setResumeName] = useState('')
   const { isOpen: isModalOpen, close, open } = useSwitch()
+  const { handleError } = useErrorHandler()
 
   const handleAddNewResume = useCallback(() => {
     const newResume = {
@@ -22,10 +27,13 @@ export const useResumeInfo = () => {
 
   const handleDeleteResume = useCallback(() => {
     // TODO: call delete API
-
-    setResume((prev) => prev.filter((val) => val.resumeId !== resumeId))
-    close()
-  }, [resumeId, close])
+    try {
+      setResume((prev) => prev.filter((val) => val.resumeId !== resumeId))
+      close()
+    } catch (err) {
+      handleError(err)
+    }
+  }, [close, resumeId, handleError])
 
   const handleOpenDeleteModal = useCallback(
     (resumeId: number) => {
@@ -44,16 +52,28 @@ export const useResumeInfo = () => {
 
   const handleUpdateResume = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    (file: File, name: string, resumeId: number) => {
+    async (name: string, resumeId: number, file?: Blob) => {
       const currentIdx = resume.findIndex((val) => val.resumeId === resumeId)
 
       if (resume[currentIdx].isFirst) {
         // TODO: Call Create Resume API
-        const newId = Math.random()
+        const resumeUrl = 'https://www.google.com'
+
+        const { resumeId } = (
+          await apiClient.post<
+            ResumeIdDto,
+            AxiosResponse<ResumeIdDto>,
+            PostResumeDto
+          >('/resumes', {
+            name,
+            resumeUrl,
+          })
+        ).data
+
         const newResume = {
           name,
-          resumeId: newId,
-          resumeUrl: 'https://www.google.com',
+          resumeId,
+          resumeUrl,
         }
 
         setResume((prev) => {
@@ -80,6 +100,15 @@ export const useResumeInfo = () => {
     },
     [resume],
   )
+
+  useEffect(() => {
+    const getInitialResume = async () => {
+      const data = (await apiClient.get<GetResumesDto>('/resumes')).data
+      setResume(data.resumes)
+    }
+
+    getInitialResume()
+  }, [])
 
   return {
     resume,

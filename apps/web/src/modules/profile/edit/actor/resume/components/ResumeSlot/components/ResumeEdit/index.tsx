@@ -12,26 +12,42 @@ import {
 import { IResumeEditProps } from './types'
 
 const ResumeEdit = (props: IResumeEditProps) => {
-  const { name, resumeUrl, handleCancel, resumeId } = props
-  const { fileName, fileUrl, handleSelectFile, resumeName, setResumeName } =
-    useResumeForm(name, resumeUrl)
+  const {
+    name,
+    resumeUrl,
+    handleCancel,
+    handleSubmit,
+    resumeId,
+    changeToView,
+  } = props
+  const {
+    fileUrl,
+    handleSelectFile,
+    resumeName,
+    handleChangeName,
+    error,
+    handleSave,
+  } = useResumeForm(name, resumeUrl, resumeId, handleSubmit, changeToView)
 
   return (
     <RootContainer>
       <TextField
         fullWidth
         placeholder="ชื่อ Resume"
+        helperText={error.resumeName}
+        error={!!error.resumeName}
         value={resumeName}
-        onChange={(el) => setResumeName(el.target.value)}
+        onChange={handleChangeName}
       />
       <ButtonAndFileContainer>
         <FileUploadContainer>
           <UploadFile
-            error={false}
+            error={!!error['file']}
+            errorMessage={error['file']}
             handleSelectFile={handleSelectFile}
             label="อัปโหลดเรซูเม่"
             url={fileUrl}
-            initialName={fileName}
+            initialName={fileUrl && 'ดูเรซูเม่'}
             sx={{ alignItems: 'start' }}
           />
         </FileUploadContainer>
@@ -39,12 +55,17 @@ const ResumeEdit = (props: IResumeEditProps) => {
           <Button
             color="error"
             variant="text"
-            onClick={() => handleCancel?.(resumeId)}
+            onClick={handleCancel}
             sx={{ padding: 0 }}
           >
             ยกเลิก
           </Button>
-          <Button color="success" variant="text" sx={{ padding: 0 }}>
+          <Button
+            color="success"
+            variant="text"
+            sx={{ padding: 0 }}
+            onClick={handleSave}
+          >
             บันทึก
           </Button>
         </ButtonContainer>

@@ -8,6 +8,8 @@ export const CardContainer = styled(Card)`
   ${(props) => props.theme.breakpoints.down('md')} {
     padding: 10px;
   }
+  margin: 20px;
+  margin-top: 40px;
   padding: 20px;
   width: 100%;
   height: fit-content;
