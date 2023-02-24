@@ -8,14 +8,27 @@ export const PageContainer = styled('form')`
   align-items: flex-start;
   max-width: 1200px;
 
-  ${(props) => props.theme.breakpoints.down('md')} {
-    margin: 40px 30px;
+  ${(props) => props.theme.breakpoints.down('lg')} {
+    flex-direction: column;
+    margin: 0px;
+    gap: 0px;
+    align-items: stretch;
+  }
+`
+export const TabletContainer = styled('div')`
+  display: flex;
+  gap: 64px;
+  flex-grow: 1;
+
+  ${(props) => props.theme.breakpoints.down('lg')} {
+    margin: 10px 30px;
   }
 
   ${(props) => props.theme.breakpoints.down('sm')} {
-    margin: 25px 15px;
+    margin: 10px 15px;
   }
 `
+
 export const CardsContainer = styled('div')`
   display: flex;
   flex-direction: column;

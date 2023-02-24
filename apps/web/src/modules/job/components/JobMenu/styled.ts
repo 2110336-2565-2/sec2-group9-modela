@@ -5,3 +5,13 @@ export const MenuContainer = styled('div')`
   flex-direction: column;
   gap: 10px;
 `
+
+export const SummaryContainer = styled('div')`
+  ${(props) => props.theme.breakpoints.down('lg')} {
+    margin: 10px 30px;
+  }
+
+  ${(props) => props.theme.breakpoints.down('sm')} {
+    margin: 8px 15px;
+  }
+`
