@@ -1,4 +1,3 @@
-import { AccountCircleOutlined, ArticleOutlined } from '@mui/icons-material'
 import { Button, CircularProgress, Grid } from '@mui/material'
 import FormController from 'common/components/FormController'
 import MenuBar from 'common/components/MenuBar'
@@ -7,7 +6,7 @@ import { Fragment } from 'react'
 
 import { FORM_LAYOUT } from './constants'
 import useEditActorForm from './hooks/useEditActorForm'
-import { CardContainer, RootContainer } from './styled'
+import { CardContainer, RootContainer, SideDiv } from './styled'
 
 const EditCastingProfile = () => {
   const {
@@ -18,14 +17,13 @@ const EditCastingProfile = () => {
     handleUploadImage,
     loading,
     user,
+    MENU_ITEM,
   } = useEditActorForm()
-  const MOCK_MENU = [
-    { icon: <AccountCircleOutlined />, label: 'โปรไฟล์', href: '/about' },
-    { icon: <ArticleOutlined />, label: 'เรซูเม่', href: '/blog' },
-  ]
   return (
     <RootContainer>
-      <MenuBar menu={MOCK_MENU} sx={{ width: '15vw' }} />
+      <SideDiv>
+        <MenuBar menu={MENU_ITEM} />
+      </SideDiv>
       <CardContainer variant="outlined">
         {isDataLoading ? (
           <CircularProgress />
@@ -74,7 +72,7 @@ const EditCastingProfile = () => {
           </form>
         )}
       </CardContainer>
-      <div style={{ width: '15vw' }} />
+      <SideDiv />
     </RootContainer>
   )
 }

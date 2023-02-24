@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { EditActorProfileDto, EditCastingProfileDto } from '@modela/dtos'
+import { AccountCircleOutlined, ArticleOutlined } from '@mui/icons-material'
 import { useUser } from 'common/context/UserContext'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
@@ -33,10 +34,7 @@ const useEditCastingForm = () => {
     async (data) => {
       setLoading(true)
       try {
-        await apiClient.put<unknown, unknown, EditCastingProfileDto>(
-          '/profile/actor',
-          { ...data, profileImageUrl: 'https://via.placeholder.com/150 ' },
-        )
+        await apiClient.put<EditCastingProfileDto>('/profile/actor', data)
         router.push('/profile')
       } catch (err) {
         handleError(err)
@@ -80,6 +78,11 @@ const useEditCastingForm = () => {
     getInitialValue()
   }, [getInitialValue])
 
+  const MENU_ITEM = [
+    { icon: <AccountCircleOutlined />, label: 'โปรไฟล์', href: '/about' },
+    { icon: <ArticleOutlined />, label: 'เรซูเม่', href: '/blog' },
+  ]
+
   return {
     loading,
     handleClickSubmit,
@@ -89,6 +92,7 @@ const useEditCastingForm = () => {
     isDataLoading,
     user,
     imageUrl: getValues('profileImageUrl') || user?.profileImageUrl,
+    MENU_ITEM,
   }
 }
 
