@@ -110,6 +110,7 @@ describe('<AppliedActorPage />', () => {
       })
 
       expect(ActorFilterSpy).not.toBeCalled()
+      expect(SearchFieldSpy).not.toBeCalled()
     })
   })
 })

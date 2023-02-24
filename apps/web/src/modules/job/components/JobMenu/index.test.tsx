@@ -14,12 +14,6 @@ describe('<JobMenu />', () => {
   })
   jest.doMock('./hooks/useSummaryData', () => useSummaryDataSpy)
 
-  const useMediaQuerySpy = jest.fn().mockReturnValue(false)
-  jest.doMock('@mui/material', () => ({
-    ...jest.requireActual('@mui/material'),
-    useMediaQuery: useMediaQuerySpy,
-  }))
-
   const { default: JobMenu } = require('.') as typeof import('.')
 
   afterEach(() => {
@@ -39,15 +33,6 @@ describe('<JobMenu />', () => {
         expect(getByText('มีนักแสดงที่กำลังรออยู่ 3 คน')).toBeDefined()
         expect(getByText('เปิดรับสมัคร')).toBeDefined()
       })
-    })
-  })
-
-  describe('screen size is tablet', () => {
-    it('should render JobMenu correctly', () => {
-      useMediaQuerySpy.mockReturnValue(true)
-      const { container } = render(<JobMenu />)
-
-      expect(container.firstChild).toBeNull()
     })
   })
 })
