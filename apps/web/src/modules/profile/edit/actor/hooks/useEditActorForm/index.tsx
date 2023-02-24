@@ -4,6 +4,7 @@ import { AccountCircleOutlined, ArticleOutlined } from '@mui/icons-material'
 import { useUser } from 'common/context/UserContext'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
+import dayjs from 'dayjs'
 import { useRouter } from 'next/router'
 import { FormEventHandler, useCallback, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -66,7 +67,7 @@ const useEditCastingForm = () => {
       const res = (
         await apiClient.get<{ data: EditActorProfileDto }>('/profile')
       ).data
-      reset(res.data)
+      reset({ ...res.data, birthDate: dayjs(res.data.birthDate) })
     } catch (err) {
       handleError(err)
     } finally {

@@ -19,7 +19,7 @@ export const RootContainer = styled('div')`
 `
 
 export const SideDiv = styled('div')`
-  width: 15vw;
+  width: 17vw;
   ${({ theme }) => theme.breakpoints.down('lg')} {
     display: none;
   }

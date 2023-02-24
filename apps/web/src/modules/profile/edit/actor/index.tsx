@@ -22,7 +22,7 @@ const EditCastingProfile = () => {
   return (
     <RootContainer>
       <SideDiv>
-        <MenuBar menu={MENU_ITEM} />
+        <MenuBar menu={MENU_ITEM} focus="โปรไฟล์" />
       </SideDiv>
       <CardContainer variant="outlined">
         {isDataLoading ? (
@@ -42,6 +42,7 @@ const EditCastingProfile = () => {
                           margin: 'auto',
                           width: '150px',
                           height: '150px',
+                          borderRadius: '10%',
                         }}
                       />
                     </Grid>

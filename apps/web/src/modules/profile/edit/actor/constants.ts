@@ -40,7 +40,7 @@ export const FORM_LAYOUT: IFormControllerProps<IEditActorProfileSchemaType>[] =
       label: 'ข้อมูลรูปลักษณ์',
     },
     {
-      type: 'textField',
+      type: 'number',
       label: 'ส่วนสูง(เซนติเมตร)',
       name: 'height',
       optional: true,
@@ -48,7 +48,7 @@ export const FORM_LAYOUT: IFormControllerProps<IEditActorProfileSchemaType>[] =
       xs: 12,
     },
     {
-      type: 'textField',
+      type: 'number',
       label: 'น้ำหนัก(กิโลกรัม)',
       name: 'weight',
       optional: true,
@@ -72,7 +72,7 @@ export const FORM_LAYOUT: IFormControllerProps<IEditActorProfileSchemaType>[] =
       xs: 12,
     },
     {
-      type: 'textField',
+      type: 'number',
       label: 'รอบอก(นิ้ว)',
       name: 'bust',
       optional: true,
@@ -80,7 +80,7 @@ export const FORM_LAYOUT: IFormControllerProps<IEditActorProfileSchemaType>[] =
       xs: 12,
     },
     {
-      type: 'textField',
+      type: 'number',
       label: 'รอบเอว(นิ้ว)',
       name: 'waist',
       optional: true,
@@ -88,7 +88,7 @@ export const FORM_LAYOUT: IFormControllerProps<IEditActorProfileSchemaType>[] =
       xs: 12,
     },
     {
-      type: 'textField',
+      type: 'number',
       label: 'รอบสะโพก(นิ้ว)',
       name: 'hips',
       optional: true,
@@ -96,7 +96,7 @@ export const FORM_LAYOUT: IFormControllerProps<IEditActorProfileSchemaType>[] =
       xs: 12,
     },
     {
-      type: 'textField',
+      type: 'number',
       label: 'ขนาดรองเท้า',
       name: 'shoeSize',
       optional: true,
