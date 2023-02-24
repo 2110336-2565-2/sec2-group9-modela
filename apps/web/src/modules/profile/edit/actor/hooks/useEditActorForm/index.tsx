@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { EditActorProfileDto, EditCastingProfileDto } from '@modela/dtos'
 import { AccountCircleOutlined, ArticleOutlined } from '@mui/icons-material'
+import { useSnackbar } from 'common/context/SnackbarContext'
 import { useUser } from 'common/context/UserContext'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
@@ -17,6 +18,7 @@ import {
 
 const useEditCastingForm = () => {
   const router = useRouter()
+  const { displaySnackbar } = useSnackbar()
 
   const { handleSubmit, setValue, getValues, control, reset } =
     useForm<IEditActorProfileSchemaType>({
@@ -36,6 +38,7 @@ const useEditCastingForm = () => {
       setLoading(true)
       try {
         await apiClient.put<EditCastingProfileDto>('/profile/actor', data)
+        displaySnackbar('แก้ไขโปรไฟล์สำเร็จ', 'success')
         router.push('/profile')
       } catch (err) {
         handleError(err)
@@ -43,7 +46,7 @@ const useEditCastingForm = () => {
         setLoading(false)
       }
     },
-    [handleError, router],
+    [handleError, router, displaySnackbar],
   )
 
   const handleClickSubmit: FormEventHandler<HTMLFormElement> =
