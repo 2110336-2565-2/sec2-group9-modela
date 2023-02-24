@@ -17,6 +17,12 @@ describe('<MenuBar />', () => {
     'MenuItem',
   ])
 
+  const useMediaQuerySpy = jest.fn().mockReturnValue(false)
+  jest.doMock('@mui/material', () => ({
+    ...jest.requireActual('@mui/material'),
+    useMediaQuery: useMediaQuerySpy,
+  }))
+
   const { default: MenuBar } = require('.') as typeof import('.')
 
   afterEach(() => {
@@ -33,6 +39,15 @@ describe('<MenuBar />', () => {
         expectToBeCalledWith(MenuItemSpy, { isFocused: false }, 1)
         expect(AboutIconSpy).toBeCalledTimes(1)
         expect(BlogIconSpy).toBeCalledTimes(1)
+      })
+
+      it('should not render icon on tablet', () => {
+        useMediaQuerySpy.mockReturnValue(true)
+
+        render(<MenuBar menu={MOCK_MENU} focus="About" />)
+
+        expect(AboutIconSpy).not.toBeCalled()
+        expect(BlogIconSpy).not.toBeCalled()
       })
     })
 
