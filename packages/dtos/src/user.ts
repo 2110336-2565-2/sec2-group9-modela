@@ -53,6 +53,10 @@ export class PendingUserDataDto{
   @ApiProperty()
   lastName: string;
 
+  @ApiPropertyOptional()
+  rejectedReason?: string
+
+  // Casting
   @ApiProperty()
   companyName?: string;
 
@@ -62,6 +66,7 @@ export class PendingUserDataDto{
   @ApiProperty()
   employmentCertUrl?: string;
 
+  // Actor
   @ApiProperty()
   idCardImageUrl?: string;
 

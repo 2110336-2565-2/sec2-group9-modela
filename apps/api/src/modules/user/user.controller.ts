@@ -48,7 +48,7 @@ export class UserController {
   @Put(':id/verification')
   @UseAuthGuard(UserType.ADMIN)
   @ApiOperation({ summary: 'accept or reject user with id' })
-  @ApiOkResponse({ type: GetUserDto })
+  @ApiOkResponse({ type: PendingUserDto })
   @ApiNotFoundResponse({ description: 'user not found' })
   updateUserStatus(
     @Param('id') id: string,
