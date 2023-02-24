@@ -37,6 +37,7 @@ const EditActorProfileDefault = {
   description: '',
   phoneNumber: '',
   profileImageUrl: '',
+  birthDate: dayjs(),
 }
 
 export type IEditActorProfileSchemaType = z.infer<typeof EditActorProfileSchema>
