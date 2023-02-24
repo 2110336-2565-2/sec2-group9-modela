@@ -1,11 +1,13 @@
 import {
   CreateJobDto,
   EditJobDto,
+  GetJobCardByAdminWithMaxPageDto,
   GetJobCardWithMaxPageDto,
   GetJobDto,
   JobIdDto,
   JobSummaryDto,
   JwtDto,
+  SearchJobByAdminDto,
   SearchJobDto,
   UserType,
 } from '@modela/dtos'
@@ -39,6 +41,20 @@ export class JobController {
   @ApiBadRequestResponse({ description: 'Wrong format' })
   findAll(@Query() searchJobDto: SearchJobDto, @User() user: JwtDto) {
     return this.jobService.findAll(searchJobDto, user)
+  }
+
+  @Get('admin')
+  @UseAuthGuard(UserType.ADMIN)
+  @ApiOperation({ summary: 'get all jobs with filter by admin' })
+  @ApiOkResponse({ type: GetJobCardByAdminWithMaxPageDto, isArray: true })
+  @ApiUnauthorizedResponse({ description: 'User is not login' })
+  @ApiForbiddenResponse({ description: 'User is not admin' })
+  @ApiBadRequestResponse({ description: 'Wrong format' })
+  findAllByAdmin(
+    @Query() searchJobByAdminDto: SearchJobByAdminDto,
+    @User() user: JwtDto,
+  ) {
+    return this.jobService.findAllByAdmin(searchJobByAdminDto, user)
   }
 
   @Get(':id')

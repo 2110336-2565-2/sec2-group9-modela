@@ -19,6 +19,12 @@ export enum SearchJobStatus {
   'CLOSE' = 'CLOSE',
 }
 
+export enum SearchJobByAdminStatus {
+  'OPEN' = 'OPEN',
+  'CLOSE' = 'CLOSE',
+  'CANCELLED' = 'CANCELLED',
+  'REPORTED' = 'REPORTED',
+}
 const maxInt32 = 2147483647 //max int32
 export class SearchJobDto {
   @IsOptional()
@@ -113,6 +119,13 @@ export class SearchJobDto {
   @IsOptional()
   @ApiPropertyOptional()
   castingId?: number
+}
+
+export class SearchJobByAdminDto extends OmitType(SearchJobDto,['status']) {
+  @IsOptional()
+  @IsEnum(SearchJobByAdminStatus, { each: true })
+  @ApiPropertyOptional({ enum: SearchJobByAdminStatus, isArray: true })
+  status?: SearchJobByAdminStatus[]
 }
 
 export class ShootingDto implements Partial<Shooting> {
@@ -227,9 +240,22 @@ export class GetJobCardDto extends OmitType(EditJobDto, [
   status: JobStatus
 }
 
+export class GetJobCardByAdminDto extends GetJobCardDto {
+  @ApiProperty()
+  isReported: Boolean
+}
+
 export class GetJobCardWithMaxPageDto {
   @ApiProperty({ type: GetJobCardDto, isArray: true })
   jobs: GetJobCardDto[]
+
+  @ApiProperty()
+  maxPage: number
+}
+
+export class GetJobCardByAdminWithMaxPageDto {
+  @ApiProperty({ type: GetJobCardByAdminDto, isArray: true })
+  jobs: GetJobCardByAdminDto[]
 
   @ApiProperty()
   maxPage: number

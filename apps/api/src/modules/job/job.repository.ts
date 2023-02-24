@@ -2,6 +2,7 @@ import { ApplicationStatus, Job, JobStatus, Prisma } from '@modela/database'
 import {
   CreateJobDto,
   EditJobDto,
+  GetJobCardByAdminDto,
   GetJobCardDto,
   GetJobDto,
   JobSummaryDto,
@@ -94,6 +95,50 @@ export class JobRepository {
       jobCastingImageUrl: job.Casting.User.profileImageUrl,
       castingId: job.castingId,
       castingName: job.Casting.User.firstName,
+    }))
+    return selectedFields
+  }
+
+  async getJobJoinedByAdmin(params: {
+    skip?: number
+    take?: number
+    cursor?: Prisma.JobWhereUniqueInput
+    where?: Prisma.JobWhereInput
+    orderBy?: Prisma.JobOrderByWithRelationInput
+  }): Promise<GetJobCardByAdminDto[]> {
+    //generate join casting and user table params
+    const paramsWithInclude = {
+      ...params,
+      orderBy: {
+        jobId: Prisma.SortOrder.desc,
+      },
+      include: {
+        Casting: {
+          include: {
+            User: true,
+          },
+        },
+        Shooting: true,
+        Report: true,
+      },
+    }
+    //get data
+    const jobs = await this.prisma.job.findMany(paramsWithInclude)
+    //select fields of GetJobDto
+    const selectedFields = jobs.map((job) => ({
+      jobId: job.jobId,
+      title: job.title,
+      companyName: job.Casting.companyName,
+      description: job.description,
+      status: job.status,
+      actorCount: job.actorCount,
+      gender: job.gender,
+      wage: job.wage,
+      applicationDeadline: job.applicationDeadline,
+      jobCastingImageUrl: job.Casting.User.profileImageUrl,
+      castingId: job.castingId,
+      castingName: job.Casting.User.firstName,
+      isReported: job.Report.length > 0,
     }))
     return selectedFields
   }
