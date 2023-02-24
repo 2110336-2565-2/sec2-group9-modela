@@ -33,4 +33,14 @@ export class ResumeService {
   async getResumesByUser(user: JwtDto) {
     return this.repository.getResumesByActorId(user.userId)
   }
+
+  async deleteResume(id: number, user: JwtDto) {
+    const resume = await this.repository.getResumeById(id)
+    if (!resume) throw new NotFoundException()
+    if (resume.actorId !== user.userId) throw new ForbiddenException()
+
+    const deletedResume = await this.repository.deleteResume(id)
+
+    return deletedResume
+  }
 }

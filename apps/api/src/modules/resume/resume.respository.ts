@@ -1,3 +1,4 @@
+import { Resume } from '@modela/database'
 import { PostResumeDto } from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
@@ -34,5 +35,9 @@ export class ResumeRepository {
       where: { actorId },
     })
     return { resumes }
+  }
+
+  async deleteResume(resumeId: number): Promise<Resume> {
+    return this.prisma.resume.delete({ where: { resumeId } })
   }
 }
