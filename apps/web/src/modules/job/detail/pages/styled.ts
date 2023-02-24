@@ -13,18 +13,22 @@ export const PageContainer = styled('form')`
     flex-direction: column;
     margin: 0;
     align-items: stretch;
-    gap: 10px;
+    gap: 0px;
   }
 `
 
 export const JobCardContainer = styled('div')`
   flex-grow: 1;
+  max-width: 800px;
+  align-self: center;
+
   ${(props) => props.theme.breakpoints.down('lg')} {
-    padding: 0 30px;
+    margintop: 10px;
+    padding: 30px;
     width: 100%;
   }
 
   ${(props) => props.theme.breakpoints.down('sm')} {
-    padding: 0 15px;
+    padding: 20px 15px;
   }
 `

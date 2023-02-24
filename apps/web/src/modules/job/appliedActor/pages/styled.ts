@@ -15,17 +15,18 @@ export const PageContainer = styled('form')`
     align-items: stretch;
   }
 `
+
 export const TabletContainer = styled('div')`
   display: flex;
   gap: 64px;
   flex-grow: 1;
 
   ${(props) => props.theme.breakpoints.down('lg')} {
-    margin: 10px 30px;
+    margin: 25px 30px;
   }
 
   ${(props) => props.theme.breakpoints.down('sm')} {
-    margin: 10px 15px;
+    margin: 15px 15px;
   }
 `
 
