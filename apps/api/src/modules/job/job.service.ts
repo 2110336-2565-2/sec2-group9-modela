@@ -7,6 +7,8 @@ import {
   GetJobCardWithMaxPageDto,
   JobSummaryDto,
   JwtDto,
+  SearchJobByAdminDto,
+  SearchJobByAdminStatus,
   SearchJobDto,
   SearchJobStatus,
   UserType,
@@ -63,9 +65,88 @@ export class JobService {
     }
   }
 
+  statusConverter(
+    searchJobByAnyDto: SearchJobDto | SearchJobByAdminDto,
+    user: JwtDto,
+    endpoint: string,
+  ) {
+    const statusQuery = []
+
+    //check searchJobByAnyDto is SearchJobByAdminDto or SearchJobDto
+    if (endpoint == '/jobs/admin') {
+      const searchJobByAdminDto = searchJobByAnyDto as SearchJobByAdminDto
+      //make OPEN for default
+      searchJobByAdminDto.status = searchJobByAdminDto.status || [
+        SearchJobByAdminStatus.OPEN,
+      ]
+      if (!Array.isArray(searchJobByAdminDto.status)) {
+        searchJobByAdminDto.status = [searchJobByAdminDto.status]
+      }
+
+      // Edge case: if only status is reported, return all status except cancelled
+      if (
+        searchJobByAdminDto.status.length == 1 &&
+        searchJobByAdminDto.status.includes(SearchJobByAdminStatus.REPORTED)
+      ) {
+        searchJobByAdminDto.status = [
+          SearchJobByAdminStatus.OPEN,
+          SearchJobByAdminStatus.CLOSE,
+          SearchJobByAdminStatus.REPORTED,
+        ]
+      }
+
+      if (searchJobByAdminDto.status.includes(SearchJobByAdminStatus.OPEN)) {
+        statusQuery.push(JobStatus.OPEN)
+      }
+      if (searchJobByAdminDto.status.includes(SearchJobByAdminStatus.CLOSE)) {
+        statusQuery.push(
+          JobStatus.SELECTING,
+          JobStatus.SELECTION_ENDED,
+          JobStatus.FINISHED,
+        )
+        if (user.type === UserType.CASTING) {
+          statusQuery.push(JobStatus.CANCELLED)
+        }
+      }
+      if (
+        searchJobByAdminDto.status.includes(SearchJobByAdminStatus.CANCELLED)
+      ) {
+        statusQuery.push(JobStatus.CANCELLED)
+      }
+    }
+    if (endpoint == '/jobs') {
+      const searchJobByUserDto = searchJobByAnyDto as SearchJobDto
+      //make OPEN for default
+      searchJobByUserDto.status = searchJobByUserDto.status || [
+        SearchJobStatus.OPEN,
+      ]
+      if (!Array.isArray(searchJobByUserDto.status)) {
+        searchJobByUserDto.status = [searchJobByUserDto.status]
+      }
+
+      if (searchJobByUserDto.status.includes(SearchJobStatus.OPEN)) {
+        statusQuery.push(JobStatus.OPEN)
+      }
+      if (searchJobByUserDto.status.includes(SearchJobStatus.CLOSE)) {
+        statusQuery.push(
+          JobStatus.SELECTING,
+          JobStatus.SELECTION_ENDED,
+          JobStatus.FINISHED,
+        )
+        if (user.type === UserType.CASTING) {
+          statusQuery.push(JobStatus.CANCELLED)
+        }
+      }
+    }
+    return statusQuery
+  }
+
   // @function create prisma params from request
   // @helper for findAll function
-  convertRequestToParams(searchJobDto: SearchJobDto, user: JwtDto) {
+  convertRequestToParams(
+    searchJobByAnyDto: SearchJobDto | SearchJobByAdminDto,
+    user: JwtDto,
+  ) {
     //const define default value for undefined params
     //declare here for easy to change
     const defaultStartDate = new Date('0001-01-01T00:00:00Z')
@@ -83,13 +164,14 @@ export class JobService {
     const defaultPage = 1
 
     //set Default value for limit and page
-    searchJobDto.limit = searchJobDto.limit || defaultLimit
-    searchJobDto.page = searchJobDto.page || defaultPage
+    searchJobByAnyDto.limit = searchJobByAnyDto.limit || defaultLimit
+    searchJobByAnyDto.page = searchJobByAnyDto.page || defaultPage
 
     const params = {
       //take and skip from limit and page
-      take: Number(searchJobDto.limit),
-      skip: (Number(searchJobDto.page) - 1) * Number(searchJobDto.limit),
+      take: Number(searchJobByAnyDto.limit),
+      skip:
+        (Number(searchJobByAnyDto.page) - 1) * Number(searchJobByAnyDto.limit),
       //filtering
       where: {
         //joined filter
@@ -98,127 +180,102 @@ export class JobService {
 
         title: undefined,
         minAge: {
-          lte: Number(searchJobDto.age) || defaultminAgeLte,
+          lte: Number(searchJobByAnyDto.age) || defaultminAgeLte,
         },
         maxAge: {
-          gte: Number(searchJobDto.age) || defaultMaxAgeGte,
+          gte: Number(searchJobByAnyDto.age) || defaultMaxAgeGte,
         },
 
         wage: {
-          gte: Number(searchJobDto.minWage) || defaultMinWageGte,
-          lte: searchJobDto.maxWage
-            ? Number(searchJobDto.maxWage)
+          gte: Number(searchJobByAnyDto.minWage) || defaultMinWageGte,
+          lte: searchJobByAnyDto.maxWage
+            ? Number(searchJobByAnyDto.maxWage)
             : defaultMaxWageLte,
         },
 
         status: undefined,
         gender: undefined,
-        castingId: Number(searchJobDto.castingId) || undefined,
+        castingId: Number(searchJobByAnyDto.castingId) || undefined,
       },
     }
     //handle array and undefined
-    searchJobDto.status = searchJobDto.status || [SearchJobStatus.OPEN]
+    searchJobByAnyDto.status = searchJobByAnyDto.status || [
+      SearchJobStatus.OPEN,
+    ]
     //check searchJobDto.status is array or not
-    if (!Array.isArray(searchJobDto.status)) {
-      searchJobDto.status = [searchJobDto.status]
+    if (!Array.isArray(searchJobByAnyDto.status)) {
+      searchJobByAnyDto.status = [searchJobByAnyDto.status]
     }
 
-    //handle status qyery
-    const statusQuery = []
-
-    //make OPEN for default
-    searchJobDto.status = searchJobDto.status || [SearchJobStatus.OPEN]
-    if (!Array.isArray(searchJobDto.status)) {
-      searchJobDto.status = [searchJobDto.status]
-    }
-
-    // Edge case: if only status is reported, return all status except cancelled
-    if (
-      searchJobDto.status.length == 1 &&
-      searchJobDto.status.includes(SearchJobStatus.REPORTED)
-    ) {
-      searchJobDto.status = [
-        SearchJobStatus.OPEN,
-        SearchJobStatus.CLOSE,
-        SearchJobStatus.REPORTED,
-      ]
-    }
-
-    if (searchJobDto.status.includes(SearchJobStatus.OPEN)) {
-      statusQuery.push(JobStatus.OPEN)
-    }
-    if (searchJobDto.status.includes(SearchJobStatus.CLOSE)) {
-      statusQuery.push(
-        JobStatus.SELECTING,
-        JobStatus.SELECTION_ENDED,
-        JobStatus.FINISHED,
-      )
-      if (user.type === UserType.CASTING) {
-        statusQuery.push(JobStatus.CANCELLED)
+    if (user.type == UserType.ADMIN) {
+      const searchJobByAdminDto = searchJobByAnyDto as SearchJobByAdminDto
+      if (
+        searchJobByAdminDto.status.includes(SearchJobByAdminStatus.REPORTED)
+      ) {
+        //filter only reported job
+        params.where.Report = {
+          some: {},
+        }
       }
     }
-    if (searchJobDto.status.includes(SearchJobStatus.CANCELLED)) {
-      statusQuery.push(JobStatus.CANCELLED)
-    }
-    if (searchJobDto.status.includes(SearchJobStatus.REPORTED)) {
-      //filter only reported job
-      params.where.Report = {
-        some: {},
-      }
-    }
+    const statusQuery = this.statusConverter(
+      searchJobByAnyDto,
+      user,
+      user.type == UserType.ADMIN ? '/jobs/admin' : '/jobs',
+    )
 
     params.where.status = {
       in: statusQuery,
     }
 
     //handle gender qyery
-    if (searchJobDto.gender) {
+    if (searchJobByAnyDto.gender) {
       //check searchJobDto.gender is array or not (the case that only one params it will not be array)
-      if (!Array.isArray(searchJobDto.gender)) {
-        searchJobDto.gender = [searchJobDto.gender]
+      if (!Array.isArray(searchJobByAnyDto.gender)) {
+        searchJobByAnyDto.gender = [searchJobByAnyDto.gender]
       }
       //if Query only Gender.ANY return all
       if (
         !(
-          searchJobDto.gender &&
-          searchJobDto.gender.length === 1 &&
-          searchJobDto.gender[0] === Gender.ANY
+          searchJobByAnyDto.gender &&
+          searchJobByAnyDto.gender.length === 1 &&
+          searchJobByAnyDto.gender[0] === Gender.ANY
         )
       ) {
         params.where.gender = {
-          in: [...searchJobDto.gender, Gender.ANY],
+          in: [...searchJobByAnyDto.gender, Gender.ANY],
         }
       }
     }
     //handle shooting query
     if (
-      searchJobDto.location ||
-      searchJobDto.startDate ||
-      searchJobDto.endDate ||
-      searchJobDto.startTime ||
-      searchJobDto.endTime
+      searchJobByAnyDto.location ||
+      searchJobByAnyDto.startDate ||
+      searchJobByAnyDto.endDate ||
+      searchJobByAnyDto.startTime ||
+      searchJobByAnyDto.endTime
     ) {
       //ignore millisecond (Timezone offset is considered as millisecond)
       //assume that user will not search with millisecond and in database we don't have timezone
 
       let queryStartTime = defaultStartTime
-      if (searchJobDto.startTime) {
-        queryStartTime = new Date(searchJobDto.startTime)
+      if (searchJobByAnyDto.startTime) {
+        queryStartTime = new Date(searchJobByAnyDto.startTime)
         queryStartTime.setMilliseconds(0)
       }
       let queryEndTime = defaultEndTime
-      if (searchJobDto.endTime) {
-        queryEndTime = new Date(searchJobDto.endTime)
+      if (searchJobByAnyDto.endTime) {
+        queryEndTime = new Date(searchJobByAnyDto.endTime)
         queryEndTime.setMilliseconds(0)
       }
 
       params.where.Shooting = {
         every: {
           startDate: {
-            gte: searchJobDto.startDate || defaultStartDate,
+            gte: searchJobByAnyDto.startDate || defaultStartDate,
           },
           endDate: {
-            lte: searchJobDto.endDate || defaultEndDate,
+            lte: searchJobByAnyDto.endDate || defaultEndDate,
           },
           startTime: {
             gte: queryStartTime,
@@ -229,16 +286,16 @@ export class JobService {
         },
         some: {
           shootingLocation: {
-            contains: searchJobDto.location,
+            contains: searchJobByAnyDto.location,
             mode: 'insensitive',
           },
         },
       }
     }
     //handle title substring query
-    if (searchJobDto.title) {
+    if (searchJobByAnyDto.title) {
       params.where.title = {
-        contains: searchJobDto.title,
+        contains: searchJobByAnyDto.title,
         mode: 'insensitive',
       }
     }
@@ -271,9 +328,9 @@ export class JobService {
     return result
   }
 
-  async findAllByAdmin(searchJobDto: SearchJobDto, user: JwtDto) {
+  async findAllByAdmin(searchJobByAdminDto: SearchJobByAdminDto, user: JwtDto) {
     //set params for getJob
-    const params = this.convertRequestToParams(searchJobDto, user)
+    const params = this.convertRequestToParams(searchJobByAdminDto, user)
 
     //get jobs with params from repository
     const jobsJoinCastingReport = await this.repository.getJobJoinedByAdmin(
@@ -286,7 +343,7 @@ export class JobService {
     const allJobsCount = await this.repository.getJobCount({
       where: params.where,
     })
-    result.maxPage = Math.ceil(allJobsCount / searchJobDto.limit)
+    result.maxPage = Math.ceil(allJobsCount / searchJobByAdminDto.limit)
 
     //return jobs
     return result

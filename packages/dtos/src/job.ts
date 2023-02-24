@@ -17,6 +17,11 @@ import { Gender, Job, JobStatus, Shooting } from '@modela/database'
 export enum SearchJobStatus {
   'OPEN' = 'OPEN',
   'CLOSE' = 'CLOSE',
+}
+
+export enum SearchJobByAdminStatus {
+  'OPEN' = 'OPEN',
+  'CLOSE' = 'CLOSE',
   'CANCELLED' = 'CANCELLED',
   'REPORTED' = 'REPORTED',
 }
@@ -114,6 +119,13 @@ export class SearchJobDto {
   @IsOptional()
   @ApiPropertyOptional()
   castingId?: number
+}
+
+export class SearchJobByAdminDto extends OmitType(SearchJobDto,['status']) {
+  @IsOptional()
+  @IsEnum(SearchJobByAdminStatus, { each: true })
+  @ApiPropertyOptional({ enum: SearchJobByAdminStatus, isArray: true })
+  status?: SearchJobByAdminStatus[]
 }
 
 export class ShootingDto implements Partial<Shooting> {

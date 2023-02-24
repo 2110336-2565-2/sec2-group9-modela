@@ -7,6 +7,7 @@ import {
   JobIdDto,
   JobSummaryDto,
   JwtDto,
+  SearchJobByAdminDto,
   SearchJobDto,
   UserType,
 } from '@modela/dtos'
@@ -49,8 +50,11 @@ export class JobController {
   @ApiUnauthorizedResponse({ description: 'User is not login' })
   @ApiForbiddenResponse({ description: 'User is not admin' })
   @ApiBadRequestResponse({ description: 'Wrong format' })
-  findAllByAdmin(@Query() searchJobDto: SearchJobDto, @User() user: JwtDto) {
-    return this.jobService.findAllByAdmin(searchJobDto, user)
+  findAllByAdmin(
+    @Query() searchJobByAdminDto: SearchJobByAdminDto,
+    @User() user: JwtDto,
+  ) {
+    return this.jobService.findAllByAdmin(searchJobByAdminDto, user)
   }
 
   @Get(':id')
