@@ -13,6 +13,7 @@ export const NavbarContainer = styled('div')`
   gap: 24px;
   color: white;
   box-shadow: ${({ theme }) => theme.shadows[3]};
+  height: 40px;
 `
 
 export const LoginButton = styled('div')`

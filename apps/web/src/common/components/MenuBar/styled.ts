@@ -6,10 +6,11 @@ export const MenuContainer = styled(Card)`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  z-index: 2;
 
   ${(props) => props.theme.breakpoints.down('lg')} {
     gap: 24px;
-    padding: 6px 24px;
+    padding: 7px 24px;
     flex-direction: row;
     border-radius: 0px;
     width: 100%;
@@ -17,6 +18,12 @@ export const MenuContainer = styled(Card)`
     border-left: none;
     overflow-x: auto;
     max-width: 100%;
+    position: fixed;
+    top: 60px;
+  }
+
+  ${({ theme }) => theme.breakpoints.down('md')} {
+    top: 40px;
   }
 `
 
