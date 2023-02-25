@@ -5,7 +5,7 @@ const useResumeSlot = (
   resumeId: number,
   handleCancel: (resumeId: number) => void,
 ) => {
-  const [isEdit, setEdit] = useState(!!isFirst)
+  const [isEdit, setEdit] = useState(isFirst)
 
   const changeToEdit = useCallback(() => {
     setEdit(true)

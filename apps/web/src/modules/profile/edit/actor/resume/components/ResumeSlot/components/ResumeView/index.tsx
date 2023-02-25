@@ -24,10 +24,10 @@ const ResumeView = (props: IResumeViewProps) => {
         passHref
         target="_blank"
         rel="noopener"
-        style={{ textDecoration: 'none' }}
+        style={{ textDecoration: 'none', width: 'fit-content' }}
       >
         <Typography color="primary" variant="subtitle1" fontWeight={500}>
-          เรซูเม่
+          ดูเรซูเม่
         </Typography>
       </Link>
     </>
