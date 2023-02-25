@@ -35,8 +35,12 @@ export default function FilterContainer(props: FilterContainerProps) {
         />
       )}
       {isAdmin && (
-        <FormGroup>
-          <Typography variant="body1"> แจ้งปัญหา </Typography>
+        <FormGroup
+          sx={{ width: '100%', display: 'flex', alignItems: 'flex-start' }}
+        >
+          <Typography variant="body1" sx={{ justifyContent: 'left' }}>
+            แจ้งปัญหา
+          </Typography>
           <FormControlLabel
             control={
               <Checkbox

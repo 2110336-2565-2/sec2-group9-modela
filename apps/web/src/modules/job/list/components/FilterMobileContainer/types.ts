@@ -8,4 +8,5 @@ export interface FilterContainerProps {
   isFilterShow: boolean
   closeFilterPage: () => void
   filterData: (state: IFilter) => Promise<void>
+  isAdmin?: boolean
 }

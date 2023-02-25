@@ -2,7 +2,7 @@ import { GetJobCardWithMaxPageDto } from '@modela/dtos'
 import { Typography } from '@mui/material'
 import React from 'react'
 
-import JobCard from '../../../JobCard'
+import JobCard from './components/JobCard'
 import { CardBoxContainer } from './styled'
 
 export default function JobCardContainer(prop: GetJobCardWithMaxPageDto) {

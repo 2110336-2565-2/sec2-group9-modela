@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { GetJobCardWithMaxPageDto } from '@modela/dtos'
+import { GetJobCardByAdminWithMaxPageDto } from '@modela/dtos'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
 import dayjs from 'dayjs'
@@ -14,7 +14,7 @@ import {
 
 const useJobListData = () => {
   const [isOpen, setOpen] = useState(false)
-  const [job, setJob] = useState<GetJobCardWithMaxPageDto>()
+  const [job, setJob] = useState<GetJobCardByAdminWithMaxPageDto>()
   const [hasMore, setHasMore] = useState(true)
   const [page, setPage] = useState(0)
   const pageControl = useRef(1)
@@ -35,6 +35,12 @@ const useJobListData = () => {
       if (state.closeCheck) {
         newStatus.push('CLOSE')
       }
+      if (state.cancleCheck) {
+        newStatus.push('CANCELLED')
+      }
+      if (state.reportCheck) {
+        newStatus.push('REPORTED')
+      }
       if (state.maleCheck) {
         newGender.push('MALE')
       }
@@ -44,6 +50,7 @@ const useJobListData = () => {
       if (state.otherCheck) {
         newGender.push('OTHER')
       }
+
       setSearch({
         ...search,
         title: state.title,
@@ -83,7 +90,7 @@ const useJobListData = () => {
       if (pageControl.current <= page) {
         pageControl.current = page + 1
         const res = (
-          await apiClient.get<GetJobCardWithMaxPageDto>(`/job`, {
+          await apiClient.get<GetJobCardByAdminWithMaxPageDto>(`/jobs/admin`, {
             params: {
               limit: 5,
               page,
@@ -118,6 +125,8 @@ const useJobListData = () => {
     state.endDate,
     state.startTime,
     state.endTime,
+    state.reportCheck,
+    state.cancleCheck,
   ])
 
   return {

@@ -7,9 +7,9 @@ import useNavbarSearch from 'common/hooks/useNavbarSearch'
 import React, { useCallback } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 
-import JobCardContainer from '../ActorCastingPage/components/JobCardContainer'
 import FilterContainer from '../FilterContainer'
 import FilterMobileContainer from '../FilterMobileContainer'
+import JobCardContainer from '../JobCardContainer'
 import SearchBox from '../SearchBox'
 import useJobListData from './hooks/useJobListData'
 import {
@@ -131,6 +131,7 @@ const JobList = () => {
           isFilterShow={isOpen}
           closeFilterPage={close}
           filterData={filterData}
+          isAdmin={true}
         />
       )}
     </div>
