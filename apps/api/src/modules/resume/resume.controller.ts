@@ -6,11 +6,20 @@ import {
   PostResumeDto,
   ResumeIdDto,
 } from '@modela/dtos'
-import { Body, Controller, Get, Param, Post } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+} from '@nestjs/common'
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
   ApiForbiddenResponse,
+  ApiNoContentResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -57,5 +66,17 @@ export class ResumeController {
   @ApiOperation({ summary: 'gets resume from user profile' })
   getResume(@Param('resumeId') resumeId: number, @User() user: JwtDto) {
     return this.resumeService.getResumeById(+resumeId, user)
+  }
+
+  @Delete(':resumeId')
+  @HttpCode(204)
+  @UseAuthGuard(UserType.ACTOR)
+  @ApiNoContentResponse({ description: 'Delete resume complete.' })
+  @ApiOperation({ summary: 'delete resume by id' })
+  @ApiUnauthorizedResponse({ description: 'User is not logged in' })
+  @ApiForbiddenResponse({ description: 'User is not an resume owner' })
+  @ApiNotFoundResponse({ description: 'Resume not found' })
+  deleteResume(@Param('resumeId') resumeId: number, @User() user: JwtDto) {
+    return this.resumeService.deleteResume(+resumeId, user)
   }
 }

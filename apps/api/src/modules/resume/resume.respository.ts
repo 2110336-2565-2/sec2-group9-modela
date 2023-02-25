@@ -1,3 +1,4 @@
+import { Resume } from '@modela/database'
 import { PostResumeDto } from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
@@ -34,5 +35,28 @@ export class ResumeRepository {
       where: { actorId },
     })
     return { resumes }
+  }
+
+  async deleteResume(resumeId: number): Promise<Resume> {
+    const resume = await this.prisma.resume.findUnique({
+      where: { resumeId },
+      include: { Application: true },
+    })
+    if (resume.Application.length > 0) {
+      //have application -> actorId = null and remove from actor
+      const deletedResume = await this.prisma.resume.update({
+        where: { resumeId },
+        data: {
+          actorId: null,
+        },
+      })
+      return deletedResume
+    } else {
+      //not have any application -> directly delete
+      const deletedResume = await this.prisma.resume.delete({
+        where: { resumeId },
+      })
+      return deletedResume
+    }
   }
 }
