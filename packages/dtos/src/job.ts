@@ -215,8 +215,7 @@ export class CreateJobDto implements EditJobType {
 
 export class EditJobDto extends CreateJobDto {}
 export class EditJobStatusDto {
-  @IsEnum(JobStatus)
-  @ApiProperty()
+  @ApiProperty({enum: JobStatus}) 
   status: JobStatus
 }
 

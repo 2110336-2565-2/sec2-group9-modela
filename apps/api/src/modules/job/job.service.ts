@@ -384,7 +384,7 @@ export class JobService {
     }
     if (job.status === JobStatus.CANCELLED || job.status === JobStatus.FINISHED)
       throw new ForbiddenException(
-        "You can't update status job that is not cancelled or finished.",
+        "You can't update status job that is cancelled or finished.",
       )
     return this.repository.updateJobStatus(id, updateJobStatus)
   }
