@@ -39,6 +39,10 @@ const resumeActorIdList: number[] = []
 const getActorByResumeId = (resumeId: number, ignoreIntegrity?: boolean) =>
   ignoreIntegrity ? getId() : resumeActorIdList[resumeId - 1]
 
+const resumeResumeUrlList: string[] = []
+const getResumeUrlByResumeId = (resumeId: number, ignoreIntegrity?: boolean) =>
+  ignoreIntegrity ? faker.image.imageUrl() : resumeResumeUrlList[resumeId - 1]
+
 export const getBaseMock = (
   model: BaseModel,
   index: number,
@@ -130,11 +134,13 @@ export const getBaseMock = (
     case 'resume': {
       const actorId = getActorId(true)
       resumeActorIdList.push(actorId)
+      const resumeUrl = faker.internet.url()
+      resumeResumeUrlList.push(resumeUrl)
       return {
         resumeId: index,
         actorId,
         name: faker.name.jobType(),
-        resumeUrl: faker.internet.url(),
+        resumeUrl,
       }
     }
     case 'job':
@@ -177,11 +183,13 @@ export const getBaseMock = (
       }
     case 'application': {
       const resumeId = getId()
+      const resumeUrl = getResumeUrlByResumeId(resumeId, ignoreIntegrity)
       return {
         applicationId: index,
         jobId: getId(),
         actorId: getActorByResumeId(resumeId, ignoreIntegrity),
         resumeId,
+        resumeUrl,
         status: faker.helpers.arrayElement([
           ApplicationStatus.OFFER_ACCEPTED,
           ApplicationStatus.OFFER_REJECTED,

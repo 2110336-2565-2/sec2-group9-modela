@@ -153,16 +153,18 @@ enum JobStatus {
 }
 
 model Application {
-  applicationId Int               @id @default(autoincrement())
+  applicationId Int @id @default(autoincrement())
   jobId         Int
   actorId       Int
-  resumeId      Int
-  status        ApplicationStatus
-  createdAt     DateTime          @default(now())
 
-  Job    Job    @relation(fields: [jobId], references: [jobId])
-  Actor  Actor  @relation(fields: [actorId], references: [actorId])
-  Resume Resume @relation(fields: [resumeId], references: [resumeId])
+  status    ApplicationStatus
+  createdAt DateTime          @default(now())
+
+  Job       Job     @relation(fields: [jobId], references: [jobId])
+  Actor     Actor   @relation(fields: [actorId], references: [actorId])
+  Resume    Resume? @relation(fields: [resumeId], references: [resumeId], onDelete: SetNull)
+  resumeId  Int?
+  resumeUrl String?
 }
 
 enum ApplicationStatus {
