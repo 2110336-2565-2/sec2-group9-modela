@@ -9,6 +9,6 @@ import { ResumeService } from './resume.service'
   imports: [PrismaModule],
   controllers: [ResumeController],
   providers: [ResumeService, ResumeRepository],
-  exports: [],
+  exports: [ResumeRepository],
 })
 export class ResumeModule {}
