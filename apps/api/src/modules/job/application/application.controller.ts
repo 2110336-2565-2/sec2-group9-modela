@@ -1,5 +1,6 @@
 import { UserType } from '@modela/database'
 import {
+  GetApplicationId,
   GetAppliedActorDto,
   GetAppliedActorQuery,
   JwtDto,
@@ -10,6 +11,7 @@ import { Body, Post, Query } from '@nestjs/common/decorators'
 import {
   ApiBadRequestResponse,
   ApiConflictResponse,
+  ApiCreatedResponse,
   ApiForbiddenResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -46,6 +48,8 @@ export class ApplicationController {
 
   @Post(':id/apply')
   @UseAuthGuard(UserType.ACTOR)
+  @ApiOperation({ summary: 'user apply to jobs with jobid and resumeid' })
+  @ApiCreatedResponse({ type: GetApplicationId })
   @ApiUnauthorizedResponse({ description: 'User is not login' })
   @ApiNotFoundResponse({ description: 'Job not found' })
   @ApiBadRequestResponse({ description: 'Resume not found' })
