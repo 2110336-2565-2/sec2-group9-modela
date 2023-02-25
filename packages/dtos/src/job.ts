@@ -25,6 +25,7 @@ export enum SearchJobByAdminStatus {
   'CANCELLED' = 'CANCELLED',
   'REPORTED' = 'REPORTED',
 }
+  
 const maxInt32 = 2147483647 //max int32
 export class SearchJobDto {
   @IsOptional()
@@ -251,14 +252,14 @@ export class GetJobCardByAdminDto extends GetJobCardDto {
 
 export class SearchAppliedJobDto {
   @IsOptional()
-  @IsEnum(SearchJobStatus, { each: true })
-  @ApiPropertyOptional({ enum: SearchJobStatus, isArray: true })
-  status?: SearchJobStatus[]
-  
-  @IsOptional()
   @IsEnum(ApplicationStatus, { each: true })
   @ApiPropertyOptional({ enum: ApplicationStatus, isArray: true })
   applicationStatus?: ApplicationStatus[]
+
+  @IsOptional()
+  @IsEnum(JobStatus, { each: true })
+  @ApiPropertyOptional({ enum: JobStatus, isArray: true })
+  status?: JobStatus[]
 }
 
 export class GetAppliedJobDto extends GetJobCardDto {
