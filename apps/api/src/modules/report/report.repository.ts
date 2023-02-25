@@ -14,4 +14,44 @@ export class ReportRepository {
       },
     })
   }
+
+  async getReports(jobId: number) {
+    const reports = await this.prisma.report.findMany({
+      where: {
+        jobId: jobId,
+      },
+    })
+    return {
+      reports: reports,
+      jobId: jobId,
+    }
+  }
+
+  async cancelJob(jobId: number) {
+    await this.prisma.report.deleteMany({
+      where: {
+        jobId: jobId,
+      },
+    })
+    await this.prisma.shooting.deleteMany({
+      where: {
+        jobId: jobId,
+      },
+    })
+    await this.prisma.job.delete({
+      where: {
+        jobId: jobId,
+      },
+    })
+    return { jobId: jobId }
+  }
+
+  async rejectReportForJob(jobId: number) {
+    await this.prisma.report.deleteMany({
+      where: {
+        jobId: jobId,
+      },
+    })
+    return { jobId: jobId }
+  }
 }
