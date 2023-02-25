@@ -20,15 +20,15 @@ export const PageContainer = styled('form')`
 export const JobCardContainer = styled('div')`
   flex-grow: 1;
   max-width: 800px;
-  align-self: center;
 
   ${(props) => props.theme.breakpoints.down('lg')} {
-    margintop: 10px;
-    padding: 30px;
+    margin-top: 10px;
+    padding: 20px;
     width: 100%;
+    align-self: center;
   }
 
   ${(props) => props.theme.breakpoints.down('sm')} {
-    padding: 20px 15px;
+    padding: 10px 15px;
   }
 `
