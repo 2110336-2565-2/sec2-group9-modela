@@ -33,7 +33,6 @@ export interface ISearch {
   status: string[]
   gender: string[]
   castingId: number | null
-  isReport: boolean
 }
 export const initialIFilter: IFilter = {
   title: null,
@@ -66,5 +65,18 @@ export const initialISearch: ISearch = {
   status: [],
   gender: [],
   castingId: null,
-  isReport: true,
+}
+export const initialISearchAdmin: ISearch = {
+  title: null,
+  startDate: null,
+  endDate: null,
+  location: null,
+  startTime: null,
+  endTime: null,
+  minWage: null,
+  maxWage: null,
+  age: null,
+  status: ['REPORTED', 'OPEN'],
+  gender: [],
+  castingId: null,
 }

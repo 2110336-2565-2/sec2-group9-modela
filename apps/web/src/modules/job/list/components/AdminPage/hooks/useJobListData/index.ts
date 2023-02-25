@@ -8,7 +8,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import {
   IFilter,
   initialIFilter,
-  initialISearch,
+  initialISearchAdmin,
   ISearch,
 } from '../../../../pages/types'
 
@@ -18,11 +18,13 @@ const useJobListData = () => {
   const [hasMore, setHasMore] = useState(true)
   const [page, setPage] = useState(0)
   const pageControl = useRef(1)
-  const [search, setSearch] = useState<ISearch>(initialISearch)
+  const [search, setSearch] = useState<ISearch>(initialISearchAdmin)
   const [state, setState] = useState<IFilter>(initialIFilter)
   const open = useCallback(() => setOpen(true), [])
   const close = useCallback(() => setOpen(false), [])
   const { handleError } = useErrorHandler()
+
+  //setSearch({ ...search, status: ['REPORTED'] })
 
   const filterData = useCallback(
     async (state: IFilter) => {
