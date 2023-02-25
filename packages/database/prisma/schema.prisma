@@ -163,6 +163,8 @@ model Application {
   Job    Job    @relation(fields: [jobId], references: [jobId])
   Actor  Actor  @relation(fields: [actorId], references: [actorId])
   Resume Resume @relation(fields: [resumeId], references: [resumeId])
+
+  @@unique([actorId, jobId], name: "applicationIdentifier")
 }
 
 enum ApplicationStatus {
