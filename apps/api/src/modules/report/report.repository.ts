@@ -14,4 +14,16 @@ export class ReportRepository {
       },
     })
   }
+
+  async getReports(jobId: number) {
+    const reports = await this.prisma.report.findMany({
+      where: {
+        jobId: jobId,
+      },
+    })
+    return {
+      reports: reports,
+      jobId: jobId,
+    }
+  }
 }

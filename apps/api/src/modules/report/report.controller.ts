@@ -1,11 +1,12 @@
-import { JobIdDto, JwtDto, UserType } from '@modela/dtos'
+import { GetReportsDto, JobIdDto, JwtDto, UserType } from '@modela/dtos'
 import { PostReportDto } from '@modela/dtos'
-import { Body, Controller, Param, Post } from '@nestjs/common'
+import { Body, Controller, Get, Param, Post } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
   ApiForbiddenResponse,
   ApiNotFoundResponse,
+  ApiOkResponse,
   ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
@@ -34,5 +35,16 @@ export class ReportController {
     @User() user: JwtDto,
   ) {
     return this.reportService.postReport(+id, postReportDto, user.userId)
+  }
+
+  @Get('jobs/:id')
+  @UseAuthGuard(UserType.ADMIN)
+  @ApiUnauthorizedResponse({ description: 'User is not login' })
+  @ApiForbiddenResponse({ description: 'User is not admin' })
+  @ApiNotFoundResponse({ description: 'Job not found' })
+  @ApiOperation({ summary: 'get reports' })
+  @ApiOkResponse({ type: GetReportsDto })
+  getReports(@Param('id') id: string) {
+    return this.reportService.getReports(+id)
   }
 }
