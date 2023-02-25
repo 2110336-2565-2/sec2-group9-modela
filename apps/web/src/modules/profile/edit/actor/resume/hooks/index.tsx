@@ -11,6 +11,7 @@ export const useResumeInfo = () => {
   const [resume, setResume] = useState<IResumeWithFirstFlag[]>([])
   const [resumeId, setResumeId] = useState(0)
   const [resumeName, setResumeName] = useState('')
+  const { isOpen: isLoading, close: finishLoading } = useSwitch(true)
   const { isOpen: isModalOpen, close, open } = useSwitch()
   const { handleError } = useErrorHandler()
 
@@ -86,7 +87,7 @@ export const useResumeInfo = () => {
           throw err
         }
 
-        return true
+        return
       }
     },
     [handleError, resume],
@@ -106,17 +107,23 @@ export const useResumeInfo = () => {
 
   useEffect(() => {
     const getInitialResume = async () => {
-      const data = (await apiClient.get<GetResumesDto>('/resumes')).data
-      setResume(data.resumes)
+      try {
+        const data = (await apiClient.get<GetResumesDto>('/resumes')).data
+        setResume(data.resumes)
+      } catch (err) {
+        handleError(err)
+      }
+      finishLoading()
     }
 
     getInitialResume()
-  }, [])
+  }, [finishLoading, handleError])
 
   return {
     resume,
     resumeName,
     isModalOpen,
+    isLoading,
     handleAddNewResume,
     handleCancelUpdate,
     handleOpenDeleteModal,
