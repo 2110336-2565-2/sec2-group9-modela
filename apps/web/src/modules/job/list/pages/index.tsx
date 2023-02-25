@@ -3,6 +3,7 @@ import { useUser } from 'common/context/UserContext'
 import withGuard from 'common/hoc/withGuard'
 
 import ActorCastingPage from '../components/ActorCastingPage'
+import AdminPage from '../components/AdminPage'
 
 const JobList = () => {
   const { user } = useUser()
@@ -11,6 +12,7 @@ const JobList = () => {
       {(user?.type === UserType.ACTOR || user?.type === UserType.CASTING) && (
         <ActorCastingPage />
       )}
+      {user?.type === UserType.ADMIN && <AdminPage />}
     </div>
   )
 }

@@ -5,7 +5,12 @@ import { apiClient } from 'common/utils/api'
 import dayjs from 'dayjs'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { IFilter, initialIFilter, initialISearch, ISearch } from '../../types'
+import {
+  IFilter,
+  initialIFilter,
+  initialISearch,
+  ISearch,
+} from '../../../../pages/types'
 
 const useJobListData = () => {
   const [isOpen, setOpen] = useState(false)

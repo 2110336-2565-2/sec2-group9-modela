@@ -130,4 +130,4 @@ const JobList = () => {
   )
 }
 
-export default withGuard(JobList, [UserType.ACTOR, UserType.CASTING])
+export default withGuard(JobList, 'verified', [UserType.ADMIN])
