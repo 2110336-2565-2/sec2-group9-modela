@@ -12,7 +12,12 @@ import FilterContainer from '../FilterContainer'
 import FilterMobileContainer from '../FilterMobileContainer'
 import SearchBox from '../SearchBox'
 import useJobListData from './hooks/useJobListData'
-import { FilterBoxContainer, JobContainer, SearchContainer } from './styled'
+import {
+  FilterBoxContainer,
+  JobContainer,
+  PlaceFill,
+  SearchContainer,
+} from './styled'
 const JobList = () => {
   const {
     job,
@@ -37,11 +42,12 @@ const JobList = () => {
       style={{
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'left',
+        justifyContent: 'center',
         alignItems: 'flex-start',
         gap: '3.5vw',
       }}
     >
+      <PlaceFill></PlaceFill>
       <JobContainer
         sx={{
           display: isOpen ? 'none' : 'flex',
@@ -113,6 +119,7 @@ const JobList = () => {
             setState={setState}
             isTitle={false}
             filterData={filterData}
+            isAdmin={true}
           />
         </div>
       </FilterBoxContainer>

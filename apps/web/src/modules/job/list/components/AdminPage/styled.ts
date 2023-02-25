@@ -69,3 +69,13 @@ export const FilterPageFilterBox = styled('div')`
   width: 80vw;
   gap: 1rem;
 `
+export const PlaceFill = styled('div')`
+  display: flex;
+  width: 20vw;
+  ${(props) => props.theme.breakpoints.down('lg')} {
+    display: none;
+  }
+  ${(props) => props.theme.breakpoints.down('md')} {
+    display: none;
+  }
+`

@@ -16,7 +16,7 @@ import { FilterBox } from './styled'
 import { FilterContainerProps } from './types'
 
 export default function FilterContainer(props: FilterContainerProps) {
-  const { state, setState, isTitle, filterData } = props
+  const { state, setState, isTitle, filterData, isAdmin } = props
   return (
     <FilterBox
       onSubmit={(event) => {
@@ -33,6 +33,38 @@ export default function FilterContainer(props: FilterContainerProps) {
             setState({ ...state, title: event.target.value })
           }}
         />
+      )}
+      {isAdmin && (
+        <FormGroup>
+          <Typography variant="body1"> แจ้งปัญหา </Typography>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={state.reportCheck}
+                onChange={(event) =>
+                  setState({ ...state, reportCheck: event.target.checked })
+                }
+              />
+            }
+            label={
+              <Typography variant="subtitle2">
+                งานที่ได้รับการแจ้งปัญหา
+              </Typography>
+            }
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={state.cancleCheck}
+                onChange={(event) =>
+                  setState({ ...state, cancleCheck: event.target.checked })
+                }
+              />
+            }
+            label={<Typography variant="subtitle2">งานที่ถูกยกเลิก</Typography>}
+          />
+          <Divider sx={{ width: '100%' }} />
+        </FormGroup>
       )}
       <Typography variant="body1"> การถ่ายทำ </Typography>
       <MobileDatePicker
