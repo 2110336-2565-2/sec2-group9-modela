@@ -185,24 +185,32 @@ export class JobRepository {
         },
       },
     })
-
-    const jobsWithApplicationStatus = jobs.map((job) => ({
-      jobId: job.jobId,
-      title: job.title,
-      companyName: job.Casting.companyName,
-      description: job.description,
-      status: job.status,
-      actorCount: job.actorCount,
-      gender: job.gender,
-      wage: job.wage,
-      applicationDeadline: job.applicationDeadline,
-      jobCastingImageUrl: job.Casting.User.profileImageUrl,
-      castingId: job.castingId,
-      castingName: job.Casting.User.firstName,
-      ApplicationStatus: job.Application.find(
-        (application) => application.actorId === userId,
-      ).status,
-    }))
+    const jobsWithApplicationStatus = []
+    //check only lastest application status
+    for (const job of jobs) {
+      //check if lastest application status is in applicationStatus
+      if (
+        applicationStatus.includes(
+          job.Application[job.Application.length - 1].status,
+        )
+      ) {
+        jobsWithApplicationStatus.push({
+          jobId: job.jobId,
+          title: job.title,
+          companyName: job.Casting.companyName,
+          description: job.description,
+          status: job.status,
+          actorCount: job.actorCount,
+          gender: job.gender,
+          wage: job.wage,
+          applicationDeadline: job.applicationDeadline,
+          jobCastingImageUrl: job.Casting.User.profileImageUrl,
+          castingId: job.castingId,
+          castingName: job.Casting.User.firstName,
+          ApplicationStatus: job.Application[job.Application.length - 1].status,
+        })
+      }
+    }
     return jobsWithApplicationStatus
   }
 
