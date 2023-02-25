@@ -1,4 +1,4 @@
-import { ActorDto, GetAppliedActorQuery } from '@modela/dtos'
+import { ActorDto, ApplicationStatus, GetAppliedActorQuery } from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
 
@@ -51,5 +51,25 @@ export class ApplicationRepository {
     }
 
     return result
+  }
+
+  async getApplicationbyActorJob(actorId: number, jobId: number) {
+    return await this.prisma.application.findFirst({
+      where: {
+        actorId,
+        jobId,
+      },
+    })
+  }
+
+  async createApplication(actorId: number, jobId: number, resumeId: number) {
+    return await this.prisma.application.create({
+      data: {
+        actorId,
+        jobId,
+        resumeId,
+        status: ApplicationStatus.PENDING,
+      },
+    })
   }
 }
