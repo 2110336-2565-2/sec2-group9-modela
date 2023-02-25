@@ -55,38 +55,41 @@ export const useResumeInfo = () => {
     async (name: string, resumeId: number, file?: Blob) => {
       const currentIdx = resume.findIndex((val) => val.resumeId === resumeId)
 
-      if (resume[currentIdx].isFirst) {
+      if (resume[currentIdx]?.isFirst) {
         // TODO: Call Create Resume API
-        const resumeUrl = 'https://www.google.com'
+        try {
+          const resumeUrl = 'https://www.google.com'
 
-        const { resumeId } = (
-          await apiClient.post<
-            ResumeIdDto,
-            AxiosResponse<ResumeIdDto>,
-            PostResumeDto
-          >('/resumes', {
+          const { resumeId } = (
+            await apiClient.post<
+              ResumeIdDto,
+              AxiosResponse<ResumeIdDto>,
+              PostResumeDto
+            >('/resumes', {
+              name,
+              resumeUrl,
+            })
+          ).data
+
+          const newResume = {
             name,
+            resumeId,
             resumeUrl,
-          })
-        ).data
+          }
 
-        const newResume = {
-          name,
-          resumeId,
-          resumeUrl,
+          setResume((prev) => {
+            prev.splice(currentIdx, 1, newResume)
+            return [...prev]
+          })
+        } catch (err) {
+          handleError(err)
+          throw err
         }
 
-        setResume((prev) => {
-          prev.splice(currentIdx, 1, newResume)
-          return [...prev]
-        })
-
-        return
+        return true
       }
-
-      // TODO: Call Put Resume API
     },
-    [resume],
+    [handleError, resume],
   )
 
   const handleCancelUpdate = useCallback(

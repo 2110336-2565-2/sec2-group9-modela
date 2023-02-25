@@ -1,4 +1,4 @@
-import { DeleteOutlineOutlined, EditOutlined } from '@mui/icons-material'
+import { DeleteOutlineOutlined } from '@mui/icons-material'
 import { Typography } from '@mui/material'
 import Link from 'next/link'
 
@@ -6,17 +6,12 @@ import { ActionButtonContainer, TitleContainer } from './styled'
 import { IResumeViewProps } from './types'
 
 const ResumeView = (props: IResumeViewProps) => {
-  const { handleDelete, handleToggleEdit, name, resumeUrl } = props
+  const { handleDelete, name, resumeUrl } = props
   return (
     <>
       <TitleContainer>
         <Typography>{name}</Typography>
         <ActionButtonContainer>
-          <EditOutlined
-            color="primary"
-            sx={{ cursor: 'pointer' }}
-            onClick={handleToggleEdit}
-          />
           <DeleteOutlineOutlined
             color="primary"
             sx={{ cursor: 'pointer' }}
