@@ -1,4 +1,4 @@
-import { JobStatus } from '@modela/database'
+import { ApplicationStatus, JobStatus } from '@modela/database'
 import {
   CreateJobDto,
   EditJobDto,
@@ -7,6 +7,7 @@ import {
   GetJobCardWithMaxPageDto,
   JobSummaryDto,
   JwtDto,
+  SearchAppliedJobDto,
   SearchJobByAdminDto,
   SearchJobByAdminStatus,
   SearchJobDto,
@@ -350,6 +351,22 @@ export class JobService {
     return result
   }
 
+  async findAllApplied(searchAppliedJobDto: SearchAppliedJobDto, user: JwtDto) {
+    //assign and set default value
+    const applicationStatus = searchAppliedJobDto.applicationStatus || [
+      ApplicationStatus.PENDING,
+    ]
+    const statusQuery = searchAppliedJobDto.status || [
+      JobStatus.OPEN,
+      JobStatus.SELECTING,
+      JobStatus.SELECTION_ENDED,
+    ]
+    return await this.repository.getJobApplied(
+      statusQuery,
+      applicationStatus,
+      user.userId,
+    )
+  }
   async findOne(id: number, user: JwtDto) {
     const job = await this.repository.getJobById(id)
 
