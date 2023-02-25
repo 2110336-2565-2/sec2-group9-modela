@@ -20,7 +20,7 @@ describe('FormController', () => {
     'common/components/PasswordTextField',
   )
 
-  jest.doMock('./components/UploadFile', () => mockUploadFile)
+  jest.doMock('common/components/UploadFile', () => mockUploadFile)
 
   test('should render TextField if type is textField', () => {
     const { default: FormController } = require('.') as typeof import('.')
