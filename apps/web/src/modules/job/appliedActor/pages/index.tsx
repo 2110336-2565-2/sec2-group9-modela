@@ -15,7 +15,7 @@ import ActorFilterModal from '../components/ActorFilterModal'
 import SearchField from '../components/SearchField'
 import useActorData from './hooks/useActorData'
 import useFilter from './hooks/useFilter'
-import { CardsContainer, PageContainer } from './styled'
+import { CardsContainer, PageContainer, TabletContainer } from './styled'
 
 const AppliedActorPage = () => {
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
@@ -28,21 +28,23 @@ const AppliedActorPage = () => {
   return (
     <PageContainer onSubmit={onSubmit}>
       <JobMenu focus="actor" />
-      <CardsContainer>
-        <SearchField control={control} onSubmit={onSubmit} />
-        {actorData ? (
-          actorData.length === 0 ? (
-            <Typography color="#00000061">ไม่พบนักแสดง</Typography>
+      <TabletContainer>
+        <CardsContainer>
+          {!isMobile && <SearchField control={control} onSubmit={onSubmit} />}
+          {actorData ? (
+            actorData.length === 0 ? (
+              <Typography color="#00000061">ไม่พบนักแสดง</Typography>
+            ) : (
+              actorData.map((actor) => (
+                <ActorCard key={actor.applicationId} {...actor} />
+              ))
+            )
           ) : (
-            actorData.map((actor) => (
-              <ActorCard key={actor.applicationId} {...actor} />
-            ))
-          )
-        ) : (
-          <CircularProgress />
-        )}
-      </CardsContainer>
-      {!isMobile && <ActorFilter control={control} />}
+            <CircularProgress />
+          )}
+        </CardsContainer>
+        {!isMobile && <ActorFilter control={control} />}
+      </TabletContainer>
     </PageContainer>
   )
 }

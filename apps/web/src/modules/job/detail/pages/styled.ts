@@ -9,18 +9,26 @@ export const PageContainer = styled('form')`
   justify-content: center;
   max-width: 1200px;
 
-  ${(props) => props.theme.breakpoints.down('md')} {
-    margin: 40px 30px;
-  }
-
-  ${(props) => props.theme.breakpoints.down('sm')} {
-    margin: 25px 15px;
+  ${(props) => props.theme.breakpoints.down('lg')} {
+    flex-direction: column;
+    margin: 0;
+    align-items: stretch;
+    gap: 0px;
   }
 `
 
 export const JobCardContainer = styled('div')`
-  width: 50vw;
-  ${(props) => props.theme.breakpoints.down('md')} {
-    width: 90vw;
+  flex-grow: 1;
+  max-width: 800px;
+
+  ${(props) => props.theme.breakpoints.down('lg')} {
+    margin-top: 10px;
+    padding: 20px;
+    width: 100%;
+    align-self: center;
+  }
+
+  ${(props) => props.theme.breakpoints.down('sm')} {
+    padding: 10px 15px;
   }
 `
