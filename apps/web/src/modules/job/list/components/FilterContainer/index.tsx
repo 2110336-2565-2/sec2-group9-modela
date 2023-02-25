@@ -16,7 +16,7 @@ import { FilterBox } from './styled'
 import { FilterContainerProps } from './types'
 
 export default function FilterContainer(props: FilterContainerProps) {
-  const { state, setState, isTitle, filterData } = props
+  const { state, setState, isTitle, filterData, isAdmin } = props
   return (
     <FilterBox
       onSubmit={(event) => {
@@ -33,6 +33,42 @@ export default function FilterContainer(props: FilterContainerProps) {
             setState({ ...state, title: event.target.value })
           }}
         />
+      )}
+      {isAdmin && (
+        <FormGroup
+          sx={{ width: '100%', display: 'flex', alignItems: 'flex-start' }}
+        >
+          <Typography variant="body1" sx={{ justifyContent: 'left' }}>
+            แจ้งปัญหา
+          </Typography>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={state.reportCheck}
+                onChange={(event) =>
+                  setState({ ...state, reportCheck: event.target.checked })
+                }
+              />
+            }
+            label={
+              <Typography variant="subtitle2">
+                งานที่ได้รับการแจ้งปัญหา
+              </Typography>
+            }
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={state.cancleCheck}
+                onChange={(event) =>
+                  setState({ ...state, cancleCheck: event.target.checked })
+                }
+              />
+            }
+            label={<Typography variant="subtitle2">งานที่ถูกยกเลิก</Typography>}
+          />
+          <Divider sx={{ width: '100%' }} />
+        </FormGroup>
       )}
       <Typography variant="body1"> การถ่ายทำ </Typography>
       <MobileDatePicker
@@ -185,7 +221,7 @@ export default function FilterContainer(props: FilterContainerProps) {
               }
             />
           }
-          label="เปิดรับสมัคร"
+          label={<Typography variant="subtitle2">เปิดรับสมัคร</Typography>}
         />
         <FormControlLabel
           control={
@@ -196,7 +232,7 @@ export default function FilterContainer(props: FilterContainerProps) {
               }
             />
           }
-          label="ปิดรับสมัคร"
+          label={<Typography variant="subtitle2">ปิดรับสมัคร</Typography>}
         />
       </FormGroup>
 
@@ -212,7 +248,7 @@ export default function FilterContainer(props: FilterContainerProps) {
               }
             />
           }
-          label="ชาย"
+          label={<Typography variant="subtitle2">ชาย</Typography>}
         />
         <FormControlLabel
           control={
@@ -223,7 +259,7 @@ export default function FilterContainer(props: FilterContainerProps) {
               }
             />
           }
-          label="หญิง"
+          label={<Typography variant="subtitle2">หญิง</Typography>}
         />
         <FormControlLabel
           control={
@@ -234,7 +270,7 @@ export default function FilterContainer(props: FilterContainerProps) {
               }
             />
           }
-          label="อื่นๆ"
+          label={<Typography variant="subtitle2">อื่นๆ</Typography>}
         />
       </FormGroup>
       <Button type="submit" sx={{ display: 'none' }}>

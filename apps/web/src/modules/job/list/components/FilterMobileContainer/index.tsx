@@ -7,7 +7,14 @@ import { FIlterPage, FilterPageFilterBox } from './styled'
 import { FilterContainerProps } from './types'
 
 const FilterMobileContainer = (props: FilterContainerProps) => {
-  const { state, setState, isFilterShow, closeFilterPage, filterData } = props
+  const {
+    state,
+    setState,
+    isFilterShow,
+    closeFilterPage,
+    filterData,
+    isAdmin,
+  } = props
   useBackNavbar(
     useMemo(
       () => ({
@@ -29,6 +36,7 @@ const FilterMobileContainer = (props: FilterContainerProps) => {
           setState={setState}
           isTitle={true}
           filterData={filterData}
+          isAdmin={isAdmin}
         />
         <Button
           onClick={() => {

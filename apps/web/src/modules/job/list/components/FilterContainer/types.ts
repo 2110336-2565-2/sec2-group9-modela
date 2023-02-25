@@ -6,4 +6,5 @@ export interface FilterContainerProps {
   setState: Dispatch<SetStateAction<IFilter>>
   isTitle: boolean
   filterData: (state: IFilter) => Promise<void>
+  isAdmin?: boolean
 }
