@@ -15,6 +15,7 @@ const UploadFile: FC<IUploadFileProps> = (props) => {
     label,
     hideLink,
     initialName,
+    sx,
   } = props
   const { handleUploadFile, name, removeSameFile } = useUploadFile(
     handleSelectFile,
@@ -22,12 +23,12 @@ const UploadFile: FC<IUploadFileProps> = (props) => {
   )
 
   return (
-    <UploadFileContainer>
+    <UploadFileContainer sx={sx}>
       <Button
         variant="text"
         disableRipple
         component="label"
-        sx={{ textAlign: 'center' }}
+        sx={{ textAlign: 'center', width: 'fit-content', padding: 0 }}
       >
         <FileUploadOutlined sx={{ marginRight: '4px' }} />
         {label}

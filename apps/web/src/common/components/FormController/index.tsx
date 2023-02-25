@@ -2,10 +2,10 @@ import { Divider, Grid, MenuItem, Typography } from '@mui/material'
 import { DesktopDatePicker, TimePicker } from '@mui/x-date-pickers'
 import PasswordTextField from 'common/components/PasswordTextField'
 import TextField from 'common/components/TextField'
+import UploadFile from 'common/components/UploadFile'
 import { memo } from 'react'
 import { Controller, FieldValues } from 'react-hook-form'
 
-import UploadFile from './components/UploadFile'
 import { IFormControllerProps } from './types'
 
 const FormController = <T extends FieldValues>(
