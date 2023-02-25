@@ -168,8 +168,13 @@ export class JobRepository {
             User: true,
           },
         },
-        Shooting: true,
-        Application: true,
+        //only get the latest application
+        Application: {
+          orderBy: {
+            applicationId: Prisma.SortOrder.desc,
+          },
+          take: 1,
+        },
       },
       where: {
         status: {
@@ -178,25 +183,16 @@ export class JobRepository {
         Application: {
           some: {
             actorId: userId,
+            status: {
+              in: applicationStatus,
+            },
           },
         },
       },
     })
-
     const jobsWithApplicationStatus = []
-    //check only lastest application status
     for (const job of jobs) {
-      //check if lastest application status is in applicationStatus
-      const applicationStatusList = []
-      for (const application of job.Application) {
-        if (application.actorId === userId)
-          applicationStatusList.push(application.status)
-      }
-      if (
-        applicationStatus.includes(
-          applicationStatusList[applicationStatusList.length - 1],
-        )
-      ) {
+      if (applicationStatus.includes(job.Application[0].status)) {
         jobsWithApplicationStatus.push({
           jobId: job.jobId,
           title: job.title,
@@ -210,11 +206,11 @@ export class JobRepository {
           jobCastingImageUrl: job.Casting.User.profileImageUrl,
           castingId: job.castingId,
           castingName: job.Casting.User.firstName,
-          ApplicationStatus:
-            applicationStatusList[applicationStatusList.length - 1],
+          ApplicationStatus: job.Application[0].status,
         })
       }
     }
+
     return jobsWithApplicationStatus
   }
 
