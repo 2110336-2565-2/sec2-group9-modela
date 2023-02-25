@@ -112,7 +112,8 @@ const useJobListData = () => {
   }, [page, search])
 
   useEffect(() => {
-    if (!isOpen) {
+    console.log(window.innerWidth)
+    if (!isOpen || window.innerWidth > 900) {
       filterData(state)
     }
   }, [
