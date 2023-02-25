@@ -19,10 +19,10 @@ import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
   ApiForbiddenResponse,
+  ApiNoContentResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
-  ApiResponse,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
@@ -71,7 +71,7 @@ export class ResumeController {
   @Delete(':resumeId')
   @HttpCode(204)
   @UseAuthGuard(UserType.ACTOR)
-  @ApiResponse({ status: 204, description: 'Delete resume complete.' })
+  @ApiNoContentResponse({ description: 'Delete resume complete.' })
   @ApiOperation({ summary: 'delete resume by id' })
   @ApiUnauthorizedResponse({ description: 'User is not logged in' })
   @ApiForbiddenResponse({ description: 'User is not an resume owner' })
