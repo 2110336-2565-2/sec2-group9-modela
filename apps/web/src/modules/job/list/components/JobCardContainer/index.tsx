@@ -1,11 +1,11 @@
-import { GetJobCardWithMaxPageDto } from '@modela/dtos'
 import { Typography } from '@mui/material'
 import React from 'react'
 
 import JobCard from './components/JobCard'
 import { CardBoxContainer } from './styled'
+import { JobCardContainerProps } from './types'
 
-export default function JobCardContainer(prop: GetJobCardWithMaxPageDto) {
+export default function JobCardContainer(prop: JobCardContainerProps) {
   const { jobs, maxPage } = prop
   return (
     <CardBoxContainer>
@@ -23,6 +23,7 @@ export default function JobCardContainer(prop: GetJobCardWithMaxPageDto) {
         </Typography>
       )}
       {jobs.map((item) => {
+        console.log(item)
         return (
           <div
             key={`Job-${item.jobId}`}
