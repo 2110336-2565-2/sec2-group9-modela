@@ -1,4 +1,4 @@
-import { Actor, Casting, User, UserType } from '@modela/database'
+import { Actor, Casting, Gender, User, UserType } from '@modela/database'
 import { ApiProperty, refs } from '@nestjs/swagger'
 import {
   IsDateString,
@@ -114,4 +114,93 @@ export class GetProfileForEditingDto {
     oneOf: refs(EditActorProfileDto, EditCastingProfileDto),
   })
   data: EditActorProfileDto | EditCastingProfileDto
+}
+export class GetUserProfileDto implements Partial<User> {
+  @ApiProperty()
+  profileImageUrl?: string
+
+  @ApiProperty()
+  phoneNumber?: string
+
+  @ApiProperty()
+  firstName: string;
+
+  @ApiProperty()
+  middleName?: string;
+
+  @ApiProperty()
+  lastName: string;
+
+  @ApiProperty()
+  description?: string;
+}
+
+export class GetCastingProfileDto extends GetUserProfileDto {
+  @ApiProperty()
+  companyName: string;
+}
+export class GetActorProfileDto extends GetUserProfileDto implements EditActorProfileDto {
+  @ApiProperty()
+  prefix?: string;
+
+  @ApiProperty()
+  nationality?: string;
+
+  @ApiProperty()
+  gender?: Gender;
+
+  @ApiProperty()
+  ethnicity?: string
+  
+  @ApiProperty()
+  age?: number;
+
+  @ApiProperty()
+  religion?: string
+
+  @ApiProperty()
+  nickname?: string
+
+  @ApiProperty()
+  height?: number
+
+  @ApiProperty()
+  weight?: number
+
+  @ApiProperty()
+  eyeColor?: string
+
+  @ApiProperty()
+  hairColor?: string
+
+  @ApiProperty()
+  waist?: number
+
+  @ApiProperty()
+  bust?: number
+
+  @ApiProperty()
+  hips?: number
+
+  // assume that it is EU format
+  @ApiProperty()
+  shoeSize?: number
+
+  @ApiProperty()
+  skinShade?: string
+
+  
+
+
+
+}
+
+export class GetProfileForViewingDto {
+  @ApiProperty({ enum: UserType, example: UserType.ACTOR })
+  type: UserType
+
+  @ApiProperty({
+    oneOf: refs(GetActorProfileDto, GetCastingProfileDto),
+  })
+  data: GetActorProfileDto | GetCastingProfileDto
 }
