@@ -109,13 +109,12 @@ Table Application {
   applicationId Int [pk, increment]
   jobId Int [not null]
   actorId Int [not null]
+  resumeId Int [not null]
   status ApplicationStatus [not null]
   createdAt DateTime [default: `now()`, not null]
   Job Job [not null]
   Actor Actor [not null]
-  Resume Resume
-  resumeId Int
-  resumeUrl String
+  Resume Resume [not null]
 }
 
 Table Report {
@@ -187,7 +186,7 @@ Ref: Application.jobId > Job.jobId
 
 Ref: Application.actorId > Actor.actorId
 
-Ref: Application.resumeId > Resume.resumeId [delete: Set Null]
+Ref: Application.resumeId > Resume.resumeId
 
 Ref: Report.reporterId > User.userId
 
