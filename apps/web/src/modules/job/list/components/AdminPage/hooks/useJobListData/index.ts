@@ -24,8 +24,6 @@ const useJobListData = () => {
   const close = useCallback(() => setOpen(false), [])
   const { handleError } = useErrorHandler()
 
-  //setSearch({ ...search, status: ['REPORTED'] })
-
   const filterData = useCallback(
     async (state: IFilter) => {
       let newStatus = []
