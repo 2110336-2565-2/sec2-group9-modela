@@ -1,3 +1,4 @@
+import { JobStatus } from '@modela/database'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
 
@@ -38,7 +39,7 @@ export class ReportRepository {
         jobId: jobId,
       },
       data: {
-        status: 'CANCELLED',
+        status: JobStatus.CANCELLED,
       },
     })
     return { jobId: jobId }
