@@ -38,10 +38,27 @@ export class ResumeRepository {
   }
 
   async deleteResume(resumeId: number): Promise<Resume> {
-    const deleteResumeId = Number(resumeId)
-    const resume = await this.prisma.resume.delete({
-      where: { resumeId: deleteResumeId },
+    const resume = await this.prisma.resume.findUnique({
+      where: { resumeId },
+      include: { Application: true },
     })
-    return resume
+    if (resume.Application.length > 0) {
+      //have application -> actorId = null and remove from actor
+      const deleteResumeId = Number(resumeId)
+      const deletedResume = await this.prisma.resume.update({
+        where: { resumeId: deleteResumeId },
+        data: {
+          actorId: null,
+        },
+      })
+      return deletedResume
+    } else {
+      //not have any application -> directly delete
+      const deleteResumeId = Number(resumeId)
+      const deletedResume = await this.prisma.resume.delete({
+        where: { resumeId: deleteResumeId },
+      })
+      return deletedResume
+    }
   }
 }
