@@ -2,9 +2,10 @@ import {
   EditActorProfileDto,
   EditCastingProfileDto,
   GetProfileForEditingDto,
+  GetProfileForViewingDto,
   UserType,
 } from '@modela/dtos'
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 
 import { ProfileRepository } from './profile.repository'
 @Injectable()
@@ -51,5 +52,13 @@ export class ProfileService {
         ...(await this.repository.getActorProfileForEditing(id)),
       },
     }
+  }
+
+  async getProfileById(id: number): Promise<GetProfileForViewingDto> {
+    const user = await this.repository.getUserProfileById(id)
+    if (!user) {
+      throw new NotFoundException()
+    }
+    return user
   }
 }
