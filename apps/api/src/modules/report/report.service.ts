@@ -28,4 +28,41 @@ export class ReportService {
       throw new InternalServerErrorException()
     }
   }
+
+  async getReports(id: number) {
+    const job = await this.jobRepository.getBaseJobById(id)
+    if (!job) {
+      throw new NotFoundException()
+    }
+
+    return await this.reportRepository.getReports(job.jobId)
+  }
+
+  async acceptReport(id: number) {
+    const job = await this.jobRepository.getBaseJobById(id)
+    if (!job) {
+      throw new NotFoundException()
+    }
+
+    try {
+      return await this.reportRepository.cancelJob(id)
+    } catch (e) {
+      console.log(e)
+      throw new InternalServerErrorException()
+    }
+  }
+
+  async rejectReport(id: number) {
+    const job = await this.jobRepository.getBaseJobById(id)
+    if (!job) {
+      throw new NotFoundException()
+    }
+
+    try {
+      return await this.reportRepository.rejectReportForJob(id)
+    } catch (e) {
+      console.log(e)
+      throw new InternalServerErrorException()
+    }
+  }
 }
