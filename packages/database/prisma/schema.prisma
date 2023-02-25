@@ -103,10 +103,10 @@ model Casting {
 model Resume {
   resumeId  Int    @id @default(autoincrement())
   name      String
-  actorId   Int
+  actorId   Int?
   resumeUrl String
 
-  Actor       Actor         @relation(fields: [actorId], references: [actorId])
+  Actor       Actor?        @relation(fields: [actorId], references: [actorId])
   Application Application[]
 }
 
