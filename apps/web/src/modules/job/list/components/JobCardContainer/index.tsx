@@ -23,7 +23,6 @@ export default function JobCardContainer(prop: JobCardContainerProps) {
         </Typography>
       )}
       {jobs.map((item) => {
-        console.log(item)
         return (
           <div
             key={`Job-${item.jobId}`}
