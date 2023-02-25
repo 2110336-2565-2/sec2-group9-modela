@@ -1,4 +1,4 @@
-import { Modal, styled } from '@mui/material'
+import { Button, Modal, styled } from '@mui/material'
 
 export const RootModalContainer = styled(Modal)`
   display: flex;
@@ -21,4 +21,18 @@ export const ModalContentContainer = styled('div')`
 export const ActionButtonContainer = styled('div')`
   display: flex;
   justify-content: space-between;
+`
+
+export const SubmitButton = styled(Button)`
+  background-color: #66a373;
+  &:hover {
+    background-color: #66a373af;
+  }
+`
+
+export const CancelButton = styled(Button)`
+  background-color: #aa5b5b;
+  &:hover {
+    background-color: #aa5b5baf;
+  }
 `

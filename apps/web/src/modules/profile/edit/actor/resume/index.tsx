@@ -48,7 +48,7 @@ const ActorResume = () => {
           },
         ]}
       />
-      <CardContainer>
+      <CardContainer variant="outlined">
         <Typography variant="h5">เรซูเม่</Typography>
         <Divider sx={{ width: '100%' }} />
         {isLoading ? (
