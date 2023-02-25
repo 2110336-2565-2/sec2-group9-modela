@@ -345,14 +345,17 @@ export class JobService {
 
   async findAllApplied(searchAppliedJobDto: SearchAppliedJobDto, user: JwtDto) {
     //assign and set default value
-    const applicationStatus = searchAppliedJobDto.applicationStatus || [
+    let applicationStatus = searchAppliedJobDto.applicationStatus || [
       ApplicationStatus.PENDING,
     ]
-    const statusQuery = searchAppliedJobDto.status || [
+    let statusQuery = searchAppliedJobDto.status || [
       JobStatus.OPEN,
       JobStatus.SELECTING,
       JobStatus.SELECTION_ENDED,
     ]
+    if (!Array.isArray(applicationStatus))
+      applicationStatus = [applicationStatus]
+    if (!Array.isArray(statusQuery)) statusQuery = [statusQuery]
     return await this.repository.getJobApplied(
       statusQuery,
       applicationStatus,
