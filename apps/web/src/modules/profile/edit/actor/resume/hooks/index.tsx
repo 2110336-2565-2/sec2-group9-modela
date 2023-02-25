@@ -28,7 +28,7 @@ export const useResumeInfo = () => {
 
   const handleDeleteResume = useCallback(async () => {
     try {
-      await apiClient.delete(`/resume/${resumeId}`)
+      await apiClient.delete(`/resumes/${resumeId}`)
       setResume((prev) => prev.filter((val) => val.resumeId !== resumeId))
       close()
     } catch (err) {
