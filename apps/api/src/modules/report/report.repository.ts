@@ -33,14 +33,12 @@ export class ReportRepository {
         jobId: jobId,
       },
     })
-    await this.prisma.shooting.deleteMany({
+    await this.prisma.job.update({
       where: {
         jobId: jobId,
       },
-    })
-    await this.prisma.job.delete({
-      where: {
-        jobId: jobId,
+      data: {
+        status: 'CANCELLED',
       },
     })
     return { jobId: jobId }
