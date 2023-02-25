@@ -215,6 +215,11 @@ export class CreateJobDto implements EditJobType {
 }
 
 export class EditJobDto extends CreateJobDto {}
+export class EditJobStatusDto {
+  @IsEnum(JobStatus)
+  @ApiProperty()
+  status: JobStatus
+}
 
 export class GetJobCardDto extends OmitType(EditJobDto, [
   'role',

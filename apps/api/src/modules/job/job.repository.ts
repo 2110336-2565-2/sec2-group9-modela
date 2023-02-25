@@ -45,6 +45,16 @@ export class JobRepository {
     return { jobId: updatedJob.jobId }
   }
 
+  async updateJobStatus(id: number, status: JobStatus) {
+    const updatedJob = await this.prisma.job.update({
+      where: { jobId: id },
+      data: {
+        status,
+      },
+    })
+    return { jobId: updatedJob.jobId }
+  }
+
   async getJobCount(params: {
     skip?: number
     take?: number
