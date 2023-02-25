@@ -1,6 +1,7 @@
 import {
   CreateJobDto,
   EditJobDto,
+  EditJobStatusDto,
   GetJobCardByAdminWithMaxPageDto,
   GetJobCardWithMaxPageDto,
   GetJobDto,
@@ -83,6 +84,26 @@ export class JobController {
     @User() user: JwtDto,
   ) {
     return this.jobService.update(+id, updateJobDto, user.userId)
+  }
+
+  @Put(':id/status')
+  @ApiOperation({ summary: 'update status of job by id' })
+  @ApiCreatedResponse({ type: JobIdDto })
+  @UseAuthGuard(UserType.CASTING)
+  @ApiUnauthorizedResponse({ description: 'User is not login' })
+  @ApiForbiddenResponse({ description: 'User is not owner' })
+  @ApiBadRequestResponse({ description: 'Wrong format' })
+  @ApiNotFoundResponse({ description: 'Job not found' })
+  updateStatus(
+    @Param('id') id: string,
+    @Body() updateJobStatusDto: EditJobStatusDto,
+    @User() user: JwtDto,
+  ) {
+    return this.jobService.updateStatus(
+      +id,
+      updateJobStatusDto.status,
+      user.userId,
+    )
   }
 
   @Post()

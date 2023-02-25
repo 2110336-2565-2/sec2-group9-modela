@@ -374,6 +374,21 @@ export class JobService {
     return this.repository.updateJob(id, updateJobDto)
   }
 
+  async updateStatus(id: number, updateJobStatus: JobStatus, userId: number) {
+    const job = await this.repository.getBaseJobById(id)
+    if (!job) throw new NotFoundException('Job not found')
+    if (job.castingId !== userId) {
+      throw new ForbiddenException(
+        "You don't have permission to update status of this job",
+      )
+    }
+    if (job.status === JobStatus.CANCELLED || job.status === JobStatus.FINISHED)
+      throw new ForbiddenException(
+        "You can't update status job that is cancelled or finished.",
+      )
+    return this.repository.updateJobStatus(id, updateJobStatus)
+  }
+
   async getJobSummaryById(
     jobId: number,
     userId: number,

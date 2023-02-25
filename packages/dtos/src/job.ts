@@ -214,6 +214,10 @@ export class CreateJobDto implements EditJobType {
 }
 
 export class EditJobDto extends CreateJobDto {}
+export class EditJobStatusDto {
+  @ApiProperty({enum: JobStatus}) 
+  status: JobStatus
+}
 
 export class GetJobCardDto extends OmitType(EditJobDto, [
   'role',
