@@ -44,9 +44,8 @@ export class ResumeRepository {
     })
     if (resume.Application.length > 0) {
       //have application -> actorId = null and remove from actor
-      const deleteResumeId = Number(resumeId)
       const deletedResume = await this.prisma.resume.update({
-        where: { resumeId: deleteResumeId },
+        where: { resumeId },
         data: {
           actorId: null,
         },
@@ -54,9 +53,8 @@ export class ResumeRepository {
       return deletedResume
     } else {
       //not have any application -> directly delete
-      const deleteResumeId = Number(resumeId)
       const deletedResume = await this.prisma.resume.delete({
-        where: { resumeId: deleteResumeId },
+        where: { resumeId },
       })
       return deletedResume
     }

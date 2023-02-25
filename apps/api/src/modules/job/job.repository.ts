@@ -168,20 +168,23 @@ export class JobRepository {
         Application: {
           some: {
             actorId: userId,
-            status: {
-              in: applicationStatus,
-            },
           },
         },
       },
     })
+
     const jobsWithApplicationStatus = []
     //check only lastest application status
     for (const job of jobs) {
       //check if lastest application status is in applicationStatus
+      const applicationStatusList = []
+      for (const application of job.Application) {
+        if (application.actorId === userId)
+          applicationStatusList.push(application.status)
+      }
       if (
         applicationStatus.includes(
-          job.Application[job.Application.length - 1].status,
+          applicationStatusList[applicationStatusList.length - 1],
         )
       ) {
         jobsWithApplicationStatus.push({
@@ -197,7 +200,8 @@ export class JobRepository {
           jobCastingImageUrl: job.Casting.User.profileImageUrl,
           castingId: job.castingId,
           castingName: job.Casting.User.firstName,
-          ApplicationStatus: job.Application[job.Application.length - 1].status,
+          ApplicationStatus:
+            applicationStatusList[applicationStatusList.length - 1],
         })
       }
     }
