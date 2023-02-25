@@ -67,14 +67,14 @@ describe('ApplicationService', () => {
         .mockResolvedValue(
           mock('job').override({ castingId: MOCK_CASTING_ID }).get(),
         )
-      expect(
+      await expect(
         service.findByJobId(MOCK_JOB_ID, MOCK_CASTING_ID, {}),
       ).resolves.toEqual({ actors: MOCK_ACTORS })
     })
 
     it('should throw not found error if job not found', async () => {
       jest.spyOn(jobRepository, 'getBaseJobById').mockResolvedValue(null)
-      expect(
+      await expect(
         service.findByJobId(MOCK_JOB_ID, MOCK_CASTING_ID, {}),
       ).rejects.toThrow(NotFoundException)
     })
@@ -85,7 +85,7 @@ describe('ApplicationService', () => {
           .override({ castingId: MOCK_CASTING_ID + 1 })
           .get(),
       )
-      expect(
+      await expect(
         service.findByJobId(MOCK_JOB_ID, MOCK_CASTING_ID, {}),
       ).rejects.toThrow(ForbiddenException)
     })
@@ -124,14 +124,14 @@ describe('ApplicationService', () => {
     })
 
     it('should apply by job id correctly', async () => {
-      expect(
+      await expect(
         service.applyJob(MOCK_JOB_ID, MOCK_RESUME.resumeId, MOCK_ACTORS_ID),
       ).resolves.toEqual({ applicationId: MOCK_APPLICATION.applicationId })
     })
 
     it('should throw not found error if job not found', async () => {
       jest.spyOn(jobRepository, 'getBaseJobById').mockResolvedValue(null)
-      expect(
+      await expect(
         service.applyJob(MOCK_JOB_ID, MOCK_RESUME.resumeId, MOCK_ACTORS_ID),
       ).rejects.toThrow(NotFoundException)
     })
@@ -144,14 +144,14 @@ describe('ApplicationService', () => {
           })
           .get(),
       )
-      expect(
+      await expect(
         service.applyJob(MOCK_JOB_ID, MOCK_RESUME.resumeId, MOCK_ACTORS_ID),
       ).rejects.toThrow(ForbiddenException)
     })
 
     it('should throw bad request error if resume not found', async () => {
       jest.spyOn(resumeRepository, 'getResumeById').mockResolvedValue(null)
-      expect(
+      await expect(
         service.applyJob(MOCK_JOB_ID, MOCK_RESUME.resumeId, MOCK_ACTORS_ID),
       ).rejects.toThrow(BadRequestException)
     })
@@ -162,7 +162,7 @@ describe('ApplicationService', () => {
           .override({ actorId: MOCK_ACTORS_ID + 1 })
           .get(),
       )
-      expect(
+      await expect(
         service.applyJob(MOCK_JOB_ID, MOCK_RESUME.resumeId, MOCK_ACTORS_ID),
       ).rejects.toThrow(BadRequestException)
     })
@@ -171,7 +171,7 @@ describe('ApplicationService', () => {
       jest
         .spyOn(repository, 'getApplicationbyActorJob')
         .mockResolvedValue(MOCK_APPLICATION)
-      expect(
+      await expect(
         service.applyJob(MOCK_JOB_ID, MOCK_RESUME.resumeId, MOCK_ACTORS_ID),
       ).rejects.toThrow(ConflictException)
     })
