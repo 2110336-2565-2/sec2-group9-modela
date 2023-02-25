@@ -1,4 +1,4 @@
-import { ApplicationStatus, mock } from '@modela/database'
+import { ApplicationStatus, JobStatus, mock } from '@modela/database'
 import {
   BadRequestException,
   ConflictException,
@@ -112,7 +112,11 @@ describe('ApplicationService', () => {
         .mockResolvedValue(MOCK_APPLICATION)
       jest
         .spyOn(jobRepository, 'getBaseJobById')
-        .mockResolvedValue(mock('job').get())
+        .mockResolvedValue(
+          mock('job')
+            .override({ jobId: MOCK_JOB_ID, status: JobStatus.OPEN })
+            .get(),
+        )
       jest
         .spyOn(resumeRepository, 'getResumeById')
         .mockResolvedValue(MOCK_RESUME)
@@ -132,12 +136,26 @@ describe('ApplicationService', () => {
       ).rejects.toThrow(NotFoundException)
     })
 
+    it('should throw forbidden error if job is not open', async () => {
+      jest.spyOn(jobRepository, 'getBaseJobById').mockResolvedValue(
+        mock('job')
+          .override({
+            status: JobStatus.SELECTING,
+          })
+          .get(),
+      )
+      expect(
+        service.applyJob(MOCK_JOB_ID, MOCK_RESUME.resumeId, MOCK_ACTORS_ID),
+      ).rejects.toThrow(ForbiddenException)
+    })
+
     it('should throw bad request error if resume not found', async () => {
       jest.spyOn(resumeRepository, 'getResumeById').mockResolvedValue(null)
       expect(
         service.applyJob(MOCK_JOB_ID, MOCK_RESUME.resumeId, MOCK_ACTORS_ID),
       ).rejects.toThrow(BadRequestException)
     })
+
     it('should throw bad request error if user not the owner of resume', async () => {
       jest.spyOn(resumeRepository, 'getResumeById').mockResolvedValue(
         mock('resume')

@@ -1,4 +1,8 @@
-import { GetAppliedActorDto, GetAppliedActorQuery } from '@modela/dtos'
+import {
+  GetAppliedActorDto,
+  GetAppliedActorQuery,
+  JobStatus,
+} from '@modela/dtos'
 import {
   BadRequestException,
   ConflictException,
@@ -36,6 +40,8 @@ export class ApplicationService {
   async applyJob(jobId: number, resumeId: number, userId: number) {
     const job = await this.jobRepository.getBaseJobById(jobId)
     if (!job) throw new NotFoundException('Job not found')
+    if (job.status !== JobStatus.OPEN)
+      throw new ForbiddenException('Job is not accept application now')
     const resume = await this.resumeRepository.getResumeById(resumeId)
     if (!resume) throw new BadRequestException('Resume not found')
     if (resume.actorId !== userId)

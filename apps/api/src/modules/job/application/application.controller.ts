@@ -49,7 +49,7 @@ export class ApplicationController {
   @ApiUnauthorizedResponse({ description: 'User is not login' })
   @ApiNotFoundResponse({ description: 'Job not found' })
   @ApiBadRequestResponse({ description: 'Resume not found' })
-  @ApiForbiddenResponse({ description: 'User is not Actor' })
+  @ApiForbiddenResponse({ description: 'User is not Actor or job is not open' })
   @ApiConflictResponse({ description: 'User already apply to the job' })
   applyJob(
     @Param('id') id: string,
