@@ -1,6 +1,6 @@
 import { GetReportsDto, JobIdDto, JwtDto, UserType } from '@modela/dtos'
 import { PostReportDto } from '@modela/dtos'
-import { Body, Controller, Get, Param, Post } from '@nestjs/common'
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
@@ -46,5 +46,27 @@ export class ReportController {
   @ApiOkResponse({ type: GetReportsDto })
   getReports(@Param('id') id: string) {
     return this.reportService.getReports(+id)
+  }
+
+  @Put('jobs/:id/accept')
+  @UseAuthGuard(UserType.ADMIN)
+  @ApiUnauthorizedResponse({ description: 'User is not login' })
+  @ApiForbiddenResponse({ description: 'User is not admin' })
+  @ApiNotFoundResponse({ description: 'Job not found' })
+  @ApiOperation({ summary: 'accept report and remove the job' })
+  @ApiOkResponse({ type: JobIdDto })
+  acceptReport(@Param('id') id: string) {
+    return this.reportService.acceptReport(+id)
+  }
+
+  @Put('jobs/:id/reject')
+  @UseAuthGuard(UserType.ADMIN)
+  @ApiUnauthorizedResponse({ description: 'User is not login' })
+  @ApiForbiddenResponse({ description: 'User is not admin' })
+  @ApiNotFoundResponse({ description: 'Job not found' })
+  @ApiOperation({ summary: 'reject all reports for a job' })
+  @ApiOkResponse({ type: JobIdDto })
+  rejectReport(@Param('id') id: string) {
+    return this.reportService.rejectReport(+id)
   }
 }
