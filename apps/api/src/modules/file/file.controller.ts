@@ -1,5 +1,12 @@
-import { Controller, Get } from '@nestjs/common'
-import { ApiTags } from '@nestjs/swagger'
+import { FileNameDto, UploadUrlDto } from '@modela/dtos'
+import { Controller, Get, Query } from '@nestjs/common'
+import {
+  ApiForbiddenResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger'
 
 import { UseAuthGuard } from '../auth/misc/jwt.decorator'
 import { FileService } from './file.service'
@@ -11,7 +18,11 @@ export class FileController {
 
   @Get('upload')
   @UseAuthGuard()
-  getUploadUrl(fileName: string) {
-    return this.fileService.getUploadUrl(fileName)
+  @ApiOperation({ summary: 'get signed url for upload' })
+  @ApiOkResponse({ type: UploadUrlDto })
+  @ApiUnauthorizedResponse({ description: 'User is not login' })
+  @ApiForbiddenResponse({ description: 'User is not verified' })
+  getUploadUrl(@Query() fileNameDto: FileNameDto) {
+    return this.fileService.getUploadUrl(fileNameDto.fileName)
   }
 }

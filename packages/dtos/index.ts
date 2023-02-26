@@ -9,6 +9,7 @@ export * from './src/application'
 export * from './src/profile'
 export * from './src/resume'
 export * from './src/info'
+export * from './src/file'
 
 export {
   UserType,

@@ -169,15 +169,10 @@ export class JobRepository {
             User: true,
           },
         },
-        //only get the latest application
         Application: {
           where: {
             actorId: userId,
           },
-          orderBy: {
-            applicationId: Prisma.SortOrder.desc,
-          },
-          take: 1,
         },
       },
       where: {
@@ -200,26 +195,21 @@ export class JobRepository {
           : undefined,
       },
     })
-    const jobsWithApplicationStatus = []
-    for (const job of jobs) {
-      if (applicationStatus.includes(job.Application[0].status)) {
-        jobsWithApplicationStatus.push({
-          jobId: job.jobId,
-          title: job.title,
-          companyName: job.Casting.companyName,
-          description: job.description,
-          status: job.status,
-          actorCount: job.actorCount,
-          gender: job.gender,
-          wage: job.wage,
-          applicationDeadline: job.applicationDeadline,
-          jobCastingImageUrl: job.Casting.User.profileImageUrl,
-          castingId: job.castingId,
-          castingName: job.Casting.User.firstName,
-          ApplicationStatus: job.Application[0].status,
-        })
-      }
-    }
+    const jobsWithApplicationStatus = jobs.map((job) => ({
+      jobId: job.jobId,
+      title: job.title,
+      companyName: job.Casting.companyName,
+      description: job.description,
+      status: job.status,
+      actorCount: job.actorCount,
+      gender: job.gender,
+      wage: job.wage,
+      applicationDeadline: job.applicationDeadline,
+      jobCastingImageUrl: job.Casting.User.profileImageUrl,
+      castingId: job.castingId,
+      castingName: job.Casting.User.firstName,
+      ApplicationStatus: job.Application[0].status,
+    }))
 
     return jobsWithApplicationStatus
   }

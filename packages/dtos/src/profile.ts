@@ -146,7 +146,7 @@ export class GetActorProfileDto extends GetUserProfileDto implements EditActorPr
   @ApiProperty()
   nationality?: string;
 
-  @ApiProperty()
+  @ApiProperty({ enum: Gender })
   gender?: Gender;
 
   @ApiProperty()

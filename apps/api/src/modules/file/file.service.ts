@@ -27,15 +27,19 @@ export class FileService {
 
   async getUploadUrl(fileName: string) {
     try {
+      const Key = this.configService.get('aws.rootPath') + fileName
       const command = new PutObjectCommand({
-        Bucket: 'fridge-agile',
-        Key: this.configService.get('aws.rootPath') + fileName,
+        Bucket: this.configService.get('aws.bucket'),
+        Key,
       })
       const signed = await getSignedUrl(this.s3Client, command, {
         expiresIn: 3600,
         signableHeaders: new Set(''),
       })
-      return signed
+      return {
+        signedUrl: signed,
+        publicUrl: this.configService.get('aws.url') + '/' + Key,
+      }
     } catch (err) {
       console.log(err)
       throw new InternalServerErrorException()
@@ -48,7 +52,7 @@ export class FileService {
     const fullName = fileName + '.' + ext
     try {
       const command = new PutObjectCommand({
-        Bucket: 'fridge-agile',
+        Bucket: this.configService.get('aws.bucket'),
         Key: this.configService.get('aws.rootPath') + fullName,
         Body: file.buffer,
       })
@@ -64,7 +68,7 @@ export class FileService {
     if (!fileName) return null
     try {
       const command = new GetObjectCommand({
-        Bucket: 'fridge-agile',
+        Bucket: this.configService.get('aws.bucket'),
         Key: this.configService.get('aws.rootPath') + fileName,
       })
       const signed = await getSignedUrl(this.s3Client, command, {
