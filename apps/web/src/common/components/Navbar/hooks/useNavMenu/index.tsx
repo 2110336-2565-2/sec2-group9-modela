@@ -59,7 +59,7 @@ const useNavMenu = (isMobile: boolean) => {
       },
       {
         label: 'โปรไฟล์',
-        href: '/',
+        href: '/profile',
         icon: <AccountCircleOutlined />,
         focusKey: 'profile',
       },

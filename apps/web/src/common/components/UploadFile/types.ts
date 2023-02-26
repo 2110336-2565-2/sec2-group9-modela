@@ -9,4 +9,5 @@ export interface IUploadFileProps {
   hideLink?: boolean
   initialName?: string
   sx?: SxPropsWithTheme
+  accept?: string
 }

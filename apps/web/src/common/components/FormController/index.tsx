@@ -73,6 +73,7 @@ const FormController = <T extends FieldValues>(
                   errorMessage={formProps.fieldState.error?.message}
                   url={field.value}
                   initialName={props.initialName}
+                  accept={props.accept}
                 />
               )
 
