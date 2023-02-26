@@ -11,7 +11,7 @@ import { FooterRow, SameDiv } from './styled'
 import { FooterProps } from './types'
 
 const JobCardFooter = (prop: FooterProps) => {
-  const { actorCount, wage, status, dueDate, gender } = prop
+  const { actorCount, wage, status, dueDate, gender, isApplied } = prop
   const { user } = useUser()
 
   const apply: React.MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -78,15 +78,17 @@ const JobCardFooter = (prop: FooterProps) => {
           <Typography variant="subtitle1">{formatDate(dueDate)}</Typography>
         </SameDiv>
 
-        {status === JobStatus.OPEN && user?.type === UserType.ACTOR && (
-          <Button
-            color="primary"
-            sx={{ cursor: 'pointer', marginLeft: 'auto' }}
-            onClick={apply}
-          >
-            สมัครงาน
-          </Button>
-        )}
+        {status === JobStatus.OPEN &&
+          user?.type === UserType.ACTOR &&
+          !isApplied && (
+            <Button
+              color="primary"
+              sx={{ cursor: 'pointer', marginLeft: 'auto' }}
+              onClick={apply}
+            >
+              สมัครงาน
+            </Button>
+          )}
       </FooterRow>
     </>
   )

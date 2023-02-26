@@ -5,6 +5,7 @@ import ProfileImage from 'common/components/ProfileImage'
 import { useUser } from 'common/context/UserContext'
 import React from 'react'
 
+import ApplicationStatusChip from './components/applicationStatusChip'
 import { HeaderRow, TitleContainer } from './styled'
 import { HeaderProps } from './types'
 
@@ -19,6 +20,7 @@ const JobCardHeader = (prop: HeaderProps) => {
     castingId,
     castingName,
     isReport,
+    applicationStatus,
   } = prop
   const { user } = useUser()
 
@@ -40,7 +42,7 @@ const JobCardHeader = (prop: HeaderProps) => {
           {companyName}
         </Typography>
       </TitleContainer>
-      {user?.type === UserType.ACTOR && (
+      {user?.type === UserType.ACTOR && !applicationStatus && (
         <Tooltip title="Report job">
           <IconButton
             href={`/report/${jobId}`}
@@ -49,6 +51,9 @@ const JobCardHeader = (prop: HeaderProps) => {
             <ReportOutlined fontSize="small" color="error" />
           </IconButton>
         </Tooltip>
+      )}
+      {applicationStatus && (
+        <ApplicationStatusChip applicationStatus={applicationStatus} />
       )}
       {user?.type === UserType.CASTING && status === JobStatus.OPEN && (
         <Tooltip title="Edit job">
