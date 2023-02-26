@@ -3,14 +3,13 @@ import { GetJobCardWithMaxPageDto } from '@modela/dtos'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
 import dayjs from 'dayjs'
-import { useCallback, useEffect, useRef, useState } from 'react'
-
 import {
   IFilter,
   initialIFilter,
   initialISearch,
   ISearch,
-} from '../../../../pages/types'
+} from 'modules/job/list/pages/types'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 const useJobListData = () => {
   const [isOpen, setOpen] = useState(false)
