@@ -2,8 +2,8 @@ import { UserType } from '@modela/database'
 import { useUser } from 'common/context/UserContext'
 import withGuard from 'common/hoc/withGuard'
 
-import ActorCastingPage from '../components/ActorCastingPage'
-import AdminPage from '../components/AdminPage'
+import ActorCastingPage from './ActorCastingPage'
+import AdminPage from './AdminPage'
 
 const JobList = () => {
   const { user } = useUser()

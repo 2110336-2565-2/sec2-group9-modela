@@ -15,7 +15,7 @@ export interface IFilter {
   maleCheck: boolean
   femaleCheck: boolean
   otherCheck: boolean
-  cancleCheck: boolean
+  cancelCheck: boolean
   reportCheck: boolean
 }
 export interface ISearch {
@@ -49,7 +49,7 @@ export const initialIFilter: IFilter = {
   maleCheck: false,
   femaleCheck: false,
   otherCheck: false,
-  cancleCheck: false,
+  cancelCheck: false,
   reportCheck: true,
 }
 export const initialISearch: ISearch = {
