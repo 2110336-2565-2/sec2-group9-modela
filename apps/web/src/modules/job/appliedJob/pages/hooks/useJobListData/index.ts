@@ -1,18 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { GetJobCardWithMaxPageDto } from '@modela/dtos'
+import { GetAppliedJobDto } from '@modela/dtos'
 import { useMediaQuery } from '@mui/material'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useRouter } from 'next/router'
+import { useCallback, useEffect, useState } from 'react'
 
 import { IFilter, initialIFilter, initialISearch, ISearch } from '../../types'
 
 const useJobListData = () => {
+  const router = useRouter()
   const [isOpen, setOpen] = useState(false)
-  const [job, setJob] = useState<GetJobCardWithMaxPageDto>()
-  const [hasMore, setHasMore] = useState(true)
-  const [page, setPage] = useState(0)
-  const pageControl = useRef(1)
+  const [job, setJob] = useState<GetAppliedJobDto[]>([])
   const [search, setSearch] = useState<ISearch>(initialISearch)
   const [state, setState] = useState<IFilter>(initialIFilter)
   const open = useCallback(() => setOpen(true), [])
@@ -62,43 +61,30 @@ const useJobListData = () => {
         status: newStatus,
         applicationStatus: newApplicationStatus,
       })
-
-      setJob({ ...job, jobs: [], maxPage: 1 })
-      setPage(1)
-      pageControl.current = 1
-
-      setHasMore(true)
+      setJob([])
     },
-    [search, job, setJob, setPage, pageControl, setHasMore],
+    [search, job, setJob],
   )
 
   const fetchData = useCallback(async () => {
     try {
-      if (pageControl.current <= page) {
-        pageControl.current = page + 1
-        const res = (
-          await apiClient.get<GetJobCardWithMaxPageDto>(`/jobs`, {
-            params: {
-              limit: 5,
-              page,
-              ...search,
-            },
-          })
-        ).data
-        setJob((prevJobs) => ({
-          ...prevJobs,
-          jobs: [...(prevJobs?.jobs || []), ...res.jobs],
-          maxPage: res.maxPage,
-        }))
-        setHasMore(res.maxPage > page)
-      }
-      setPage((prev) => prev + 1)
+      const res = (
+        await apiClient.get<GetAppliedJobDto[]>(`/jobs/applied`, {
+          params: {
+            ...search,
+          },
+        })
+      ).data
+      setJob(res)
     } catch (err) {
       handleError(err)
     }
-  }, [page, search])
-
+  }, [search])
   useEffect(() => {
+    fetchData()
+  }, [search])
+  useEffect(() => {
+    console.log('T')
     if (!isOpen || isDesktop) {
       filterData(state)
     }
@@ -113,11 +99,11 @@ const useJobListData = () => {
     state.rejectCheck,
     state.offerAcceptCheck,
     state.offerRejectCheck,
+    router.isReady,
   ])
 
   return {
     job,
-    hasMore,
     fetchData,
     filterData,
     state,
