@@ -36,8 +36,10 @@ export class ReportService {
     }
 
     const reports = await this.reportRepository.getReports(job.jobId)
-
-    return { ...reports, jobTitle: job.title }
+    return {
+      ...reports,
+      jobTitle: job.title,
+    }
   }
 
   async acceptReport(id: number) {
