@@ -59,9 +59,9 @@ export default function FilterContainer(props: FilterContainerProps) {
           <FormControlLabel
             control={
               <Checkbox
-                checked={state.cancleCheck}
+                checked={state.cancelCheck}
                 onChange={(event) =>
-                  setState({ ...state, cancleCheck: event.target.checked })
+                  setState({ ...state, cancelCheck: event.target.checked })
                 }
               />
             }

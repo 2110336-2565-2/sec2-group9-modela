@@ -36,7 +36,7 @@ const useJobListData = () => {
       if (state.closeCheck) {
         newStatus.push('CLOSE')
       }
-      if (state.cancleCheck) {
+      if (state.cancelCheck) {
         newStatus.push('CANCELLED')
       }
       if (state.reportCheck) {
@@ -127,7 +127,7 @@ const useJobListData = () => {
     state.startTime,
     state.endTime,
     state.reportCheck,
-    state.cancleCheck,
+    state.cancelCheck,
   ])
 
   return {
