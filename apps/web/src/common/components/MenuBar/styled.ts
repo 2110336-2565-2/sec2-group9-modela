@@ -20,6 +20,7 @@ export const MenuContainer = styled(Card)`
     max-width: 100%;
     position: fixed;
     top: 60px;
+    left: 0px;
   }
 
   ${({ theme }) => theme.breakpoints.down('md')} {

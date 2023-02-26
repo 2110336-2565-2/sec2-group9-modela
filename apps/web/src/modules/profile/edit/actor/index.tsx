@@ -21,9 +21,7 @@ const EditCastingProfile = () => {
   } = useEditActorForm()
   return (
     <RootContainer>
-      <SideDiv>
-        <MenuBar menu={MENU_ITEM} focus="โปรไฟล์" />
-      </SideDiv>
+      <MenuBar sx={{ width: '17vw' }} menu={MENU_ITEM} focus="โปรไฟล์" />
       <CardContainer variant="outlined">
         {isDataLoading ? (
           <CircularProgress />
