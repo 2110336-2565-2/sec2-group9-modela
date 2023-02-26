@@ -269,7 +269,7 @@ export class SearchAppliedJobDto {
 }
 
 export class GetAppliedJobDto extends GetJobCardDto {
-  @ApiProperty()
+  @ApiProperty({enum: JobStatus})
   appliedStatus: JobStatus
 }
 
