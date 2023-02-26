@@ -7,4 +7,5 @@ export interface FooterProps {
   dueDate: Date
   status: JobStatus
   jobId?: number
+  isApplied?: boolean
 }
