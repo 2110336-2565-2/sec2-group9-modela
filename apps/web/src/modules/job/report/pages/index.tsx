@@ -1,4 +1,5 @@
 import { GetReportsDto, UserType } from '@modela/dtos'
+import { CircularProgress } from '@mui/material'
 import withGuard from 'common/hoc/withGuard'
 import React from 'react'
 
@@ -10,7 +11,9 @@ const JobReportPage = () => {
   const Data: GetReportsDto | undefined = useGetReport()
 
   return (
-    <RootContainer>{Data ? <JobReportCard {...Data} /> : null}</RootContainer>
+    <RootContainer>
+      {Data ? <JobReportCard {...Data} /> : <CircularProgress />}
+    </RootContainer>
   )
 }
 
