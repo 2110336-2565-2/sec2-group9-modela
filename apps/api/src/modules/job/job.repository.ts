@@ -171,6 +171,9 @@ export class JobRepository {
         },
         //only get the latest application
         Application: {
+          where: {
+            actorId: userId,
+          },
           orderBy: {
             applicationId: Prisma.SortOrder.desc,
           },
