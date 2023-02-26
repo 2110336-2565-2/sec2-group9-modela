@@ -83,16 +83,12 @@ export class JobService {
         searchJobByAdminDto.status = [searchJobByAdminDto.status]
       }
 
-      // Edge case: if only status is reported, return all status except cancelled
+      // Edge case: if only status is reported, return default JobStatus search (OPEN only)
       if (
         searchJobByAdminDto.status.length === 1 &&
         searchJobByAdminDto.status.includes(SearchJobByAdminStatus.REPORTED)
       ) {
-        searchJobByAdminDto.status = [
-          SearchJobByAdminStatus.OPEN,
-          SearchJobByAdminStatus.CLOSE,
-          SearchJobByAdminStatus.REPORTED,
-        ]
+        searchJobByAdminDto.status = [SearchJobByAdminStatus.OPEN]
       }
 
       if (searchJobByAdminDto.status.includes(SearchJobByAdminStatus.OPEN)) {
@@ -104,9 +100,6 @@ export class JobService {
           JobStatus.SELECTION_ENDED,
           JobStatus.FINISHED,
         )
-        if (user.type === UserType.CASTING) {
-          statusQuery.push(JobStatus.CANCELLED)
-        }
       }
       if (
         searchJobByAdminDto.status.includes(SearchJobByAdminStatus.CANCELLED)
