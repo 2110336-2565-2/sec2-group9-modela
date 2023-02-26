@@ -30,7 +30,7 @@ export default function FilterContainer(props: FilterContainerProps) {
           label="ชื่องาน"
           value={state.title}
           onChange={(event) => {
-            setState({ ...state, title: event.target.value })
+            setState((prev) => ({ ...prev, title: event.target.value }))
           }}
         />
       )}
@@ -46,7 +46,10 @@ export default function FilterContainer(props: FilterContainerProps) {
               <Checkbox
                 checked={state.reportCheck}
                 onChange={(event) =>
-                  setState({ ...state, reportCheck: event.target.checked })
+                  setState((prev) => ({
+                    ...prev,
+                    reportCheck: event.target.checked,
+                  }))
                 }
               />
             }
@@ -61,7 +64,10 @@ export default function FilterContainer(props: FilterContainerProps) {
               <Checkbox
                 checked={state.cancelCheck}
                 onChange={(event) =>
-                  setState({ ...state, cancelCheck: event.target.checked })
+                  setState((prev) => ({
+                    ...prev,
+                    cancelCheck: event.target.checked,
+                  }))
                 }
               />
             }
@@ -75,7 +81,7 @@ export default function FilterContainer(props: FilterContainerProps) {
         label="วันเริ่มการถ่ายทำ"
         value={state.startDate}
         onChange={(newValue) => {
-          setState({ ...state, startDate: newValue })
+          setState((prev) => ({ ...prev, startDate: newValue }))
         }}
         inputFormat="DD/MM/YYYY"
         renderInput={(params) => (
@@ -93,7 +99,7 @@ export default function FilterContainer(props: FilterContainerProps) {
         label="วันสิ้นสุดถ่ายทำ"
         value={state.endDate}
         onChange={(newValue) => {
-          setState({ ...state, endDate: newValue })
+          setState((prev) => ({ ...prev, endDate: newValue }))
         }}
         inputFormat="DD/MM/YYYY"
         renderInput={(params) => (
@@ -112,7 +118,7 @@ export default function FilterContainer(props: FilterContainerProps) {
         value={state.startTime}
         ampm={false}
         onChange={(newValue) => {
-          setState({ ...state, startTime: newValue })
+          setState((prev) => ({ ...prev, startTime: newValue }))
         }}
         renderInput={(params) => (
           <TextField
@@ -132,7 +138,7 @@ export default function FilterContainer(props: FilterContainerProps) {
         value={state.endTime}
         ampm={false}
         onChange={(newValue) => {
-          setState({ ...state, endTime: newValue })
+          setState((prev) => ({ ...prev, endTime: newValue }))
         }}
         renderInput={(params) => (
           <TextField
@@ -152,7 +158,7 @@ export default function FilterContainer(props: FilterContainerProps) {
         label="สถานที่ถ่ายทำ"
         value={state.location}
         onChange={(event) => {
-          setState({ ...state, location: event.target.value })
+          setState((prev) => ({ ...prev, location: event.target.value }))
         }}
       />
 
@@ -167,9 +173,9 @@ export default function FilterContainer(props: FilterContainerProps) {
         value={state.age}
         onChange={(event) => {
           if (event.target.value != '') {
-            setState({ ...state, age: Number(event.target.value) })
+            setState((prev) => ({ ...prev, age: Number(event.target.value) }))
           } else {
-            setState({ ...state, age: null })
+            setState((prev) => ({ ...prev, age: null }))
           }
         }}
       />
@@ -182,9 +188,9 @@ export default function FilterContainer(props: FilterContainerProps) {
         inputProps={{ min: 0 }}
         onChange={(event) => {
           if (event.target.value != '') {
-            setState({ ...state, wage: Number(event.target.value) })
+            setState((prev) => ({ ...prev, wage: Number(event.target.value) }))
           } else {
-            setState({ ...state, wage: null })
+            setState((prev) => ({ ...prev, wage: null }))
           }
         }}
         value={state.wage}
@@ -200,9 +206,12 @@ export default function FilterContainer(props: FilterContainerProps) {
         inputProps={{ min: 0 }}
         onChange={(event) => {
           if (event.target.value != '') {
-            setState({ ...state, deviant: Number(event.target.value) })
+            setState((prev) => ({
+              ...prev,
+              deviant: Number(event.target.value),
+            }))
           } else {
-            setState({ ...state, deviant: null })
+            setState((prev) => ({ ...prev, deviant: null }))
           }
         }}
         value={state.deviant}
@@ -217,7 +226,10 @@ export default function FilterContainer(props: FilterContainerProps) {
             <Checkbox
               checked={state.openCheck}
               onChange={(event) =>
-                setState({ ...state, openCheck: event.target.checked })
+                setState((prev) => ({
+                  ...prev,
+                  openCheck: event.target.checked,
+                }))
               }
             />
           }
@@ -228,7 +240,10 @@ export default function FilterContainer(props: FilterContainerProps) {
             <Checkbox
               checked={state.closeCheck}
               onChange={(event) =>
-                setState({ ...state, closeCheck: event.target.checked })
+                setState((prev) => ({
+                  ...prev,
+                  closeCheck: event.target.checked,
+                }))
               }
             />
           }
@@ -244,7 +259,10 @@ export default function FilterContainer(props: FilterContainerProps) {
             <Checkbox
               checked={state.maleCheck}
               onChange={(event) =>
-                setState({ ...state, maleCheck: event.target.checked })
+                setState((prev) => ({
+                  ...prev,
+                  maleCheck: event.target.checked,
+                }))
               }
             />
           }
@@ -255,7 +273,10 @@ export default function FilterContainer(props: FilterContainerProps) {
             <Checkbox
               checked={state.femaleCheck}
               onChange={(event) =>
-                setState({ ...state, femaleCheck: event.target.checked })
+                setState((prev) => ({
+                  ...prev,
+                  femaleCheck: event.target.checked,
+                }))
               }
             />
           }
@@ -266,7 +287,10 @@ export default function FilterContainer(props: FilterContainerProps) {
             <Checkbox
               checked={state.otherCheck}
               onChange={(event) =>
-                setState({ ...state, otherCheck: event.target.checked })
+                setState((prev) => ({
+                  ...prev,
+                  otherCheck: event.target.checked,
+                }))
               }
             />
           }
