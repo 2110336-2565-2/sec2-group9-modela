@@ -269,8 +269,8 @@ export class SearchAppliedJobDto {
 }
 
 export class GetAppliedJobDto extends GetJobCardDto {
-  @ApiProperty({enum: JobStatus})
-  appliedStatus: JobStatus
+  @ApiProperty({enum: ApplicationStatus})
+  appliedStatus: ApplicationStatus
 }
 
 export class GetJobCardWithMaxPageDto {
