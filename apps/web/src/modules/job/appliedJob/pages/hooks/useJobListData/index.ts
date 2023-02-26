@@ -11,6 +11,7 @@ import { IFilter, initialIFilter, initialISearch, ISearch } from '../../types'
 const useJobListData = () => {
   const router = useRouter()
   const [isOpen, setOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [job, setJob] = useState<GetAppliedJobDto[]>([])
   const [search, setSearch] = useState<ISearch>(initialISearch)
   const [state, setState] = useState<IFilter>(initialIFilter)
@@ -62,6 +63,7 @@ const useJobListData = () => {
         applicationStatus: newApplicationStatus,
       })
       setJob([])
+      setIsLoading(true)
     },
     [search, job, setJob],
   )
@@ -79,6 +81,7 @@ const useJobListData = () => {
     } catch (err) {
       handleError(err)
     }
+    setIsLoading(false)
   }, [search])
   useEffect(() => {
     fetchData()
@@ -111,6 +114,7 @@ const useJobListData = () => {
     isOpen,
     open,
     close,
+    isLoading,
   }
 }
 
