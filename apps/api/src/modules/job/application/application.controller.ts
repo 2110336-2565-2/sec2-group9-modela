@@ -1,8 +1,17 @@
 import { UserType } from '@modela/database'
-import { GetAppliedActorDto, GetAppliedActorQuery, JwtDto } from '@modela/dtos'
-import { Controller, Get, Param } from '@nestjs/common'
-import { Query } from '@nestjs/common/decorators'
 import {
+  GetApplicationId,
+  GetAppliedActorDto,
+  GetAppliedActorQuery,
+  JwtDto,
+  ResumeIdDto,
+} from '@modela/dtos'
+import { Controller, Get, Param } from '@nestjs/common'
+import { Body, Post, Query } from '@nestjs/common/decorators'
+import {
+  ApiBadRequestResponse,
+  ApiConflictResponse,
+  ApiCreatedResponse,
   ApiForbiddenResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -35,5 +44,22 @@ export class ApplicationController {
     @Query() query: GetAppliedActorQuery,
   ) {
     return this.applicationService.findByJobId(+id, user.userId, query)
+  }
+
+  @Post(':id/apply')
+  @UseAuthGuard(UserType.ACTOR)
+  @ApiOperation({ summary: 'user apply to jobs with jobid and resumeid' })
+  @ApiCreatedResponse({ type: GetApplicationId })
+  @ApiUnauthorizedResponse({ description: 'User is not login' })
+  @ApiNotFoundResponse({ description: 'Job not found' })
+  @ApiBadRequestResponse({ description: 'Resume not found' })
+  @ApiForbiddenResponse({ description: 'User is not Actor or job is not open' })
+  @ApiConflictResponse({ description: 'User already apply to the job' })
+  applyJob(
+    @Param('id') id: string,
+    @Body() body: ResumeIdDto,
+    @User() user: JwtDto,
+  ) {
+    return this.applicationService.applyJob(+id, body.resumeId, user.userId)
   }
 }
