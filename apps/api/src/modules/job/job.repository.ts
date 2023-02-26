@@ -153,6 +153,67 @@ export class JobRepository {
     return selectedFields
   }
 
+  async getJobApplied(
+    titleSearch: string,
+    statusQuery: JobStatus[],
+    applicationStatus: ApplicationStatus[],
+    userId: number,
+  ): Promise<(GetJobCardDto & { ApplicationStatus })[]> {
+    const jobs = await this.prisma.job.findMany({
+      orderBy: {
+        jobId: Prisma.SortOrder.desc,
+      },
+      include: {
+        Casting: {
+          include: {
+            User: true,
+          },
+        },
+        Application: {
+          where: {
+            actorId: userId,
+          },
+        },
+      },
+      where: {
+        status: {
+          in: statusQuery,
+        },
+        Application: {
+          some: {
+            actorId: userId,
+            status: {
+              in: applicationStatus,
+            },
+          },
+        },
+        title: titleSearch
+          ? {
+              contains: titleSearch,
+              mode: 'insensitive',
+            }
+          : undefined,
+      },
+    })
+    const jobsWithApplicationStatus = jobs.map((job) => ({
+      jobId: job.jobId,
+      title: job.title,
+      companyName: job.Casting.companyName,
+      description: job.description,
+      status: job.status,
+      actorCount: job.actorCount,
+      gender: job.gender,
+      wage: job.wage,
+      applicationDeadline: job.applicationDeadline,
+      jobCastingImageUrl: job.Casting.User.profileImageUrl,
+      castingId: job.castingId,
+      castingName: job.Casting.User.firstName,
+      ApplicationStatus: job.Application[0].status,
+    }))
+
+    return jobsWithApplicationStatus
+  }
+
   async getJobById(id: number): Promise<GetJobDto & { castingId: number }> {
     const job = await this.prisma.job.findUnique({
       where: { jobId: id },

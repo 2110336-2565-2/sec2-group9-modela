@@ -12,7 +12,7 @@ import {
   Max,
   Min,
 } from 'class-validator'
-import { Gender, Job, JobStatus, Shooting } from '@modela/database'
+import { ApplicationStatus, Gender, Job, JobStatus, Shooting } from '@modela/database'
 
 export enum SearchJobStatus {
   'OPEN' = 'OPEN',
@@ -25,6 +25,7 @@ export enum SearchJobByAdminStatus {
   'CANCELLED' = 'CANCELLED',
   'REPORTED' = 'REPORTED',
 }
+  
 const maxInt32 = 2147483647 //max int32
 export class SearchJobDto {
   @IsOptional()
@@ -215,6 +216,7 @@ export class CreateJobDto implements EditJobType {
 
 export class EditJobDto extends CreateJobDto {}
 export class EditJobStatusDto {
+  @IsEnum(JobStatus)
   @ApiProperty({enum: JobStatus}) 
   status: JobStatus
 }
@@ -247,6 +249,28 @@ export class GetJobCardDto extends OmitType(EditJobDto, [
 export class GetJobCardByAdminDto extends GetJobCardDto {
   @ApiProperty()
   isReported: Boolean
+}
+
+export class SearchAppliedJobDto {
+  @IsOptional()
+  @IsString()
+  @ApiPropertyOptional()
+  title?: string
+
+  @IsOptional()
+  @IsEnum(ApplicationStatus, { each: true })
+  @ApiPropertyOptional({ enum: ApplicationStatus, isArray: true })
+  applicationStatus?: ApplicationStatus[]
+
+  @IsOptional()
+  @IsEnum(JobStatus, { each: true })
+  @ApiPropertyOptional({ enum: JobStatus, isArray: true })
+  status?: JobStatus[]
+}
+
+export class GetAppliedJobDto extends GetJobCardDto {
+  @ApiProperty({enum: JobStatus})
+  appliedStatus: JobStatus
 }
 
 export class GetJobCardWithMaxPageDto {
