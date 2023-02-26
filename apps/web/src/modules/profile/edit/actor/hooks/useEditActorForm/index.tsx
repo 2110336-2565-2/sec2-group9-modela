@@ -5,6 +5,7 @@ import { useSnackbar } from 'common/context/SnackbarContext'
 import { useUser } from 'common/context/UserContext'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
+import { uploadFileToS3 } from 'common/utils/file'
 import dayjs from 'dayjs'
 import { useRouter } from 'next/router'
 import { FormEventHandler, useCallback, useEffect, useState } from 'react'
@@ -27,7 +28,7 @@ const useEditCastingForm = () => {
       defaultValues: EditActorProfileDefault,
     })
 
-  const [, setProfileImage] = useState<File | null>(null)
+  const [profileImage, setProfileImage] = useState<File | null>(null)
   const [loading, setLoading] = useState(false)
   const [isDataLoading, setDataLoading] = useState(true)
   const { handleError } = useErrorHandler()
@@ -37,7 +38,14 @@ const useEditCastingForm = () => {
     async (data) => {
       setLoading(true)
       try {
-        await apiClient.put<EditCastingProfileDto>('/profile/actor', data)
+        const profileImageUrl = profileImage
+          ? await uploadFileToS3(profileImage!)
+          : data.profileImageUrl
+
+        await apiClient.put<EditCastingProfileDto>('/profile/actor', {
+          ...data,
+          profileImageUrl,
+        })
         displaySnackbar('แก้ไขโปรไฟล์สำเร็จ', 'success')
         router.push('/profile')
       } catch (err) {
@@ -46,7 +54,7 @@ const useEditCastingForm = () => {
         setLoading(false)
       }
     },
-    [handleError, router, displaySnackbar],
+    [profileImage, displaySnackbar, router, handleError],
   )
 
   const handleClickSubmit: FormEventHandler<HTMLFormElement> =

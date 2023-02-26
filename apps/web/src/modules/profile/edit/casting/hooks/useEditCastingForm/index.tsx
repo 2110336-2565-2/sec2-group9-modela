@@ -3,6 +3,7 @@ import { EditCastingProfileDto } from '@modela/dtos'
 import { useUser } from 'common/context/UserContext'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
+import { uploadFileToS3 } from 'common/utils/file'
 import { useRouter } from 'next/router'
 import { FormEventHandler, useCallback, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -23,7 +24,7 @@ const useEditCastingForm = () => {
       defaultValues: EditCastingProfileDefault,
     })
 
-  const [, setProfileImage] = useState<File | null>(null)
+  const [profileImage, setProfileImage] = useState<File | null>(null)
   const [loading, setLoading] = useState(false)
   const [isDataLoading, setDataLoading] = useState(true)
   const { handleError } = useErrorHandler()
@@ -34,9 +35,13 @@ const useEditCastingForm = () => {
       async (data) => {
         setLoading(true)
         try {
+          const profileImageUrl = profileImage
+            ? await uploadFileToS3(profileImage!)
+            : data.profileImageUrl
+
           await apiClient.put<unknown, unknown, EditCastingProfileDto>(
             '/profile/casting',
-            { ...data, profileImageUrl: 'https://via.placeholder.com/150 ' },
+            { ...data, profileImageUrl },
           )
           router.push('/profile')
         } catch (err) {
@@ -45,7 +50,7 @@ const useEditCastingForm = () => {
           setLoading(false)
         }
       },
-      [handleError, router],
+      [handleError, profileImage, router],
     )
 
   const handleClickSubmit: FormEventHandler<HTMLFormElement> =

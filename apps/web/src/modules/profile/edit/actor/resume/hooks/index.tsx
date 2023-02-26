@@ -3,6 +3,7 @@ import { AxiosResponse } from 'axios'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import useSwitch from 'common/hooks/useSwitch'
 import { apiClient } from 'common/utils/api'
+import { uploadFileToS3 } from 'common/utils/file'
 import { useCallback, useEffect, useState } from 'react'
 
 import { IResumeWithFirstFlag } from './types'
@@ -59,7 +60,7 @@ export const useResumeInfo = () => {
       if (resume[currentIdx]?.isFirst) {
         // TODO: Call Create Resume API
         try {
-          const resumeUrl = 'https://www.google.com'
+          const resumeUrl = await uploadFileToS3(file!)
 
           const { resumeId } = (
             await apiClient.post<

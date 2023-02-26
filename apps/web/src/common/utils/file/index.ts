@@ -13,23 +13,19 @@ const getNewFileName = (filename: string) => {
 }
 
 const uploadFileToS3 = async (file: File) => {
-  const filename = getNewFileName(file.name)
+  const fileName = getNewFileName(file.name)
 
   const { publicUrl, signedUrl } = (
     await apiClient.get<UploadUrlDto>('/file/upload', {
       params: {
-        filename,
+        fileName,
       },
     })
   ).data
 
   const fileBuffer = await file.arrayBuffer()
 
-  await axios.put(signedUrl, fileBuffer, {
-    headers: {
-      'Content-Type': file.type,
-    },
-  })
+  await axios.put(signedUrl, fileBuffer)
 
   return publicUrl
 }
