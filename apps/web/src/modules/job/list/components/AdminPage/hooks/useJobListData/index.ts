@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { GetJobCardByAdminWithMaxPageDto } from '@modela/dtos'
+import { useMediaQuery } from '@mui/material'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
 import dayjs from 'dayjs'
@@ -22,6 +23,7 @@ const useJobListData = () => {
   const open = useCallback(() => setOpen(true), [])
   const close = useCallback(() => setOpen(false), [])
   const { handleError } = useErrorHandler()
+  const isDesktop = useMediaQuery('(min-width: 900px)')
 
   const filterData = useCallback(
     async (state: IFilter) => {
@@ -111,8 +113,7 @@ const useJobListData = () => {
   }, [page, search])
 
   useEffect(() => {
-    console.log(window.innerWidth)
-    if (!isOpen || window.innerWidth > 900) {
+    if (!isOpen || isDesktop) {
       filterData(state)
     }
   }, [
