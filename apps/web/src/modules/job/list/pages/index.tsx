@@ -1,4 +1,4 @@
-import { UserType } from '@modela/database'
+import { UserType } from '@modela/dtos'
 import { useUser } from 'common/context/UserContext'
 import withGuard from 'common/hoc/withGuard'
 

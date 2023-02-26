@@ -1,4 +1,4 @@
-import { UserType } from '@modela/database'
+import { UserType } from '@modela/dtos'
 import { Add } from '@mui/icons-material'
 import { Button, CircularProgress, Typography } from '@mui/material'
 import { useUser } from 'common/context/UserContext'
