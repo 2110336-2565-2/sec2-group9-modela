@@ -115,6 +115,10 @@ Table Application {
   Job Job [not null]
   Actor Actor [not null]
   Resume Resume [not null]
+
+  indexes {
+    (actorId, jobId) [unique]
+  }
 }
 
 Table Report {

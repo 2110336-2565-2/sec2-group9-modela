@@ -35,9 +35,20 @@ const getCastingId = (verified?: boolean) => {
   return id
 }
 
-const resumeActorIdList: number[] = []
-const getActorByResumeId = (resumeId: number, ignoreIntegrity?: boolean) =>
-  ignoreIntegrity ? getId() : resumeActorIdList[resumeId - 1]
+const actorResumeDict: { [k: number]: number[] } = {}
+const getUniqueActorId = (index: number, ignoreIntegrity?: boolean) => {
+  const actorResumeList = Object.keys(actorResumeDict)
+  return ignoreIntegrity
+    ? getId()
+    : parseInt(actorResumeList[index % actorResumeList.length])
+}
+
+const getResumeByActorId = (actorId: number, ignoreIntegrity?: boolean) => {
+  const resumes = actorResumeDict[actorId]
+  return ignoreIntegrity
+    ? getId()
+    : resumes[faker.datatype.number({ min: 0, max: resumes.length - 1 })]
+}
 
 export const getBaseMock = (
   model: BaseModel,
@@ -129,7 +140,10 @@ export const getBaseMock = (
       }
     case 'resume': {
       const actorId = getActorId(true)
-      resumeActorIdList.push(actorId)
+      actorResumeDict[actorId] = [
+        ...(actorResumeDict[actorId] ? actorResumeDict[actorId] : []),
+        index,
+      ]
       return {
         resumeId: index,
         actorId,
@@ -176,12 +190,12 @@ export const getBaseMock = (
         endTime: faker.date.soon(),
       }
     case 'application': {
-      const resumeId = getId()
+      const actorId = getUniqueActorId(index, ignoreIntegrity)
       return {
         applicationId: index,
-        jobId: getId(),
-        actorId: getActorByResumeId(resumeId, ignoreIntegrity),
-        resumeId,
+        jobId: Math.ceil(index / 2),
+        actorId,
+        resumeId: getResumeByActorId(actorId, ignoreIntegrity),
         status: faker.helpers.arrayElement([
           ApplicationStatus.OFFER_ACCEPTED,
           ApplicationStatus.OFFER_REJECTED,
