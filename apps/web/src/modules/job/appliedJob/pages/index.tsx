@@ -1,3 +1,4 @@
+import { CircularProgress } from '@mui/material'
 import withGuard from 'common/hoc/withGuard'
 import useNavbarSearch from 'common/hooks/useNavbarSearch'
 import FilterMobileContainer from 'modules/job/appliedJob/components/FilterMobileContainer'
@@ -15,7 +16,7 @@ import {
 } from './styled'
 
 const AppliedJobPage = () => {
-  const { job, filterData, state, setState, isOpen, open, close } =
+  const { job, filterData, state, setState, isOpen, open, close, isLoading } =
     useJobListData()
   useNavbarSearch(
     useCallback(() => {
@@ -54,7 +55,20 @@ const AppliedJobPage = () => {
             gap: '1rem',
           }}
         >
-          <JobCardContainer jobs={job} />
+          {isLoading && (
+            <div
+              className="loader"
+              key={0}
+              style={{
+                display: 'flex',
+                alignItems: 'column',
+                justifyContent: 'center',
+              }}
+            >
+              <CircularProgress color="primary" />
+            </div>
+          )}
+          {!isLoading && <JobCardContainer jobs={job} />}
         </div>
       </JobContainer>
       <FilterBoxContainer>
