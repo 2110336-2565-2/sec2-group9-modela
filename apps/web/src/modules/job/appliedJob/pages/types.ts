@@ -34,6 +34,6 @@ export const initialIFilter: IFilter = {
 }
 export const initialISearch: ISearch = {
   title: null,
-  status: ['PENDING'],
-  applicationStatus: ['OPEN', 'SELECTING', 'SELECTION_ENDED'],
+  applicationStatus: ['PENDING'],
+  status: ['OPEN', 'SELECTING', 'SELECTION_ENDED'],
 }
