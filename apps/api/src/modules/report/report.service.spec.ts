@@ -60,14 +60,19 @@ describe('ReportService', () => {
     const MOCK_JOB = mock('job').override({ jobId: 1 }).get()
 
     it('should get reports correctly', async () => {
-      jest
-        .spyOn(repository, 'getReports')
-        .mockResolvedValue({ reports: [MOCK_REPORT], jobId: MOCK_JOB_ID })
+      jest.spyOn(repository, 'getReports').mockResolvedValue({
+        reports: [MOCK_REPORT],
+        jobId: MOCK_JOB_ID,
+      })
       jest.spyOn(jobRepository, 'getBaseJobById').mockResolvedValue(MOCK_JOB)
 
       const result = await service.getReports(MOCK_JOB_ID)
       expect(repository.getReports).toBeCalledWith(MOCK_JOB_ID)
-      expect(result).toEqual({ jobId: MOCK_JOB_ID, reports: [MOCK_REPORT] })
+      expect(result).toEqual({
+        jobId: MOCK_JOB_ID,
+        reports: [MOCK_REPORT],
+        jobTitle: MOCK_JOB.title,
+      })
     })
 
     it('should throw error if job does not exist', async () => {
