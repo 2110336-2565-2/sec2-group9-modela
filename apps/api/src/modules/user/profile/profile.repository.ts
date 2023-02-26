@@ -1,5 +1,10 @@
-import { EditActorProfileDto, EditUserProfileDto } from '@modela/dtos'
-import { Injectable } from '@nestjs/common'
+import {
+  EditActorProfileDto,
+  EditUserProfileDto,
+  GetProfileForViewingDto,
+  UserType,
+} from '@modela/dtos'
+import { BadRequestException, Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
 
 type OnlyActorProfile = Pick<
@@ -61,5 +66,75 @@ export class ProfileRepository {
         birthDate: true,
       },
     })
+  }
+
+  async getUserProfileById(id: number): Promise<GetProfileForViewingDto> {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        userId: id,
+      },
+      include: {
+        Actor: true,
+        Casting: true,
+      },
+    })
+    if (!user) {
+      //Not found exception is thrown in the service
+      return null
+    }
+    const returnUser = {
+      type: user.type,
+      data: undefined,
+    }
+    const userCommon = {
+      profileImageUrl: user.profileImageUrl,
+      phoneNumber: user.phoneNumber,
+      firstName: user.firstName,
+      middleName: user.middleName,
+      lastName: user.lastName,
+      description: user.description,
+    }
+    if (user.type === UserType.ACTOR) {
+      //calculate age from birthDate
+      let actorAge = 0
+      if (user.Actor.birthDate) {
+        const birthDate = new Date(user.Actor.birthDate)
+        const today = new Date()
+        actorAge = today.getFullYear() - birthDate.getFullYear()
+        const m = today.getMonth() - birthDate.getMonth()
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+          actorAge--
+        }
+      }
+      const actorProfile = {
+        ...userCommon,
+        prefix: user.Actor.prefix,
+        nationality: user.Actor.nationality,
+        gender: user.Actor.gender,
+        ethnicity: user.Actor.ethnicity,
+        age: actorAge,
+        religion: user.Actor.religion,
+        nickname: user.Actor.nickname,
+        height: user.Actor.height,
+        weight: user.Actor.weight,
+        eyeColor: user.Actor.eyeColor,
+        hairColor: user.Actor.hairColor,
+        waist: user.Actor.waist,
+        bust: user.Actor.bust,
+        hips: user.Actor.hips,
+        shoeSize: user.Actor.shoeSize,
+        skinShade: user.Actor.skinShade,
+      }
+      returnUser.data = actorProfile
+      return returnUser
+    } else if (user.type === UserType.CASTING) {
+      const castingProfile = {
+        ...userCommon,
+        companyName: user.Casting.companyName,
+      }
+      returnUser.data = castingProfile
+      return returnUser
+    }
+    throw new BadRequestException()
   }
 }
