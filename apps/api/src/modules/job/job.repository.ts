@@ -2,6 +2,7 @@ import { ApplicationStatus, Job, JobStatus, Prisma } from '@modela/database'
 import {
   CreateJobDto,
   EditJobDto,
+  GetAppliedJobDto,
   GetJobCardByAdminDto,
   GetJobCardDto,
   GetJobDto,
@@ -158,7 +159,7 @@ export class JobRepository {
     statusQuery: JobStatus[],
     applicationStatus: ApplicationStatus[],
     userId: number,
-  ): Promise<(GetJobCardDto & { ApplicationStatus })[]> {
+  ): Promise<GetAppliedJobDto[]> {
     const jobs = await this.prisma.job.findMany({
       orderBy: {
         jobId: Prisma.SortOrder.desc,
@@ -208,7 +209,7 @@ export class JobRepository {
       jobCastingImageUrl: job.Casting.User.profileImageUrl,
       castingId: job.castingId,
       castingName: job.Casting.User.firstName,
-      ApplicationStatus: job.Application[0].status,
+      appliedStatus: job.Application[0].status,
     }))
 
     return jobsWithApplicationStatus
