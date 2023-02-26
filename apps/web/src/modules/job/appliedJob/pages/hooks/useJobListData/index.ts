@@ -2,6 +2,7 @@
 import { useMediaQuery } from '@mui/material'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
+import { JobCardProps } from 'modules/job/appliedJob/components/JobCardContainer/components/JobCard/types'
 import { JobCardContainerProps } from 'modules/job/appliedJob/components/JobCardContainer/types'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useState } from 'react'
@@ -71,13 +72,13 @@ const useJobListData = () => {
   const fetchData = useCallback(async () => {
     try {
       const res = (
-        await apiClient.get<JobCardContainerProps>(`/jobs/applied`, {
+        await apiClient.get<JobCardProps[]>(`/jobs/applied`, {
           params: {
             ...search,
           },
         })
       ).data
-      setJob(res)
+      setJob((prev) => ({ ...prev, jobs: res }))
     } catch (err) {
       handleError(err)
     }
@@ -87,7 +88,6 @@ const useJobListData = () => {
     fetchData()
   }, [search])
   useEffect(() => {
-    console.log('T')
     if (!isOpen || isDesktop) {
       filterData(state)
     }
