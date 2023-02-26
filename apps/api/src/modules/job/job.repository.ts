@@ -154,6 +154,7 @@ export class JobRepository {
   }
 
   async getJobApplied(
+    titleSearch: string,
     statusQuery: JobStatus[],
     applicationStatus: ApplicationStatus[],
     userId: number,
@@ -188,6 +189,12 @@ export class JobRepository {
             },
           },
         },
+        title: titleSearch
+          ? {
+              contains: titleSearch,
+              mode: 'insensitive',
+            }
+          : undefined,
       },
     })
     const jobsWithApplicationStatus = []

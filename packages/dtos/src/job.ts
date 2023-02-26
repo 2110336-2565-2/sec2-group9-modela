@@ -253,6 +253,11 @@ export class GetJobCardByAdminDto extends GetJobCardDto {
 
 export class SearchAppliedJobDto {
   @IsOptional()
+  @IsString()
+  @ApiPropertyOptional()
+  title?: string
+
+  @IsOptional()
   @IsEnum(ApplicationStatus, { each: true })
   @ApiPropertyOptional({ enum: ApplicationStatus, isArray: true })
   applicationStatus?: ApplicationStatus[]
