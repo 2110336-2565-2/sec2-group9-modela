@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { GetAppliedJobDto } from '@modela/dtos'
 import { useMediaQuery } from '@mui/material'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
+import { JobCardContainerProps } from 'modules/job/appliedJob/components/JobCardContainer/types'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useState } from 'react'
 
@@ -12,7 +12,7 @@ const useJobListData = () => {
   const router = useRouter()
   const [isOpen, setOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [job, setJob] = useState<GetAppliedJobDto[]>([])
+  const [job, setJob] = useState<JobCardContainerProps>({ jobs: [] })
   const [search, setSearch] = useState<ISearch>(initialISearch)
   const [state, setState] = useState<IFilter>(initialIFilter)
   const open = useCallback(() => setOpen(true), [])
@@ -62,7 +62,7 @@ const useJobListData = () => {
         status: newStatus,
         applicationStatus: newApplicationStatus,
       })
-      setJob([])
+      setJob((prev) => ({ ...prev, jobs: [] }))
       setIsLoading(true)
     },
     [search, job, setJob],
@@ -71,7 +71,7 @@ const useJobListData = () => {
   const fetchData = useCallback(async () => {
     try {
       const res = (
-        await apiClient.get<GetAppliedJobDto[]>(`/jobs/applied`, {
+        await apiClient.get<JobCardContainerProps>(`/jobs/applied`, {
           params: {
             ...search,
           },

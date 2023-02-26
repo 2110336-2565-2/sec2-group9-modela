@@ -41,7 +41,7 @@ const useNavMenu = (isMobile: boolean) => {
       },
       {
         label: 'งานของฉัน',
-        href: '/',
+        href: '/job/applied',
         icon: <ArticleOutlined />,
         focusKey: 'jobs',
       },

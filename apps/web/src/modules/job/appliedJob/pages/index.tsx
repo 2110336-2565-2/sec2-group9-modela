@@ -68,7 +68,7 @@ const AppliedJobPage = () => {
               <CircularProgress color="primary" />
             </div>
           )}
-          {!isLoading && <JobCardContainer jobs={job} />}
+          {!isLoading && <JobCardContainer {...job} />}
         </div>
       </JobContainer>
       <FilterBoxContainer>
