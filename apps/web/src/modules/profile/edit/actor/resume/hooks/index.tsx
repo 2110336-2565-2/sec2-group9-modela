@@ -3,6 +3,7 @@ import { AxiosResponse } from 'axios'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import useSwitch from 'common/hooks/useSwitch'
 import { apiClient } from 'common/utils/api'
+import { uploadFileToS3 } from 'common/utils/file'
 import { useCallback, useEffect, useState } from 'react'
 
 import { IResumeWithFirstFlag } from './types'
@@ -53,14 +54,24 @@ export const useResumeInfo = () => {
 
   const handleUpdateResume = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async (name: string, resumeId: number, file?: Blob) => {
+    async (name: string, resumeId: number, file?: File) => {
       const currentIdx = resume.findIndex((val) => val.resumeId === resumeId)
 
       if (resume[currentIdx]?.isFirst) {
         // TODO: Call Create Resume API
+        let resumeUrl = ''
         try {
-          const resumeUrl = 'https://www.google.com'
+          resumeUrl = await uploadFileToS3(file!)
+        } catch (err) {
+          handleError(err, {
+            400: 'เกิดข้อผิดพลาดในการอัพโหลดรูปภาพ',
+            403: 'เกิดข้อผิดพลาดในการอัพโหลดรูปภาพ',
+            500: 'เกิดข้อผิดพลาดในการอัพโหลดรูปภาพ',
+          })
+          return
+        }
 
+        try {
           const { resumeId } = (
             await apiClient.post<
               ResumeIdDto,

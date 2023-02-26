@@ -5,5 +5,5 @@ export interface IResumeEditProps extends ResumeDto {
   resumeUrl: string
   changeToView(): void
   handleCancel(): void
-  handleSubmit(name: string, resumeId: number, file?: Blob): Promise<void>
+  handleSubmit(name: string, resumeId: number, file?: File): Promise<void>
 }
