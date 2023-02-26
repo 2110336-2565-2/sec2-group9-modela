@@ -1,7 +1,5 @@
 import { UserType } from '@modela/database'
-import { Add } from '@mui/icons-material'
-import { Button, CircularProgress } from '@mui/material'
-import { useUser } from 'common/context/UserContext'
+import { CircularProgress } from '@mui/material'
 import withGuard from 'common/hoc/withGuard'
 import useNavbarSearch from 'common/hooks/useNavbarSearch'
 import React, { useCallback } from 'react'
@@ -30,7 +28,6 @@ const JobList = () => {
     open,
     close,
   } = useJobListData()
-  const { user } = useUser()
   useNavbarSearch(
     useCallback(() => {
       open()
@@ -47,7 +44,7 @@ const JobList = () => {
         gap: '3.5vw',
       }}
     >
-      <PlaceFill></PlaceFill>
+      <PlaceFill />
       <JobContainer
         sx={{
           display: isOpen ? 'none' : 'flex',
@@ -98,22 +95,6 @@ const JobList = () => {
             gap: '1rem',
           }}
         >
-          {user?.type === UserType.CASTING && (
-            <Button
-              href="/job/post"
-              variant="contained"
-              sx={{
-                borderRadius: '12px',
-                width: '100%',
-                maxWidth: '250px',
-                marginLeft: '1rem',
-                fontSize: '16px',
-              }}
-              startIcon={<Add />}
-            >
-              สร้างงาน
-            </Button>
-          )}
           <FilterContainer
             state={state}
             setState={setState}
