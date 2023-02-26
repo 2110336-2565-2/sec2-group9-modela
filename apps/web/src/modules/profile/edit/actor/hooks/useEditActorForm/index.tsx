@@ -17,7 +17,7 @@ import {
   IEditActorProfileSchemaType,
 } from './schema'
 
-const useEditCastingForm = () => {
+const useEditActorForm = () => {
   const router = useRouter()
   const { displaySnackbar } = useSnackbar()
 
@@ -108,4 +108,4 @@ const useEditCastingForm = () => {
   }
 }
 
-export default useEditCastingForm
+export default useEditActorForm

@@ -59,9 +59,19 @@ export const useResumeInfo = () => {
 
       if (resume[currentIdx]?.isFirst) {
         // TODO: Call Create Resume API
+        let resumeUrl = ''
         try {
-          const resumeUrl = await uploadFileToS3(file!)
+          resumeUrl = await uploadFileToS3(file!)
+        } catch (err) {
+          handleError(err, {
+            400: 'เกิดข้อผิดพลาดในการอัพโหลดรูปภาพ',
+            403: 'เกิดข้อผิดพลาดในการอัพโหลดรูปภาพ',
+            500: 'เกิดข้อผิดพลาดในการอัพโหลดรูปภาพ',
+          })
+          return
+        }
 
+        try {
           const { resumeId } = (
             await apiClient.post<
               ResumeIdDto,

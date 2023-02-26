@@ -76,11 +76,11 @@ const useActorForm = (defaultValues: ActorInfoDto) => {
         })
         return
       }
-      const FileUrl = URL.createObjectURL(file)
+      const fileUrl = URL.createObjectURL(file)
 
       setFile(file)
       setFilename(file.name)
-      setValue('idCardImageUrl', FileUrl, {
+      setValue('idCardImageUrl', fileUrl, {
         shouldValidate: true,
       })
     },
