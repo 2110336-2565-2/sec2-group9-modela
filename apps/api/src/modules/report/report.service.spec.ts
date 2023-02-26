@@ -67,7 +67,11 @@ describe('ReportService', () => {
 
       const result = await service.getReports(MOCK_JOB_ID)
       expect(repository.getReports).toBeCalledWith(MOCK_JOB_ID)
-      expect(result).toEqual({ jobId: MOCK_JOB_ID, reports: [MOCK_REPORT] })
+      expect(result).toEqual({
+        jobId: MOCK_JOB_ID,
+        reports: [MOCK_REPORT],
+        jobTitle: MOCK_JOB.title,
+      })
     })
 
     it('should throw error if job does not exist', async () => {

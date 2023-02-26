@@ -35,7 +35,11 @@ export class ReportService {
       throw new NotFoundException()
     }
 
-    return await this.reportRepository.getReports(job.jobId)
+    const reports = await this.reportRepository.getReports(job.jobId)
+    return {
+      ...reports,
+      jobTitle: job.title,
+    }
   }
 
   async acceptReport(id: number) {

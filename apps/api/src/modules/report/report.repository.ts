@@ -17,9 +17,16 @@ export class ReportRepository {
   }
 
   async getReports(jobId: number) {
+    // get reports excluding its createdAt
     const reports = await this.prisma.report.findMany({
       where: {
         jobId: jobId,
+      },
+      select: {
+        jobId: true,
+        reportId: true,
+        reporterId: true,
+        reason: true,
       },
     })
     return {
