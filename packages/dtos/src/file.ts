@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
+import { IsString } from 'class-validator'
 
 export class UploadUrlDto {
   @ApiProperty()
@@ -6,4 +7,10 @@ export class UploadUrlDto {
 
   @ApiProperty()
   publicUrl: string
+}
+
+export class FileNameDto {
+  @ApiProperty()
+  @IsString()
+  fileName: string
 }
