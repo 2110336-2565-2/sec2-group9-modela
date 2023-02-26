@@ -364,6 +364,7 @@ export class JobService {
       applicationStatus = [applicationStatus]
     if (!Array.isArray(statusQuery)) statusQuery = [statusQuery]
     return await this.repository.getJobApplied(
+      searchAppliedJobDto.title,
       statusQuery,
       applicationStatus,
       user.userId,
