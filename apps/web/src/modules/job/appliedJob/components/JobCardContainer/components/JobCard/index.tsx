@@ -1,4 +1,4 @@
-import { GetJobCardDto } from '@modela/dtos'
+import { GetAppliedJobDto } from '@modela/dtos'
 import { Divider, Typography } from '@mui/material'
 import Footer from 'modules/job/components/JobCardFooter'
 import Header from 'modules/job/components/JobCardHeader'
@@ -7,7 +7,7 @@ import React from 'react'
 
 import { CardContainer } from './styled'
 
-export default function JobCard(prop: GetJobCardDto) {
+export default function JobCard(prop: GetAppliedJobDto) {
   const {
     actorCount,
     description,
@@ -26,7 +26,12 @@ export default function JobCard(prop: GetJobCardDto) {
       style={{ textDecoration: 'none', color: 'inherit' }}
     >
       <CardContainer>
-        <Header status={status} jobId={jobId} {...headerProps} />
+        <Header
+          status={status}
+          jobId={jobId}
+          applicationStatus={'PENDING'}
+          {...headerProps}
+        />
         <Typography
           variant="subtitle2"
           sx={{
@@ -47,6 +52,7 @@ export default function JobCard(prop: GetJobCardDto) {
           wage={wage}
           actorCount={actorCount}
           status={status}
+          isApplied={true}
         />
       </CardContainer>
     </Link>

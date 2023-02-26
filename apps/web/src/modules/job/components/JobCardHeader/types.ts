@@ -1,4 +1,4 @@
-import { JobStatus } from '@modela/dtos'
+import { ApplicationStatus, JobStatus } from '@modela/dtos'
 
 export interface HeaderProps {
   title: string
@@ -9,4 +9,5 @@ export interface HeaderProps {
   isDetail?: boolean
   castingId: number
   castingName: string
+  applicationStatus?: ApplicationStatus
 }
