@@ -1,10 +1,23 @@
+import { useSnackbar } from 'common/context/SnackbarContext'
+import { apiClient } from 'common/utils/api'
+import { useRouter } from 'next/router'
+
 const useReport = () => {
-  const rejectJob = (id: number) => {
-    console.log('rejectJob', id)
+  const router = useRouter()
+  const { displaySnackbar } = useSnackbar()
+
+  const rejectJob = async (id: number) => {
+    await apiClient.put('reports/jobs/' + id + '/accept')
+    displaySnackbar('ยกเลิกงานเรียบร้อย', 'success')
+    router.push('/job')
   }
-  const rejectReport = (id: number) => {
-    console.log('rejectReport', id)
+
+  const rejectReport = async (id: number) => {
+    await apiClient.put('reports/jobs/' + id + '/accept')
+    displaySnackbar('ยกเลิกการแจ้งปัญหาเรียบร้อย', 'success')
+    router.push('/job')
   }
+
   return { rejectJob, rejectReport }
 }
 
