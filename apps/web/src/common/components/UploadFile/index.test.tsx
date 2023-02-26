@@ -27,7 +27,7 @@ describe('UploadFile', () => {
       <UploadFile
         error={false}
         // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-        handleSelectFile={(file: Blob) => {}}
+        handleSelectFile={(file: File) => {}}
         label="Hello World"
       />,
     )
@@ -41,7 +41,7 @@ describe('UploadFile', () => {
         error={false}
         url="https://google.com"
         // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-        handleSelectFile={(file: Blob) => {}}
+        handleSelectFile={(file: File) => {}}
         label="Hello World"
       />,
     )
@@ -62,7 +62,7 @@ describe('UploadFile', () => {
         error={true}
         errorMessage="Hello Error"
         // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-        handleSelectFile={(file: Blob) => {}}
+        handleSelectFile={(file: File) => {}}
         label="Hello World"
       />,
     )

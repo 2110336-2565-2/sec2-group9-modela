@@ -13,11 +13,11 @@ export const useResumeForm = (
   const [resumeName, setResumeName] = useState(name)
   const [fileUrl, setFileUrl] = useState(resumeUrl)
   const [fileName, setFileName] = useState<string>('')
-  const [currentFile, setCurrentFile] = useState<Blob | undefined>(undefined)
+  const [currentFile, setCurrentFile] = useState<File | undefined>(undefined)
 
   const [error, setError] = useState<IError>({})
 
-  const handleSelectFile = useCallback((file: Blob, filename: string) => {
+  const handleSelectFile = useCallback((file: File) => {
     if (file.size >= 5 * 1024 * 1024) {
       setError((prev) => ({
         ...prev,
@@ -29,7 +29,7 @@ export const useResumeForm = (
     const tempUrl = URL.createObjectURL(file)
     setCurrentFile(file)
     setFileUrl(tempUrl)
-    setFileName(filename)
+    setFileName(file.name)
     setError((prev) => ({
       resumeName: prev?.resumeName,
     }))

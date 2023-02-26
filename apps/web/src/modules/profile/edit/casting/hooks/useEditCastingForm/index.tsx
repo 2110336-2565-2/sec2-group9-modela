@@ -23,7 +23,7 @@ const useEditCastingForm = () => {
       defaultValues: EditCastingProfileDefault,
     })
 
-  const [, setProfileImage] = useState<Blob | null>(null)
+  const [, setProfileImage] = useState<File | null>(null)
   const [loading, setLoading] = useState(false)
   const [isDataLoading, setDataLoading] = useState(true)
   const { handleError } = useErrorHandler()
@@ -52,12 +52,12 @@ const useEditCastingForm = () => {
     handleSubmit(handleSuccess)
 
   const handleUploadImage = useCallback(
-    (file: Blob) => {
+    (file: File) => {
       URL.revokeObjectURL(getValues('profileImageUrl') || '')
-      const blobUrl = URL.createObjectURL(file)
+      const fileUrl = URL.createObjectURL(file)
 
       setProfileImage(file)
-      setValue('profileImageUrl', blobUrl, {
+      setValue('profileImageUrl', fileUrl, {
         shouldValidate: true,
       })
     },

@@ -3,7 +3,7 @@ import { SxPropsWithTheme } from 'common/types/mui'
 export interface IUploadFileProps {
   error: boolean
   errorMessage?: string
-  handleSelectFile: (file: Blob, filename: string) => void
+  handleSelectFile: (file: File) => void
   label?: string
   url?: string
   hideLink?: boolean

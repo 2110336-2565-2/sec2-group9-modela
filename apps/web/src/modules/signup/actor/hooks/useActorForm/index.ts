@@ -26,7 +26,7 @@ const useActorForm = () => {
     })
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-  const [file, setFile] = useState<Blob | null>(null)
+  const [file, setFile] = useState<File | null>(null)
   const [filename, setFilename] = useState<string>()
   const [loading, setLoading] = useState(false)
 
@@ -66,18 +66,18 @@ const useActorForm = () => {
   )
 
   const handleUploadFile = useCallback(
-    (file: Blob, filename: string) => {
+    (file: File) => {
       if (file.size > 5 * 1024 * 1024) {
         setError('idCardImageUrl', {
           message: 'ขนาดไฟล์เกิน 5 MB',
         })
         return
       }
-      const blobUrl = URL.createObjectURL(file)
+      const FileUrl = URL.createObjectURL(file)
 
       setFile(file)
-      setFilename(filename)
-      setValue('idCardImageUrl', blobUrl, {
+      setFilename(file.name)
+      setValue('idCardImageUrl', FileUrl, {
         shouldValidate: true,
       })
     },

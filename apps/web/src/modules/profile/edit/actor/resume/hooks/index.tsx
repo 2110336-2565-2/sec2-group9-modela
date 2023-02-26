@@ -53,7 +53,7 @@ export const useResumeInfo = () => {
 
   const handleUpdateResume = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async (name: string, resumeId: number, file?: Blob) => {
+    async (name: string, resumeId: number, file?: File) => {
       const currentIdx = resume.findIndex((val) => val.resumeId === resumeId)
 
       if (resume[currentIdx]?.isFirst) {
