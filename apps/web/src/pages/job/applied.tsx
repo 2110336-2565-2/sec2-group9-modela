@@ -1,1 +1,1 @@
-export { default } from 'modules/job/applied/pages'
+export { default } from 'modules/job/appliedJob/pages'
