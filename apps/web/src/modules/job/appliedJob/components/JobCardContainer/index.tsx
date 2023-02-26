@@ -1,15 +1,15 @@
-import { GetJobCardWithMaxPageDto } from '@modela/dtos'
 import { Typography } from '@mui/material'
 import React from 'react'
 
 import JobCard from './components/JobCard'
 import { CardBoxContainer } from './styled'
+import { JobCardContainerProps } from './types'
 
-export default function JobCardContainer(prop: GetJobCardWithMaxPageDto) {
-  const { jobs, maxPage } = prop
+export default function JobCardContainer(props: JobCardContainerProps) {
+  const { jobs } = props
   return (
     <CardBoxContainer>
-      {maxPage === 0 && (
+      {jobs.length === 0 && (
         <Typography
           variant="subtitle1"
           sx={{

@@ -1,10 +1,8 @@
-import { CircularProgress } from '@mui/material'
 import withGuard from 'common/hoc/withGuard'
 import useNavbarSearch from 'common/hooks/useNavbarSearch'
 import FilterMobileContainer from 'modules/job/appliedJob/components/FilterMobileContainer'
 import SearchBox from 'modules/job/appliedJob/components/SearchBox'
 import { useCallback } from 'react'
-import InfiniteScroll from 'react-infinite-scroller'
 
 import FilterContainer from '../components/FilterContainer'
 import JobCardContainer from '../components/JobCardContainer'
@@ -17,17 +15,8 @@ import {
 } from './styled'
 
 const AppliedJobPage = () => {
-  const {
-    job,
-    hasMore,
-    fetchData,
-    filterData,
-    state,
-    setState,
-    isOpen,
-    open,
-    close,
-  } = useJobListData()
+  const { job, filterData, state, setState, isOpen, open, close } =
+    useJobListData()
   useNavbarSearch(
     useCallback(() => {
       open()
@@ -65,25 +54,7 @@ const AppliedJobPage = () => {
             gap: '1rem',
           }}
         >
-          <InfiniteScroll
-            loadMore={fetchData}
-            hasMore={hasMore}
-            loader={
-              <div
-                className="loader"
-                key={0}
-                style={{
-                  display: 'flex',
-                  alignItems: 'column',
-                  justifyContent: 'center',
-                }}
-              >
-                <CircularProgress color="primary" />
-              </div>
-            }
-          >
-            {job && <JobCardContainer {...job} />}
-          </InfiniteScroll>
+          <JobCardContainer jobs={job} />
         </div>
       </JobContainer>
       <FilterBoxContainer>
