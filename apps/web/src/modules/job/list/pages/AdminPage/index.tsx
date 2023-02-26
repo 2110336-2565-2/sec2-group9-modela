@@ -2,13 +2,13 @@ import { UserType } from '@modela/database'
 import { CircularProgress } from '@mui/material'
 import withGuard from 'common/hoc/withGuard'
 import useNavbarSearch from 'common/hooks/useNavbarSearch'
+import FilterContainer from 'modules/job/list/components/FilterContainer'
+import FilterMobileContainer from 'modules/job/list/components/FilterMobileContainer'
+import JobCardContainer from 'modules/job/list/components/JobCardContainer'
+import SearchBox from 'modules/job/list/components/SearchBox'
 import React, { useCallback } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 
-import FilterContainer from '../FilterContainer'
-import FilterMobileContainer from '../FilterMobileContainer'
-import JobCardContainer from '../JobCardContainer'
-import SearchBox from '../SearchBox'
 import useJobListData from './hooks/useJobListData'
 import {
   FilterBoxContainer,
