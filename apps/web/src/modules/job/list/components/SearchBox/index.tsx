@@ -18,7 +18,7 @@ export default function SearchBox(prop: SearchBoxProps) {
         fullWidth={true}
         value={state.title}
         onChange={(event) => {
-          setState({ ...state, title: event.target.value })
+          setState((prev) => ({ ...prev, title: event.target.value }))
         }}
         InputProps={{
           endAdornment: (

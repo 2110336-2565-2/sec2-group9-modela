@@ -1,23 +1,29 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { GetJobCardWithMaxPageDto } from '@modela/dtos'
+import { GetJobCardByAdminWithMaxPageDto } from '@modela/dtos'
+import { useMediaQuery } from '@mui/material'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
 import dayjs from 'dayjs'
+import {
+  IFilter,
+  initialIFilter,
+  initialISearchAdmin,
+  ISearch,
+} from 'modules/job/list/pages/types'
 import { useCallback, useEffect, useRef, useState } from 'react'
-
-import { IFilter, initialIFilter, initialISearch, ISearch } from '../../types'
 
 const useJobListData = () => {
   const [isOpen, setOpen] = useState(false)
-  const [job, setJob] = useState<GetJobCardWithMaxPageDto>()
+  const [job, setJob] = useState<GetJobCardByAdminWithMaxPageDto>()
   const [hasMore, setHasMore] = useState(true)
   const [page, setPage] = useState(0)
   const pageControl = useRef(1)
-  const [search, setSearch] = useState<ISearch>(initialISearch)
+  const [search, setSearch] = useState<ISearch>(initialISearchAdmin)
   const [state, setState] = useState<IFilter>(initialIFilter)
   const open = useCallback(() => setOpen(true), [])
   const close = useCallback(() => setOpen(false), [])
   const { handleError } = useErrorHandler()
+  const isDesktop = useMediaQuery('(min-width: 900px)')
 
   const filterData = useCallback(
     async (state: IFilter) => {
@@ -30,6 +36,12 @@ const useJobListData = () => {
       if (state.closeCheck) {
         newStatus.push('CLOSE')
       }
+      if (state.cancelCheck) {
+        newStatus.push('CANCELLED')
+      }
+      if (state.reportCheck) {
+        newStatus.push('REPORTED')
+      }
       if (state.maleCheck) {
         newGender.push('MALE')
       }
@@ -39,6 +51,7 @@ const useJobListData = () => {
       if (state.otherCheck) {
         newGender.push('OTHER')
       }
+
       setSearch({
         ...search,
         title: state.title,
@@ -78,7 +91,7 @@ const useJobListData = () => {
       if (pageControl.current <= page) {
         pageControl.current = page + 1
         const res = (
-          await apiClient.get<GetJobCardWithMaxPageDto>(`/jobs`, {
+          await apiClient.get<GetJobCardByAdminWithMaxPageDto>(`/jobs/admin`, {
             params: {
               limit: 5,
               page,
@@ -100,7 +113,7 @@ const useJobListData = () => {
   }, [page, search])
 
   useEffect(() => {
-    if (!isOpen) {
+    if (!isOpen || isDesktop) {
       filterData(state)
     }
   }, [
@@ -113,6 +126,8 @@ const useJobListData = () => {
     state.endDate,
     state.startTime,
     state.endTime,
+    state.reportCheck,
+    state.cancelCheck,
   ])
 
   return {

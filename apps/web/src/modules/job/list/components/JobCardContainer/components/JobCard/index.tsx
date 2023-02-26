@@ -1,4 +1,4 @@
-import { GetJobCardDto } from '@modela/dtos'
+import { JobStatus } from '@modela/dtos'
 import { Divider, Typography } from '@mui/material'
 import Footer from 'modules/job/components/JobCardFooter'
 import Header from 'modules/job/components/JobCardHeader'
@@ -6,8 +6,9 @@ import Link from 'next/link'
 import React from 'react'
 
 import { CardContainer } from './styled'
+import { JobCardProps } from './types'
 
-export default function JobCard(prop: GetJobCardDto) {
+export default function JobCard(prop: JobCardProps) {
   const {
     actorCount,
     description,
@@ -16,17 +17,28 @@ export default function JobCard(prop: GetJobCardDto) {
     wage,
     jobId,
     status,
+    isReported,
     ...headerProps
   } = prop
 
   return (
     <Link
-      href={`/job/${jobId}`}
+      href={isReported ? `/job/${jobId}/reports` : `/job/${jobId}`}
       passHref
       style={{ textDecoration: 'none', color: 'inherit' }}
     >
-      <CardContainer>
-        <Header status={status} jobId={jobId} {...headerProps} />
+      <CardContainer
+        sx={{
+          backgroundColor:
+            status === JobStatus.CANCELLED ? 'rgba(33, 33, 33, 0.08)' : '',
+        }}
+      >
+        <Header
+          status={status}
+          jobId={jobId}
+          isReport={isReported}
+          {...headerProps}
+        />
         <Typography
           variant="subtitle2"
           sx={{

@@ -1,6 +1,6 @@
 import { JobStatus, UserType } from '@modela/dtos'
 import { EditOutlined, ReportOutlined } from '@mui/icons-material'
-import { IconButton, Tooltip, Typography } from '@mui/material'
+import { Chip, IconButton, Tooltip, Typography } from '@mui/material'
 import ProfileImage from 'common/components/ProfileImage'
 import { useUser } from 'common/context/UserContext'
 import React from 'react'
@@ -18,6 +18,7 @@ const JobCardHeader = (prop: HeaderProps) => {
     isDetail,
     castingId,
     castingName,
+    isReport,
   } = prop
   const { user } = useUser()
 
@@ -58,6 +59,12 @@ const JobCardHeader = (prop: HeaderProps) => {
             <EditOutlined fontSize="small" color="primary" />
           </IconButton>
         </Tooltip>
+      )}
+      {user?.type === UserType.ADMIN && isReport && (
+        <Chip
+          label="ถูกแจ้งปัญหา"
+          sx={{ color: '#AA5B5B', background: 'rgba(170, 91, 91, 0.2)' }}
+        />
       )}
     </HeaderRow>
   )

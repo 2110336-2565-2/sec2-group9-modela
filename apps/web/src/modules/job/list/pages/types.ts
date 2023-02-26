@@ -15,6 +15,8 @@ export interface IFilter {
   maleCheck: boolean
   femaleCheck: boolean
   otherCheck: boolean
+  cancelCheck: boolean
+  reportCheck: boolean
 }
 export interface ISearch {
   title: string | null
@@ -47,6 +49,8 @@ export const initialIFilter: IFilter = {
   maleCheck: false,
   femaleCheck: false,
   otherCheck: false,
+  cancelCheck: false,
+  reportCheck: true,
 }
 export const initialISearch: ISearch = {
   title: null,
@@ -59,6 +63,20 @@ export const initialISearch: ISearch = {
   maxWage: null,
   age: null,
   status: [],
+  gender: [],
+  castingId: null,
+}
+export const initialISearchAdmin: ISearch = {
+  title: null,
+  startDate: null,
+  endDate: null,
+  location: null,
+  startTime: null,
+  endTime: null,
+  minWage: null,
+  maxWage: null,
+  age: null,
+  status: ['REPORTED', 'OPEN'],
   gender: [],
   castingId: null,
 }
