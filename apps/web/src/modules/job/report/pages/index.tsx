@@ -3,32 +3,14 @@ import withGuard from 'common/hoc/withGuard'
 import React from 'react'
 
 import JobReportCard from '../components/JobReportCard'
+import useGetReport from '../hooks/useGetReport'
 import { RootContainer } from './styled'
 
 const JobReportPage = () => {
-  const mockData: GetReportsDto = {
-    jobId: 1,
-    jobTitle: 'งานพี',
-    reports: [
-      {
-        reportId: 1,
-        reporterId: 1,
-        reporterName: 'ธนพล สุขสวัสดิ์',
-        reason: 'ไม่มีเครื่องเสียง',
-      },
-      {
-        reportId: 2,
-        reporterId: 1,
-        reporterName: 'ธนพล สุขสวัสดิ์',
-        reason: 'ไม่มีเครื่องเสียง',
-      },
-    ],
-  }
+  const Data: GetReportsDto | undefined = useGetReport()
 
   return (
-    <RootContainer>
-      <JobReportCard {...mockData} />
-    </RootContainer>
+    <RootContainer>{Data ? <JobReportCard {...Data} /> : null}</RootContainer>
   )
 }
 
