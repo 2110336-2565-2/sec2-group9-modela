@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { GetAppliedJobDto } from '@modela/dtos'
 import { useMediaQuery } from '@mui/material'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
-import { JobCardProps } from 'modules/job/appliedJob/components/JobCardContainer/components/JobCard/types'
 import { JobCardContainerProps } from 'modules/job/appliedJob/components/JobCardContainer/types'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useState } from 'react'
@@ -72,7 +72,7 @@ const useJobListData = () => {
   const fetchData = useCallback(async () => {
     try {
       const res = (
-        await apiClient.get<JobCardProps[]>(`/jobs/applied`, {
+        await apiClient.get<GetAppliedJobDto[]>(`/jobs/applied`, {
           params: {
             ...search,
           },
