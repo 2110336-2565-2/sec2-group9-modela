@@ -22,6 +22,7 @@ export const FORM_LAYOUT: IFormControllerProps<IEditActorProfileSchemaType>[] =
       name: 'profileImageUrl',
       sm: 12,
       xs: 12,
+      accept: 'image/*',
     },
     {
       type: 'textField',

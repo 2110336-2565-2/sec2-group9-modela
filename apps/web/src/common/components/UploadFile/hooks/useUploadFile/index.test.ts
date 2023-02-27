@@ -3,7 +3,7 @@ import { ChangeEvent, MouseEvent } from 'react'
 
 describe('useUploadFile', () => {
   const { default: useUploadFile } = require('.') as typeof import('.')
-  const MOCK_BLOB = new File([], 'HelloWorld.png')
+  const MOCK_FILE = new File([], 'HelloWorld.png')
 
   const setUploadFileMock = jest.fn()
 
@@ -27,14 +27,14 @@ describe('useUploadFile', () => {
     act(() => {
       result.current.handleUploadFile({
         target: {
-          files: [MOCK_BLOB],
+          files: [MOCK_FILE],
         },
       } as unknown as ChangeEvent<HTMLInputElement>)
     })
 
     rerender()
 
-    expect(setUploadFileMock).toBeCalledWith(MOCK_BLOB, 'HelloWorld.png')
+    expect(setUploadFileMock).toBeCalledWith(MOCK_FILE)
     expect(result.current.name).toStrictEqual('HelloWorld.png')
   })
 

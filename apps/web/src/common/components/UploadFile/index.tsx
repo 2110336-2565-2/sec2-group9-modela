@@ -16,6 +16,7 @@ const UploadFile: FC<IUploadFileProps> = (props) => {
     hideLink,
     initialName,
     sx,
+    accept = 'image/*,.pdf',
   } = props
   const { handleUploadFile, name, removeSameFile } = useUploadFile(
     handleSelectFile,
@@ -34,7 +35,7 @@ const UploadFile: FC<IUploadFileProps> = (props) => {
         {label}
         <input
           hidden
-          accept="image/*,.pdf"
+          accept={accept}
           type="file"
           onChange={handleUploadFile}
           onClick={(e) => removeSameFile(e)}

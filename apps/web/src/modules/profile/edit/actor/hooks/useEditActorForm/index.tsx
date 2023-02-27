@@ -1,10 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { EditActorProfileDto, EditCastingProfileDto } from '@modela/dtos'
+import { EditActorProfileDto } from '@modela/dtos'
 import { AccountCircleOutlined, ArticleOutlined } from '@mui/icons-material'
 import { useSnackbar } from 'common/context/SnackbarContext'
 import { useUser } from 'common/context/UserContext'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
+import { uploadFileToS3 } from 'common/utils/file'
 import dayjs from 'dayjs'
 import { useRouter } from 'next/router'
 import { FormEventHandler, useCallback, useEffect, useState } from 'react'
@@ -16,7 +17,7 @@ import {
   IEditActorProfileSchemaType,
 } from './schema'
 
-const useEditCastingForm = () => {
+const useEditActorForm = () => {
   const router = useRouter()
   const { displaySnackbar } = useSnackbar()
 
@@ -27,7 +28,7 @@ const useEditCastingForm = () => {
       defaultValues: EditActorProfileDefault,
     })
 
-  const [, setProfileImage] = useState<Blob | null>(null)
+  const [profileImage, setProfileImage] = useState<File | null>(null)
   const [loading, setLoading] = useState(false)
   const [isDataLoading, setDataLoading] = useState(true)
   const { handleError } = useErrorHandler()
@@ -37,7 +38,18 @@ const useEditCastingForm = () => {
     async (data) => {
       setLoading(true)
       try {
-        await apiClient.put<EditCastingProfileDto>('/profile/actor', data)
+        const profileImageUrl = profileImage
+          ? await uploadFileToS3(profileImage!)
+          : data.profileImageUrl
+
+        await apiClient.put<unknown, unknown, EditActorProfileDto>(
+          '/profile/actor',
+          {
+            ...data,
+            birthDate: data.birthDate?.toDate(),
+            profileImageUrl,
+          },
+        )
         displaySnackbar('แก้ไขโปรไฟล์สำเร็จ', 'success')
         router.push('/profile')
       } catch (err) {
@@ -46,19 +58,19 @@ const useEditCastingForm = () => {
         setLoading(false)
       }
     },
-    [handleError, router, displaySnackbar],
+    [profileImage, displaySnackbar, router, handleError],
   )
 
   const handleClickSubmit: FormEventHandler<HTMLFormElement> =
     handleSubmit(handleSuccess)
 
   const handleUploadImage = useCallback(
-    (file: Blob) => {
+    (file: File) => {
       URL.revokeObjectURL(getValues('profileImageUrl') || '')
-      const blobUrl = URL.createObjectURL(file)
+      const FileUrl = URL.createObjectURL(file)
 
       setProfileImage(file)
-      setValue('profileImageUrl', blobUrl, {
+      setValue('profileImageUrl', FileUrl, {
         shouldValidate: true,
       })
     },
@@ -100,4 +112,4 @@ const useEditCastingForm = () => {
   }
 }
 
-export default useEditCastingForm
+export default useEditActorForm
