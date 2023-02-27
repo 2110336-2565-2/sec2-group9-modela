@@ -1,5 +1,5 @@
-import { JobCardProps } from './components/JobCard/types'
+import { GetAppliedJobDto } from '@modela/dtos'
 
 export interface JobCardContainerProps {
-  jobs: JobCardProps[]
+  jobs: GetAppliedJobDto[]
 }
