@@ -1,4 +1,4 @@
-import { Button } from '@mui/material'
+import { Button, CircularProgress } from '@mui/material'
 import TextField from 'common/components/TextField'
 import UploadFile from 'common/components/UploadFile'
 
@@ -20,7 +20,9 @@ const ResumeEdit = (props: IResumeEditProps) => {
     resumeId,
     changeToView,
   } = props
+
   const {
+    isLoading,
     fileUrl,
     handleSelectFile,
     resumeName,
@@ -51,24 +53,28 @@ const ResumeEdit = (props: IResumeEditProps) => {
             sx={{ alignItems: 'start' }}
           />
         </FileUploadContainer>
-        <ButtonContainer>
-          <Button
-            color="error"
-            variant="text"
-            onClick={handleCancel}
-            sx={{ padding: 0 }}
-          >
-            ยกเลิก
-          </Button>
-          <Button
-            color="success"
-            variant="text"
-            sx={{ padding: 0 }}
-            onClick={handleSave}
-          >
-            บันทึก
-          </Button>
-        </ButtonContainer>
+        {isLoading ? (
+          <CircularProgress color="primary" />
+        ) : (
+          <ButtonContainer>
+            <Button
+              color="error"
+              variant="text"
+              onClick={handleCancel}
+              sx={{ padding: 0 }}
+            >
+              ยกเลิก
+            </Button>
+            <Button
+              color="success"
+              variant="text"
+              sx={{ padding: 0 }}
+              onClick={handleSave}
+            >
+              บันทึก
+            </Button>
+          </ButtonContainer>
+        )}
       </ButtonAndFileContainer>
     </RootContainer>
   )
