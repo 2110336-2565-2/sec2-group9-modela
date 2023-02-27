@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { EditActorProfileDto, EditCastingProfileDto } from '@modela/dtos'
+import { EditActorProfileDto } from '@modela/dtos'
 import { AccountCircleOutlined, ArticleOutlined } from '@mui/icons-material'
 import { useSnackbar } from 'common/context/SnackbarContext'
 import { useUser } from 'common/context/UserContext'
@@ -42,10 +42,14 @@ const useEditActorForm = () => {
           ? await uploadFileToS3(profileImage!)
           : data.profileImageUrl
 
-        await apiClient.put<EditCastingProfileDto>('/profile/actor', {
-          ...data,
-          profileImageUrl,
-        })
+        await apiClient.put<unknown, unknown, EditActorProfileDto>(
+          '/profile/actor',
+          {
+            ...data,
+            birthDate: data.birthDate?.toDate(),
+            profileImageUrl,
+          },
+        )
         displaySnackbar('แก้ไขโปรไฟล์สำเร็จ', 'success')
         router.push('/profile')
       } catch (err) {
