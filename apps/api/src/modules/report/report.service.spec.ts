@@ -56,20 +56,34 @@ describe('ReportService', () => {
 
   describe('getReports', () => {
     const MOCK_JOB_ID = 1
-    const MOCK_REPORT = mock('report').override({ jobId: 1 }).get()
+    const MOCK_REPORT = mock('report')
+      .override({ jobId: 1 })
+      .omit(['createdAt', 'jobId'])
+      .get()
+    const MOCK_FIRST_NAME = 'John'
+    const MOCK_LAST_NAME = 'Doe'
+    const MOCK_REPORTS = {
+      reports: [
+        {
+          ...MOCK_REPORT,
+          User: { firstName: MOCK_FIRST_NAME, lastName: MOCK_LAST_NAME },
+        },
+      ],
+      jobId: MOCK_JOB_ID,
+    }
+    service = new ReportService(repository, jobRepository)
+    const MOCK_REPORTS_FORMATTED = service.formatReports(MOCK_REPORTS)
     const MOCK_JOB = mock('job').override({ jobId: 1 }).get()
 
     it('should get reports correctly', async () => {
-      jest
-        .spyOn(repository, 'getReports')
-        .mockResolvedValue({ reports: [MOCK_REPORT], jobId: MOCK_JOB_ID })
+      jest.spyOn(repository, 'getReports').mockResolvedValue(MOCK_REPORTS)
       jest.spyOn(jobRepository, 'getBaseJobById').mockResolvedValue(MOCK_JOB)
 
       const result = await service.getReports(MOCK_JOB_ID)
       expect(repository.getReports).toBeCalledWith(MOCK_JOB_ID)
       expect(result).toEqual({
+        reports: MOCK_REPORTS_FORMATTED,
         jobId: MOCK_JOB_ID,
-        reports: [MOCK_REPORT],
         jobTitle: MOCK_JOB.title,
       })
     })
