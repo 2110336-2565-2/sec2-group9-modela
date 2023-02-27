@@ -23,10 +23,15 @@ export class ReportRepository {
         jobId: jobId,
       },
       select: {
-        jobId: true,
         reportId: true,
         reporterId: true,
         reason: true,
+        User: {
+          select: {
+            firstName: true,
+            lastName: true,
+          },
+        },
       },
     })
     return {
