@@ -242,7 +242,7 @@ export class GetJobCardDto extends OmitType(EditJobDto, [
   @ApiProperty()
   castingName: string
 
-  @ApiProperty()
+  @ApiProperty({enum: JobStatus})
   status: JobStatus
 }
 
@@ -315,7 +315,7 @@ export class JobIdDto {
 }
 
 export class JobSummaryDto {
-  @ApiProperty()
+  @ApiProperty({enum: JobStatus})
   status: JobStatus
 
   @ApiProperty()
