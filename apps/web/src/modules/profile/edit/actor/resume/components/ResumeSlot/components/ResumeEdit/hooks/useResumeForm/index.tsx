@@ -1,3 +1,4 @@
+import useSwitch from 'common/hooks/useSwitch'
 import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 
 import { IResumeEditProps } from '../../types'
@@ -14,6 +15,11 @@ export const useResumeForm = (
   const [fileUrl, setFileUrl] = useState(resumeUrl)
   const [fileName, setFileName] = useState<string>('')
   const [currentFile, setCurrentFile] = useState<File | undefined>(undefined)
+  const {
+    isOpen: isLoading,
+    open: startLoading,
+    close: stopLoading,
+  } = useSwitch(false)
 
   const [error, setError] = useState<IError>({})
 
@@ -61,14 +67,21 @@ export const useResumeForm = (
       return
     }
 
-    await handleSubmit(resumeName, resumeId, currentFile)
-    changeToView()
+    startLoading()
+    try {
+      await handleSubmit(resumeName, resumeId, currentFile)
+      changeToView()
+    } finally {
+      stopLoading()
+    }
   }, [
     changeToView,
     currentFile,
     handleSubmit,
     resumeId,
     resumeName,
+    startLoading,
+    stopLoading,
     validateInput,
   ])
 
@@ -80,6 +93,7 @@ export const useResumeForm = (
   }, [fileUrl])
 
   return {
+    isLoading,
     resumeName,
     fileUrl,
     fileName,
