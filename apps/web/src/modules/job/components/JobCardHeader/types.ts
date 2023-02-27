@@ -10,5 +10,5 @@ export interface HeaderProps {
   castingId: number
   castingName: string
   isReport?: Boolean
-  applicationStatus?: ApplicationStatus
+  appliedStatus?: ApplicationStatus
 }
