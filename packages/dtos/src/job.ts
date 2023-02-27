@@ -242,7 +242,7 @@ export class GetJobCardDto extends OmitType(EditJobDto, [
   @ApiProperty()
   castingName: string
 
-  @ApiProperty()
+  @ApiProperty({enum: JobStatus})
   status: JobStatus
 }
 
@@ -269,8 +269,8 @@ export class SearchAppliedJobDto {
 }
 
 export class GetAppliedJobDto extends GetJobCardDto {
-  @ApiProperty({enum: JobStatus})
-  appliedStatus: JobStatus
+  @ApiProperty({enum: ApplicationStatus})
+  appliedStatus: ApplicationStatus
 }
 
 export class GetJobCardWithMaxPageDto {
@@ -315,7 +315,7 @@ export class JobIdDto {
 }
 
 export class JobSummaryDto {
-  @ApiProperty()
+  @ApiProperty({enum: JobStatus})
   status: JobStatus
 
   @ApiProperty()
