@@ -35,7 +35,25 @@ export class ReportService {
       throw new NotFoundException()
     }
 
-    return await this.reportRepository.getReports(job.jobId)
+    const reports = await this.reportRepository.getReports(job.jobId)
+    const formattedReports = this.formatReports(reports)
+    return {
+      reports: formattedReports,
+      jobTitle: job.title,
+      jobId: job.jobId,
+    }
+  }
+
+  public formatReports(reports: any) {
+    const formattedReports = reports.reports.map((report) => {
+      const newReports = {
+        ...report,
+        reporterName: `${report.User.firstName} ${report.User.lastName}`,
+      }
+      delete newReports.User
+      return newReports
+    })
+    return formattedReports
   }
 
   async acceptReport(id: number) {
