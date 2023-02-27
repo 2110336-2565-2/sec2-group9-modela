@@ -35,46 +35,82 @@ export default function FilterContainer(props: FilterContainerProps) {
         />
       )}
       {isAdmin && (
-        <FormGroup
-          sx={{ width: '100%', display: 'flex', alignItems: 'flex-start' }}
-        >
-          <Typography variant="body1" sx={{ justifyContent: 'left' }}>
-            แจ้งปัญหา
-          </Typography>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={state.reportCheck}
-                onChange={(event) =>
-                  setState((prev) => ({
-                    ...prev,
-                    reportCheck: event.target.checked,
-                  }))
-                }
-              />
-            }
-            label={
-              <Typography variant="subtitle2">
-                งานที่ได้รับการแจ้งปัญหา
-              </Typography>
-            }
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={state.cancelCheck}
-                onChange={(event) =>
-                  setState((prev) => ({
-                    ...prev,
-                    cancelCheck: event.target.checked,
-                  }))
-                }
-              />
-            }
-            label={<Typography variant="subtitle2">งานที่ถูกยกเลิก</Typography>}
-          />
+        <>
+          <FormGroup
+            sx={{ width: '100%', display: 'flex', alignItems: 'flex-start' }}
+          >
+            <Typography variant="body1" sx={{ justifyContent: 'left' }}>
+              แจ้งปัญหา
+            </Typography>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={state.reportCheck}
+                  onChange={(event) =>
+                    setState((prev) => ({
+                      ...prev,
+                      reportCheck: event.target.checked,
+                    }))
+                  }
+                />
+              }
+              label={
+                <Typography variant="subtitle2">
+                  งานที่ได้รับการแจ้งปัญหา
+                </Typography>
+              }
+            />
+          </FormGroup>
           <Divider sx={{ width: '100%' }} />
-        </FormGroup>
+          <Typography variant="body1"> สถานะการเปิดรับสมัคร </Typography>
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={state.openCheck}
+                  onChange={(event) =>
+                    setState((prev) => ({
+                      ...prev,
+                      openCheck: event.target.checked,
+                    }))
+                  }
+                />
+              }
+              label={<Typography variant="subtitle2">เปิดรับสมัคร</Typography>}
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={state.closeCheck}
+                  onChange={(event) =>
+                    setState((prev) => ({
+                      ...prev,
+                      closeCheck: event.target.checked,
+                    }))
+                  }
+                />
+              }
+              label={<Typography variant="subtitle2">ปิดรับสมัคร</Typography>}
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={state.cancelCheck}
+                  onChange={(event) =>
+                    setState((prev) => ({
+                      ...prev,
+                      cancelCheck: event.target.checked,
+                    }))
+                  }
+                />
+              }
+              label={
+                <Typography variant="subtitle2">งานที่ถูกยกเลิก</Typography>
+              }
+            />
+          </FormGroup>
+          <Divider sx={{ width: '100%' }} />
+        </>
       )}
       <Typography variant="body1"> การถ่ายทำ </Typography>
       <MobileDatePicker
@@ -217,39 +253,42 @@ export default function FilterContainer(props: FilterContainerProps) {
         value={state.deviant}
         placeholder="1000"
       />
-
-      <Divider sx={{ width: '100%' }} />
-      <Typography variant="body1"> สถานะการเปิดรับสมัคร </Typography>
-      <FormGroup>
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={state.openCheck}
-              onChange={(event) =>
-                setState((prev) => ({
-                  ...prev,
-                  openCheck: event.target.checked,
-                }))
+      {!isAdmin && (
+        <>
+          <Divider sx={{ width: '100%' }} />
+          <Typography variant="body1"> สถานะการเปิดรับสมัคร </Typography>
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={state.openCheck}
+                  onChange={(event) =>
+                    setState((prev) => ({
+                      ...prev,
+                      openCheck: event.target.checked,
+                    }))
+                  }
+                />
               }
+              label={<Typography variant="subtitle2">เปิดรับสมัคร</Typography>}
             />
-          }
-          label={<Typography variant="subtitle2">เปิดรับสมัคร</Typography>}
-        />
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={state.closeCheck}
-              onChange={(event) =>
-                setState((prev) => ({
-                  ...prev,
-                  closeCheck: event.target.checked,
-                }))
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={state.closeCheck}
+                  onChange={(event) =>
+                    setState((prev) => ({
+                      ...prev,
+                      closeCheck: event.target.checked,
+                    }))
+                  }
+                />
               }
+              label={<Typography variant="subtitle2">ปิดรับสมัคร</Typography>}
             />
-          }
-          label={<Typography variant="subtitle2">ปิดรับสมัคร</Typography>}
-        />
-      </FormGroup>
+          </FormGroup>
+        </>
+      )}
 
       <Divider sx={{ width: '100%' }} />
       <Typography variant="body1"> เพศ </Typography>
