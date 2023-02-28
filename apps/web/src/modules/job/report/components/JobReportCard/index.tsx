@@ -2,6 +2,7 @@ import { GetReportsDto } from '@modela/dtos'
 import { Divider, Link, Typography } from '@mui/material'
 
 import ReportDetail from './components/ReportDetail'
+import useReport from './hooks/useReport'
 import {
   AcceptButton,
   ButtonContainer,
@@ -11,6 +12,7 @@ import {
 
 const JobReportCard = (prop: GetReportsDto) => {
   const { jobTitle, jobId, reports } = prop
+  const { rejectJob, rejectReport } = useReport()
 
   return (
     <CardContainer>
@@ -29,13 +31,19 @@ const JobReportCard = (prop: GetReportsDto) => {
           {jobTitle}
         </Link>
       </Typography>
-      <Typography variant="body1">มีการแจ้งปัญหา 2 ครั้ง</Typography>
+      <Typography variant="body1">
+        มีการแจ้งปัญหา {reports.length} ครั้ง
+      </Typography>
       {reports.map((report) => (
         <ReportDetail key={report.reportId} {...report} />
       ))}
       <ButtonContainer>
-        <RejectButton>ยกเลิกการแจ้งปัญหาทั้งหมด</RejectButton>
-        <AcceptButton>ยืนยันยกเลิกงาน</AcceptButton>
+        <RejectButton onClick={() => rejectReport(jobId)}>
+          ยกเลิกการแจ้งปัญหาทั้งหมด
+        </RejectButton>
+        <AcceptButton onClick={() => rejectJob(jobId)}>
+          ยืนยันยกเลิกงาน
+        </AcceptButton>
       </ButtonContainer>
     </CardContainer>
   )

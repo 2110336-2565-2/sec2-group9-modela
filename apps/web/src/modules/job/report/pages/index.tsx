@@ -1,33 +1,18 @@
 import { GetReportsDto, UserType } from '@modela/dtos'
+import { CircularProgress } from '@mui/material'
 import withGuard from 'common/hoc/withGuard'
 import React from 'react'
 
 import JobReportCard from '../components/JobReportCard'
+import useGetReport from '../hooks/useGetReport'
 import { RootContainer } from './styled'
 
 const JobReportPage = () => {
-  const mockData: GetReportsDto = {
-    jobId: 1,
-    jobTitle: 'งานพี',
-    reports: [
-      {
-        reportId: 1,
-        reporterId: 1,
-        reporterName: 'ธนพล สุขสวัสดิ์',
-        reason: 'ไม่มีเครื่องเสียง',
-      },
-      {
-        reportId: 2,
-        reporterId: 1,
-        reporterName: 'ธนพล สุขสวัสดิ์',
-        reason: 'ไม่มีเครื่องเสียง',
-      },
-    ],
-  }
+  const data: GetReportsDto | undefined = useGetReport()
 
   return (
     <RootContainer>
-      <JobReportCard {...mockData} />
+      {data ? <JobReportCard {...data} /> : <CircularProgress />}
     </RootContainer>
   )
 }
