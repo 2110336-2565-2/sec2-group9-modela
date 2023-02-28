@@ -79,6 +79,7 @@ const JobCard = (prop: GetJobDto) => {
         wage={wage}
         actorCount={actorCount}
         status={status}
+        jobId={prop.jobId}
       />
     </CardContainer>
   )
