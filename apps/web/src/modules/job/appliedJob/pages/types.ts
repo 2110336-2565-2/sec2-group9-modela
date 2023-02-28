@@ -1,3 +1,5 @@
+import { ApplicationStatus, JobStatus } from '@modela/database'
+
 export interface IFilter {
   title: string | null
 
@@ -34,6 +36,6 @@ export const initialIFilter: IFilter = {
 }
 export const initialISearch: ISearch = {
   title: null,
-  applicationStatus: ['PENDING'],
-  status: ['OPEN', 'SELECTING', 'SELECTION_ENDED'],
+  applicationStatus: [ApplicationStatus.PENDING],
+  status: [JobStatus.OPEN, JobStatus.SELECTING, JobStatus.SELECTION_ENDED],
 }
