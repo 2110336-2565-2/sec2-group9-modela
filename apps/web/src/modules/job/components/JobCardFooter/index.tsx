@@ -15,7 +15,7 @@ const JobCardFooter = (prop: FooterProps) => {
   const { user } = useUser()
 
   const apply: React.MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.preventDefault()
+    e.stopPropagation()
   }
 
   const genderThai = genderTranslationMap[gender]
