@@ -12,7 +12,13 @@ import {
   Max,
   Min,
 } from 'class-validator'
-import { ApplicationStatus, Gender, Job, JobStatus, Shooting } from '@modela/database'
+import {
+  ApplicationStatus,
+  Gender,
+  Job,
+  JobStatus,
+  Shooting,
+} from '@modela/database'
 
 export enum SearchJobStatus {
   'OPEN' = 'OPEN',
@@ -25,7 +31,7 @@ export enum SearchJobByAdminStatus {
   'CANCELLED' = 'CANCELLED',
   'REPORTED' = 'REPORTED',
 }
-  
+
 const maxInt32 = 2147483647 //max int32
 export class SearchJobDto {
   @IsOptional()
@@ -122,7 +128,7 @@ export class SearchJobDto {
   castingId?: number
 }
 
-export class SearchJobByAdminDto extends OmitType(SearchJobDto,['status']) {
+export class SearchJobByAdminDto extends OmitType(SearchJobDto, ['status']) {
   @IsOptional()
   @IsEnum(SearchJobByAdminStatus, { each: true })
   @ApiPropertyOptional({ enum: SearchJobByAdminStatus, isArray: true })
@@ -217,7 +223,7 @@ export class CreateJobDto implements EditJobType {
 export class EditJobDto extends CreateJobDto {}
 export class EditJobStatusDto {
   @IsEnum(JobStatus)
-  @ApiProperty({enum: JobStatus}) 
+  @ApiProperty({ enum: JobStatus })
   status: JobStatus
 }
 
@@ -242,7 +248,10 @@ export class GetJobCardDto extends OmitType(EditJobDto, [
   @ApiProperty()
   castingName: string
 
-  @ApiProperty({enum: JobStatus})
+  @ApiProperty()
+  isApplied?: boolean
+
+  @ApiProperty({ enum: JobStatus })
   status: JobStatus
 }
 
@@ -269,7 +278,7 @@ export class SearchAppliedJobDto {
 }
 
 export class GetAppliedJobDto extends GetJobCardDto {
-  @ApiProperty({enum: ApplicationStatus})
+  @ApiProperty({ enum: ApplicationStatus })
   appliedStatus: ApplicationStatus
 }
 
@@ -315,7 +324,7 @@ export class JobIdDto {
 }
 
 export class JobSummaryDto {
-  @ApiProperty({enum: JobStatus})
+  @ApiProperty({ enum: JobStatus })
   status: JobStatus
 
   @ApiProperty()

@@ -308,7 +308,7 @@ export class JobService {
     const params = this.convertRequestToParams(searchJobDto, user)
 
     //get jobs with params from repository
-    const jobsJoinCasting = await this.repository.getJobJoined(params)
+    const jobsJoinCasting = await this.repository.getJobJoined(params, user)
     const result = new GetJobCardWithMaxPageDto()
     result.jobs = jobsJoinCasting
 
