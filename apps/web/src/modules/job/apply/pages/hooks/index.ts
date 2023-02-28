@@ -26,7 +26,10 @@ const useResume = () => {
       displaySnackbar('การสมัครเสร็จสิ้น', 'success')
       router.push('/job', undefined, { shallow: true })
     } catch (err) {
-      handleError(err)
+      handleError(err, {
+        409: 'คุณได้สมัครงานนี้ไปแล้ว',
+        400: 'กรุญาเลือกเรซูเม่',
+      })
     } finally {
       setLoading(false)
     }

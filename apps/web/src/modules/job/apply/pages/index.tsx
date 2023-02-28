@@ -1,15 +1,16 @@
 import { UserType } from '@modela/dtos'
-import { CircularProgress, Divider, Link, Typography } from '@mui/material'
+import {
+  Button,
+  CircularProgress,
+  Divider,
+  Link,
+  Typography,
+} from '@mui/material'
 import withGuard from 'common/hoc/withGuard'
 
 import SelectResume from '../components/SelectResume'
 import useResume from './hooks'
-import {
-  AcceptButton,
-  ButtonContainer,
-  CardContainer,
-  RootContainer,
-} from './styled'
+import { CardContainer, RootContainer } from './styled'
 
 const JobApplyPage = () => {
   const { jobId, jobTitle, handleSuccess, loading, resumes, Id, setId } =
@@ -19,7 +20,7 @@ const JobApplyPage = () => {
   return (
     <RootContainer>
       <CardContainer>
-        <Typography variant="h5" textAlign="center">
+        <Typography variant="h6" textAlign="center">
           สมัครงาน
         </Typography>
         <Divider />
@@ -35,9 +36,15 @@ const JobApplyPage = () => {
           </Link>
         </Typography>
         <SelectResume resumes={resumes} Id={Id} setId={setId}></SelectResume>
-        <ButtonContainer>
-          <AcceptButton onClick={handleSuccess}>ยืนยันสมัครงาน</AcceptButton>
-        </ButtonContainer>
+        <Button
+          sx={{ borderRadius: '12px', alignSelf: 'center' }}
+          size="large"
+          variant="contained"
+          type="submit"
+          onClick={handleSuccess}
+        >
+          ยืนยันสมัครงาน
+        </Button>
       </CardContainer>
     </RootContainer>
   )
