@@ -14,7 +14,7 @@ const useResume = () => {
   const [jobTitle, setJobTitle] = useState('')
   const { displaySnackbar } = useSnackbar()
 
-  const [Id, setId] = React.useState(undefined)
+  const [Id, setId] = React.useState<number | undefined>()
 
   const handleSuccess = useCallback(async () => {
     setLoading(true)

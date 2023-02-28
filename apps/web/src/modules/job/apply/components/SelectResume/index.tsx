@@ -5,7 +5,9 @@ import MenuItem from '@mui/material/MenuItem'
 import TextField from 'common/components/TextField'
 import * as React from 'react'
 
-export default function SelectResume(props: any) {
+import { ApplyProps } from './types'
+
+export default function SelectResume(props: ApplyProps) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     props.setId(Number(event.target.value))
   }
