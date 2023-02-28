@@ -1,10 +1,10 @@
-import { Button, styled } from '@mui/material'
+import { styled } from '@mui/material'
 
 export const RootContainer = styled('div')`
   display: flex;
   justify-content: center;
   padding-top: 3rem;
-  width: 50vw;
+  width: 40vw;
   ${(props) => props.theme.breakpoints.down('md')} {
     width: 90vw;
   }
@@ -23,29 +23,5 @@ export const CardContainer = styled('div')`
   padding: 16px;
   ${(props) => props.theme.breakpoints.down('md')} {
     padding: 8px;
-  }
-`
-
-export const ButtonContainer = styled('div')`
-  display: flex;
-  justify-content: space-between;
-`
-
-export const StyledButton = styled(Button)`
-  color: white;
-  border-radius: 10px;
-`
-
-export const AcceptButton = styled(StyledButton)`
-  background-color: rgba(102, 163, 115, 1);
-  &:hover {
-    background-color: rgba(102, 163, 115, 0.7);
-  }
-`
-
-export const RejectButton = styled(StyledButton)`
-  background-color: rgba(170, 91, 91, 1);
-  &:hover {
-    background-color: rgba(170, 91, 91, 0.7);
   }
 `
