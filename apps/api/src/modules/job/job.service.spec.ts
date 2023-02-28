@@ -177,7 +177,10 @@ describe('JobService', () => {
               skip: (pageQuery - 1) * limitQuery,
               where: defaultWhere,
             }
-            expect(repository.getJobJoined).toBeCalledWith(prismaParams)
+            expect(repository.getJobJoined).toBeCalledWith(
+              prismaParams,
+              MOCK_USER_ACTOR,
+            )
           }
         }
       }) //end it
@@ -278,7 +281,14 @@ describe('JobService', () => {
             skip: (pageQuery - 1) * limitQuery,
             where: thisWhere,
           }
-          expect(repository.getJobJoined).toBeCalledWith(prismaParams)
+          expect(repository.getJobJoined).toBeCalledWith(
+            prismaParams,
+            MOCK_USER_CASTING,
+          )
+          expect(repository.getJobJoined).toBeCalledWith(
+            prismaParams,
+            MOCK_USER_ACTOR,
+          )
         })
       })
     })
@@ -323,7 +333,10 @@ describe('JobService', () => {
           skip: (pageQuery - 1) * limitQuery,
           where: thisWhere,
         }
-        expect(repository.getJobJoined).toBeCalledWith(prismaParams)
+        expect(repository.getJobJoined).toBeCalledWith(
+          prismaParams,
+          MOCK_USER_CASTING,
+        )
       })
     })
   })
