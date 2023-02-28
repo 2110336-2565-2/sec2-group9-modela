@@ -6,5 +6,5 @@ export interface FooterProps {
   wage: number
   dueDate: Date
   status: JobStatus
-  jobId: number
+  jobId?: number
 }
