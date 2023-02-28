@@ -19,7 +19,6 @@ export default function JobCard(prop: GetAppliedJobDto) {
     appliedStatus,
     ...headerProps
   } = prop
-  console.log(appliedStatus)
   return (
     <Link
       href={`/job/${jobId}`}
