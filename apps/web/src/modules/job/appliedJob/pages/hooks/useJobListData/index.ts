@@ -2,6 +2,7 @@
 import { ApplicationStatus, GetAppliedJobDto, JobStatus } from '@modela/dtos'
 import { useMediaQuery } from '@mui/material'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
+import useSwitch from 'common/hooks/useSwitch'
 import { apiClient } from 'common/utils/api'
 import { JobCardContainerProps } from 'modules/job/appliedJob/components/JobCardContainer/types'
 import { useRouter } from 'next/router'
@@ -11,15 +12,14 @@ import { IFilter, initialIFilter, initialISearch, ISearch } from '../../types'
 
 const useJobListData = () => {
   const router = useRouter()
-  const [isOpen, setOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [job, setJob] = useState<JobCardContainerProps>({ jobs: [] })
   const [search, setSearch] = useState<ISearch>(initialISearch)
   const [state, setState] = useState<IFilter>(initialIFilter)
-  const open = useCallback(() => setOpen(true), [])
-  const close = useCallback(() => setOpen(false), [])
   const { handleError } = useErrorHandler()
   const isDesktop = useMediaQuery('(min-width: 900px)')
+
+  const { isOpen, open, close } = useSwitch()
 
   const filterData = useCallback(
     async (state: IFilter) => {
