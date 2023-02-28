@@ -8,12 +8,19 @@ const useGetReport = () => {
   const [jobData, setJobData] = useState<GetReportsDto>()
 
   useEffect(() => {
-    if (jobId) {
-      apiClient.get('/reports/jobs/' + jobId).then((res) => {
+    const fetchData = async () => {
+      try {
+        const res = await apiClient.get('/reports/jobs/' + jobId)
         setJobData(res.data)
-      })
+      } catch (err) {
+        //console.log(err)
+        router.push('/404')
+      }
     }
-  }, [jobId])
+    if (jobId) {
+      fetchData()
+    }
+  }, [jobId, router])
 
   return jobData
 }

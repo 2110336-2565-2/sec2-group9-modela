@@ -7,15 +7,23 @@ const useReport = () => {
   const { displaySnackbar } = useSnackbar()
 
   const rejectJob = async (id: number) => {
-    await apiClient.put('reports/jobs/' + id + '/accept')
-    displaySnackbar('ยกเลิกงานเรียบร้อย', 'success')
-    router.push('/job')
+    try {
+      await apiClient.put('reports/jobs/' + id + '/accept')
+      displaySnackbar('ยกเลิกงานเรียบร้อย', 'success')
+      router.push('/job')
+    } catch (err) {
+      displaySnackbar('ไม่สามารถยกเลิกงานได้', 'error')
+    }
   }
 
   const rejectReport = async (id: number) => {
-    await apiClient.put('reports/jobs/' + id + '/accept')
-    displaySnackbar('ยกเลิกการแจ้งปัญหาเรียบร้อย', 'success')
-    router.push('/job')
+    try {
+      await apiClient.put('reports/jobs/' + id + '/accept')
+      displaySnackbar('ยกเลิกการแจ้งปัญหาเรียบร้อย', 'success')
+      router.push('/job')
+    } catch (err) {
+      displaySnackbar('ไม่สามารถยกเลิกการแจ้งปัญหาได้', 'error')
+    }
   }
 
   return { rejectJob, rejectReport }
