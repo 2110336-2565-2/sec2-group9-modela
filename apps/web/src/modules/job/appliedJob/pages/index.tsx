@@ -17,8 +17,17 @@ import {
 } from './styled'
 
 const AppliedJobPage = () => {
-  const { job, filterData, state, setState, isOpen, open, close, isLoading } =
-    useJobListData()
+  const {
+    job,
+    filterData,
+    state,
+    setState,
+    isOpen,
+    open,
+    close,
+    isLoading,
+    isDesktop,
+  } = useJobListData()
   useNavbarSearch(
     useCallback(() => {
       open()
@@ -37,7 +46,7 @@ const AppliedJobPage = () => {
       <PlaceFill />
       <JobContainer
         sx={{
-          display: isOpen ? 'none' : 'flex',
+          display: isOpen && !isDesktop ? 'none' : 'flex',
         }}
       >
         <SearchContainer>
