@@ -130,6 +130,7 @@ const useJobListData = () => {
     isOpen,
     open,
     close,
+    isDesktop,
   }
 }
 

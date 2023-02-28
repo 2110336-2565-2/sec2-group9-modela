@@ -27,6 +27,7 @@ const JobList = () => {
     isOpen,
     open,
     close,
+    isDesktop,
   } = useJobListData()
   useNavbarSearch(
     useCallback(() => {
@@ -47,7 +48,7 @@ const JobList = () => {
       <PlaceFill />
       <JobContainer
         sx={{
-          display: isOpen ? 'none' : 'flex',
+          display: isOpen && !isDesktop ? 'none' : 'flex',
         }}
       >
         <SearchContainer>

@@ -17,9 +17,7 @@ const useJobListData = () => {
   const [search, setSearch] = useState<ISearch>(initialISearch)
   const [state, setState] = useState<IFilter>(initialIFilter)
   const { handleError } = useErrorHandler()
-  const isDesktop = useMediaQuery((theme: Theme) =>
-    theme.breakpoints.down('md'),
-  )
+  const isDesktop = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
 
   const { isOpen, open, close } = useSwitch()
 
@@ -117,6 +115,7 @@ const useJobListData = () => {
     open,
     close,
     isLoading,
+    isDesktop,
   }
 }
 
