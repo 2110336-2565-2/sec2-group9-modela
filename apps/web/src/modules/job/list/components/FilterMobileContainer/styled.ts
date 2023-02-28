@@ -15,7 +15,6 @@ export const FIlterPage = styled('div')`
 export const FilterPageFilterBox = styled('div')`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   text-align: center;
   align-items: center;
   margin: 1rem;
