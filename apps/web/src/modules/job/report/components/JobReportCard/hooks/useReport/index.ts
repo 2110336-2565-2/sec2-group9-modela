@@ -1,10 +1,12 @@
 import { useSnackbar } from 'common/context/SnackbarContext'
+import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
 import { useRouter } from 'next/router'
 
 const useReport = () => {
   const router = useRouter()
   const { displaySnackbar } = useSnackbar()
+  const { handleError } = useErrorHandler()
 
   const rejectJob = async (id: number) => {
     try {
@@ -12,7 +14,7 @@ const useReport = () => {
       displaySnackbar('ยกเลิกงานเรียบร้อย', 'success')
       router.push('/job')
     } catch (err) {
-      displaySnackbar('ไม่สามารถยกเลิกงานได้', 'error')
+      handleError(err)
     }
   }
 
@@ -22,7 +24,7 @@ const useReport = () => {
       displaySnackbar('ยกเลิกการแจ้งปัญหาเรียบร้อย', 'success')
       router.push('/job')
     } catch (err) {
-      displaySnackbar('ไม่สามารถยกเลิกการแจ้งปัญหาได้', 'error')
+      handleError(err)
     }
   }
 
