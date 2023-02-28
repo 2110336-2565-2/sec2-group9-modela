@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { GetAppliedJobDto } from '@modela/dtos'
+import { ApplicationStatus, GetAppliedJobDto, JobStatus } from '@modela/dtos'
 import { useMediaQuery } from '@mui/material'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
@@ -27,35 +27,35 @@ const useJobListData = () => {
       let newApplicationStatus = []
 
       if (state.openCheck) {
-        newStatus.push('OPEN')
+        newStatus.push(JobStatus.OPEN)
       }
       if (state.selectCheck) {
-        newStatus.push('SELECTING')
+        newStatus.push(JobStatus.SELECTING)
       }
       if (state.selectEndCheck) {
-        newStatus.push('SELECTION_ENDED')
+        newStatus.push(JobStatus.SELECTION_ENDED)
       }
       if (state.finishCheck) {
-        newStatus.push('FINISHED')
+        newStatus.push(JobStatus.FINISHED)
       }
       if (state.cancelCheck) {
-        newStatus.push('CANCELLED')
+        newStatus.push(JobStatus.CANCELLED)
       }
 
       if (state.pendingCheck) {
-        newApplicationStatus.push('PENDING')
+        newApplicationStatus.push(ApplicationStatus.PENDING)
       }
       if (state.offerCheck) {
-        newApplicationStatus.push('OFFER_SENT')
+        newApplicationStatus.push(ApplicationStatus.OFFER_SENT)
       }
       if (state.rejectCheck) {
-        newApplicationStatus.push('REJECTED')
+        newApplicationStatus.push(ApplicationStatus.REJECTED)
       }
       if (state.offerAcceptCheck) {
-        newApplicationStatus.push('OFFER_ACCEPTED')
+        newApplicationStatus.push(ApplicationStatus.OFFER_ACCEPTED)
       }
       if (state.offerRejectCheck) {
-        newApplicationStatus.push('OFFER_REJECTED')
+        newApplicationStatus.push(ApplicationStatus.OFFER_REJECTED)
       }
       setSearch({
         ...search,
