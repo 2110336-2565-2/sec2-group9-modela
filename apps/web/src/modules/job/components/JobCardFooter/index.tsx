@@ -11,12 +11,11 @@ import { FooterRow, SameDiv } from './styled'
 import { FooterProps } from './types'
 
 const JobCardFooter = (prop: FooterProps) => {
-  const { actorCount, wage, status, dueDate, gender, isApplied } = prop
+  const { actorCount, wage, status, dueDate, gender, isApplied, jobId } = prop
   const { user } = useUser()
 
   const apply: React.MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.preventDefault()
-    window.alert('applied')
+    e.stopPropagation()
   }
 
   const genderThai = genderTranslationMap[gender]
@@ -77,11 +76,11 @@ const JobCardFooter = (prop: FooterProps) => {
           />
           <Typography variant="subtitle1">{formatDate(dueDate)}</Typography>
         </SameDiv>
-
         {status === JobStatus.OPEN &&
           user?.type === UserType.ACTOR &&
           !isApplied && (
             <Button
+              href={'/job/' + jobId + '/apply'}
               color="primary"
               sx={{ cursor: 'pointer', marginLeft: 'auto' }}
               onClick={apply}
