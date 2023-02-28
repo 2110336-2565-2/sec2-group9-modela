@@ -1,4 +1,4 @@
-import { ApplicationStatus, JobStatus } from '@modela/database'
+import { ApplicationStatus, JobStatus } from '@modela/dtos'
 
 export interface IFilter {
   title: string | null

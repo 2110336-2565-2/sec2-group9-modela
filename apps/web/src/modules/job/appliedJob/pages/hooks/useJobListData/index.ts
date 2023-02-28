@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { ApplicationStatus, GetAppliedJobDto, JobStatus } from '@modela/dtos'
-import { useMediaQuery } from '@mui/material'
+import { Theme, useMediaQuery } from '@mui/material'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import useSwitch from 'common/hooks/useSwitch'
 import { apiClient } from 'common/utils/api'
@@ -17,7 +17,9 @@ const useJobListData = () => {
   const [search, setSearch] = useState<ISearch>(initialISearch)
   const [state, setState] = useState<IFilter>(initialIFilter)
   const { handleError } = useErrorHandler()
-  const isDesktop = useMediaQuery('(min-width: 900px)')
+  const isDesktop = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down('md'),
+  )
 
   const { isOpen, open, close } = useSwitch()
 
