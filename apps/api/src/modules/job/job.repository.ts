@@ -1,4 +1,10 @@
-import { ApplicationStatus, Job, JobStatus, Prisma } from '@modela/database'
+import {
+  ApplicationStatus,
+  Job,
+  JobStatus,
+  Prisma,
+  UserType,
+} from '@modela/database'
 import {
   CreateJobDto,
   EditJobDto,
@@ -7,6 +13,7 @@ import {
   GetJobCardDto,
   GetJobDto,
   JobSummaryDto,
+  JwtDto,
 } from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
@@ -68,13 +75,16 @@ export class JobRepository {
     return count
   }
 
-  async getJobJoined(params: {
-    skip?: number
-    take?: number
-    cursor?: Prisma.JobWhereUniqueInput
-    where?: Prisma.JobWhereInput
-    orderBy?: Prisma.JobOrderByWithRelationInput
-  }): Promise<GetJobCardDto[]> {
+  async getJobJoined(
+    params: {
+      skip?: number
+      take?: number
+      cursor?: Prisma.JobWhereUniqueInput
+      where?: Prisma.JobWhereInput
+      orderBy?: Prisma.JobOrderByWithRelationInput
+    },
+    user: JwtDto,
+  ): Promise<GetJobCardDto[]> {
     //generate join casting and user table params
     const paramsWithInclude = {
       ...params,
@@ -88,6 +98,11 @@ export class JobRepository {
           },
         },
         Shooting: true,
+        Application: {
+          where: {
+            actorId: user.userId,
+          },
+        },
       },
     }
     //get data
@@ -106,6 +121,8 @@ export class JobRepository {
       jobCastingImageUrl: job.Casting.User.profileImageUrl,
       castingId: job.castingId,
       castingName: job.Casting.User.firstName,
+      isApplied:
+        user.type === UserType.ACTOR ? job.Application.length > 0 : undefined,
     }))
     return selectedFields
   }

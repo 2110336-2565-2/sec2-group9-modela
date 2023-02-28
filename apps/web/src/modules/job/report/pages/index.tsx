@@ -8,11 +8,11 @@ import useGetReport from '../hooks/useGetReport'
 import { RootContainer } from './styled'
 
 const JobReportPage = () => {
-  const Data: GetReportsDto | undefined = useGetReport()
+  const data: GetReportsDto | undefined = useGetReport()
 
   return (
     <RootContainer>
-      {Data ? <JobReportCard {...Data} /> : <CircularProgress />}
+      {data ? <JobReportCard {...data} /> : <CircularProgress />}
     </RootContainer>
   )
 }
