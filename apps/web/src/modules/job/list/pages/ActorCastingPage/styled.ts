@@ -35,9 +35,6 @@ export const JobContainer = styled('div')`
   ${(props) => props.theme.breakpoints.down('md')} {
     width: 95vw;
   }
-  ${(props) => props.theme.breakpoints.up('md')} {
-    display: flex;
-  }
 `
 
 export const FilterBoxContainer = styled('div')`
