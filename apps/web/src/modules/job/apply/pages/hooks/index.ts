@@ -19,12 +19,16 @@ const useResume = () => {
   const handleSuccess = useCallback(async () => {
     setLoading(true)
     try {
-      const resumeIdBody: ResumeIdDto = {
-        resumeId: id!,
+      if (id) {
+        const resumeIdBody: ResumeIdDto = {
+          resumeId: id,
+        }
+        await apiClient.post('jobs/' + jobId + '/apply', resumeIdBody)
+        displaySnackbar('การสมัครเสร็จสิ้น', 'success')
+        router.push('/job', undefined, { shallow: true })
+      } else {
+        displaySnackbar('กรุณาเลือกเรซูเม่', 'error')
       }
-      await apiClient.post('jobs/' + jobId + '/apply', resumeIdBody)
-      displaySnackbar('การสมัครเสร็จสิ้น', 'success')
-      router.push('/job', undefined, { shallow: true })
     } catch (err) {
       handleError(err, {
         409: 'คุณได้สมัครงานนี้ไปแล้ว',

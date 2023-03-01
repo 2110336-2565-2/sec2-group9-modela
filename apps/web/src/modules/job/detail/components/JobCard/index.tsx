@@ -20,6 +20,7 @@ const JobCard = (prop: GetJobDto) => {
     shooting,
     wage,
     status,
+    jobId,
     ...headerProps
   } = prop
 
@@ -27,7 +28,7 @@ const JobCard = (prop: GetJobDto) => {
 
   return (
     <CardContainer>
-      <JobCardHeader {...headerProps} status={status} isDetail />
+      <JobCardHeader {...headerProps} jobId={jobId} status={status} isDetail />
       <CorporateRow>
         <Typography
           variant="subtitle2"
@@ -79,7 +80,7 @@ const JobCard = (prop: GetJobDto) => {
         wage={wage}
         actorCount={actorCount}
         status={status}
-        jobId={prop.jobId}
+        jobId={jobId}
       />
     </CardContainer>
   )
