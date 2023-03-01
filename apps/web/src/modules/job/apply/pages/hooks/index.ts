@@ -14,17 +14,21 @@ const useResume = () => {
   const [jobTitle, setJobTitle] = useState('')
   const { displaySnackbar } = useSnackbar()
 
-  const [Id, setId] = React.useState<number | undefined>()
+  const [id, setId] = React.useState<number | undefined>()
 
   const handleSuccess = useCallback(async () => {
     setLoading(true)
     try {
-      const resumeIdBody: ResumeIdDto = {
-        resumeId: Id!,
+      if (id) {
+        const resumeIdBody: ResumeIdDto = {
+          resumeId: id,
+        }
+        await apiClient.post('jobs/' + jobId + '/apply', resumeIdBody)
+        displaySnackbar('การสมัครเสร็จสิ้น', 'success')
+        router.push('/job', undefined, { shallow: true })
+      } else {
+        displaySnackbar('กรุณาเลือกเรซูเม่', 'error')
       }
-      await apiClient.post('jobs/' + jobId + '/apply', resumeIdBody)
-      displaySnackbar('การสมัครเสร็จสิ้น', 'success')
-      router.push('/job', undefined, { shallow: true })
     } catch (err) {
       handleError(err, {
         409: 'คุณได้สมัครงานนี้ไปแล้ว',
@@ -33,7 +37,7 @@ const useResume = () => {
     } finally {
       setLoading(false)
     }
-  }, [Id, displaySnackbar, handleError, jobId, router])
+  }, [id, displaySnackbar, handleError, jobId, router])
 
   const [resumes, setResumes] = React.useState<ResumeDto[]>([])
   //fetch job title
@@ -59,7 +63,7 @@ const useResume = () => {
     handleSuccess,
     loading,
     resumes,
-    Id,
+    id,
     setId,
   }
 }
