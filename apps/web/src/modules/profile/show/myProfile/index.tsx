@@ -1,3 +1,4 @@
+import { UserType } from '@modela/database'
 import { AccountCircleOutlined, ArticleOutlined } from '@mui/icons-material'
 import { Edit } from '@mui/icons-material'
 import {
@@ -11,6 +12,7 @@ import MenuBar from 'common/components/MenuBar'
 import ProfileImage from 'common/components/ProfileImage'
 import { useUser } from 'common/context/UserContext'
 import withGuard from 'common/hoc/withGuard'
+import useNavbarFocus from 'common/hooks/useNavbarFocus'
 import React from 'react'
 
 import InfoText from '../components/InfoText'
@@ -23,11 +25,12 @@ import {
   SubContentContainer,
 } from './styled'
 
-const Login = () => {
+const ActorProfile = () => {
   const MENU_ITEM = [
     { icon: <AccountCircleOutlined />, label: 'โปรไฟล์', href: '/profile' },
     { icon: <ArticleOutlined />, label: 'เรซูเม่', href: '/blog' },
   ]
+  useNavbarFocus('profile')
   const { profile, isOpen } = useActorProfile()
   const { user } = useUser()
   return (
@@ -55,7 +58,7 @@ const Login = () => {
                 }}
               />
             </Grid>
-            <ContentContainer sx={{ width: '100%' }}>
+            <ContentContainer>
               <SubContentContainer sx={{ width: '50%' }}>
                 <InfoText main={'ชื่อเล่น'} info={profile?.nickname} />
                 <InfoText main={'สัญชาติ'} info={profile?.nationality} />
@@ -73,7 +76,7 @@ const Login = () => {
               </SubContentContainer>
             </ContentContainer>
             <Divider sx={{ width: '100%' }} />
-            <ContentContainer sx={{ width: '100%' }}>
+            <ContentContainer>
               <SubContentContainer sx={{ width: '100%' }}>
                 <InfoText main={'ความสูง'} info={profile?.height?.toString()} />
                 <InfoText main={'น้ำหนัก'} info={profile?.weight?.toString()} />
@@ -90,7 +93,7 @@ const Login = () => {
               </SubContentContainer>
             </ContentContainer>
             <ContentContainer>
-              <SubContentContainer>
+              <SubContentContainer sx={{ width: '100%' }}>
                 <InfoText
                   main={'ข้อมูลอื่นๆ เพิ่มเติม'}
                   info={profile?.description}
@@ -119,4 +122,4 @@ const Login = () => {
   )
 }
 
-export default withGuard(Login, 'verified')
+export default withGuard(ActorProfile, 'verified', [UserType.ACTOR])
