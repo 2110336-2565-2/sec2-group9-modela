@@ -3,7 +3,7 @@ import Box from '@mui/material/Box'
 import FormControl from '@mui/material/FormControl'
 import MenuItem from '@mui/material/MenuItem'
 import TextField from 'common/components/TextField'
-import * as React from 'react'
+import React from 'react'
 
 import { ApplyProps } from './types'
 
@@ -17,7 +17,7 @@ export default function SelectResume(props: ApplyProps) {
       <FormControl fullWidth>
         <TextField
           select
-          value={props.Id}
+          value={props.id}
           label="เลือก resume"
           onChange={handleChange}
         >

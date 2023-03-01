@@ -13,7 +13,7 @@ import useResume from './hooks'
 import { CardContainer, RootContainer } from './styled'
 
 const JobApplyPage = () => {
-  const { jobId, jobTitle, handleSuccess, loading, resumes, Id, setId } =
+  const { jobId, jobTitle, handleSuccess, loading, resumes, id, setId } =
     useResume()
   if (loading) return <CircularProgress />
 
@@ -35,7 +35,7 @@ const JobApplyPage = () => {
             {jobTitle}
           </Link>
         </Typography>
-        <SelectResume resumes={resumes} Id={Id} setId={setId}></SelectResume>
+        <SelectResume resumes={resumes} id={id} setId={setId}></SelectResume>
         <Button
           sx={{ borderRadius: '12px', alignSelf: 'center' }}
           size="large"
