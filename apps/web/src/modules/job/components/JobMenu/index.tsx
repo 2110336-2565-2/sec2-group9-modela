@@ -1,10 +1,10 @@
 import { AccountCircleOutlined, ArticleOutlined } from '@mui/icons-material'
-import { Typography } from '@mui/material'
+import { Button, Typography } from '@mui/material'
 import MenuBar from 'common/components/MenuBar'
 import { useRouter } from 'next/router'
 import React from 'react'
 
-import { STATUS_NAME } from './constants'
+import { NEXT_STATUS_NAME, STATUS_NAME } from './constants'
 import useSummaryData from './hooks/useSummaryData'
 import { MenuContainer, SummaryContainer } from './styled'
 import { JobMenuProps } from './types'
@@ -41,6 +41,18 @@ const JobMenu = ({ focus }: JobMenuProps) => {
           มีนักแสดงที่กำลังรออยู่ {pendingActorCount} คน
         </Typography>
       </SummaryContainer>
+      {NEXT_STATUS_NAME[status!] && (
+        <Button
+          variant="contained"
+          sx={{
+            borderRadius: '12px',
+            width: '100%',
+            fontSize: '16px',
+          }}
+        >
+          {NEXT_STATUS_NAME[status!]}
+        </Button>
+      )}
     </MenuContainer>
   )
 }
