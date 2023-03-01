@@ -25,8 +25,6 @@ const useResume = () => {
         await apiClient.post('jobs/' + jobId + '/apply', resumeIdBody)
         displaySnackbar('การสมัครเสร็จสิ้น', 'success')
         router.push('/job', undefined, { shallow: true })
-      } else {
-        displaySnackbar('กรุณาเลือกเรซูเม่', 'error')
       }
     } catch (err) {
       handleError(err, {

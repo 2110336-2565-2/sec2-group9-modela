@@ -1,6 +1,6 @@
 import { styled } from '@mui/material'
 
-export const RootContainer = styled('div')`
+export const RootContainer = styled('form')`
   display: flex;
   justify-content: center;
   padding-top: 3rem;
