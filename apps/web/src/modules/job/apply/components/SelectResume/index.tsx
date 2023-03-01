@@ -8,8 +8,9 @@ import React from 'react'
 import { ApplyProps } from './types'
 
 export default function SelectResume(props: ApplyProps) {
+  const { id, setId, resumes } = props
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    props.setId(Number(event.target.value))
+    setId(Number(event.target.value))
   }
 
   return (
@@ -17,13 +18,13 @@ export default function SelectResume(props: ApplyProps) {
       <FormControl fullWidth>
         <TextField
           select
-          value={props.id}
+          value={id}
           label="เลือก resume"
           onChange={handleChange}
         >
-          {props.resumes.map((resume: ResumeDto) => (
-            <MenuItem key={resume.resumeId} value={resume.resumeId}>
-              {resume.name}
+          {resumes.map(({ resumeId, name }: ResumeDto) => (
+            <MenuItem key={resumeId} value={resumeId}>
+              {name}
             </MenuItem>
           ))}
         </TextField>

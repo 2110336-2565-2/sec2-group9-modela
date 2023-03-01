@@ -59,7 +59,7 @@ export default function JobCard(prop: JobCardProps) {
           wage={wage}
           actorCount={actorCount}
           status={status}
-          jobId={prop.jobId}
+          jobId={jobId}
         />
       </CardContainer>
     </Link>
