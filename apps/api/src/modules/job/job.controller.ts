@@ -2,15 +2,15 @@ import {
   CreateJobDto,
   EditJobDto,
   EditJobStatusDto,
-  GetJobCardByAdminWithMaxPageDto,
   GetAppliedJobDto,
+  GetJobCardByAdminWithMaxPageDto,
   GetJobCardWithMaxPageDto,
   GetJobDto,
   JobIdDto,
   JobSummaryDto,
   JwtDto,
-  SearchJobByAdminDto,
   SearchAppliedJobDto,
+  SearchJobByAdminDto,
   SearchJobDto,
   UserType,
 } from '@modela/dtos'
@@ -36,7 +36,7 @@ export class JobController {
   constructor(private readonly jobService: JobService) {}
 
   @Get()
-  @UseAuthGuard()
+  @UseAuthGuard(UserType.CASTING, UserType.ACTOR)
   @ApiOperation({ summary: 'get all jobs with filter' })
   @ApiOkResponse({ type: GetJobCardWithMaxPageDto, isArray: true })
   @ApiUnauthorizedResponse({ description: 'User is not login' })
