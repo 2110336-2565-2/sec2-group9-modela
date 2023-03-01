@@ -15,7 +15,6 @@ import { CardContainer, RootContainer } from './styled'
 const JobApplyPage = () => {
   const { jobId, jobTitle, handleSuccess, loading, resumes, id, setId } =
     useResume()
-  if (loading) return <CircularProgress />
 
   return (
     <RootContainer>
@@ -42,6 +41,10 @@ const JobApplyPage = () => {
           variant="contained"
           type="submit"
           onClick={handleSuccess}
+          disabled={loading}
+          startIcon={
+            loading && <CircularProgress size="24px" color="primary" />
+          }
         >
           ยืนยันสมัครงาน
         </Button>
