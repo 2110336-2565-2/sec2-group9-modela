@@ -1,14 +1,14 @@
 import { UserType } from '@modela/dtos'
 import { CircularProgress } from '@mui/material'
 import withGuard from 'common/hoc/withGuard'
+import useNavbarFocus from 'common/hooks/useNavbarFocus'
 import useNavbarSearch from 'common/hooks/useNavbarSearch'
-import FilterContainer from 'modules/job/list/components/FilterContainer'
-import FilterMobileContainer from 'modules/job/list/components/FilterMobileContainer'
-import JobCardContainer from 'modules/job/list/components/JobCardContainer'
-import SearchBox from 'modules/job/list/components/SearchBox'
-import React, { useCallback } from 'react'
-import InfiniteScroll from 'react-infinite-scroller'
+import FilterMobileContainer from 'modules/job/appliedJob/components/FilterMobileContainer'
+import SearchBox from 'modules/job/appliedJob/components/SearchBox'
+import { useCallback } from 'react'
 
+import FilterContainer from '../components/FilterContainer'
+import JobCardContainer from '../components/JobCardContainer'
 import useJobListData from './hooks/useJobListData'
 import {
   FilterBoxContainer,
@@ -16,17 +16,17 @@ import {
   PlaceFill,
   SearchContainer,
 } from './styled'
-const JobList = () => {
+
+const AppliedJobPage = () => {
   const {
     job,
-    hasMore,
-    fetchData,
     filterData,
     state,
     setState,
     isOpen,
     open,
     close,
+    isLoading,
     isDesktop,
   } = useJobListData()
   useNavbarSearch(
@@ -34,7 +34,7 @@ const JobList = () => {
       open()
     }, [open]),
   )
-
+  useNavbarFocus('jobs')
   return (
     <div
       style={{
@@ -67,25 +67,20 @@ const JobList = () => {
             gap: '1rem',
           }}
         >
-          <InfiniteScroll
-            loadMore={fetchData}
-            hasMore={hasMore}
-            loader={
-              <div
-                className="loader"
-                key={0}
-                style={{
-                  display: 'flex',
-                  alignItems: 'column',
-                  justifyContent: 'center',
-                }}
-              >
-                <CircularProgress color="primary" />
-              </div>
-            }
-          >
-            {job && <JobCardContainer {...job} />}
-          </InfiniteScroll>
+          {isLoading && (
+            <div
+              className="loader"
+              key={0}
+              style={{
+                display: 'flex',
+                alignItems: 'column',
+                justifyContent: 'center',
+              }}
+            >
+              <CircularProgress color="primary" />
+            </div>
+          )}
+          {!isLoading && <JobCardContainer {...job} />}
         </div>
       </JobContainer>
       <FilterBoxContainer>
@@ -101,7 +96,6 @@ const JobList = () => {
             setState={setState}
             isTitle={false}
             filterData={filterData}
-            isAdmin={true}
           />
         </div>
       </FilterBoxContainer>
@@ -113,11 +107,10 @@ const JobList = () => {
           isFilterShow={isOpen}
           closeFilterPage={close}
           filterData={filterData}
-          isAdmin={true}
         />
       )}
     </div>
   )
 }
 
-export default withGuard(JobList, 'verified', [UserType.ADMIN])
+export default withGuard(AppliedJobPage, 'verified', [UserType.ACTOR])

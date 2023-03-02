@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { GetJobCardByAdminWithMaxPageDto } from '@modela/dtos'
-import { useMediaQuery } from '@mui/material'
+import { Theme, useMediaQuery } from '@mui/material'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
+import useSwitch from 'common/hooks/useSwitch'
 import { apiClient } from 'common/utils/api'
 import dayjs from 'dayjs'
 import {
@@ -13,17 +14,15 @@ import {
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 const useJobListData = () => {
-  const [isOpen, setOpen] = useState(false)
   const [job, setJob] = useState<GetJobCardByAdminWithMaxPageDto>()
   const [hasMore, setHasMore] = useState(true)
   const [page, setPage] = useState(0)
   const pageControl = useRef(1)
   const [search, setSearch] = useState<ISearch>(initialISearchAdmin)
   const [state, setState] = useState<IFilter>(initialIFilter)
-  const open = useCallback(() => setOpen(true), [])
-  const close = useCallback(() => setOpen(false), [])
   const { handleError } = useErrorHandler()
-  const isDesktop = useMediaQuery('(min-width: 900px)')
+  const isDesktop = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
+  const { isOpen, open, close } = useSwitch()
 
   const filterData = useCallback(
     async (state: IFilter) => {
@@ -140,6 +139,7 @@ const useJobListData = () => {
     isOpen,
     open,
     close,
+    isDesktop,
   }
 }
 
