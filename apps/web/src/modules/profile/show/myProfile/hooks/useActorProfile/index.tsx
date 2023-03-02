@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { GetActorProfileDto, GetProfileForViewingDto } from '@modela/dtos'
+import { useUser } from 'common/context/UserContext'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import useSwitch from 'common/hooks/useSwitch'
 import { apiClient } from 'common/utils/api/axiosInstance'
@@ -11,13 +12,17 @@ const useActorProfile = () => {
   const [profile, setProfile] = useState<GetActorProfileDto>()
   const { isOpen, open, close } = useSwitch()
   const { handleError } = useErrorHandler()
+  const { user } = useUser()
 
   useEffect(() => {
     const fetchData = async () => {
       open()
       try {
-        const res = (await apiClient.get<GetProfileForViewingDto>('/profile/'))
-          .data
+        const res = (
+          await apiClient.get<GetProfileForViewingDto>(
+            '/profile/' + user?.userId,
+          )
+        ).data
         setProfile(res.data)
       } catch (err) {
         handleError(err)
@@ -29,7 +34,7 @@ const useActorProfile = () => {
     }
   }, [handleError, router.isReady])
 
-  return { profile, isOpen }
+  return { profile, isOpen, user }
 }
 
 export default useActorProfile

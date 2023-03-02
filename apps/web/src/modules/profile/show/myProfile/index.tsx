@@ -10,7 +10,6 @@ import {
 } from '@mui/material'
 import MenuBar from 'common/components/MenuBar'
 import ProfileImage from 'common/components/ProfileImage'
-import { useUser } from 'common/context/UserContext'
 import withGuard from 'common/hoc/withGuard'
 import useNavbarFocus from 'common/hooks/useNavbarFocus'
 import React from 'react'
@@ -31,8 +30,7 @@ const ActorProfile = () => {
     { icon: <ArticleOutlined />, label: 'เรซูเม่', href: '/blog' },
   ]
   useNavbarFocus('profile')
-  const { profile, isOpen } = useActorProfile()
-  const { user } = useUser()
+  const { profile, isOpen, user } = useActorProfile()
   return (
     <RootContainer>
       <MenuBar sx={{ width: '17vw' }} menu={MENU_ITEM} focus="โปรไฟล์" />
