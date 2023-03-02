@@ -1,6 +1,6 @@
 import { styled } from '@mui/material'
 
-export const FIlterPage = styled('div')`
+export const FilterPage = styled('div')`
   display: none;
   flex-direction: row;
   justify-content: center;
