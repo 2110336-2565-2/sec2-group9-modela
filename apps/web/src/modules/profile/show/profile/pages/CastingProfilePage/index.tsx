@@ -8,7 +8,7 @@ import React from 'react'
 import useCastingProfile from './hooks/useCastingProfile'
 import { CardContainer, RootContainer } from './styled'
 
-const ViewCastingProfile = () => {
+const CastingProfilePage = () => {
   const { profile, isOpen, userId } = useCastingProfile()
   const { user } = useUser()
   return (
@@ -31,4 +31,4 @@ const ViewCastingProfile = () => {
   )
 }
 
-export default withGuard(ViewCastingProfile, 'verified', [UserType.ACTOR])
+export default withGuard(CastingProfilePage, 'verified', [UserType.ACTOR])
