@@ -1,6 +1,9 @@
-import { UserType } from '@modela/database'
-import { AccountCircleOutlined, ArticleOutlined } from '@mui/icons-material'
-import { Edit } from '@mui/icons-material'
+import { UserType } from '@modela/dtos'
+import {
+  AccountCircleOutlined,
+  ArticleOutlined,
+  Edit,
+} from '@mui/icons-material'
 import {
   Button,
   CircularProgress,

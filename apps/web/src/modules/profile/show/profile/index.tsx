@@ -1,4 +1,4 @@
-import { UserType } from '@modela/database'
+import { UserType } from '@modela/dtos'
 import { CircularProgress, Divider, Grid, Typography } from '@mui/material'
 import ProfileImage from 'common/components/ProfileImage'
 import { useUser } from 'common/context/UserContext'
