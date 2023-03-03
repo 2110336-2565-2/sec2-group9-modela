@@ -3,6 +3,7 @@ import { EditOutlined, ReportOutlined } from '@mui/icons-material'
 import { Chip, IconButton, Tooltip, Typography } from '@mui/material'
 import ProfileImage from 'common/components/ProfileImage'
 import { useUser } from 'common/context/UserContext'
+import Link from 'next/link'
 import React from 'react'
 
 import ApplicationStatusChip from './components/applicationStatusChip'
@@ -26,12 +27,18 @@ const JobCardHeader = (prop: HeaderProps) => {
 
   return (
     <HeaderRow>
-      <ProfileImage
-        src={jobCastingImageUrl}
-        firstName={castingName}
-        userId={castingId}
-        sx={{ marginTop: '4px' }}
-      />
+      <Link
+        href={`/profile/${castingId}`}
+        passHref
+        style={{ textDecoration: 'none', color: 'inherit' }}
+      >
+        <ProfileImage
+          src={jobCastingImageUrl}
+          firstName={castingName}
+          userId={castingId}
+          sx={{ marginTop: '4px' }}
+        />
+      </Link>
       <TitleContainer>
         <Typography variant="h6" sx={{ wordBreak: 'break-word' }}>
           {!isDetail &&
