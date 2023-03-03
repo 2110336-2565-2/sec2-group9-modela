@@ -5,12 +5,16 @@ export const CardContainer = styled(Card)`
   flex-direction: column;
   align-items: center;
   height: fit-content;
-  padding: 30px;
+  padding: 32px;
+  padding-top: 24px;
   width: 35vw;
   min-width: 450px;
   min-height: 300px;
   border-radius: 10px;
   gap: 16px;
+  ${(props) => props.theme.breakpoints.down('lg')} {
+    margin-top: 5vh;
+  }
 `
 export const ContentContainer = styled('div')`
   display: flex;
