@@ -19,7 +19,7 @@ const StatusChangeModal = (props: IChangeStatusModalProps) => {
           เปลี่ยนสถานะงาน
         </Typography>
         <Divider />
-        <Typography>
+        <Typography align="center" variant="subtitle1">
           คุณกำลังจะเปลี่ยนสถานะงานเป็น
           <Typography
             component={'span'}
