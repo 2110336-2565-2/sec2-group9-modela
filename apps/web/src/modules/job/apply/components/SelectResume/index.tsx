@@ -21,6 +21,7 @@ export default function SelectResume(props: ApplyProps) {
           value={id}
           label="เลือก resume"
           onChange={handleChange}
+          required
         >
           {resumes.map(({ resumeId, name }: ResumeDto) => (
             <MenuItem key={resumeId} value={resumeId}>

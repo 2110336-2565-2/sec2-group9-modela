@@ -1,16 +1,20 @@
 import { JobSummaryDto } from '@modela/dtos'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
+import useSwitch from 'common/hooks/useSwitch'
 import { apiClient } from 'common/utils/api'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+
+import { NEXT_STATUS_STAGE } from './constants'
 
 const useSummaryData = () => {
   const [summary, setSummary] = useState<Partial<JobSummaryDto>>({
     status: undefined,
     pendingActorCount: undefined,
   })
-
+  const { isOpen: isModalOpen, close, open } = useSwitch()
   const { handleError } = useErrorHandler()
+  const { isOpen: isUpdate, close: needUpdate, open: update } = useSwitch(true)
 
   const router = useRouter()
   const { jobId } = router.query
@@ -23,12 +27,40 @@ const useSummaryData = () => {
       } catch (err) {
         handleError(err)
       }
+      update()
     }
 
     if (router.isReady) fetchActorData()
-  }, [handleError, jobId, router.isReady])
+  }, [handleError, jobId, router.isReady, isUpdate, update])
 
-  return summary
+  const handleStatusChange = useCallback(async () => {
+    try {
+      await apiClient.put(`/jobs/${jobId}/status`, {
+        status: NEXT_STATUS_STAGE[summary.status!],
+      })
+      needUpdate()
+      close()
+    } catch (err) {
+      handleError(err)
+    }
+  }, [jobId, summary.status, needUpdate, close, handleError])
+
+  const handleModalOpen = useCallback(() => {
+    open()
+  }, [open])
+
+  const handleCloseModal = useCallback(() => {
+    close()
+  }, [close])
+
+  return {
+    status: summary.status,
+    pendingActorCount: summary.pendingActorCount,
+    isModalOpen,
+    handleCloseModal,
+    handleStatusChange,
+    handleModalOpen,
+  }
 }
 
 export default useSummaryData

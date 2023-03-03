@@ -3,7 +3,6 @@ import { useSnackbar } from 'common/context/SnackbarContext'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
 import { useRouter } from 'next/router'
-import React from 'react'
 import { useCallback, useEffect, useState } from 'react'
 
 const useResume = () => {
@@ -14,7 +13,7 @@ const useResume = () => {
   const [jobTitle, setJobTitle] = useState('')
   const { displaySnackbar } = useSnackbar()
 
-  const [id, setId] = React.useState<number | undefined>()
+  const [id, setId] = useState<number | undefined>()
 
   const handleSuccess = useCallback(async () => {
     setLoading(true)
@@ -26,8 +25,6 @@ const useResume = () => {
         await apiClient.post('jobs/' + jobId + '/apply', resumeIdBody)
         displaySnackbar('การสมัครเสร็จสิ้น', 'success')
         router.push('/job', undefined, { shallow: true })
-      } else {
-        displaySnackbar('กรุณาเลือกเรซูเม่', 'error')
       }
     } catch (err) {
       handleError(err, {
@@ -39,7 +36,7 @@ const useResume = () => {
     }
   }, [id, displaySnackbar, handleError, jobId, router])
 
-  const [resumes, setResumes] = React.useState<ResumeDto[]>([])
+  const [resumes, setResumes] = useState<ResumeDto[]>([])
   //fetch job title
   useEffect(() => {
     const fetchData = async () => {
