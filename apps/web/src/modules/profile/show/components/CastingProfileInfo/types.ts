@@ -5,7 +5,7 @@ export interface ProfileInfoProps {
   profileImageUrl?: string
   userId?: number
   phoneNumber?: string
-  company?: string
+  companyName?: string
   description?: string
   isOwn: boolean
 }

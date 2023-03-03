@@ -14,7 +14,7 @@ export default function CastingProfileInfo(props: ProfileInfoProps) {
     lastName,
     profileImageUrl,
     userId,
-    company,
+    companyName,
     phoneNumber,
     description,
     isOwn,
@@ -40,7 +40,7 @@ export default function CastingProfileInfo(props: ProfileInfoProps) {
       </Grid>
       <ContentContainer>
         <SubContentContainer sx={{ width: '100%' }}>
-          <InfoText main="ชื่อบริษัท" info={company} />
+          <InfoText main="ชื่อบริษัท" info={companyName} />
           <InfoText main="เบอร์โทรศัพท์" info={phoneNumber} />
         </SubContentContainer>
       </ContentContainer>
