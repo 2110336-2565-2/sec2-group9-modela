@@ -72,7 +72,7 @@ export class ProfileController {
   @ApiForbiddenResponse({ description: 'User is not an casting or actor' })
   @ApiUnauthorizedResponse({ description: 'User is not login' })
   @ApiNotFoundResponse({ description: 'User not found' })
-  getProfileById(@Param('id') id: number) {
-    return this.profileService.getProfileById(+id)
+  getProfileById(@Param('id') id: number, @User() user: JwtDto) {
+    return this.profileService.getProfileById(+id, user)
   }
 }
