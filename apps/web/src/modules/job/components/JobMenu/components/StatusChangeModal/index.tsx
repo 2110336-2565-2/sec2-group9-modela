@@ -1,6 +1,7 @@
 import { Divider, Typography } from '@mui/material'
 
 import { NEXT_STATUS_NAME } from '../../constants'
+import { ADDITION_DESC } from './constants'
 import {
   CancelButton,
   ModalContentContainer,
@@ -20,10 +21,15 @@ const StatusChangeModal = (props: IChangeStatusModalProps) => {
         <Divider />
         <Typography>
           คุณกำลังจะเปลี่ยนสถานะงานเป็น
-          <Typography component={'span'}>
+          <Typography
+            component={'span'}
+            sx={{ marginLeft: '5px', fontWeight: 700 }}
+          >
             {NEXT_STATUS_NAME[status!]}
           </Typography>
-          ยืนยันหรือไม่
+          <Typography component={'span'} sx={{ marginLeft: '5px' }}>
+            {ADDITION_DESC[status!]}
+          </Typography>
         </Typography>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <CancelButton variant="contained" onClick={handleClose}>
