@@ -10,7 +10,7 @@ import useActorProfile from './hooks/useActorProfile'
 import { CardContainer, RootContainer } from './styled'
 
 const ViewActorProfile = () => {
-  const { profile, isOpen } = useActorProfile()
+  const { profile, isOpen, type, userId } = useActorProfile()
   const { user } = useUser()
   return (
     <RootContainer>
@@ -19,11 +19,21 @@ const ViewActorProfile = () => {
           <CircularProgress />
         ) : (
           <>
-            {user?.type === UserType.ACTOR && (
-              <ActorProfileInfo isOwn={false} {...user} {...profile} />
+            {type === UserType.ACTOR && (
+              <ActorProfileInfo
+                isOwn={false}
+                {...user}
+                {...profile}
+                userId={parseInt(userId as string, 10)}
+              />
             )}
-            {user?.type === UserType.CASTING && (
-              <CastingProfileInfo isOwn={false} {...user} {...profile} />
+            {type === UserType.CASTING && (
+              <CastingProfileInfo
+                isOwn={false}
+                {...user}
+                {...profile}
+                userId={parseInt(userId as string, 10)}
+              />
             )}
           </>
         )}

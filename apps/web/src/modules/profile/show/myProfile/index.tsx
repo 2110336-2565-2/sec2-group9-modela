@@ -18,7 +18,6 @@ const ActorProfile = () => {
   ]
   useNavbarFocus('profile')
   const { profile, isOpen, user } = useActorProfile()
-  user?.type
   return (
     <RootContainer>
       <MenuBar sx={{ width: '17vw' }} menu={MENU_ITEM} focus="โปรไฟล์" />
