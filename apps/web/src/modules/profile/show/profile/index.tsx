@@ -32,4 +32,7 @@ const ViewActorProfile = () => {
   )
 }
 
-export default withGuard(ViewActorProfile, 'verified', [UserType.CASTING])
+export default withGuard(ViewActorProfile, 'verified', [
+  UserType.CASTING,
+  UserType.ACTOR,
+])
