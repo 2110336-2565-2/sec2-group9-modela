@@ -3,7 +3,7 @@ import React from 'react'
 
 import { InfoProps } from './types'
 
-export default function JobCard(props: InfoProps) {
+export default function InfoText(props: InfoProps) {
   const { main, info } = props
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }}>
