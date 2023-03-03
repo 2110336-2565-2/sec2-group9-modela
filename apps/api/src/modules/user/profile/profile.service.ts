@@ -3,9 +3,14 @@ import {
   EditCastingProfileDto,
   GetProfileForEditingDto,
   GetProfileForViewingDto,
+  JwtDto,
   UserType,
 } from '@modela/dtos'
-import { Injectable, NotFoundException } from '@nestjs/common'
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common'
 
 import { ProfileRepository } from './profile.repository'
 @Injectable()
@@ -54,11 +59,22 @@ export class ProfileService {
     }
   }
 
-  async getProfileById(id: number): Promise<GetProfileForViewingDto> {
-    const user = await this.repository.getUserProfileById(id)
-    if (!user) {
+  async getProfileById(
+    id: number,
+    user: JwtDto,
+  ): Promise<GetProfileForViewingDto> {
+    const TargetUser = await this.repository.getUserProfileById(id)
+
+    if (!TargetUser) {
       throw new NotFoundException()
     }
-    return user
+    if (user.userId !== id) {
+      // if user is not the owner of the profile
+      if (user.type === TargetUser.type) {
+        // user can't see other user's profile if they are the same type
+        throw new ForbiddenException()
+      }
+    }
+    return TargetUser
   }
 }
