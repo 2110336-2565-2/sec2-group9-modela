@@ -6,7 +6,8 @@ import withGuard from 'common/hoc/withGuard'
 import useNavbarFocus from 'common/hooks/useNavbarFocus'
 import React from 'react'
 
-import ProfileInfo from '../components/ActorProfileInfo'
+import ActorProfileInfo from '../components/ActorProfileInfo'
+import CastingProfileInfo from '../components/CastingProfileInfo'
 import useActorProfile from './hooks/useActorProfile'
 import { CardContainer, PlaceFill, RootContainer } from './styled'
 
@@ -17,6 +18,7 @@ const ActorProfile = () => {
   ]
   useNavbarFocus('profile')
   const { profile, isOpen, user } = useActorProfile()
+  user?.type
   return (
     <RootContainer>
       <MenuBar sx={{ width: '17vw' }} menu={MENU_ITEM} focus="โปรไฟล์" />
@@ -24,7 +26,14 @@ const ActorProfile = () => {
         {isOpen ? (
           <CircularProgress />
         ) : (
-          <ProfileInfo isOwn={true} {...user} {...profile} />
+          <>
+            {user?.type === UserType.ACTOR && (
+              <ActorProfileInfo isOwn={true} {...user} {...profile} />
+            )}
+            {user?.type === UserType.CASTING && (
+              <CastingProfileInfo isOwn={true} {...user} {...profile} />
+            )}
+          </>
         )}
       </CardContainer>
       <PlaceFill />
@@ -32,4 +41,7 @@ const ActorProfile = () => {
   )
 }
 
-export default withGuard(ActorProfile, 'verified', [UserType.ACTOR])
+export default withGuard(ActorProfile, 'verified', [
+  UserType.ACTOR,
+  UserType.CASTING,
+])

@@ -4,7 +4,8 @@ import { useUser } from 'common/context/UserContext'
 import withGuard from 'common/hoc/withGuard'
 import React from 'react'
 
-import ProfileInfo from '../components/ActorProfileInfo'
+import ActorProfileInfo from '../components/ActorProfileInfo'
+import CastingProfileInfo from '../components/CastingProfileInfo'
 import useActorProfile from './hooks/useActorProfile'
 import { CardContainer, RootContainer } from './styled'
 
@@ -17,7 +18,14 @@ const ViewActorProfile = () => {
         {isOpen ? (
           <CircularProgress />
         ) : (
-          <ProfileInfo isOwn={false} {...user} {...profile} />
+          <>
+            {user?.type === UserType.ACTOR && (
+              <ActorProfileInfo isOwn={false} {...user} {...profile} />
+            )}
+            {user?.type === UserType.CASTING && (
+              <CastingProfileInfo isOwn={false} {...user} {...profile} />
+            )}
+          </>
         )}
       </CardContainer>
     </RootContainer>
