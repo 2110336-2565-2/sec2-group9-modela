@@ -16,23 +16,6 @@ export const CardContainer = styled(Card)`
     margin-top: 5vh;
   }
 `
-export const ContentContainer = styled('div')`
-  display: flex;
-  flex-direction: row;
-  align-items: left;
-  width: 100%;
-  height: fit-content;
-  gap: 16px;
-  border: none;
-`
-export const SubContentContainer = styled('div')`
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  height: fit-content;
-  gap: 8px;
-  border: none;
-`
 export const RootContainer = styled('div')`
   display: flex;
   flex-direction: row;
