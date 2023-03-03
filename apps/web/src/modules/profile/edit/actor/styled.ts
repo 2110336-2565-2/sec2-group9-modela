@@ -10,6 +10,9 @@ export const CardContainer = styled(Card)`
   min-height: 300px;
   min-width: 300px;
   border-radius: 10px;
+  ${(props) => props.theme.breakpoints.down('lg')} {
+    margin-top: 5vh;
+  }
 `
 
 export const RootContainer = styled('div')`
