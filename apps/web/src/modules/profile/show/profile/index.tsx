@@ -6,7 +6,7 @@ import React from 'react'
 import ActorProfilePage from './pages/ActorProfilePage'
 import CastingProfilePage from './pages/CastingProfilePage'
 
-const ViewActorProfile = () => {
+const ProfilePage = () => {
   const { user } = useUser()
   return (
     <>
@@ -16,7 +16,7 @@ const ViewActorProfile = () => {
   )
 }
 
-export default withGuard(ViewActorProfile, 'verified', [
+export default withGuard(ProfilePage, 'verified', [
   UserType.CASTING,
   UserType.ACTOR,
 ])

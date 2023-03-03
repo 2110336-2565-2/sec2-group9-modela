@@ -11,10 +11,10 @@ import CastingProfileInfo from '../components/CastingProfileInfo'
 import useActorProfile from './hooks/useActorProfile'
 import { CardContainer, PlaceFill, RootContainer } from './styled'
 
-const ActorProfile = () => {
+const MyProfilePage = () => {
   const MENU_ITEM = [
     { icon: <AccountCircleOutlined />, label: 'โปรไฟล์', href: '/profile' },
-    { icon: <ArticleOutlined />, label: 'เรซูเม่', href: '/blog' },
+    { icon: <ArticleOutlined />, label: 'เรซูเม่', href: '/profile/resume' },
   ]
   useNavbarFocus('profile')
   const { profile, isOpen, user } = useActorProfile()
@@ -40,7 +40,7 @@ const ActorProfile = () => {
   )
 }
 
-export default withGuard(ActorProfile, 'verified', [
+export default withGuard(MyProfilePage, 'verified', [
   UserType.ACTOR,
   UserType.CASTING,
 ])
