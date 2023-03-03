@@ -1,8 +1,6 @@
 import { styled } from '@mui/material'
 
-export const HeaderContainer = styled('div')`
+export const FooterContainer = styled('div')`
   display: flex;
-  gap: 16px;
-  align-items: center;
   justify-content: space-between;
 `
