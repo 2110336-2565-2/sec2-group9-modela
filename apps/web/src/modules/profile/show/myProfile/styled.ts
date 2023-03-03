@@ -26,7 +26,7 @@ export const SubContentContainer = styled('div')`
   flex-direction: column;
   align-items: left;
   height: fit-content;
-  gap: 16px;
+  gap: 8px;
   border: none;
 `
 export const RootContainer = styled('div')`

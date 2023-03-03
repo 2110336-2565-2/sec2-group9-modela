@@ -61,42 +61,42 @@ const ActorProfile = () => {
             </Grid>
             <ContentContainer>
               <SubContentContainer sx={{ width: '50%' }}>
-                <InfoText main={'ชื่อเล่น'} info={profile?.nickname} />
-                <InfoText main={'สัญชาติ'} info={profile?.nationality} />
-                <InfoText main={'ศาสนา'} info={profile?.religion} />
+                <InfoText main="ชื่อเล่น" info={profile?.nickname} />
+                <InfoText main="สัญชาติ" info={profile?.nationality} />
+                <InfoText main="ศาสนา" info={profile?.religion} />
                 <InfoText
-                  main={'เบอร์โทรศัพท์'}
+                  main="เบอร์โทรศัพท์"
                   info={profile?.phoneNumber}
                   isBlack={true}
                 />
               </SubContentContainer>
               <SubContentContainer sx={{ width: '50%' }}>
-                <InfoText main={'อายุ'} info={profile?.age?.toString()} />
-                <InfoText main={'เชื้อชาติ'} info={profile?.ethnicity} />
-                <InfoText main={'เพศ'} info={profile?.gender} />
+                <InfoText main="อายุ" info={profile?.age?.toString()} />
+                <InfoText main="เชื้อชาติ" info={profile?.ethnicity} />
+                <InfoText main="เพศ" info={profile?.gender} />
               </SubContentContainer>
             </ContentContainer>
             <Divider sx={{ width: '100%' }} />
             <ContentContainer>
               <SubContentContainer sx={{ width: '100%' }}>
-                <InfoText main={'ความสูง'} info={profile?.height?.toString()} />
-                <InfoText main={'น้ำหนัก'} info={profile?.weight?.toString()} />
-                <InfoText main={'สีตา'} info={profile?.eyeColor} />
-                <InfoText main={'สีผม'} info={profile?.hairColor} />
-                <InfoText main={'รอบอก'} info={profile?.bust?.toString()} />
-                <InfoText main={'รอบเอว'} info={profile?.waist?.toString()} />
-                <InfoText main={'รอบสะโพก'} info={profile?.hips?.toString()} />
+                <InfoText main="ความสูง" info={profile?.height?.toString()} />
+                <InfoText main="น้ำหนัก" info={profile?.weight?.toString()} />
+                <InfoText main="สีตา" info={profile?.eyeColor} />
+                <InfoText main="สีผม" info={profile?.hairColor} />
+                <InfoText main="รอบอก" info={profile?.bust?.toString()} />
+                <InfoText main="รอบเอว" info={profile?.waist?.toString()} />
+                <InfoText main="รอบสะโพก" info={profile?.hips?.toString()} />
                 <InfoText
-                  main={'ขนาดรองเท้า'}
+                  main="ขนาดรองเท้า"
                   info={profile?.shoeSize?.toString()}
                 />
-                <InfoText main={'สีผิว'} info={profile?.skinShade} />
+                <InfoText main="สีผิว" info={profile?.skinShade} />
               </SubContentContainer>
             </ContentContainer>
             <ContentContainer>
               <SubContentContainer sx={{ width: '100%' }}>
                 <InfoText
-                  main={'ข้อมูลอื่นๆ เพิ่มเติม'}
+                  main="ข้อมูลอื่นๆ เพิ่มเติม"
                   info={profile?.description}
                 />
               </SubContentContainer>

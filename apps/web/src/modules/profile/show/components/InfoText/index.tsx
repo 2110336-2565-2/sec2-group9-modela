@@ -15,9 +15,10 @@ export default function JobCard(props: InfoProps) {
           sx={{
             color: isBlack ? '' : 'rgba(0,0,0,0.6)',
             wordBreak: 'break-word',
+            marginLeft: '5px',
           }}
         >
-          &nbsp;{`  ${info}`}
+          {`${info}`}
         </Typography>
       </Typography>
     </div>
