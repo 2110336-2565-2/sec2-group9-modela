@@ -1,4 +1,4 @@
-import { JobStatus } from '@modela/database'
+import { JobStatus } from '@modela/dtos'
 
 export const ADDITION_DESC: Partial<{ [key in JobStatus]: string }> = {
   [JobStatus.OPEN]:
