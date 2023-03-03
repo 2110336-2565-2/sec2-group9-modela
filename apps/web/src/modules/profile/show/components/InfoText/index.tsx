@@ -3,8 +3,8 @@ import React from 'react'
 
 import { InfoProps } from './types'
 
-export default function JobCard(props: InfoProps) {
-  const { main, info, isBlack } = props
+export default function InfoText(props: InfoProps) {
+  const { main, info } = props
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }}>
       <Typography variant="subtitle2">
@@ -13,11 +13,12 @@ export default function JobCard(props: InfoProps) {
           component="span"
           variant="subtitle2"
           sx={{
-            color: isBlack ? '' : 'rgba(0,0,0,0.6)',
+            color: 'rgba(0,0,0,0.6)',
             wordBreak: 'break-word',
+            marginLeft: '5px',
           }}
         >
-          &nbsp;{`  ${info}`}
+          {`${info}`}
         </Typography>
       </Typography>
     </div>
