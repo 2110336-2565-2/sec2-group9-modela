@@ -64,11 +64,7 @@ const ActorProfile = () => {
                 <InfoText main="ชื่อเล่น" info={profile?.nickname} />
                 <InfoText main="สัญชาติ" info={profile?.nationality} />
                 <InfoText main="ศาสนา" info={profile?.religion} />
-                <InfoText
-                  main="เบอร์โทรศัพท์"
-                  info={profile?.phoneNumber}
-                  isBlack={true}
-                />
+                <InfoText main="เบอร์โทรศัพท์" info={profile?.phoneNumber} />
               </SubContentContainer>
               <SubContentContainer sx={{ width: '50%' }}>
                 <InfoText main="อายุ" info={profile?.age?.toString()} />
