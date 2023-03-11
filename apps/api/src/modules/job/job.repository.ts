@@ -53,13 +53,44 @@ export class JobRepository {
     return { jobId: updatedJob.jobId }
   }
 
-  async updateJobStatus(id: number, status: JobStatus) {
+  async updateJobStatus(id: number, updateStatus: JobStatus) {
     const updatedJob = await this.prisma.job.update({
       where: { jobId: id },
       data: {
-        status,
+        status: updateStatus,
       },
     })
+    //update application status
+    await this.prisma.application.updateMany({
+      where: {
+        jobId: id,
+        Job: {
+          status: {
+            in: [JobStatus.SELECTION_ENDED, JobStatus.CANCELLED],
+          },
+        },
+        status: {
+          in: [ApplicationStatus.PENDING, ApplicationStatus.OFFER_SENT],
+        },
+      },
+
+      data: {
+        status: ApplicationStatus.REJECTED,
+      },
+    })
+    await this.prisma.application.updateMany({
+      where: {
+        jobId: id,
+        Job: {
+          status: JobStatus.CANCELLED,
+        },
+        status: ApplicationStatus.OFFER_ACCEPTED,
+      },
+      data: {
+        status: ApplicationStatus.OFFER_REJECTED,
+      },
+    })
+
     return { jobId: updatedJob.jobId }
   }
 
