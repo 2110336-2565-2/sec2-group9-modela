@@ -3,7 +3,7 @@ import useBackNavbar from 'common/hooks/useBackNavbar'
 import { useMemo } from 'react'
 
 import FilterContainer from '../FilterContainer'
-import { FIlterPage, FilterPageFilterBox } from './styled'
+import { FilterPage, FilterPageFilterBox } from './styled'
 import { FilterContainerProps } from './types'
 
 const FilterMobileContainer = (props: FilterContainerProps) => {
@@ -20,7 +20,7 @@ const FilterMobileContainer = (props: FilterContainerProps) => {
     ),
   )
   return (
-    <FIlterPage
+    <FilterPage
       sx={{ display: isFilterShow ? 'flex' : 'none', background: '#f5f5f5;' }}
     >
       <FilterPageFilterBox>
@@ -46,7 +46,7 @@ const FilterMobileContainer = (props: FilterContainerProps) => {
           ค้นหางาน
         </Button>
       </FilterPageFilterBox>
-    </FIlterPage>
+    </FilterPage>
   )
 }
 export default FilterMobileContainer

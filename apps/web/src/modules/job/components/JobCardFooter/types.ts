@@ -8,4 +8,5 @@ export interface FooterProps {
   status: JobStatus
   isApplied?: boolean
   jobId?: number
+  isApplied?: boolean
 }
