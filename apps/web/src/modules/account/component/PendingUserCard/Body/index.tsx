@@ -1,4 +1,3 @@
-import { PendingUserDto } from '@modela/dtos'
 import { FileDownloadOutlined } from '@mui/icons-material'
 import { Divider, Typography } from '@mui/material'
 import React from 'react'
@@ -6,20 +5,22 @@ import React from 'react'
 import PendingUserCardFooter from '../Footer'
 import PendingUserCardHeader from '../Header'
 import { CardContainer, ResumeDownloadButton } from './styled'
+import { cardProps } from './type'
 
-const PendingUserCard = (props: PendingUserDto) => {
+const PendingUserCard = (props: cardProps) => {
   const { companyId, employmentCertUrl, idCardImageUrl, ssn, userId } =
-    props.data
-  const usingUrl = props.type === 'CASTING' ? employmentCertUrl : idCardImageUrl
+    props.data.data
+  const usingUrl =
+    props.data.type === 'CASTING' ? employmentCertUrl : idCardImageUrl
   return (
     <CardContainer variant="outlined">
-      <PendingUserCardHeader data={props.data} type={props.type} />
-      {props.type === 'CASTING' && (
+      <PendingUserCardHeader data={props.data.data} type={props.data.type} />
+      {props.data.type === 'CASTING' && (
         <Typography variant="subtitle2" color="#00000099">
           เลขจดทะเบียน: {companyId}
         </Typography>
       )}
-      {props.type === 'ACTOR' && (
+      {props.data.type === 'ACTOR' && (
         <Typography variant="subtitle2" color="#00000099">
           เลขบัตรประจำตัวประชาชน/เลขพาสปอร์ต: {ssn}
         </Typography>
@@ -33,12 +34,12 @@ const PendingUserCard = (props: PendingUserDto) => {
         }}
       >
         <FileDownloadOutlined color="primary" />
-        {props.type === 'CASTING' && (
+        {props.data.type === 'CASTING' && (
           <Typography variant="button" color="primary">
             หนังสือรับรองการทำงาน
           </Typography>
         )}
-        {props.type === 'ACTOR' && (
+        {props.data.type === 'ACTOR' && (
           <Typography variant="button" color="primary">
             รูปถ่ายบัตรประชาชน/พาสปอร์ต
           </Typography>
@@ -46,7 +47,12 @@ const PendingUserCard = (props: PendingUserDto) => {
       </ResumeDownloadButton>
       <>
         <Divider sx={{ margin: '-8px 0' }} />
-        <PendingUserCardFooter userId={userId} />
+        <PendingUserCardFooter
+          userId={userId}
+          setId={props.setId}
+          accept={props.accept}
+          reject={props.reject}
+        />
       </>
     </CardContainer>
   )

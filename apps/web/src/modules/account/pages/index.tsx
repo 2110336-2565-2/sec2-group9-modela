@@ -9,12 +9,17 @@ const PendingUserPage = () => {
   const pendingUserData = usePendingUserData()
   return (
     <CardsContainer>
-      {pendingUserData ? (
-        pendingUserData.length === 0 ? (
+      {pendingUserData.pendingUserData ? (
+        pendingUserData.pendingUserData.length === 0 ? (
           <Typography color="#00000061">ไม่พบการขอสมัครเข้าสู่ระบบ</Typography>
         ) : (
-          pendingUserData.map((user) => (
-            <PendingUserCard type={user.type} data={user.data} />
+          pendingUserData.pendingUserData.map((user) => (
+            <PendingUserCard
+              setId={pendingUserData.setModalId}
+              accept={pendingUserData.acceptUser}
+              reject={pendingUserData.rejectUser}
+              data={user}
+            />
           ))
         )
       ) : (
