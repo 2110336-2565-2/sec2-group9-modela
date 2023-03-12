@@ -413,9 +413,9 @@ export class JobService {
     }
 
     if (
-      this.JobStatusToNumber(job.status) + 1 !=
+      this.JobStatusToNumber(job.status) + 1 !==
         this.JobStatusToNumber(updateJobStatus) &&
-      updateJobStatus != JobStatus.CANCELLED
+      updateJobStatus !== JobStatus.CANCELLED
     )
       // only allow to update status to next status (except cancelled)
       throw new ForbiddenException(

@@ -63,18 +63,15 @@ export class ProfileService {
     id: number,
     user: JwtDto,
   ): Promise<GetProfileForViewingDto> {
-    const TargetUser = await this.repository.getUserProfileById(id)
+    const targetUser = await this.repository.getUserProfileById(id)
 
-    if (!TargetUser) {
+    if (!targetUser) {
       throw new NotFoundException()
     }
-    if (user.userId !== id) {
-      // if user is not the owner of the profile
-      if (user.type === TargetUser.type) {
-        // user can't see other user's profile if they are the same type
-        throw new ForbiddenException()
-      }
+    if (user.userId !== id && user.type === targetUser.type) {
+      // user can't see other user's profile if they are the same type
+      throw new ForbiddenException()
     }
-    return TargetUser
+    return targetUser
   }
 }
