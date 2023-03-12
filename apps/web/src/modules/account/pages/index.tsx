@@ -1,23 +1,27 @@
-import { PendingUserDto } from '@modela/dtos'
+import { CircularProgress, Typography } from '@mui/material'
 import React from 'react'
 
 import PendingUserCard from '../component/PendingUserCard/Body'
+import usePendingUserData from '../hooks/usePendingUserData'
+import { CardsContainer } from './styled'
 
 const PendingUserPage = () => {
-  const props: PendingUserDto = {
-    type: 'CASTING',
-    data: {
-      userId: 100,
-      firstName: 'Pakapol',
-      lastName: 'Saleephol',
-      companyName: 'P entertainment',
-      companyId: '5556-111455',
-      employmentCertUrl: 'https://google.com',
-      idCardImageUrl: 'https://youtube.com',
-      ssn: '1712201036678',
-    },
-  }
-  return <PendingUserCard {...props} />
+  const pendingUserData = usePendingUserData()
+  return (
+    <CardsContainer>
+      {pendingUserData ? (
+        pendingUserData.length === 0 ? (
+          <Typography color="#00000061">ไม่พบการขอสมัครเข้าสู่ระบบ</Typography>
+        ) : (
+          pendingUserData.map((user) => (
+            <PendingUserCard type={user.type} data={user.data} />
+          ))
+        )
+      ) : (
+        <CircularProgress />
+      )}
+    </CardsContainer>
+  )
 }
 
 export default PendingUserPage

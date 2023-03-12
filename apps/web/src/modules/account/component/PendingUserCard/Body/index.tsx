@@ -8,7 +8,8 @@ import PendingUserCardHeader from '../Header'
 import { CardContainer, ResumeDownloadButton } from './styled'
 
 const PendingUserCard = (props: PendingUserDto) => {
-  const { companyId, employmentCertUrl, idCardImageUrl, ssn } = props.data
+  const { companyId, employmentCertUrl, idCardImageUrl, ssn, userId } =
+    props.data
   const usingUrl = props.type === 'CASTING' ? employmentCertUrl : idCardImageUrl
   return (
     <CardContainer variant="outlined">
@@ -45,7 +46,7 @@ const PendingUserCard = (props: PendingUserDto) => {
       </ResumeDownloadButton>
       <>
         <Divider sx={{ margin: '-8px 0' }} />
-        <PendingUserCardFooter />
+        <PendingUserCardFooter userId={userId} />
       </>
     </CardContainer>
   )
