@@ -1,4 +1,4 @@
-import { JobStatus } from '@modela/database'
+import { ApplicationStatus, JobStatus } from '@modela/database'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
 
@@ -52,6 +52,29 @@ export class ReportRepository {
       },
       data: {
         status: JobStatus.CANCELLED,
+      },
+    })
+
+    //update application status
+    await this.prisma.application.updateMany({
+      where: {
+        jobId: jobId,
+        Job: {
+          status: {
+            in: JobStatus.CANCELLED,
+          },
+        },
+        status: {
+          in: [
+            ApplicationStatus.PENDING,
+            ApplicationStatus.OFFER_SENT,
+            ApplicationStatus.OFFER_ACCEPTED,
+          ],
+        },
+      },
+
+      data: {
+        status: ApplicationStatus.REJECTED,
       },
     })
     return { jobId: jobId }
