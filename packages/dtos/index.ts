@@ -12,6 +12,7 @@ export * from './src/info'
 export * from './src/file'
 
 export {
+  UserStatus,
   UserType,
   ApplicationStatus,
   JobStatus,
