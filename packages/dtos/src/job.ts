@@ -316,6 +316,9 @@ export class GetJobDto extends EditJobDto {
 
   @ApiProperty()
   castingName: string
+
+  @ApiProperty()
+  isApplied?: boolean
 }
 
 export class JobIdDto {
