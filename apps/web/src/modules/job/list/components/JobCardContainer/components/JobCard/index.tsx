@@ -18,6 +18,7 @@ export default function JobCard(prop: JobCardProps) {
     jobId,
     status,
     isReported,
+    isApplied,
     ...headerProps
   } = prop
 
@@ -60,6 +61,7 @@ export default function JobCard(prop: JobCardProps) {
           actorCount={actorCount}
           status={status}
           jobId={jobId}
+          isApplied={isApplied}
         />
       </CardContainer>
     </Link>
