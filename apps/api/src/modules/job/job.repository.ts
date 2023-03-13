@@ -87,7 +87,7 @@ export class JobRepository {
         status: ApplicationStatus.OFFER_ACCEPTED,
       },
       data: {
-        status: ApplicationStatus.OFFER_REJECTED,
+        status: ApplicationStatus.REJECTED,
       },
     })
 
