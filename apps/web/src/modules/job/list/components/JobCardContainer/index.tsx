@@ -9,8 +9,7 @@ export default function JobCardContainer(prop: JobCardContainerProps) {
   const { jobs, maxPage } = prop
   return (
     <CardBoxContainer>
-      {(maxPage === 0 ||
-        jobs.filter((job) => job.isApplied).length == jobs.length) && (
+      {maxPage === 0 && (
         <Typography
           variant="subtitle1"
           sx={{
@@ -25,22 +24,18 @@ export default function JobCardContainer(prop: JobCardContainerProps) {
       )}
       {jobs.map((item) => {
         return (
-          <>
-            {!item.isApplied && (
-              <div
-                key={`Job-${item.jobId}`}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'flex-start',
-                  width: '100%',
-                  gap: '1rem',
-                }}
-              >
-                <JobCard {...item} />
-              </div>
-            )}
-          </>
+          <div
+            key={`Job-${item.jobId}`}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-start',
+              width: '100%',
+              gap: '1rem',
+            }}
+          >
+            <JobCard {...item} />
+          </div>
         )
       })}
     </CardBoxContainer>
