@@ -21,4 +21,6 @@ export type NavbarFocus =
   | 'profile'
   | 'notification'
   | 'createJob'
+  | 'transaction'
+  | 'account'
   | null
