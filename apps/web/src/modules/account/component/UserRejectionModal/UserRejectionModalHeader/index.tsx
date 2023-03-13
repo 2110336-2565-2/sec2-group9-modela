@@ -3,7 +3,7 @@ import React from 'react'
 
 import { HeaderContainer } from './styled'
 
-const UserRejectionCardHeader = () => {
+const UserRejectionModalHeader = () => {
   return (
     <HeaderContainer>
       <Typography variant="h5">เหตุผลในการปฏิเสธ</Typography>
@@ -11,4 +11,4 @@ const UserRejectionCardHeader = () => {
   )
 }
 
-export default UserRejectionCardHeader
+export default UserRejectionModalHeader

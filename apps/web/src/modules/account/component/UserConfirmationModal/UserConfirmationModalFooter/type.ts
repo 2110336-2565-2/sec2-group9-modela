@@ -1,4 +1,4 @@
-export interface UserConfirmationCardFooterProps {
+export interface UserConfirmationModalFooterProps {
   userId: number
   close(): void
   confirm(): void

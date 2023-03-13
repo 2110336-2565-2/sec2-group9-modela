@@ -1,18 +1,18 @@
 import { Divider } from '@mui/material'
 
 import { CardContainer } from './styled'
-import { UserConfirmationCardProps } from './type'
-import UserConfirmationCardFooter from './UserConfirmationModalFooter'
-import UserConfirmationCardHeader from './UserConfirmationModalHeader'
+import { UserConfirmationModalProps } from './type'
+import UserConfirmationModalFooter from './UserConfirmationModalFooter'
+import UserConfirmationModalHeader from './UserConfirmationModalHeader'
 
-const UserConfirmationCard = (props: UserConfirmationCardProps) => {
+const UserConfirmationModal = (props: UserConfirmationModalProps) => {
   return (
     <CardContainer>
-      <UserConfirmationCardHeader />
+      <UserConfirmationModalHeader />
       <Divider sx={{ margin: '20px 8px 8px 8px' }} />
-      <UserConfirmationCardFooter {...props} />
+      <UserConfirmationModalFooter {...props} />
     </CardContainer>
   )
 }
 
-export default UserConfirmationCard
+export default UserConfirmationModal

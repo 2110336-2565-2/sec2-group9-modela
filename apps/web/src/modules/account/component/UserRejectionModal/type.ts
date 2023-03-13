@@ -1,4 +1,4 @@
-export interface UserRejectionCardProps {
+export interface UserRejectionModalProps {
   setReason(rejectedReason: string): void
   reject(): void
 }

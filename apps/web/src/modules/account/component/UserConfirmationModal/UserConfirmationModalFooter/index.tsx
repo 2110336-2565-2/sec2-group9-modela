@@ -2,12 +2,12 @@ import { Button, Typography } from '@mui/material'
 import React from 'react'
 
 import { FooterContainer } from './styled'
-import { UserConfirmationCardFooterProps } from './type'
+import { UserConfirmationModalFooterProps } from './type'
 
-const UserConfirmationCardFooter = ({
+const UserConfirmationModalFooter = ({
   close,
   confirm,
-}: UserConfirmationCardFooterProps) => {
+}: UserConfirmationModalFooterProps) => {
   return (
     <FooterContainer>
       <Button
@@ -28,4 +28,4 @@ const UserConfirmationCardFooter = ({
   )
 }
 
-export default UserConfirmationCardFooter
+export default UserConfirmationModalFooter

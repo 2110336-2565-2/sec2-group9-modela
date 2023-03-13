@@ -1,8 +1,8 @@
 import { Button, Modal, Typography } from '@mui/material'
 import React from 'react'
 
-import UserConfirmationCard from '../../UserConfirmationCard/UserConfirmationModalBody'
-import UserRejectionCard from '../../UserRejectionCard/UserRejectionModalBody'
+import UserConfirmationModal from '../../UserConfirmationModal'
+import UserRejectionModal from '../../UserRejectionModal'
 import { FooterContainer } from './styled'
 import { PendingUserCardFooterProps } from './type'
 
@@ -47,7 +47,7 @@ const PendingUserCardFooter = ({
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <UserRejectionCard setReason={setReason} reject={handleReject} />
+        <UserRejectionModal setReason={setReason} reject={handleReject} />
       </Modal>
       <Button color="success" onClick={handleOpenAccept}>
         <Typography variant="button">อนุมัติ</Typography>
@@ -58,7 +58,7 @@ const PendingUserCardFooter = ({
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <UserConfirmationCard
+        <UserConfirmationModal
           userId={userId}
           close={handleCloseAccept}
           confirm={handleAccept}

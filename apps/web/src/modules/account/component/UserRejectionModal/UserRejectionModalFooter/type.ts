@@ -1,3 +1,3 @@
-export interface UserRejectionCardFooterProps {
+export interface UserRejectionModalFooterProps {
   reject(): void
 }

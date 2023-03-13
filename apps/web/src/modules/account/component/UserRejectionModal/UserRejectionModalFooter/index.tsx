@@ -2,9 +2,11 @@ import { Button, Typography } from '@mui/material'
 import React from 'react'
 
 import { FooterContainer } from './styled'
-import { UserRejectionCardFooterProps } from './type'
+import { UserRejectionModalFooterProps } from './type'
 
-const UserRejectionCardFooter = ({ reject }: UserRejectionCardFooterProps) => {
+const UserRejectionModalFooter = ({
+  reject,
+}: UserRejectionModalFooterProps) => {
   return (
     <FooterContainer>
       <Button
@@ -19,4 +21,4 @@ const UserRejectionCardFooter = ({ reject }: UserRejectionCardFooterProps) => {
   )
 }
 
-export default UserRejectionCardFooter
+export default UserRejectionModalFooter

@@ -3,7 +3,7 @@ import React from 'react'
 
 import { HeaderContainer } from './styled'
 
-const UserConfirmationCardHeader = () => {
+const UserConfirmationModalHeader = () => {
   return (
     <HeaderContainer>
       <Typography variant="h5">ยืนยันการอนุมัติ</Typography>
@@ -11,4 +11,4 @@ const UserConfirmationCardHeader = () => {
   )
 }
 
-export default UserConfirmationCardHeader
+export default UserConfirmationModalHeader
