@@ -21,6 +21,7 @@ const JobCard = (prop: GetJobDto) => {
     wage,
     status,
     jobId,
+    isApplied,
     ...headerProps
   } = prop
 
@@ -79,6 +80,7 @@ const JobCard = (prop: GetJobDto) => {
         gender={gender}
         wage={wage}
         actorCount={actorCount}
+        isApplied={isApplied}
         status={status}
         jobId={jobId}
       />
