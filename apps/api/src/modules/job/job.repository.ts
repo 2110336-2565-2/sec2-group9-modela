@@ -263,13 +263,21 @@ export class JobRepository {
     return jobsWithApplicationStatus
   }
 
-  async getJobById(id: number): Promise<GetJobDto & { castingId: number }> {
+  async getJobById(
+    id: number,
+    user: JwtDto,
+  ): Promise<GetJobDto & { castingId: number }> {
     const job = await this.prisma.job.findUnique({
       where: { jobId: id },
       include: {
         Casting: {
           include: {
             User: true,
+          },
+        },
+        Application: {
+          where: {
+            actorId: user.userId,
           },
         },
         Shooting: true,
@@ -287,6 +295,8 @@ export class JobRepository {
       companyName: Casting.companyName,
       jobCastingImageUrl: Casting.User.profileImageUrl,
       castingName: Casting.User.firstName,
+      isApplied:
+        user.type === UserType.ACTOR ? job.Application.length > 0 : undefined,
     }
   }
 

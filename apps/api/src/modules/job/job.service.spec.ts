@@ -364,7 +364,7 @@ describe('JobService', () => {
         await expect(service.findOne(MOCK_JOB_ID, MOCK_USER)).resolves.toEqual(
           MOCK_JOB,
         )
-        expect(repository.getJobById).toBeCalledWith(MOCK_JOB_ID)
+        expect(repository.getJobById).toBeCalledWith(MOCK_JOB_ID, MOCK_USER)
       })
     })
 
