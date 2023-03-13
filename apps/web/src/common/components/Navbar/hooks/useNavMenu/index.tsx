@@ -66,7 +66,7 @@ const useNavMenu = (isMobile: boolean) => {
       },
       {
         label: 'งานทั้งหมด',
-        href: '/่job',
+        href: '/job',
         icon: <ArticleOutlined />,
         focusKey: 'jobs',
         adminOnly: true,
