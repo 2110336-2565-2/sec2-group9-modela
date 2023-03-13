@@ -364,7 +364,7 @@ export class JobService {
     )
   }
   async findOne(id: number, user: JwtDto) {
-    const job = await this.repository.getJobById(id)
+    const job = await this.repository.getJobById(id, user)
 
     if (!job) throw new NotFoundException()
 
