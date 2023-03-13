@@ -24,18 +24,22 @@ export default function JobCardContainer(prop: JobCardContainerProps) {
       )}
       {jobs.map((item) => {
         return (
-          <div
-            key={`Job-${item.jobId}`}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'flex-start',
-              width: '100%',
-              gap: '1rem',
-            }}
-          >
-            <JobCard {...item} />
-          </div>
+          <>
+            {!item.isApplied && (
+              <div
+                key={`Job-${item.jobId}`}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-start',
+                  width: '100%',
+                  gap: '1rem',
+                }}
+              >
+                <JobCard {...item} />
+              </div>
+            )}
+          </>
         )
       })}
     </CardBoxContainer>
