@@ -1,6 +1,7 @@
 import { UserType } from '@modela/dtos'
 import { CircularProgress } from '@mui/material'
 import withGuard from 'common/hoc/withGuard'
+import useNavbarFocus from 'common/hooks/useNavbarFocus'
 import useNavbarSearch from 'common/hooks/useNavbarSearch'
 import FilterContainer from 'modules/job/list/components/FilterContainer'
 import FilterMobileContainer from 'modules/job/list/components/FilterMobileContainer'
@@ -34,6 +35,8 @@ const JobList = () => {
       open()
     }, [open]),
   )
+
+  useNavbarFocus('jobs')
 
   return (
     <div

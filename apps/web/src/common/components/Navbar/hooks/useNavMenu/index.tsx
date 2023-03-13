@@ -1,11 +1,13 @@
 import { UserStatus } from '@modela/database'
 import { UserType } from '@modela/dtos'
 import {
+  AccountBalanceWalletOutlined,
   AccountCircleOutlined,
   ArticleOutlined,
   LoginOutlined,
   LogoutOutlined,
   NotificationsNoneOutlined,
+  PersonAddAltOutlined,
   PostAddOutlined,
 } from '@mui/icons-material'
 import { useUser } from 'common/context/UserContext'
@@ -44,13 +46,40 @@ const useNavMenu = (isMobile: boolean) => {
         href: '/job/applied',
         icon: <ArticleOutlined />,
         focusKey: 'jobs',
+        notAdmin: true,
       },
       {
         label: 'การแจ้งเตือน',
         href: '/',
         icon: <NotificationsNoneOutlined />,
         focusKey: 'notification',
+        notAdmin: true,
       },
+
+      // admin
+      {
+        label: 'คำขอสมัครสมาชิก',
+        href: '/account',
+        icon: <PersonAddAltOutlined />,
+        focusKey: 'account',
+        adminOnly: true,
+      },
+      {
+        label: 'งานทั้งหมด',
+        href: '/่job',
+        icon: <ArticleOutlined />,
+        focusKey: 'jobs',
+        adminOnly: true,
+      },
+      {
+        label: 'รายการธุรกรรม',
+        href: '/',
+        icon: <AccountBalanceWalletOutlined />,
+        focusKey: 'transaction',
+        adminOnly: true,
+      },
+
+      // right part
       {
         label: 'divider',
         desktopOnly: true,
@@ -62,6 +91,7 @@ const useNavMenu = (isMobile: boolean) => {
         href: '/profile',
         icon: <AccountCircleOutlined />,
         focusKey: 'profile',
+        notAdmin: true,
       },
       {
         label: `สวัสดี คุณ ${user?.firstName}`,
@@ -102,9 +132,15 @@ const useNavMenu = (isMobile: boolean) => {
   }, [VERIFIED_MENU, user])
 
   const getMenuByRole = useCallback(() => {
+    let users = getMenuByUser()
     if (user?.type !== UserType.CASTING)
-      return getMenuByUser().filter((item) => !item.castingOnly)
-    return getMenuByUser()
+      users = users.filter((item) => !item.castingOnly)
+    if (user?.type === UserType.ADMIN)
+      users = users.filter((item) => !item.notAdmin)
+    if (user?.type !== UserType.ADMIN)
+      users = users.filter((item) => !item.adminOnly)
+
+    return users
   }, [getMenuByUser, user?.type])
 
   const getMenuByScreenSize = useCallback(
