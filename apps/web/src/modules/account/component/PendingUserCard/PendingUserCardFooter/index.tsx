@@ -1,33 +1,39 @@
 import { Button, Modal, Typography } from '@mui/material'
 import React from 'react'
 
-import UserConfirmationCard from '../../UserConfirmationCard/Body'
-import UserRejectionCard from '../../UserRejectionCard/Body'
+import UserConfirmationCard from '../../UserConfirmationCard/UserConfirmationModalBody'
+import UserRejectionCard from '../../UserRejectionCard/UserRejectionModalBody'
 import { FooterContainer } from './styled'
-import { footerProps } from './type'
+import { PendingUserCardFooterProps } from './type'
 
-const PendingUserCardFooter = (props: footerProps) => {
+const PendingUserCardFooter = ({
+  userId,
+  accept,
+  reject,
+  setId,
+  setReason,
+}: PendingUserCardFooterProps) => {
   const [openAccept, setOpenAccept] = React.useState(false)
   const handleOpenAccept = () => {
-    props.setId(props.userId)
+    setId(userId)
     setOpenAccept(true)
   }
   const handleCloseAccept = () => setOpenAccept(false)
 
   const [openReject, setOpenReject] = React.useState(false)
   const handleOpenReject = () => {
-    props.setId(props.userId)
+    setId(userId)
     setOpenReject(true)
   }
   const handleCloseReject = () => setOpenReject(false)
-  const fReject = () => {
+  const handleReject = () => {
     handleCloseReject()
-    props.reject()
+    reject()
   }
 
-  const fAccept = () => {
+  const handleAccept = () => {
     handleCloseAccept()
-    props.accept()
+    accept()
   }
 
   return (
@@ -41,7 +47,7 @@ const PendingUserCardFooter = (props: footerProps) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <UserRejectionCard setReason={props.setReason} modal={fReject} />
+        <UserRejectionCard setReason={setReason} reject={handleReject} />
       </Modal>
       <Button color="success" onClick={handleOpenAccept}>
         <Typography variant="button">อนุมัติ</Typography>
@@ -53,9 +59,9 @@ const PendingUserCardFooter = (props: footerProps) => {
         aria-describedby="modal-modal-description"
       >
         <UserConfirmationCard
-          userId={props.userId}
+          userId={userId}
           close={handleCloseAccept}
-          modal={fAccept}
+          confirm={handleAccept}
         />
       </Modal>
     </FooterContainer>

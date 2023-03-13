@@ -1,6 +1,10 @@
 import { Card, styled } from '@mui/material'
 
 export const CardContainer = styled(Card)`
+  ${(props) => props.theme.breakpoints.down('md')} {
+    width: 50%;
+  }
+  border-radius: 12px;
   background-color: white;
   position: absolute;
   display: flex;

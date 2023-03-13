@@ -2,20 +2,25 @@ import { Button, Typography } from '@mui/material'
 import React from 'react'
 
 import { FooterContainer } from './styled'
-import { footerProps } from './type'
+import { UserConfirmationCardFooterProps } from './type'
 
-const UserConfirmationCardFooter = (props: footerProps) => {
+const UserConfirmationCardFooter = ({
+  close,
+  confirm,
+}: UserConfirmationCardFooterProps) => {
   return (
     <FooterContainer>
-      <Button color="error" variant="contained" onClick={() => props.close()}>
+      <Button
+        sx={{ backgroundColor: '#AA5B5B', borderRadius: 2 }}
+        variant="contained"
+        onClick={close}
+      >
         <Typography variant="button">ปฏิเสธ</Typography>
       </Button>
       <Button
-        color="success"
+        sx={{ backgroundColor: '#66A373', borderRadius: 2 }}
         variant="contained"
-        onClick={() => {
-          props.modal()
-        }}
+        onClick={confirm}
       >
         <Typography variant="button">อนุมัติ</Typography>
       </Button>

@@ -1,6 +1,9 @@
 import { Card, styled } from '@mui/material'
 
 export const CardContainer = styled(Card)`
+  ${(props) => props.theme.breakpoints.down('md')} {
+    width: 100%;
+  }
   border-radius: 12px;
   display: flex;
   flex-direction: column;
@@ -8,7 +11,6 @@ export const CardContainer = styled(Card)`
   padding: 16px 14px 8px 14px;
   height: fit-content;
   width: 40vw;
-  margin-top: 40px;
 `
 export const ResumeDownloadButton = styled('a')`
   display: flex;

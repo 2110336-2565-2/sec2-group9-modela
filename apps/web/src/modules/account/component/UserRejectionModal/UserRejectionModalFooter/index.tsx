@@ -2,17 +2,16 @@ import { Button, Typography } from '@mui/material'
 import React from 'react'
 
 import { FooterContainer } from './styled'
-import { footerProps } from './type'
+import { UserRejectionCardFooterProps } from './type'
 
-const UserRejectionCardFooter = (props: footerProps) => {
+const UserRejectionCardFooter = ({ reject }: UserRejectionCardFooterProps) => {
   return (
     <FooterContainer>
       <Button
+        sx={{ borderRadius: 2 }}
         color="primary"
         variant="contained"
-        onClick={() => {
-          props.reject()
-        }}
+        onClick={reject}
       >
         <Typography variant="button">ยืนยัน</Typography>
       </Button>
