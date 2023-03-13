@@ -5,6 +5,7 @@ import withGuard from 'common/hoc/withGuard'
 import React from 'react'
 
 import EditActorInfoForm from '../actor'
+import EditCastingInfoForm from '../casting'
 import useInitialData from './hooks/useInitialData'
 import { FormContainer, FormHeader, RootContainer } from './styled'
 
@@ -35,7 +36,7 @@ const RejectedPage = () => {
         {type === UserType.ACTOR ? (
           <EditActorInfoForm initialData={initialData.data} />
         ) : (
-          <></>
+          <EditCastingInfoForm initialData={initialData.data} />
         )}
       </FormContainer>
     </RootContainer>

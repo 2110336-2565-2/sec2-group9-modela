@@ -1,4 +1,6 @@
+import { UserType } from '@modela/dtos'
 import { CircularProgress, Typography } from '@mui/material'
+import withGuard from 'common/hoc/withGuard'
 import React from 'react'
 
 import PendingUserCard from '../component/PendingUserCard/Body'
@@ -15,6 +17,7 @@ const PendingUserPage = () => {
         ) : (
           pendingUserData.pendingUserData.map((user) => (
             <PendingUserCard
+              setReason={pendingUserData.setModalReason}
               setId={pendingUserData.setModalId}
               accept={pendingUserData.acceptUser}
               reject={pendingUserData.rejectUser}
@@ -29,4 +32,4 @@ const PendingUserPage = () => {
   )
 }
 
-export default PendingUserPage
+export default withGuard(PendingUserPage, 'verified', [UserType.ADMIN])

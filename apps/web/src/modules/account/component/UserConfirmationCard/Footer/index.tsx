@@ -10,7 +10,13 @@ const UserConfirmationCardFooter = (props: footerProps) => {
       <Button color="error" variant="contained" onClick={() => props.close()}>
         <Typography variant="button">ปฏิเสธ</Typography>
       </Button>
-      <Button color="success" variant="contained" onClick={() => props.modal()}>
+      <Button
+        color="success"
+        variant="contained"
+        onClick={() => {
+          props.modal()
+        }}
+      >
         <Typography variant="button">อนุมัติ</Typography>
       </Button>
     </FooterContainer>
