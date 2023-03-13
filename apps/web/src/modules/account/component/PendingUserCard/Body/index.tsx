@@ -49,6 +49,7 @@ const PendingUserCard = (props: cardProps) => {
         <Divider sx={{ margin: '-8px 0' }} />
         <PendingUserCardFooter
           userId={userId}
+          setReason={props.setReason}
           setId={props.setId}
           accept={props.accept}
           reject={props.reject}

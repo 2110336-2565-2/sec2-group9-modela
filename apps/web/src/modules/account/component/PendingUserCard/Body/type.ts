@@ -5,4 +5,5 @@ export interface cardProps {
   accept: Function
   reject: Function
   setId: Function
+  setReason: Function
 }

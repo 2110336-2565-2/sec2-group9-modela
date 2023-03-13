@@ -4,14 +4,20 @@ import TextField from 'common/components/TextField'
 import UserRejectionCardFooter from '../Footer'
 import UserRejectionCardHeader from '../Header'
 import { CardContainer } from './styled'
+import { cardProps } from './type'
 
-const UserRejectionCard = () => {
+const UserRejectionCard = (props: cardProps) => {
   return (
     <CardContainer>
       <UserRejectionCardHeader />
       <Divider sx={{ margin: '8px 8px 8px 20px' }} />
-      <TextField required multiline placeholder="เหตุผล*" />
-      <UserRejectionCardFooter />
+      <TextField
+        required
+        multiline
+        placeholder="เหตุผล*"
+        onChange={(e) => props.setReason(e.target.value)}
+      />
+      <UserRejectionCardFooter reject={props.modal} />
     </CardContainer>
   )
 }

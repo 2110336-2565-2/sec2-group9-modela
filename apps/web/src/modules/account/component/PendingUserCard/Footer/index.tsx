@@ -15,8 +15,20 @@ const PendingUserCardFooter = (props: footerProps) => {
   const handleCloseAccept = () => setOpenAccept(false)
 
   const [openReject, setOpenReject] = React.useState(false)
-  const handleOpenReject = () => setOpenReject(true)
+  const handleOpenReject = () => {
+    props.setId(props.userId)
+    setOpenReject(true)
+  }
   const handleCloseReject = () => setOpenReject(false)
+  const fReject = () => {
+    handleCloseReject()
+    props.reject()
+  }
+
+  const fAccept = () => {
+    handleCloseAccept()
+    props.accept()
+  }
 
   return (
     <FooterContainer>
@@ -29,7 +41,7 @@ const PendingUserCardFooter = (props: footerProps) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <UserRejectionCard />
+        <UserRejectionCard setReason={props.setReason} modal={fReject} />
       </Modal>
       <Button color="success" onClick={handleOpenAccept}>
         <Typography variant="button">อนุมัติ</Typography>
@@ -43,7 +55,7 @@ const PendingUserCardFooter = (props: footerProps) => {
         <UserConfirmationCard
           userId={props.userId}
           close={handleCloseAccept}
-          modal={props.accept}
+          modal={fAccept}
         />
       </Modal>
     </FooterContainer>

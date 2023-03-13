@@ -3,4 +3,5 @@ export interface footerProps {
   accept: Function
   reject: Function
   setId: Function
+  setReason: Function
 }
