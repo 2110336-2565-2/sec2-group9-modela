@@ -12,15 +12,31 @@ import useActorProfile from './hooks/useActorProfile'
 import { CardContainer, PlaceFill, RootContainer } from './styled'
 
 const MyProfilePage = () => {
-  const MENU_ITEM = [
+  const MENU_ITEM_ACTOR = [
     { icon: <AccountCircleOutlined />, label: 'โปรไฟล์', href: '/profile' },
     { icon: <ArticleOutlined />, label: 'เรซูเม่', href: '/profile/resume' },
+  ]
+  const MENU_ITEM_CASTING = [
+    { icon: <AccountCircleOutlined />, label: 'โปรไฟล์', href: '/profile' },
   ]
   useNavbarFocus('profile')
   const { profile, isOpen, user } = useActorProfile()
   return (
     <RootContainer>
-      <MenuBar sx={{ width: '17vw' }} menu={MENU_ITEM} focus="โปรไฟล์" />
+      {user?.type === UserType.ACTOR && (
+        <MenuBar
+          sx={{ width: '17vw' }}
+          menu={MENU_ITEM_ACTOR}
+          focus="โปรไฟล์"
+        />
+      )}
+      {user?.type === UserType.CASTING && (
+        <MenuBar
+          sx={{ width: '17vw' }}
+          menu={MENU_ITEM_CASTING}
+          focus="โปรไฟล์"
+        />
+      )}
       <CardContainer variant="outlined">
         {isOpen ? (
           <CircularProgress />
