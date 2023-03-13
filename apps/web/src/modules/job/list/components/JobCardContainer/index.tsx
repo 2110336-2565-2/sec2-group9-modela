@@ -9,7 +9,7 @@ export default function JobCardContainer(prop: JobCardContainerProps) {
   const { jobs, maxPage } = prop
   return (
     <CardBoxContainer>
-      {maxPage === 0 && (
+      {(maxPage === 0 || jobs.filter((job) => job.isApplied).length != 0) && (
         <Typography
           variant="subtitle1"
           sx={{
