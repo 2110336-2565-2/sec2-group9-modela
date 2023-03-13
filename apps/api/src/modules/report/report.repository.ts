@@ -59,11 +59,6 @@ export class ReportRepository {
     await this.prisma.application.updateMany({
       where: {
         jobId: jobId,
-        Job: {
-          status: {
-            in: JobStatus.CANCELLED,
-          },
-        },
         status: {
           in: [
             ApplicationStatus.PENDING,
