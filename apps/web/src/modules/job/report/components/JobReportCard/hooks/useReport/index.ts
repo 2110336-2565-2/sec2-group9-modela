@@ -20,7 +20,7 @@ const useReport = () => {
 
   const rejectReport = async (id: number) => {
     try {
-      await apiClient.put('reports/jobs/' + id + '/accept')
+      await apiClient.put('reports/jobs/' + id + '/reject')
       displaySnackbar('ยกเลิกการแจ้งปัญหาเรียบร้อย', 'success')
       router.push('/job')
     } catch (err) {
