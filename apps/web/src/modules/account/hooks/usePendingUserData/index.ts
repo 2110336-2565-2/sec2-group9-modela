@@ -1,4 +1,4 @@
-import { PendingUserDto, UpdateUserStatusDto } from '@modela/dtos'
+import { PendingUserDto, UpdateUserStatusDto, UserStatus } from '@modela/dtos'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
 import { useRouter } from 'next/router'
@@ -6,16 +6,15 @@ import { useEffect, useState } from 'react'
 
 const usePendingUserData = () => {
   const [pendingUserData, setPendingUserData] = useState<PendingUserDto[]>([])
-  const [ModalId, setModalId] = useState<number | null>(null)
-  const [ModalReason, setModalReason] = useState<string | null>(null)
-
+  const [modalId, setModalId] = useState<number | null>(null)
+  const [modalReason, setModalReason] = useState<string | null>(null)
   const { handleError } = useErrorHandler()
 
   const router = useRouter()
 
   const pendingFilter = () => {
     setPendingUserData((prev) =>
-      prev.filter((user) => user.data.userId !== ModalId),
+      prev.filter((user) => user.data.userId !== modalId),
     )
   }
 
@@ -35,9 +34,9 @@ const usePendingUserData = () => {
   const acceptUser = async () => {
     try {
       await apiClient.put<UpdateUserStatusDto>(
-        `/users/${ModalId}/verification`,
+        `/users/${modalId}/verification`,
         {
-          status: 'ACCEPTED',
+          status: UserStatus.ACCEPTED,
           rejectedReason: '',
         },
       )
@@ -50,10 +49,10 @@ const usePendingUserData = () => {
   const rejectUser = async () => {
     try {
       await apiClient.put<UpdateUserStatusDto>(
-        `/users/${ModalId}/verification`,
+        `/users/${modalId}/verification`,
         {
-          status: 'REJECTED',
-          rejectedReason: ModalReason,
+          status: UserStatus.REJECTED,
+          rejectedReason: modalReason,
         },
       )
       pendingFilter()
