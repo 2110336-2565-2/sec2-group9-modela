@@ -1,3 +1,4 @@
+import { ActorInfoDto } from '@modela/dtos'
 export interface EditActorInfoFormProps {
-  initialData: any
+  initialData: ActorInfoDto
 }
