@@ -1,4 +1,5 @@
 import { UserType } from '@modela/database'
+import { ActorInfoDto, CastingInfoDto } from '@modela/dtos'
 import { CircularProgress, Divider, Typography } from '@mui/material'
 import { useUser } from 'common/context/UserContext'
 import withGuard from 'common/hoc/withGuard'
@@ -34,9 +35,11 @@ const RejectedPage = () => {
           <Divider sx={{ width: '100%' }} />
         </FormHeader>
         {type === UserType.ACTOR ? (
-          <EditActorInfoForm initialData={initialData.data} />
+          <EditActorInfoForm initialData={initialData.data as ActorInfoDto} />
         ) : (
-          <EditCastingInfoForm initialData={initialData.data} />
+          <EditCastingInfoForm
+            initialData={initialData.data as CastingInfoDto}
+          />
         )}
       </FormContainer>
     </RootContainer>
