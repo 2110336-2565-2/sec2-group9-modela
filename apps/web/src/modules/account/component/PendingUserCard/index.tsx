@@ -1,4 +1,4 @@
-import { UserType } from '@modela/database'
+import { UserType } from '@modela/dtos'
 import { FileDownloadOutlined } from '@mui/icons-material'
 import { Divider, Typography } from '@mui/material'
 import React from 'react'
@@ -18,12 +18,11 @@ const PendingUserCard = (props: PendingUserCardProps) => {
   return (
     <CardContainer variant="outlined">
       <PendingUserCardHeader data={data} type={type} />
-      {type === UserType.CASTING && (
+      {type === UserType.CASTING ? (
         <Typography variant="subtitle2" color="#00000099">
           เลขจดทะเบียน: {companyId}
         </Typography>
-      )}
-      {type === UserType.ACTOR && (
+      ) : (
         <Typography variant="subtitle2" color="#00000099">
           เลขบัตรประจำตัวประชาชน/เลขพาสปอร์ต: {ssn}
         </Typography>
@@ -37,12 +36,11 @@ const PendingUserCard = (props: PendingUserCardProps) => {
         }}
       >
         <FileDownloadOutlined color="primary" />
-        {type === UserType.CASTING && (
+        {type === UserType.CASTING ? (
           <Typography variant="button" color="primary">
             หนังสือรับรองการทำงาน
           </Typography>
-        )}
-        {type === UserType.ACTOR && (
+        ) : (
           <Typography variant="button" color="primary">
             รูปถ่ายบัตรประชาชน/พาสปอร์ต
           </Typography>

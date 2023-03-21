@@ -1,5 +1,7 @@
 import { Button, Modal, Typography } from '@mui/material'
+import useSwitch from 'common/hooks/useSwitch'
 import React from 'react'
+import { useCallback } from 'react'
 
 import UserConfirmationModal from '../../UserConfirmationModal'
 import UserRejectionModal from '../../UserRejectionModal'
@@ -8,59 +10,58 @@ import { PendingUserCardFooterProps } from './type'
 
 const PendingUserCardFooter = ({
   userId,
-  accept,
-  reject,
-  setId,
-  setReason,
+  acceptUser,
+  rejectUser,
+  setModalId,
+  setModalReason,
 }: PendingUserCardFooterProps) => {
-  const [openAccept, setOpenAccept] = React.useState(false)
-  const handleOpenAccept = () => {
-    setId(userId)
-    setOpenAccept(true)
-  }
-  const handleCloseAccept = () => setOpenAccept(false)
+  const {
+    isOpen: isOpenAccept,
+    open: openAccept,
+    close: closeAccept,
+  } = useSwitch()
 
-  const [openReject, setOpenReject] = React.useState(false)
-  const handleOpenReject = () => {
-    setId(userId)
-    setOpenReject(true)
-  }
-  const handleCloseReject = () => setOpenReject(false)
-  const handleReject = () => {
-    handleCloseReject()
-    reject()
-  }
+  const handleOpenAccept = useCallback(() => {
+    setModalId(userId)
+    openAccept()
+  }, [userId, setModalId, openAccept])
 
-  const handleAccept = () => {
-    handleCloseAccept()
-    accept()
-  }
+  const handleAccept = useCallback(() => {
+    closeAccept()
+    acceptUser()
+  }, [closeAccept, acceptUser])
+
+  const {
+    isOpen: isOpenReject,
+    open: openReject,
+    close: closeReject,
+  } = useSwitch()
+
+  const handleOpenReject = useCallback(() => {
+    setModalId(userId)
+    openReject()
+  }, [userId, setModalId, openReject])
+
+  const handleReject = useCallback(() => {
+    closeReject()
+    rejectUser()
+  }, [closeReject, rejectUser])
 
   return (
     <FooterContainer>
       <Button color="error" onClick={handleOpenReject}>
         <Typography variant="button">ปฏิเสธ</Typography>
       </Button>
-      <Modal
-        open={openReject}
-        onClose={handleCloseReject}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <UserRejectionModal setReason={setReason} reject={handleReject} />
+      <Modal open={isOpenReject} onClose={closeReject}>
+        <UserRejectionModal setReason={setModalReason} reject={handleReject} />
       </Modal>
       <Button color="success" onClick={handleOpenAccept}>
         <Typography variant="button">อนุมัติ</Typography>
       </Button>
-      <Modal
-        open={openAccept}
-        onClose={handleCloseAccept}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
+      <Modal open={isOpenAccept} onClose={closeAccept}>
         <UserConfirmationModal
           userId={userId}
-          close={handleCloseAccept}
+          close={closeAccept}
           confirm={handleAccept}
         />
       </Modal>

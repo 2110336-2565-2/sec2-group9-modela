@@ -1,14 +1,15 @@
-import { Divider } from '@mui/material'
+import { Divider, Typography } from '@mui/material'
 
-import { CardContainer } from './styled'
+import { CardContainer, HeaderContainer } from './styled'
 import { UserConfirmationModalProps } from './type'
 import UserConfirmationModalFooter from './UserConfirmationModalFooter'
-import UserConfirmationModalHeader from './UserConfirmationModalHeader'
 
 const UserConfirmationModal = (props: UserConfirmationModalProps) => {
   return (
     <CardContainer>
-      <UserConfirmationModalHeader />
+      <HeaderContainer>
+        <Typography variant="h5">ยืนยันการอนุมัติ</Typography>
+      </HeaderContainer>
       <Divider sx={{ margin: '20px 8px 8px 8px' }} />
       <UserConfirmationModalFooter {...props} />
     </CardContainer>

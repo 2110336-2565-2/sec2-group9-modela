@@ -1,7 +1,7 @@
 import { Card, styled } from '@mui/material'
 
 export const CardContainer = styled(Card)`
-  ${(props) => props.theme.breakpoints.down('md')} {
+  ${(props) => props.theme.breakpoints.down('lg')} {
     width: 100%;
   }
   border-radius: 12px;

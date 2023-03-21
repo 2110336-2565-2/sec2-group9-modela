@@ -1,4 +1,5 @@
 import { PendingUserDto } from '@modela/dtos'
+import { UserType } from '@modela/dtos'
 import { Typography } from '@mui/material'
 import Chip from 'common/components/Chip'
 import ProfileImage from 'common/components/ProfileImage'
@@ -31,7 +32,7 @@ const PendingUserCardHeader = (props: PendingUserDto) => {
           <Typography variant="h6">
             {firstName} {middleName} {lastName}
           </Typography>
-          {props.type === 'CASTING' && (
+          {props.type === UserType.CASTING && (
             <Typography variant="body1">{companyName}</Typography>
           )}
         </div>

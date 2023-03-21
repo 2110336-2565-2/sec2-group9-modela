@@ -37,7 +37,6 @@ const usePendingUserData = () => {
         `/users/${modalId}/verification`,
         {
           status: UserStatus.ACCEPTED,
-          rejectedReason: '',
         },
       )
       pendingFilter()

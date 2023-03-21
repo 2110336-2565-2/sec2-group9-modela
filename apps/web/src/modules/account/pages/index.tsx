@@ -1,6 +1,7 @@
 import { UserType } from '@modela/dtos'
 import { CircularProgress, Typography } from '@mui/material'
 import withGuard from 'common/hoc/withGuard'
+import useNavbarFocus from 'common/hooks/useNavbarFocus'
 import React from 'react'
 
 import PendingUserCard from '../component/PendingUserCard'
@@ -8,13 +9,8 @@ import usePendingUserData from '../hooks/usePendingUserData'
 import { CardsContainer } from './styled'
 
 const PendingUserPage = () => {
-  const {
-    pendingUserData,
-    rejectUser,
-    acceptUser,
-    setModalId,
-    setModalReason,
-  } = usePendingUserData()
+  const { pendingUserData, ...cardFunction } = usePendingUserData()
+  useNavbarFocus('account')
   return (
     <CardsContainer>
       {pendingUserData ? (
@@ -26,11 +22,8 @@ const PendingUserPage = () => {
           pendingUserData.map((user) => (
             <PendingUserCard
               key={user.data.userId}
-              setReason={setModalReason}
-              setId={setModalId}
-              accept={acceptUser}
-              reject={rejectUser}
               data={user}
+              {...cardFunction}
             />
           ))
         )

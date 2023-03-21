@@ -1,5 +1,4 @@
-import { UserType } from '@modela/database'
-import { ActorInfoDto, CastingInfoDto } from '@modela/dtos'
+import { ActorInfoDto, CastingInfoDto, UserType } from '@modela/dtos'
 import { CircularProgress, Divider, Typography } from '@mui/material'
 import { useUser } from 'common/context/UserContext'
 import withGuard from 'common/hoc/withGuard'
