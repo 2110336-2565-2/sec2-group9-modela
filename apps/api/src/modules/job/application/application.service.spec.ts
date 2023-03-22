@@ -176,4 +176,77 @@ describe('ApplicationService', () => {
       ).rejects.toThrow(ConflictException)
     })
   })
+
+  describe('rejectApplication', () => {
+    const MOCK_JOB_ID = 1
+    const MOCK_CASTING_ID = 1
+    const MOCK_ACTOR_ID = 1
+    const MOCK_APPLICATION_ID = 1
+
+    beforeEach(() => {
+      jest
+        .spyOn(jobRepository, 'getBaseJobById')
+        .mockResolvedValue(
+          mock('job').override({ castingId: MOCK_CASTING_ID }).get(),
+        )
+      jest.spyOn(repository, 'getApplicationbyActorJob').mockResolvedValue(
+        mock('application')
+          .override({
+            applicationId: MOCK_APPLICATION_ID,
+            status: ApplicationStatus.PENDING,
+          })
+          .get(),
+      )
+
+      jest.spyOn(repository, 'rejectApplication').mockResolvedValue(null)
+    })
+
+    it('should reject application correctly', async () => {
+      await service.rejectApplication(
+        MOCK_JOB_ID,
+        MOCK_ACTOR_ID,
+        MOCK_CASTING_ID,
+      )
+
+      expect(repository.rejectApplication).toBeCalledWith(MOCK_APPLICATION_ID)
+    })
+
+    it('should throw not found error if application not found', async () => {
+      jest.spyOn(jobRepository, 'getBaseJobById').mockResolvedValue(null)
+      await expect(
+        service.rejectApplication(MOCK_JOB_ID, MOCK_ACTOR_ID, MOCK_CASTING_ID),
+      ).rejects.toThrow(NotFoundException)
+    })
+
+    it('should throw forbidden error if user is not owener of this job', async () => {
+      jest.spyOn(jobRepository, 'getBaseJobById').mockResolvedValue(
+        mock('job')
+          .override({ castingId: MOCK_CASTING_ID + 1 })
+          .get(),
+      )
+      await expect(
+        service.rejectApplication(MOCK_JOB_ID, MOCK_ACTOR_ID, MOCK_CASTING_ID),
+      ).rejects.toThrow(ForbiddenException)
+    })
+
+    it('should throw bad request error if actor did not apply this job', async () => {
+      jest.spyOn(repository, 'getApplicationbyActorJob').mockResolvedValue(null)
+      await expect(
+        service.rejectApplication(MOCK_JOB_ID, MOCK_ACTOR_ID, MOCK_CASTING_ID),
+      ).rejects.toThrow(BadRequestException)
+    })
+
+    it('should throw bad request error if application is not pending', async () => {
+      jest
+        .spyOn(repository, 'getApplicationbyActorJob')
+        .mockResolvedValue(
+          mock('application')
+            .override({ status: ApplicationStatus.OFFER_SENT })
+            .get(),
+        )
+      await expect(
+        service.rejectApplication(MOCK_JOB_ID, MOCK_ACTOR_ID, MOCK_CASTING_ID),
+      ).rejects.toThrow(BadRequestException)
+    })
+  })
 })
