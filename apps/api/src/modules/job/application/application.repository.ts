@@ -72,4 +72,11 @@ export class ApplicationRepository {
       },
     })
   }
+
+  async rejectApplication(applicationId: number) {
+    return await this.prisma.application.update({
+      where: { applicationId },
+      data: { status: ApplicationStatus.REJECTED },
+    })
+  }
 }
