@@ -2,9 +2,11 @@ import {
   Actor,
   Application,
   Casting,
+  Credit,
   Example,
   Job,
   Notification,
+  Refund,
   Report,
   Resume,
   Shooting,
@@ -24,4 +26,6 @@ export type BaseModelType = {
   report: Report
   notification: Notification
   shooting: Shooting
+  credit: Credit
+  refund: Refund
 }

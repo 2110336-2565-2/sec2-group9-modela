@@ -32,9 +32,11 @@ async function main() {
   await Promise.all([
     seed('application'),
     seed('report'),
-    seed('notification'),
     seed('shooting'),
+    seed('credit'),
   ])
+  await seed('refund', 2)
+  await seed('notification')
 }
 
 main()
