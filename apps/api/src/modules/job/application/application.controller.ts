@@ -7,7 +7,7 @@ import {
   ResumeIdDto,
 } from '@modela/dtos'
 import { Controller, Get, Param } from '@nestjs/common'
-import { Body, Post, Query } from '@nestjs/common/decorators'
+import { Body, Post, Put, Query } from '@nestjs/common/decorators'
 import {
   ApiBadRequestResponse,
   ApiConflictResponse,
@@ -61,5 +61,30 @@ export class ApplicationController {
     @User() user: JwtDto,
   ) {
     return this.applicationService.applyJob(+id, body.resumeId, user.userId)
+  }
+
+  @Put('/:jobId/actors/:actorId/reject')
+  @UseAuthGuard(UserType.CASTING)
+  @ApiOperation({ summary: 'casting reject actor application' })
+  @ApiOkResponse()
+  @ApiBadRequestResponse({
+    description:
+      'actor didn’t apply for this job or application status is not pending',
+  })
+  @ApiUnauthorizedResponse({ description: 'User is not login' })
+  @ApiNotFoundResponse({ description: 'Job not found' })
+  @ApiForbiddenResponse({
+    description: 'User is not Casting or User is not the owner of this job',
+  })
+  rejectApplication(
+    @Param('jobId') jobId: string,
+    @Param('actorId') actorId: string,
+    @User() user: JwtDto,
+  ) {
+    return this.applicationService.rejectApplication(
+      +jobId,
+      +actorId,
+      user.userId,
+    )
   }
 }

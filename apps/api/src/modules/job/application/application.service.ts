@@ -1,4 +1,5 @@
 import {
+  ApplicationStatus,
   GetAppliedActorDto,
   GetAppliedActorQuery,
   JobStatus,
@@ -66,5 +67,27 @@ export class ApplicationService {
     return {
       applicationId: newApplication.applicationId,
     }
+  }
+
+  async rejectApplication(jobId: number, actorId: number, castingId: number) {
+    const job = await this.jobRepository.getBaseJobById(jobId)
+
+    if (!job) throw new NotFoundException('Job not found')
+
+    if (job.castingId !== castingId)
+      throw new ForbiddenException('User is not the owner of this job')
+
+    const application = await this.repository.getApplicationbyActorJob(
+      actorId,
+      jobId,
+    )
+
+    if (!application)
+      throw new BadRequestException(`Actor didn't apply for this job`)
+
+    if (application.status !== ApplicationStatus.PENDING)
+      throw new BadRequestException('Application is not pending')
+
+    this.repository.rejectApplication(application.applicationId)
   }
 }
