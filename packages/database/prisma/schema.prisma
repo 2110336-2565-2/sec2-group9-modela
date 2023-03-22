@@ -79,9 +79,10 @@ model Actor {
   shoeSize       Int?
   skinShade      String?
 
-  User        User          @relation(fields: [actorId], references: [userId])
-  Resume      Resume[]
-  Application Application[]
+  User         User           @relation(fields: [actorId], references: [userId])
+  Resume       Resume[]
+  Application  Application[]
+  Notification Notification[]
 }
 
 enum Gender {
@@ -122,14 +123,17 @@ model Job {
   gender              Gender
   actorCount          Int
   wage                Int
+  isPaid              Boolean   @default(false)
   applicationDeadline DateTime
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
 
-  Casting     Casting       @relation(fields: [castingId], references: [castingId])
-  Application Application[]
-  Report      Report[]
-  Shooting    Shooting[]
+  Casting      Casting        @relation(fields: [castingId], references: [castingId])
+  Application  Application[]
+  Report       Report[]
+  Shooting     Shooting[]
+  Notification Notification[]
+  Credit       Credit[]
 }
 
 model Shooting {
@@ -158,11 +162,13 @@ model Application {
   actorId       Int
   resumeId      Int
   status        ApplicationStatus
+  isPaid        Boolean           @default(false)
   createdAt     DateTime          @default(now())
 
-  Job    Job    @relation(fields: [jobId], references: [jobId])
-  Actor  Actor  @relation(fields: [actorId], references: [actorId])
-  Resume Resume @relation(fields: [resumeId], references: [resumeId])
+  Job    Job      @relation(fields: [jobId], references: [jobId])
+  Actor  Actor    @relation(fields: [actorId], references: [actorId])
+  Resume Resume   @relation(fields: [resumeId], references: [resumeId])
+  Refund Refund[]
 
   @@unique([actorId, jobId], name: "applicationIdentifier")
 }
@@ -187,12 +193,52 @@ model Report {
 }
 
 model Notification {
-  notificationId Int      @id @default(autoincrement())
+  notificationId Int              @id @default(autoincrement())
   userId         Int
-  message        String
-  link           String
-  isRead         Boolean  @default(false)
-  createdAt      DateTime @default(now())
+  actorId        Int?
+  jobId          Int?
+  refundId       Int?
+  type           NotificationType
+  isRead         Boolean          @default(false)
+  createdAt      DateTime         @default(now())
 
-  User User @relation(fields: [userId], references: [userId])
+  User   User    @relation(fields: [userId], references: [userId])
+  Actor  Actor?  @relation(fields: [actorId], references: [actorId])
+  Job    Job?    @relation(fields: [jobId], references: [jobId])
+  Refund Refund? @relation(fields: [refundId], references: [refundId])
+}
+
+enum NotificationType {
+  ACCEPTOFFER //casting
+  REJECTOFFER //use in both
+  RECEIVEOFFER //actor
+  CANCELJOB //use in both
+  APPROVEREFUND //use in both
+  REJECTREFUND //casting
+}
+
+model Credit {
+  creditId    Int      @id @default(autoincrement())
+  jobId       Int
+  evidenceUrl String
+  createdAt   DateTime @default(now())
+
+  Job Job @relation(fields: [jobId], references: [jobId])
+}
+
+model Refund {
+  refundId      Int          @id @default(autoincrement())
+  applicationId Int
+  reason        String
+  evidenceUrl   String
+  refundStatus  RefundStatus @default(PENDING)
+  createdAt     DateTime     @default(now())
+
+  Application  Application    @relation(fields: [applicationId], references: [applicationId])
+  Notification Notification[]
+}
+
+enum RefundStatus {
+  PENDING
+  ACCEPTED
 }

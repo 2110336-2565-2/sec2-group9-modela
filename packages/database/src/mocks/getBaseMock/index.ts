@@ -3,6 +3,8 @@ import {
   ApplicationStatus,
   Gender,
   JobStatus,
+  NotificationType,
+  RefundStatus,
   UserStatus,
   UserType,
 } from '@prisma/client'
@@ -176,6 +178,7 @@ export const getBaseMock = (
         actorCount: faker.datatype.number({ min: 1, max: 10 }),
         wage: faker.datatype.number({ min: 10000, max: 1000000 }),
         applicationDeadline: faker.date.past(),
+        isPaid: index % 2 == 0,
         createdAt: faker.date.past(),
         updatedAt: faker.date.past(),
       }
@@ -191,18 +194,20 @@ export const getBaseMock = (
       }
     case 'application': {
       const actorId = getUniqueActorId(index, ignoreIntegrity)
+      const applicationStatus = [
+        ApplicationStatus.OFFER_ACCEPTED,
+        ApplicationStatus.OFFER_REJECTED,
+        ApplicationStatus.OFFER_SENT,
+        ApplicationStatus.PENDING,
+        ApplicationStatus.REJECTED,
+      ][index % 5]
       return {
         applicationId: index,
         jobId: Math.ceil(index / 2),
         actorId,
         resumeId: getResumeByActorId(actorId, ignoreIntegrity),
-        status: faker.helpers.arrayElement([
-          ApplicationStatus.OFFER_ACCEPTED,
-          ApplicationStatus.OFFER_REJECTED,
-          ApplicationStatus.OFFER_SENT,
-          ApplicationStatus.PENDING,
-          ApplicationStatus.REJECTED,
-        ]),
+        status: applicationStatus,
+        isPaid: index % 10 === 0,
         createdAt: faker.date.past(),
       }
     }
@@ -215,12 +220,53 @@ export const getBaseMock = (
         createdAt: faker.date.past(),
       }
     case 'notification':
+      let userId
+      let notiType
+      if (index % 2 === 0) {
+        //Actor
+        userId = getActorId(true)
+        notiType = faker.helpers.arrayElement([
+          NotificationType.REJECTOFFER, //use in both
+          NotificationType.RECEIVEOFFER, //actor
+          NotificationType.CANCELJOB, //use in both
+          NotificationType.APPROVEREFUND, //use in both
+        ])
+      } else {
+        //Casting
+        userId = getCastingId(true)
+        notiType = faker.helpers.arrayElement([
+          NotificationType.ACCEPTOFFER, //casting
+          NotificationType.REJECTOFFER, //use in both
+          NotificationType.CANCELJOB, //use in both
+          NotificationType.APPROVEREFUND, //use in both
+          NotificationType.REJECTREFUND, //casting
+        ])
+      }
       return {
         notificationId: index,
-        userId: index % 2 === 0 ? getActorId(true) : getCastingId(true),
-        message: faker.lorem.sentence(),
-        link: faker.internet.url(),
+        userId,
+        actorId: getActorId(true),
+        jobId: (index % 5) + 1,
+        refundId: (index % 2) + 1,
+        type: notiType,
         isRead: faker.datatype.boolean(),
+        createdAt: faker.date.past(),
+      }
+    case 'credit':
+      return {
+        creditId: index,
+        jobId: Math.ceil(index / 2),
+        evidenceUrl: faker.internet.url(),
+        createdAt: faker.date.past(),
+      }
+    case 'refund':
+      return {
+        refundId: index,
+        applicationId: index,
+        reason: faker.lorem.lines(),
+        evidenceUrl: faker.image.business(),
+        refundStatus:
+          index % 2 === 0 ? RefundStatus.ACCEPTED : RefundStatus.PENDING,
         createdAt: faker.date.past(),
       }
   }
