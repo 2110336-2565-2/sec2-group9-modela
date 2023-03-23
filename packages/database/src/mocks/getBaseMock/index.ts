@@ -226,20 +226,20 @@ export const getBaseMock = (
         //Actor
         userId = getActorId(true)
         notiType = faker.helpers.arrayElement([
-          NotificationType.REJECTOFFER, //use in both
-          NotificationType.RECEIVEOFFER, //actor
-          NotificationType.CANCELJOB, //use in both
-          NotificationType.APPROVEREFUND, //use in both
+          NotificationType.REJECT_OFFER, //use in both
+          NotificationType.RECEIVE_OFFER, //actor
+          NotificationType.CANCEL_JOB, //use in both
+          NotificationType.APPROVE_REFUND, //use in both
         ])
       } else {
         //Casting
         userId = getCastingId(true)
         notiType = faker.helpers.arrayElement([
-          NotificationType.ACCEPTOFFER, //casting
-          NotificationType.REJECTOFFER, //use in both
-          NotificationType.CANCELJOB, //use in both
-          NotificationType.APPROVEREFUND, //use in both
-          NotificationType.REJECTREFUND, //casting
+          NotificationType.ACCEPT_OFFER, //casting
+          NotificationType.REJECT_OFFER, //use in both
+          NotificationType.CANCEL_JOB, //use in both
+          NotificationType.APPROVE_REFUND, //use in both
+          NotificationType.REJECT_REFUND, //casting
         ])
       }
       return {
