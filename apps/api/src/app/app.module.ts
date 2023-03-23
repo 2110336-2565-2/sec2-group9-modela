@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config'
 import { AuthModule } from 'src/modules/auth/auth.module'
 import { InfoModule } from 'src/modules/auth/info/info.module'
 import { CreditModule } from 'src/modules/credit/credit.module'
+import { DebitModule } from 'src/modules/debit/debit.module'
 import { ExampleModule } from 'src/modules/example/example.module'
 import { FileModule } from 'src/modules/file/file.module'
 import { ApplicationModule } from 'src/modules/job/application/application.module'
@@ -31,6 +32,7 @@ import { AppService } from './app.service'
     FileModule,
     InfoModule,
     CreditModule,
+    DebitModule,
   ],
   controllers: [AppController],
   providers: [AppService],
