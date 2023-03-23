@@ -209,12 +209,12 @@ model Notification {
 }
 
 enum NotificationType {
-  ACCEPTOFFER //casting
-  REJECTOFFER //use in both
-  RECEIVEOFFER //actor
-  CANCELJOB //use in both
-  APPROVEREFUND //use in both
-  REJECTREFUND //casting
+  ACCEPT_OFFER //casting
+  REJECT_OFFER //use in both
+  RECEIVE_OFFER //actor
+  CANCEL_JOB //use in both
+  APPROVE_REFUND //use in both
+  REJECT_REFUND //casting
 }
 
 model Credit {
