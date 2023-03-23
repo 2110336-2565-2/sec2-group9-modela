@@ -73,7 +73,7 @@ const useNavMenu = (isMobile: boolean) => {
       },
       {
         label: 'รายการธุรกรรม',
-        href: '/',
+        href: '/transaction',
         icon: <AccountBalanceWalletOutlined />,
         focusKey: 'transaction',
         adminOnly: true,
