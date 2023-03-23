@@ -1,47 +1,26 @@
-// import { UserType } from '@modela/dtos'
 import { Button, Typography } from '@mui/material'
 import FormController from 'common/components/FormController'
 import UploadFile from 'common/components/UploadFile'
 import Link from 'next/link'
-// import withGuard from 'common/hoc/withGuard'
-// import { apiClient } from 'common/utils/api'
 import { useRouter } from 'next/router'
-import { useCallback, useEffect, useState } from 'react'
 
-import { DetailsContainer, SendProofContainer, TitleContainer } from './styled'
+import useSendingDetails from './hooks/useSendingDetails'
+import {
+  ActionContainer,
+  DetailsContainer,
+  SendProofContainer,
+  TitleContainer,
+} from './styled'
 
 const SendProofOfTransactionPage = () => {
   const router = useRouter()
   const { jobId } = router.query
 
-  // This will change to strict type later
-  const [job, setJob] = useState<any>({})
-
-  const handleFetchDetails = useCallback(async () => {
-    setJob({
-      title: 'hello world',
-      jobId: 1,
-      amount: 50000,
-      bankName: 'Kasikorn Bank',
-      bankAccount: '1234567890',
-    })
-    // try {
-    //   const res = await apiClient.get(`credits/jobs/${jobId}`)
-    // } catch (err) {}
-    // if (res.status !== 200) {
-    //   router.replace(`jobs/${jobId}`)
-    //   return
-    // }
-  }, [])
-
-  const handleUploadFile = () => {}
-
-  useEffect(() => {
-    handleFetchDetails()
-  }, [handleFetchDetails])
+  const { job, error, fileUrl, handleSubmit, handleUploadFile } =
+    useSendingDetails(jobId as string)
 
   return (
-    <SendProofContainer>
+    <SendProofContainer onSubmit={handleSubmit(false)}>
       <TitleContainer>
         <FormController type="title" label="ส่งหลักฐานธุรกรรม" />
         <FormController type="divider" />
@@ -50,7 +29,7 @@ const SendProofOfTransactionPage = () => {
             งาน:{' '}
             <Typography variant="body1" color="primary">
               <Link
-                href={`/jobs/${jobId}`}
+                href={`/job/${jobId}`}
                 style={{ textDecoration: 'none', color: 'inherit' }}
               >
                 {job.title}
@@ -68,21 +47,33 @@ const SendProofOfTransactionPage = () => {
       </TitleContainer>
       <UploadFile
         label="อัปโหลดรูปถ่ายหลักฐานธุรกรรม"
+        url={fileUrl}
         handleSelectFile={handleUploadFile}
-        error={false}
+        error={!!error}
+        errorMessage={error}
       />
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Button variant="contained" color="error" sx={{ borderRadius: '12px' }}>
-          ยกเลิก
-        </Button>
+      <ActionContainer>
+        <Link
+          href={`/job/${jobId}`}
+          style={{ textDecoration: 'none', color: 'inherit' }}
+        >
+          <Button
+            variant="contained"
+            color="error"
+            sx={{ borderRadius: '12px' }}
+          >
+            ยกเลิก
+          </Button>
+        </Link>
         <Button
+          type="submit"
           variant="contained"
           color="success"
           sx={{ borderRadius: '12px' }}
         >
           ยืนยัน
         </Button>
-      </div>
+      </ActionContainer>
     </SendProofContainer>
   )
 }

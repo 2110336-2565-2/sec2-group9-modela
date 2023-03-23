@@ -3,14 +3,19 @@ import { styled } from '@mui/material'
 export const TitleContainer = styled('div')`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
+`
+
+export const ActionContainer = styled('div')`
+  display: flex;
+  justify-content: space-between;
 `
 
 export const DetailsContainer = styled('div')`
   margin: 0 16px;
 `
 
-export const SendProofContainer = styled('div')`
+export const SendProofContainer = styled('form')`
   background-color: white;
   padding: 16px;
   display: flex;
