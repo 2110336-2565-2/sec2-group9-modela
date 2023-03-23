@@ -8,6 +8,6 @@ export class NotificationService {
   constructor(private repository: NotificationRepository) {}
 
   async createNotification(data: SendNotificationDto) {
-    this.repository.createNotification(data)
+    return await this.repository.createNotification(data)
   }
 }

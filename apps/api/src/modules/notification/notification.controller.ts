@@ -5,13 +5,13 @@ import { ApiTags } from '@nestjs/swagger'
 import { UseAuthGuard } from '../auth/misc/jwt.decorator'
 import { NotificationService } from './notification.service'
 
-@ApiTags('notification')
-@Controller('notification')
+@ApiTags('notifications')
+@Controller('notifications')
 export class NotificationController {
   constructor(private readonly notificationService: NotificationService) {}
   @Post('test')
   @UseAuthGuard()
   async createNotification(@Body() body: SendNotificationDto) {
-    return this.notificationService.createNotification(body)
+    return await this.notificationService.createNotification(body)
   }
 }
