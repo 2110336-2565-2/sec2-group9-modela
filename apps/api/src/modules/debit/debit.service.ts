@@ -32,6 +32,11 @@ export class DebitService {
     if (application.isPaid)
       throw new BadRequestException('Already mark this transaction')
 
+    const refund = await this.repository.getRefundByApplicationId(
+      application.applicationId,
+    )
+    if (refund) throw new BadRequestException('Already refund')
+
     await this.repository.markAsPaid(application.applicationId)
   }
 }

@@ -58,6 +58,7 @@ describe('DebitService', () => {
             })
             .get(),
         )
+      jest.spyOn(repository, 'getRefundByApplicationId').mockResolvedValue(null)
 
       jest.spyOn(repository, 'markAsPaid').mockResolvedValue(null)
     })
@@ -109,6 +110,16 @@ describe('DebitService', () => {
             })
             .get(),
         )
+
+      await expect(
+        service.markAsPaid(MOCK_JOB_ID, MOCK_ACTOR_ID),
+      ).rejects.toThrowError(BadRequestException)
+    })
+
+    it('should throw bad request error if application is already refunded', async () => {
+      jest
+        .spyOn(repository, 'getRefundByApplicationId')
+        .mockResolvedValue(mock('refund').get())
 
       await expect(
         service.markAsPaid(MOCK_JOB_ID, MOCK_ACTOR_ID),

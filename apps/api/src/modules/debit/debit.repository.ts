@@ -10,4 +10,11 @@ export class DebitRepository {
       data: { isPaid: true },
     })
   }
+
+  // TODO: any one who work with refund API should move this to refund repository
+  async getRefundByApplicationId(applicationId: number) {
+    return await this.prisma.refund.findFirst({
+      where: { applicationId },
+    })
+  }
 }

@@ -22,7 +22,7 @@ export class DebitController {
   @UseAuthGuard(UserType.ADMIN)
   @ApiBadRequestResponse({
     description:
-      'Actor didn’t apply for this job or application status is not offer accept or job status is not finished or already mark this transaction',
+      'Actor didn’t apply for this job or application status is not offer accept or job status is not finished or already mark this transaction or already refund',
   })
   @ApiUnauthorizedResponse({ description: 'User is not logged in' })
   @ApiNotFoundResponse({ description: 'Job not found' })
