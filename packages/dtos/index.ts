@@ -10,6 +10,7 @@ export * from './src/profile'
 export * from './src/resume'
 export * from './src/info'
 export * from './src/file'
+export * from './src/notification'
 
 export {
   UserStatus,
