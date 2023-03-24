@@ -1,4 +1,5 @@
 import {
+  GetNotificationDto,
   GetNotificationsQuery,
   JwtDto,
   NotificationDto,
@@ -37,7 +38,7 @@ export class NotificationController {
   async getNotifications(
     @User() user: JwtDto,
     @Query() query: GetNotificationsQuery,
-  ): Promise<NotificationDto[]> {
+  ): Promise<GetNotificationDto> {
     return await this.notificationService.getNotifications(
       user.userId,
       user.type,

@@ -62,6 +62,14 @@ export class NotificationDto {
   createdAt: Date
 }
 
+export class GetNotificationDto {
+  @ApiProperty()
+  maxPage: number
+
+  @ApiProperty({ isArray: true })
+  notifications: NotificationDto[]
+}
+
 export class GetNotificationsQuery {
   @ApiPropertyOptional({ enum: NotificationType, isArray: true })
   @IsOptional()

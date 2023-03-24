@@ -107,4 +107,13 @@ export class NotificationRepository {
       })),
     )
   }
+
+  async getNotificationCount(userId: number, type: NotificationType[]) {
+    return await this.prisma.notification.count({
+      where: {
+        userId,
+        type: { in: type },
+      },
+    })
+  }
 }

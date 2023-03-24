@@ -1,6 +1,6 @@
 import {
+  GetNotificationDto,
   GetNotificationsQuery,
-  NotificationDto,
   SendNotificationDto,
   UserType,
 } from '@modela/dtos'
@@ -20,17 +20,24 @@ export class NotificationService {
     userId: number,
     userType: UserType,
     query: GetNotificationsQuery,
-  ): Promise<NotificationDto[]> {
+  ): Promise<GetNotificationDto> {
     const page = +query.page || 1
     const limit = +query.limit || 10
     const offset = (page - 1) * limit
 
-    return await this.repository.getNotifications(
+    const notificationCount = await this.repository.getNotificationCount(
+      userId,
+      query.type,
+    )
+
+    const maxPage = Math.ceil(notificationCount / limit)
+    const notifications = await this.repository.getNotifications(
       userId,
       userType,
       query.type,
       offset,
       limit,
     )
+    return { maxPage, notifications }
   }
 }
