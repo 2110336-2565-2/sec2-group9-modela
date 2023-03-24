@@ -53,6 +53,19 @@ export class NotificationRepository {
     return formattedNotification
   }
 
+  async markAsRead(notificationsId: number[]) {
+    await this.prisma.notification.updateMany({
+      where: {
+        notificationId: {
+          in: notificationsId,
+        },
+      },
+      data: {
+        isRead: true,
+      },
+    })
+  }
+
   async getNotifications(
     userId: number,
     userType: UserType,
@@ -73,6 +86,12 @@ export class NotificationRepository {
       userType === UserType.ACTOR
         ? ActorNotificationSchema
         : CastingNotificationSchema
+
+    const notificationsId = notifications.map(
+      ({ notificationId }) => notificationId,
+    )
+
+    await this.markAsRead(notificationsId)
 
     return await Promise.all(
       notifications.map(async ({ notificationId, type, ...rest }) => ({
