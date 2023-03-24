@@ -1,7 +1,8 @@
-import { SendNotificationDto, UserType } from '@modela/dtos'
+import { NotificationDto, SendNotificationDto, UserType } from '@modela/dtos'
 import { Body, Controller, Get, Post } from '@nestjs/common'
 import {
   ApiForbiddenResponse,
+  ApiOkResponse,
   ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
@@ -25,8 +26,9 @@ export class NotificationController {
   @UseAuthGuard(UserType.ACTOR, UserType.CASTING)
   @ApiUnauthorizedResponse({ description: 'User is not logged in' })
   @ApiForbiddenResponse({ description: 'User is admin' })
+  @ApiOkResponse({ type: NotificationDto, isArray: true })
   @ApiOperation({ summary: 'get notifications' })
-  async getNotifications(@User() user) {
+  async getNotifications(@User() user): Promise<NotificationDto[]> {
     return await this.notificationService.getNotifications(user.id, user.type)
   }
 }

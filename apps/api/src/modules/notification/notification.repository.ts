@@ -1,5 +1,5 @@
 import { Prisma, UserType } from '@modela/database'
-import { SendNotificationDto } from '@modela/dtos'
+import { NotificationDto, SendNotificationDto } from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
 
@@ -21,7 +21,7 @@ export class NotificationRepository {
   async getNotificationBySchema(
     notificationId: number,
     schema: Prisma.NotificationSelect,
-  ) {
+  ): Promise<Partial<NotificationDto>> {
     const notification = (await this.prisma.notification.findFirst({
       where: {
         notificationId,
@@ -53,7 +53,10 @@ export class NotificationRepository {
     return formattedNotification
   }
 
-  async getNotifications(userId: number, userType: UserType) {
+  async getNotifications(
+    userId: number,
+    userType: UserType,
+  ): Promise<NotificationDto[]> {
     const notifications = await this.prisma.notification.findMany({
       where: {
         userId,

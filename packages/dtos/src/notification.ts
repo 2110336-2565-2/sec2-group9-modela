@@ -17,3 +17,45 @@ export class SendNotificationDto {
   @ApiPropertyOptional()
   refundId?: number
 }
+
+export class NotificationActorDto {
+  @ApiProperty()
+  actorId: number
+
+  @ApiProperty()
+  firstName: string
+
+  @ApiProperty()
+  middleName: string
+
+  @ApiProperty()
+  lastName: string
+}
+
+export class NotificationJobDto {
+  @ApiProperty()
+  jobId: number
+
+  @ApiProperty()
+  title: string
+
+  @ApiPropertyOptional()
+  companyName?: string
+}
+
+export class NotificationDto {
+  @ApiPropertyOptional()
+  actor?: NotificationActorDto
+
+  @ApiPropertyOptional()
+  job?: NotificationJobDto
+
+  @ApiProperty({ enum: NotificationType })
+  type: NotificationType
+
+  @ApiPropertyOptional()
+  reason?: string
+
+  @ApiProperty()
+  createdAt: Date
+}
