@@ -43,7 +43,11 @@ const NotiCardHeader = (props: HeaderProps) => {
               : jobTitle}
           </Typography>
           <Typography variant="body1" fontWeight={400}>
-            {companyName}
+            {userType === UserType.CASTING &&
+            (type === NotificationType.APPROVEREFUND ||
+              type === NotificationType.REJECTREFUND)
+              ? ''
+              : companyName}
           </Typography>
         </div>
       </div>

@@ -2,8 +2,6 @@ import { NotificationType, UserType } from '@modela/dtos'
 
 export interface NotiCardProps {
   type: NotificationType
-  jobTitle?: string
-  companyName?: string
   reason?: string
   isRead: boolean
   url: string
@@ -12,6 +10,11 @@ export interface NotiCardProps {
     firstName: string
     middleName: string
     lastName: string
+  }
+  job?: {
+    jobId: number
+    jobTitle: string
+    companyName?: string
   }
   timestamp: Date
 }

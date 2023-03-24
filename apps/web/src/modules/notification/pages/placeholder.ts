@@ -2,8 +2,6 @@ import { NotificationType } from '@modela/dtos'
 
 export const notiHolder = new Array({
   type: NotificationType.REJECTOFFER,
-  jobTitle: 'TEST1234',
-  companyName: 'PRIAS THE ANIMATION',
   reason: 'LAZY',
   isRead: true,
   url: 'string',
@@ -11,6 +9,10 @@ export const notiHolder = new Array({
     firstName: 'PRIAS',
     middleName: 'DEVO',
     lastName: 'HALO',
+  },
+  job: {
+    jobTitle: 'TEST1234',
+    companyName: 'Prias The Animation',
   },
   timestamp: new Date(),
 })
