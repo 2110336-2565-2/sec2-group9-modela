@@ -1,5 +1,11 @@
-import { NotificationDto, SendNotificationDto, UserType } from '@modela/dtos'
-import { Body, Controller, Get, Post } from '@nestjs/common'
+import {
+  GetNotificationsQuery,
+  JwtDto,
+  NotificationDto,
+  SendNotificationDto,
+  UserType,
+} from '@modela/dtos'
+import { Body, Controller, Get, Post, Query } from '@nestjs/common'
 import {
   ApiForbiddenResponse,
   ApiOkResponse,
@@ -28,7 +34,14 @@ export class NotificationController {
   @ApiForbiddenResponse({ description: 'User is admin' })
   @ApiOkResponse({ type: NotificationDto, isArray: true })
   @ApiOperation({ summary: 'get notifications' })
-  async getNotifications(@User() user): Promise<NotificationDto[]> {
-    return await this.notificationService.getNotifications(user.id, user.type)
+  async getNotifications(
+    @User() user: JwtDto,
+    @Query() query: GetNotificationsQuery,
+  ): Promise<NotificationDto[]> {
+    return await this.notificationService.getNotifications(
+      user.userId,
+      user.type,
+      query,
+    )
   }
 }

@@ -1,5 +1,7 @@
 import { NotificationType } from '@modela/database'
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
+import { Type } from 'class-transformer'
+import { IsEnum, IsNumber, IsOptional, Max, Min } from 'class-validator'
 
 export class SendNotificationDto {
   @ApiProperty()
@@ -58,4 +60,30 @@ export class NotificationDto {
 
   @ApiProperty()
   createdAt: Date
+}
+
+export class GetNotificationsQuery {
+  @ApiPropertyOptional({ enum: NotificationType, isArray: true })
+  @IsOptional()
+  @IsEnum(NotificationType, { each: true })
+  type?: NotificationType[]
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  @Min(1)
+  @Max(20)
+  @ApiPropertyOptional({
+    default: 10,
+  })
+  limit: number
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  @Min(1)
+  @ApiPropertyOptional({
+    default: 1,
+  })
+  page: number
 }

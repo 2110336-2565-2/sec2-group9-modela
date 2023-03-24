@@ -1,4 +1,9 @@
-import { NotificationDto, SendNotificationDto, UserType } from '@modela/dtos'
+import {
+  GetNotificationsQuery,
+  NotificationDto,
+  SendNotificationDto,
+  UserType,
+} from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
 
 import { NotificationRepository } from './notification.repository'
@@ -14,7 +19,18 @@ export class NotificationService {
   async getNotifications(
     userId: number,
     userType: UserType,
+    query: GetNotificationsQuery,
   ): Promise<NotificationDto[]> {
-    return await this.repository.getNotifications(userId, userType)
+    const page = +query.page || 1
+    const limit = +query.limit || 10
+    const offset = (page - 1) * limit
+
+    return await this.repository.getNotifications(
+      userId,
+      userType,
+      query.type,
+      offset,
+      limit,
+    )
   }
 }
