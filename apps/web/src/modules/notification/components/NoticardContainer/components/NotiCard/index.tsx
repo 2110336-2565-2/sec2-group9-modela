@@ -24,6 +24,7 @@ const NotiCard = (props: NotiCardPropsWithUserType) => {
         jobTitle={jobTitle}
         companyName={companyName}
         timestamp={timestamp}
+        {...actor}
       />
       <NotiCardBody
         type={type}

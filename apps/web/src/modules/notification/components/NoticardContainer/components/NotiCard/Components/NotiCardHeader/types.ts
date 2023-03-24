@@ -6,4 +6,7 @@ export interface HeaderProps {
   companyName?: string
   timestamp: Date
   userType?: UserType
+  firstName?: string
+  middleName?: string
+  lastName?: string
 }
