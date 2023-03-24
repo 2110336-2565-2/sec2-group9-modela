@@ -7,7 +7,8 @@ export interface NotiCardProps {
   reason?: string
   isRead: boolean
   url: string
-  actor: {
+  actor?: {
+    actorId: number
     firstName: string
     middleName: string
     lastName: string
