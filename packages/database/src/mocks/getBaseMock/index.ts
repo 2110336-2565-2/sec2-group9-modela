@@ -256,15 +256,16 @@ export const getBaseMock = (
       return {
         creditId: index,
         jobId: Math.ceil(index / 2),
-        evidenceUrl: faker.internet.url(),
+        proofUrl: faker.internet.url(),
         createdAt: faker.date.past(),
+        amount: 5000,
       }
     case 'refund':
       return {
         refundId: index,
         applicationId: index,
         reason: faker.lorem.lines(),
-        evidenceUrl: faker.image.business(),
+        proofUrl: faker.image.business(),
         refundStatus:
           index % 2 === 0 ? RefundStatus.ACCEPTED : RefundStatus.PENDING,
         createdAt: faker.date.past(),

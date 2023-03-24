@@ -155,7 +155,8 @@ Table Notification {
 Table Credit {
   creditId Int [pk, increment]
   jobId Int [not null]
-  evidenceUrl String [not null]
+  proofUrl String [not null]
+  amount Int [not null]
   createdAt DateTime [default: `now()`, not null]
   Job Job [not null]
 }
@@ -164,7 +165,7 @@ Table Refund {
   refundId Int [pk, increment]
   applicationId Int [not null]
   reason String [not null]
-  evidenceUrl String [not null]
+  proofUrl String [not null]
   refundStatus RefundStatus [not null, default: 'PENDING']
   createdAt DateTime [default: `now()`, not null]
   Application Application [not null]

@@ -218,10 +218,11 @@ enum NotificationType {
 }
 
 model Credit {
-  creditId    Int      @id @default(autoincrement())
-  jobId       Int
-  evidenceUrl String
-  createdAt   DateTime @default(now())
+  creditId  Int      @id @default(autoincrement())
+  jobId     Int
+  proofUrl  String
+  amount    Int
+  createdAt DateTime @default(now())
 
   Job Job @relation(fields: [jobId], references: [jobId])
 }
@@ -230,7 +231,7 @@ model Refund {
   refundId      Int          @id @default(autoincrement())
   applicationId Int
   reason        String
-  evidenceUrl   String
+  proofUrl      String
   refundStatus  RefundStatus @default(PENDING)
   createdAt     DateTime     @default(now())
 
