@@ -1,5 +1,10 @@
-import { UserStatus } from '@modela/database'
-import { GetUserDto, PendingUserDto, UpdateUserStatusDto } from '@modela/dtos'
+import { UserStatus, UserType } from '@modela/database'
+import {
+  GetJobCardDto,
+  GetUserDto,
+  PendingUserDto,
+  UpdateUserStatusDto,
+} from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
 import {
   BadRequestException,
@@ -66,5 +71,32 @@ export class UserService {
       updateUserStatusDto,
     )
     return updatedUser
+  }
+
+  async getUsersWorkHistory(
+    paramId: number,
+    userId: number,
+    userType: UserType,
+  ): Promise<GetJobCardDto[]> {
+    //check if user exist
+    const targetUser = await this.repository.getUserById(paramId)
+    if (!targetUser) throw new NotFoundException()
+
+    let result: GetJobCardDto[] = []
+    if (targetUser.type === UserType.ACTOR) {
+      if (userType === UserType.ACTOR && userId !== paramId)
+        throw new BadRequestException('Cannot get other actor work history')
+
+      result = await this.repository.getActorsWorkHistory(paramId)
+    } else if (targetUser.type === UserType.CASTING) {
+      if (userType === UserType.CASTING && userId !== paramId)
+        throw new BadRequestException('Cannot get other casting work history')
+
+      result = await this.repository.getCastingWorkHistory(paramId)
+    } else {
+      throw new BadRequestException('Invalid user type')
+    }
+
+    return result
   }
 }

@@ -1,4 +1,5 @@
 import {
+  GetJobCardDto,
   GetUserDto,
   JwtDto,
   PendingUserDto,
@@ -54,5 +55,18 @@ export class UserController {
     @Body() updateUserStatusDto: UpdateUserStatusDto,
   ) {
     return this.userService.updateUserStatus(+id, updateUserStatusDto)
+  }
+
+  @Get(':id/history')
+  @UseAuthGuard()
+  @ApiOperation({ summary: 'get work history for casting and actor' })
+  @ApiOkResponse({ type: GetJobCardDto })
+  @ApiNotFoundResponse({ description: 'user not found' })
+  getUsersWorkHistory(@Param('id') ParamId: number, @User() user: JwtDto) {
+    return this.userService.getUsersWorkHistory(
+      +ParamId,
+      user.userId,
+      user.type,
+    )
   }
 }
