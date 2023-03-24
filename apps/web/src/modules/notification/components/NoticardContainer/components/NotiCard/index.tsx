@@ -2,13 +2,14 @@ import React from 'react'
 
 import NotiCardHeader from './Components/NotiCardHeader'
 import { CardBox } from './styled'
-import { NotiCardProps } from './types'
+import { NotiCardPropsWithUserType } from './types'
 
-const NotiCard = (props: NotiCardProps) => {
-  const { type, jobTitle, companyName, timestamp } = props
+const NotiCard = (props: NotiCardPropsWithUserType) => {
+  const { type, jobTitle, companyName, timestamp, userType } = props
   return (
     <CardBox>
       <NotiCardHeader
+        userType={userType}
         type={type}
         jobTitle={jobTitle}
         companyName={companyName}

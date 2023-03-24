@@ -4,11 +4,11 @@ import NotiCard from './components/NotiCard'
 import { NotiCardContainerProps } from './types'
 
 const NotiCardContainer = (props: NotiCardContainerProps) => {
-  const { noti } = props
+  const { noti, userType } = props
   return (
     <>
       {noti.map((item) => {
-        return <NotiCard {...item} />
+        return <NotiCard userType={userType} {...item} />
       })}
     </>
   )

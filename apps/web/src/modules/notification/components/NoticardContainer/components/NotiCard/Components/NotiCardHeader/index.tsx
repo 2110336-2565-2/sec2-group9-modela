@@ -1,19 +1,34 @@
+import { UserType } from '@modela/dtos'
 import { Typography } from '@mui/material'
 import { formatDate, formatTime } from 'common/utils/formatter'
 import React from 'react'
 
-import { actorIconMap } from './constants'
+import {
+  actorHeaderMap,
+  actorIconMap,
+  castingHeaderMap,
+  castingIconMap,
+} from './constants'
 import { HeaderContainer, IconContainer } from './styled'
 import { HeaderProps } from './types'
 
 const NotiCardHeader = (props: HeaderProps) => {
-  const { type, jobTitle, companyName, timestamp } = props
+  const { type, jobTitle, companyName, timestamp, userType } = props
   return (
     <HeaderContainer>
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <IconContainer>{actorIconMap[type]}</IconContainer>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <Typography variant="h6">{jobTitle}</Typography>
+        <IconContainer>
+          {userType === UserType.ACTOR
+            ? actorIconMap[type]
+            : castingIconMap[type]}
+        </IconContainer>
+        <div>
+          <Typography variant="h6">
+            {userType === UserType.ACTOR
+              ? actorHeaderMap[type]
+              : castingHeaderMap[type]}
+            {jobTitle}
+          </Typography>
           <Typography variant="body1" fontWeight={400}>
             {companyName}
           </Typography>

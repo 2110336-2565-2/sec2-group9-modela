@@ -1,4 +1,4 @@
-import { NotificationType } from '@modela/dtos'
+import { NotificationType, UserType } from '@modela/dtos'
 
 export interface NotiCardProps {
   type: NotificationType
@@ -13,4 +13,8 @@ export interface NotiCardProps {
     lastName: string
   }
   timestamp: Date
+}
+
+export interface NotiCardPropsWithUserType extends NotiCardProps {
+  userType?: UserType
 }

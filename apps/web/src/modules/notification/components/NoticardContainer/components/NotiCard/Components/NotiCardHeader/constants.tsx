@@ -23,3 +23,21 @@ export const castingIconMap = {
   [NotificationType.REJECTREFUND]: <MoneyOffCsred sx={{ fontSize: '40px' }} />,
   [NotificationType.RECEIVEOFFER]: <></>,
 }
+
+export const actorHeaderMap = {
+  [NotificationType.REJECTOFFER]: 'ถูกปฏิเสธ: ',
+  [NotificationType.RECEIVEOFFER]: 'ได้รับข้อเสนองาน: ',
+  [NotificationType.CANCELJOB]: 'งานถูกยกเลิก: ',
+  [NotificationType.APPROVEREFUND]: 'ถูกระงับเงินจากงาน: ',
+  [NotificationType.REJECTREFUND]: '',
+  [NotificationType.ACCEPTOFFER]: '',
+}
+
+export const castingHeaderMap = {
+  [NotificationType.ACCEPTOFFER]: 'นักแสดงรับข้อเสนองาน: ',
+  [NotificationType.REJECTOFFER]: 'นักแสดงปฏิเสธข้อเสนองาน: ',
+  [NotificationType.CANCELJOB]: 'งานถูกยกเลิก: ',
+  [NotificationType.APPROVEREFUND]: 'การขอเงินคืนสำเร็จ: ',
+  [NotificationType.REJECTREFUND]: 'การขอเงินคืนไม่สำเร็จ:',
+  [NotificationType.RECEIVEOFFER]: '',
+}
