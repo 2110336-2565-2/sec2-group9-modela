@@ -7,20 +7,33 @@ import { BodyContainer } from './styled'
 import { BodyProps } from './types'
 
 const NotiCardBody = (props: BodyProps) => {
-  const { userType, type, url, firstName, middleName, lastName, jobTitle } =
-    props
-  const textMap =
-    userType === UserType.ACTOR ? actorBodyMap[type] : castingBodyMap[type]
+  const {
+    userType,
+    type,
+    url,
+    firstName,
+    middleName,
+    lastName,
+    jobTitle,
+    reason,
+  } = props
   return (
     <BodyContainer>
       <Typography variant="subtitle2" sx={{ color: 'rgba(0, 0, 0, 0.6)' }}>
-        {textMap}
-        {textMap === castingBodyMap[NotificationType.ACCEPTOFFER] ? (
+        {userType === UserType.ACTOR
+          ? actorBodyMap[type]
+          : castingBodyMap[type]}
+        {userType === UserType.CASTING &&
+        (type === NotificationType.ACCEPTOFFER ||
+          type === NotificationType.REJECTOFFER) ? (
           <Link href={url} underline="none">
             {firstName + ' '}
             {middleName + ' '}
             {lastName}
           </Link>
+        ) : userType === UserType.ACTOR &&
+          type === NotificationType.APPROVEREFUND ? (
+          reason
         ) : (
           <Link href={url} underline="none">
             {jobTitle}
