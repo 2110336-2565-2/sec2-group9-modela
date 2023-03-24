@@ -1,4 +1,4 @@
-import { ActorDto, ApplicationStatus } from '@modela/dtos'
+import { ApplicationStatus } from '@modela/dtos'
 import { FileDownloadOutlined } from '@mui/icons-material'
 import { Divider, Typography } from '@mui/material'
 import Link from 'next/link'
@@ -7,8 +7,9 @@ import React from 'react'
 import ActorCardAction from '../ActorCardAction'
 import ActorCardHeader from '../ActorCardHeader'
 import { CardContainer, ResumeDownloadButton } from './styled'
+import { ActorCardProps } from './types'
 
-const ActorCard = (props: ActorDto) => {
+const ActorCard = (props: ActorCardProps) => {
   const { actorId, status, description, resumeUrl, ...headerProps } = props
   return (
     <Link

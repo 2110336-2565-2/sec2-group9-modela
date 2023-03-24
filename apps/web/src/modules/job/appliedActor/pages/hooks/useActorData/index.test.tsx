@@ -22,7 +22,7 @@ describe('useActorData()', () => {
     it('should init value correctly', async () => {
       const { result } = renderHook(() => useActorData(MOCK_QUERY))
 
-      expect(result.current).toEqual(null)
+      expect(result.current.actorData).toEqual(null)
     })
     it('should fetch actor data correctly', async () => {
       const { result } = renderHook(() => useActorData(MOCK_QUERY))
@@ -30,7 +30,9 @@ describe('useActorData()', () => {
       await waitFor(() =>
         expect(getSpy).toBeCalledWith('/jobs/1/actors', { params: MOCK_QUERY }),
       )
-      await waitFor(() => expect(result.current).toEqual(MOCK_ACTOR_DATA))
+      await waitFor(() =>
+        expect(result.current.actorData).toEqual(MOCK_ACTOR_DATA),
+      )
     })
   })
 })

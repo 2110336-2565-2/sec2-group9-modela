@@ -26,7 +26,9 @@ describe('<AppliedActorPage />', () => {
   const useFilterSpy = jest.fn().mockReturnValue(USE_FILTER_RETURN)
   jest.doMock('./hooks/useFilter', () => useFilterSpy)
 
-  const MOCK_ACTOR_DATA = [{ applicationId: 1 }, { applicationId: 2 }]
+  const MOCK_ACTOR_DATA = {
+    actorData: [{ applicationId: 1 }, { applicationId: 2 }],
+  }
   const useActorDataSpy = jest.fn().mockReturnValue(MOCK_ACTOR_DATA)
   jest.doMock('./hooks/useActorData', () => useActorDataSpy)
 
@@ -75,7 +77,7 @@ describe('<AppliedActorPage />', () => {
 
   describe('still fetching actor data', () => {
     it('should render loading', () => {
-      useActorDataSpy.mockReturnValue(null)
+      useActorDataSpy.mockReturnValue({ actorData: null })
 
       render(<AppliedActorPage />)
 
@@ -86,7 +88,7 @@ describe('<AppliedActorPage />', () => {
 
   describe('there is no actor', () => {
     it('should render no actor text', () => {
-      useActorDataSpy.mockReturnValue([])
+      useActorDataSpy.mockReturnValue({ actorData: [] })
       const { getByText } = render(<AppliedActorPage />)
       expect(getByText('ไม่พบนักแสดง')).toBeDefined()
     })

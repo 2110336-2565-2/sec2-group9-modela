@@ -1,4 +1,4 @@
-import { ApplicationStatus } from '@modela/database'
+import { ApplicationStatus, JobStatus } from '@modela/dtos'
 import { render } from '@testing-library/react'
 import {
   expectToBeCalledWith,
@@ -21,6 +21,8 @@ describe('<ActorCard />', () => {
     description: 'description',
   }
 
+  const JOB_STATUS = JobStatus.OPEN
+
   const LinkSpy = mockAndSpy('next/link')
   const ActorCardHeaderSpy = mockAndSpy(
     'modules/job/appliedActor/components/ActorCardHeader',
@@ -42,7 +44,9 @@ describe('<ActorCard />', () => {
   describe('normal behavior', () => {
     describe('display', () => {
       it('should render ActorCard correctly', () => {
-        const { getByText } = render(<ActorCard {...MOCK_ACTOR} />)
+        const { getByText } = render(
+          <ActorCard jobStatus={JOB_STATUS} {...MOCK_ACTOR} />,
+        )
 
         expect(ActorCardHeaderSpy).toBeCalledTimes(1)
         expect(getByText(MOCK_ACTOR.description)).toBeDefined()
@@ -52,7 +56,7 @@ describe('<ActorCard />', () => {
 
     describe('event', () => {
       it('should open resume click on ResumeDownloadButton', () => {
-        render(<ActorCard {...MOCK_ACTOR} />)
+        render(<ActorCard jobStatus={JOB_STATUS} {...MOCK_ACTOR} />)
 
         expectToBeCalledWith(ResumeDownloadButtonSpy, {
           href: MOCK_ACTOR.resumeUrl,
@@ -60,7 +64,7 @@ describe('<ActorCard />', () => {
       })
 
       it('should call redirect to profile page when click on card', () => {
-        render(<ActorCard {...MOCK_ACTOR} />)
+        render(<ActorCard jobStatus={JOB_STATUS} {...MOCK_ACTOR} />)
 
         expectToBeCalledWith(LinkSpy, {
           href: `/profile/${MOCK_ACTOR.actorId}`,
@@ -72,7 +76,11 @@ describe('<ActorCard />', () => {
   describe('status is not pending', () => {
     it('should not render ResumeDownloadButton', () => {
       render(
-        <ActorCard {...MOCK_ACTOR} status={ApplicationStatus.OFFER_ACCEPTED} />,
+        <ActorCard
+          jobStatus={JOB_STATUS}
+          {...MOCK_ACTOR}
+          status={ApplicationStatus.OFFER_ACCEPTED}
+        />,
       )
 
       expect(ActorCardActionSpy).not.toBeCalled()

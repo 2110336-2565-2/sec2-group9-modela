@@ -10,7 +10,7 @@ import useSummaryData from './hooks/useSummaryData'
 import { MenuContainer, SummaryContainer } from './styled'
 import { JobMenuProps } from './types'
 
-const JobMenu = ({ focus }: JobMenuProps) => {
+const JobMenu = ({ focus, setStatus }: JobMenuProps) => {
   const router = useRouter()
   const { jobId } = router.query
   const {
@@ -20,7 +20,7 @@ const JobMenu = ({ focus }: JobMenuProps) => {
     handleCloseModal,
     handleStatusChange,
     handleModalOpen,
-  } = useSummaryData()
+  } = useSummaryData(setStatus)
 
   return (
     <MenuContainer>
