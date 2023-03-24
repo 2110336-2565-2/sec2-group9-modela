@@ -1,5 +1,5 @@
 import { UserType } from '@modela/database'
-import { GetJobCardDto } from '@modela/dtos'
+import { GetJobCardDto, GetPendingTransactionDto } from '@modela/dtos'
 import { Controller, Get } from '@nestjs/common'
 import {
   ApiForbiddenResponse,
@@ -21,10 +21,20 @@ export class CreditController {
   @Get('/jobs')
   @UseAuthGuard(UserType.CASTING)
   @ApiUnauthorizedResponse({ description: 'User is not logged in' })
-  @ApiForbiddenResponse({ description: 'User is not an casting' })
+  @ApiForbiddenResponse({ description: 'User is not a casting' })
   @ApiOkResponse({ type: GetJobCardDto, isArray: true })
   @ApiOperation({ summary: 'Casting get list of unpaid jobs' })
   getUnpaidJob(@User() user) {
     return this.creditService.getUnpaidJob(user.id)
+  }
+
+  @Get('/')
+  @UseAuthGuard(UserType.ADMIN)
+  @ApiUnauthorizedResponse({ description: 'User is not logged in' })
+  @ApiForbiddenResponse({ description: 'User is not an admin' })
+  @ApiOkResponse({ type: GetPendingTransactionDto, isArray: true })
+  @ApiOperation({ summary: 'Admin get list of pending casting transaction' })
+  getPendingTransactions() {
+    return this.creditService.getPendingTransactions()
   }
 }

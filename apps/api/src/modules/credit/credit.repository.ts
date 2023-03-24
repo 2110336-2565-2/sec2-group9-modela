@@ -46,4 +46,35 @@ export class CreditRepository {
       castingName: User.firstName,
     }))
   }
+
+  async getPendingTransactions() {
+    const credits = this.prisma.credit.findMany({
+      select: {
+        jobId: true,
+        proofUrl: true,
+        amount: true,
+        Job: {
+          select: {
+            castingId: true,
+            title: true,
+            Casting: {
+              select: {
+                companyName: true,
+                User: {
+                  select: {
+                    firstName: true,
+                    middleName: true,
+                    lastName: true,
+                    bankName: true,
+                    bankAccount: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    })
+    return credits
+  }
 }
