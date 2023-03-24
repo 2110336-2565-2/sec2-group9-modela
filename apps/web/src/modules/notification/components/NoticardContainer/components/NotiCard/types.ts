@@ -6,14 +6,14 @@ export interface NotiCardProps {
   isRead: boolean
   url: string
   actor?: {
-    actorId: number
-    firstName: string
-    middleName: string
-    lastName: string
+    actorId?: number
+    firstName?: string
+    middleName?: string
+    lastName?: string
   }
   job?: {
-    jobId: number
-    jobTitle: string
+    jobId?: number
+    jobTitle?: string
     companyName?: string
   }
   timestamp: Date

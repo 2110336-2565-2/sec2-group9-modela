@@ -1,7 +1,7 @@
 import { NotificationType } from '@modela/dtos'
 
 export const notiHolder = new Array({
-  type: NotificationType.REJECTOFFER,
+  type: NotificationType.RECEIVEOFFER,
   reason: 'LAZY',
   isRead: true,
   url: 'string',
