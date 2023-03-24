@@ -80,6 +80,9 @@ export class NotificationRepository {
         userId,
         type: { in: type },
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
       select: {
         type: true,
         notificationId: true,
