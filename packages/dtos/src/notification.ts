@@ -84,7 +84,7 @@ export class GetNotificationsQuery {
   @ApiPropertyOptional({
     default: 10,
   })
-  limit: number
+  limit?: number
 
   @IsOptional()
   @Type(() => Number)
@@ -93,5 +93,5 @@ export class GetNotificationsQuery {
   @ApiPropertyOptional({
     default: 1,
   })
-  page: number
+  page?: number
 }
