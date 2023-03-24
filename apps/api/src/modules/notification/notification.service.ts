@@ -1,4 +1,4 @@
-import { SendNotificationDto } from '@modela/dtos'
+import { SendNotificationDto, UserType } from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
 
 import { NotificationRepository } from './notification.repository'
@@ -11,7 +11,7 @@ export class NotificationService {
     return await this.repository.createNotification(data)
   }
 
-  async getNotifications(userId: number) {
-    return await this.repository.getNotifications(userId)
+  async getNotifications(userId: number, userType: UserType) {
+    return await this.repository.getNotifications(userId, userType)
   }
 }

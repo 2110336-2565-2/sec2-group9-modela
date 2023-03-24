@@ -27,6 +27,6 @@ export class NotificationController {
   @ApiForbiddenResponse({ description: 'User is admin' })
   @ApiOperation({ summary: 'get notifications' })
   async getNotifications(@User() user) {
-    return await this.notificationService.getNotifications(user.id)
+    return await this.notificationService.getNotifications(user.id, user.type)
   }
 }

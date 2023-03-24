@@ -1,7 +1,13 @@
-import { NotificationType } from '@modela/database'
+import { Prisma, UserType } from '@modela/database'
 import { SendNotificationDto } from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
+
+import {
+  ActorNotificationSchema,
+  CastingNotificationSchema,
+  IFindNotification,
+} from './constants'
 
 @Injectable()
 export class NotificationRepository {
@@ -12,20 +18,42 @@ export class NotificationRepository {
     })
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async getNotificationByType(notificationId: number, type: NotificationType) {
-    return await this.prisma.notification.findFirst({
+  async getNotificationBySchema(
+    notificationId: number,
+    schema: Prisma.NotificationSelect,
+  ) {
+    const notification = (await this.prisma.notification.findFirst({
       where: {
         notificationId,
       },
-      select: {
-        type: true,
-        notificationId: true,
+      select: schema,
+    })) as IFindNotification
+
+    const formattedNotification = {
+      actor: {
+        actorId: notification.Actor?.actorId,
+        ...notification.Actor?.User,
       },
-    })
+      job: {
+        jobId: notification.Job?.jobId,
+        title: notification.Job?.title,
+        ...notification.Job?.Casting,
+      },
+      ...notification.Refund,
+    }
+
+    if (!notification.Actor) {
+      delete formattedNotification.actor
+    }
+
+    if (!notification.Job) {
+      delete formattedNotification.job
+    }
+
+    return formattedNotification
   }
 
-  async getNotifications(userId: number) {
+  async getNotifications(userId: number, userType: UserType) {
     const notifications = await this.prisma.notification.findMany({
       where: {
         userId,
@@ -33,17 +61,22 @@ export class NotificationRepository {
       select: {
         type: true,
         notificationId: true,
+        createdAt: true,
+        isRead: true,
       },
     })
 
+    const schema =
+      userType === UserType.ACTOR
+        ? ActorNotificationSchema
+        : CastingNotificationSchema
+
     return await Promise.all(
-      notifications.map(
-        async (notification) =>
-          await this.getNotificationByType(
-            notification.notificationId,
-            notification.type,
-          ),
-      ),
+      notifications.map(async ({ notificationId, type, ...rest }) => ({
+        ...(await this.getNotificationBySchema(notificationId, schema[type])),
+        ...rest,
+        type,
+      })),
     )
   }
 }
