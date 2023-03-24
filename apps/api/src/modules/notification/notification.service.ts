@@ -10,4 +10,8 @@ export class NotificationService {
   async createNotification(data: SendNotificationDto) {
     return await this.repository.createNotification(data)
   }
+
+  async getNotifications(userId: number) {
+    return await this.repository.getNotifications(userId)
+  }
 }

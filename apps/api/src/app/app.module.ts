@@ -8,6 +8,7 @@ import { ExampleModule } from 'src/modules/example/example.module'
 import { FileModule } from 'src/modules/file/file.module'
 import { ApplicationModule } from 'src/modules/job/application/application.module'
 import { JobModule } from 'src/modules/job/job.module'
+import { NotificationModule } from 'src/modules/notification/notification.module'
 import { ReportModule } from 'src/modules/report/report.module'
 import { ResumeModule } from 'src/modules/resume/resume.module'
 import { UserModule } from 'src/modules/user/user.module'
@@ -33,6 +34,7 @@ import { AppService } from './app.service'
     InfoModule,
     CreditModule,
     DebitModule,
+    NotificationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
