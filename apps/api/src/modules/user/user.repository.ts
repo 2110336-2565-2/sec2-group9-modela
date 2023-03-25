@@ -122,7 +122,6 @@ export class UserRepository {
       },
       where: {
         status: JobStatus.FINISHED,
-        //filter jobs that the actor has applied to and accepted the offer
         Application: {
           some: {
             actorId: paramId,

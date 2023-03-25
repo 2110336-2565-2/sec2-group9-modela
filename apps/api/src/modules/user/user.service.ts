@@ -89,7 +89,7 @@ export class UserService {
 
       result = await this.repository.getActorsWorkHistory(paramId)
     } else if (targetUser.type === UserType.CASTING) {
-      if (userType === UserType.CASTING && userId !== paramId)
+      if (userId !== paramId)
         throw new BadRequestException('Cannot get other casting work history')
 
       result = await this.repository.getCastingWorkHistory(paramId)
