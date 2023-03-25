@@ -22,7 +22,7 @@ export const SendProofContainer = styled('form')`
   flex-direction: column;
   gap: 16px;
   width: 100%;
-  max-width: 500px;
+  max-width: 550px;
   margin: 32px;
   height: fit-content;
   border-radius: 8px;
