@@ -18,13 +18,6 @@ export class DebitRepository {
     })
   }
 
-  // TODO: any one who work with refund API should move this to refund repository
-  async getRefundByApplicationId(applicationId: number) {
-    return await this.prisma.refund.findFirst({
-      where: { applicationId },
-    })
-  }
-
   async getPendingJobsDebits(): Promise<GetPendingJobsDebitsDto[]> {
     const jobs = await this.prisma.job.findMany({
       where: {
