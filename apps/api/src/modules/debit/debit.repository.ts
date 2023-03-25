@@ -1,3 +1,8 @@
+import {
+  ApplicationStatus,
+  GetPendingJobsDebitsDto,
+  JobStatus,
+} from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
 
@@ -16,5 +21,30 @@ export class DebitRepository {
     return await this.prisma.refund.findFirst({
       where: { applicationId },
     })
+  }
+
+  async getPendingJobsDebits(): Promise<GetPendingJobsDebitsDto[]> {
+    const jobs = await this.prisma.job.findMany({
+      where: {
+        status: JobStatus.SELECTION_ENDED,
+        Application: {
+          some: {
+            isPaid: false,
+            status: ApplicationStatus.OFFER_ACCEPTED,
+          },
+        },
+      },
+      include: {
+        Application: true,
+        Casting: true,
+      },
+    })
+
+    const resultJobs = jobs.map((job) => ({
+      jobId: job.jobId,
+      title: job.title,
+      companyName: job.Casting.companyName,
+    }))
+    return resultJobs
   }
 }

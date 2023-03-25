@@ -1,4 +1,5 @@
 import { JobStatus } from '@modela/database'
+import { GetPendingJobsDebitsDto } from '@modela/dtos'
 import {
   BadRequestException,
   Injectable,
@@ -38,5 +39,9 @@ export class DebitService {
     if (refund) throw new BadRequestException('Already refund')
 
     await this.repository.markAsPaid(application.applicationId)
+  }
+
+  async getPendingJobsDebits(): Promise<GetPendingJobsDebitsDto[]> {
+    return await this.repository.getPendingJobsDebits()
   }
 }
