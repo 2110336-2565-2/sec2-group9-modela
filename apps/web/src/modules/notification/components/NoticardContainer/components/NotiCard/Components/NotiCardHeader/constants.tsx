@@ -7,37 +7,39 @@ import {
   MoneyOffCsred,
 } from '@mui/icons-material'
 export const actorIconMap = {
-  [NotificationType.REJECTOFFER]: <Close sx={{ fontSize: '40px' }} />,
-  [NotificationType.RECEIVEOFFER]: <Check sx={{ fontSize: '40px' }} />,
-  [NotificationType.CANCELJOB]: <Block sx={{ fontSize: '40px' }} />,
-  [NotificationType.APPROVEREFUND]: <MoneyOffCsred sx={{ fontSize: '40px' }} />,
-  [NotificationType.REJECTREFUND]: <></>,
-  [NotificationType.ACCEPTOFFER]: <></>,
+  [NotificationType.REJECT_OFFER]: <Close sx={{ fontSize: '40px' }} />,
+  [NotificationType.RECEIVE_OFFER]: <Check sx={{ fontSize: '40px' }} />,
+  [NotificationType.CANCEL_JOB]: <Block sx={{ fontSize: '40px' }} />,
+  [NotificationType.APPROVE_REFUND]: (
+    <MoneyOffCsred sx={{ fontSize: '40px' }} />
+  ),
+  [NotificationType.REJECT_REFUND]: <></>,
+  [NotificationType.ACCEPT_OFFER]: <></>,
 }
 
 export const castingIconMap = {
-  [NotificationType.ACCEPTOFFER]: <Check sx={{ fontSize: '40px' }} />,
-  [NotificationType.REJECTOFFER]: <Close sx={{ fontSize: '40px' }} />,
-  [NotificationType.CANCELJOB]: <Block sx={{ fontSize: '40px' }} />,
-  [NotificationType.APPROVEREFUND]: <AttachMoney sx={{ fontSize: '40px' }} />,
-  [NotificationType.REJECTREFUND]: <MoneyOffCsred sx={{ fontSize: '40px' }} />,
-  [NotificationType.RECEIVEOFFER]: <></>,
+  [NotificationType.ACCEPT_OFFER]: <Check sx={{ fontSize: '40px' }} />,
+  [NotificationType.REJECT_OFFER]: <Close sx={{ fontSize: '40px' }} />,
+  [NotificationType.CANCEL_JOB]: <Block sx={{ fontSize: '40px' }} />,
+  [NotificationType.APPROVE_REFUND]: <AttachMoney sx={{ fontSize: '40px' }} />,
+  [NotificationType.REJECT_REFUND]: <MoneyOffCsred sx={{ fontSize: '40px' }} />,
+  [NotificationType.RECEIVE_OFFER]: <></>,
 }
 
 export const actorHeaderMap = {
-  [NotificationType.REJECTOFFER]: 'ถูกปฏิเสธ: ',
-  [NotificationType.RECEIVEOFFER]: 'ได้รับข้อเสนองาน: ',
-  [NotificationType.CANCELJOB]: 'งานถูกยกเลิก: ',
-  [NotificationType.APPROVEREFUND]: 'ถูกระงับเงินจากงาน: ',
-  [NotificationType.REJECTREFUND]: '',
-  [NotificationType.ACCEPTOFFER]: '',
+  [NotificationType.REJECT_OFFER]: 'ถูกปฏิเสธ: ',
+  [NotificationType.RECEIVE_OFFER]: 'ได้รับข้อเสนองาน: ',
+  [NotificationType.CANCEL_JOB]: 'งานถูกยกเลิก: ',
+  [NotificationType.APPROVE_REFUND]: 'ถูกระงับเงินจากงาน: ',
+  [NotificationType.REJECT_REFUND]: '',
+  [NotificationType.ACCEPT_OFFER]: '',
 }
 
 export const castingHeaderMap = {
-  [NotificationType.ACCEPTOFFER]: 'นักแสดงรับข้อเสนองาน: ',
-  [NotificationType.REJECTOFFER]: 'นักแสดงปฏิเสธข้อเสนองาน: ',
-  [NotificationType.CANCELJOB]: 'งานถูกยกเลิก: ',
-  [NotificationType.APPROVEREFUND]: 'การขอเงินคืนสำเร็จ: ',
-  [NotificationType.REJECTREFUND]: 'การขอเงินคืนไม่สำเร็จ:',
-  [NotificationType.RECEIVEOFFER]: '',
+  [NotificationType.ACCEPT_OFFER]: 'นักแสดงรับข้อเสนองาน: ',
+  [NotificationType.REJECT_OFFER]: 'นักแสดงปฏิเสธข้อเสนองาน: ',
+  [NotificationType.CANCEL_JOB]: 'งานถูกยกเลิก: ',
+  [NotificationType.APPROVE_REFUND]: 'การขอเงินคืนสำเร็จ: ',
+  [NotificationType.REJECT_REFUND]: 'การขอเงินคืนไม่สำเร็จ:',
+  [NotificationType.RECEIVE_OFFER]: '',
 }

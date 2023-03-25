@@ -62,6 +62,9 @@ export class NotificationDto {
   type: NotificationType
 
   @ApiProperty()
+  isRead: boolean
+
+  @ApiProperty()
   createdAt: Date
 }
 

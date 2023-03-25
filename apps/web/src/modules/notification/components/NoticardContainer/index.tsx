@@ -5,10 +5,10 @@ import { CardBoxContainer } from './styled'
 import { NotiCardContainerProps } from './types'
 
 const NotiCardContainer = (props: NotiCardContainerProps) => {
-  const { noti, userType } = props
+  const { notifications, userType } = props
   return (
     <CardBoxContainer>
-      {noti.map((item) => {
+      {notifications?.map((item) => {
         return <NotiCard userType={userType} {...item} />
       })}
     </CardBoxContainer>

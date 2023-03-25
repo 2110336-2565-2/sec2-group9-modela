@@ -8,5 +8,5 @@ export interface BodyProps {
   firstName?: string
   middleName?: string
   lastName?: string
-  jobTitle?: string
+  title?: string
 }

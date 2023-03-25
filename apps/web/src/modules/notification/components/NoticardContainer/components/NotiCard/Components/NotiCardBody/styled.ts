@@ -7,4 +7,5 @@ export const BodyContainer = styled('div')`
   height: fit-content;
   align-items: flex-start;
   padding: 16px;
+  padding-top: 0px;
 `

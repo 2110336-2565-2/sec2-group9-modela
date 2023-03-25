@@ -5,11 +5,12 @@ import useNavbarSearch from 'common/hooks/useNavbarSearch'
 import { useCallback } from 'react'
 
 import NotiCardContainer from '../components/NoticardContainer'
-import { notiHolder } from './placeholder'
+import useNotiListData from './hooks/useNotiListData'
 import { FilterBoxContainer, NotiContainer, PlaceFill } from './styled'
 
 const NotificationPage = () => {
   const { user } = useUser()
+  const { noti } = useNotiListData()
   useNavbarSearch(
     useCallback(() => {
       console.log('TEST')
@@ -27,11 +28,7 @@ const NotificationPage = () => {
     >
       <PlaceFill />
       <NotiContainer>
-        <NotiCardContainer
-          maxPage={1}
-          userType={user?.type}
-          noti={notiHolder}
-        />
+        <NotiCardContainer userType={user?.type} {...noti} />
       </NotiContainer>
       <FilterBoxContainer></FilterBoxContainer>
     </div>

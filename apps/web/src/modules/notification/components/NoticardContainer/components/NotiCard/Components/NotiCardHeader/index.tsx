@@ -15,7 +15,7 @@ import { HeaderProps } from './types'
 const NotiCardHeader = (props: HeaderProps) => {
   const {
     type,
-    jobTitle,
+    title,
     companyName,
     timestamp,
     userType,
@@ -37,15 +37,15 @@ const NotiCardHeader = (props: HeaderProps) => {
               ? actorHeaderMap[type]
               : castingHeaderMap[type]}
             {userType === UserType.CASTING &&
-            (type === NotificationType.APPROVEREFUND ||
-              type === NotificationType.REJECTREFUND)
+            (type === NotificationType.APPROVE_REFUND ||
+              type === NotificationType.REJECT_REFUND)
               ? firstName + ' ' + middleName + ' ' + lastName
-              : jobTitle}
+              : title}
           </Typography>
           <Typography variant="body1" fontWeight={400}>
             {userType === UserType.CASTING &&
-            (type === NotificationType.APPROVEREFUND ||
-              type === NotificationType.REJECTREFUND)
+            (type === NotificationType.APPROVE_REFUND ||
+              type === NotificationType.REJECT_REFUND)
               ? ''
               : companyName}
           </Typography>

@@ -1,9 +1,9 @@
-import { UserType } from '@modela/database'
+import { UserType } from '@modela/dtos'
 
 import { NotiCardProps } from './components/NotiCard/types'
 
 export interface NotiCardContainerProps {
-  maxPage: number
-  noti: NotiCardProps[]
+  maxPage?: number
+  notifications?: NotiCardProps[]
   userType?: UserType
 }

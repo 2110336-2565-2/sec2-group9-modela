@@ -2,7 +2,7 @@ import { NotificationType, UserType } from '@modela/dtos'
 
 export interface HeaderProps {
   type: NotificationType
-  jobTitle?: string
+  title?: string
   companyName?: string
   timestamp: Date
   userType?: UserType
