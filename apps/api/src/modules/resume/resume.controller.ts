@@ -14,6 +14,7 @@ import {
   HttpCode,
   Param,
   Post,
+  Put,
 } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
@@ -45,6 +46,23 @@ export class ResumeController {
   @ApiOperation({ summary: 'adds resume to user profile' })
   createResume(@Body() postResumeDto: PostResumeDto, @User() user: JwtDto) {
     return this.resumeService.createResume(postResumeDto, user)
+  }
+
+  @Put(':resumeId')
+  @UseAuthGuard(UserType.ACTOR)
+  @ApiOkResponse()
+  @ApiUnauthorizedResponse({ description: 'User is not logged in' })
+  @ApiForbiddenResponse({
+    description: 'User is not an actor or is not the owner of resume',
+  })
+  @ApiNotFoundResponse({ description: 'Resume not found' })
+  @ApiOperation({ summary: 'updates resume from user profile' })
+  updateResume(
+    @Param('resumeId') resumeId: number,
+    @Body() postResumeDto: PostResumeDto,
+    @User() user: JwtDto,
+  ) {
+    return this.resumeService.updateResume(+resumeId, postResumeDto, user)
   }
 
   @Get()
