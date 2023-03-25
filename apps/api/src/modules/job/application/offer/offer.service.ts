@@ -6,6 +6,7 @@ import {
   NotFoundException,
 } from '@nestjs/common'
 
+import { JobRepository } from '../../job.repository'
 import { ApplicationRepository } from '../application.repository'
 import { OfferRepository } from './offer.repository'
 
@@ -14,10 +15,11 @@ export class OfferService {
   constructor(
     private readonly offerRepository: OfferRepository,
     private readonly applicationRepository: ApplicationRepository,
+    private readonly jobRepository: JobRepository,
   ) {}
 
   async sendJobOffer(jobId: number, castingId: number, actorId: number) {
-    const job = await this.offerRepository.getJobById(jobId)
+    const job = await this.jobRepository.getBaseJobById(jobId)
     if (!job) {
       throw new NotFoundException('Job not found')
     }
@@ -32,7 +34,7 @@ export class OfferService {
     if (application.status !== ApplicationStatus.PENDING) {
       throw new BadRequestException('A job offer has already been sent')
     }
-    await this.offerRepository.updateApplicationStatus(
+    await this.applicationRepository.updateApplicationStatus(
       application.applicationId,
       ApplicationStatus.OFFER_SENT,
     )
