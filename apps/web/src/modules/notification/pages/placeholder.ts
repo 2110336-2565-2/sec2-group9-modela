@@ -1,18 +1,36 @@
 import { NotificationType } from '@modela/dtos'
 
-export const notiHolder = new Array({
-  type: NotificationType.RECEIVEOFFER,
-  reason: 'LAZY',
-  isRead: true,
-  url: 'string',
-  actor: {
-    firstName: 'PRIAS',
-    middleName: 'DEVO',
-    lastName: 'HALO',
+export const notiHolder = new Array(
+  {
+    type: NotificationType.RECEIVEOFFER,
+    reason: 'LAZY',
+    isRead: true,
+    url: 'string',
+    actor: {
+      firstName: 'PRIAS',
+      middleName: 'DEVO',
+      lastName: 'HALO',
+    },
+    job: {
+      jobTitle: 'TEST1234',
+      companyName: 'Prias The Animation',
+    },
+    timestamp: new Date(),
   },
-  job: {
-    jobTitle: 'TEST1234',
-    companyName: 'Prias The Animation',
+  {
+    type: NotificationType.RECEIVEOFFER,
+    reason: 'LAZY',
+    isRead: true,
+    url: 'string',
+    actor: {
+      firstName: 'PRIAS',
+      middleName: 'DEVO',
+      lastName: 'HALO',
+    },
+    job: {
+      jobTitle: 'TEST1234',
+      companyName: 'Prias The Animation',
+    },
+    timestamp: new Date(),
   },
-  timestamp: new Date(),
-})
+)
