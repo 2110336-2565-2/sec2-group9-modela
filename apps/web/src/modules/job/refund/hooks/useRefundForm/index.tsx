@@ -10,16 +10,15 @@ import { IRefundFormSchemaType, refundFormSchema } from './schema'
 
 const useRefundForm = (jobId: string, actorId: string) => {
   const [refundDetails, setRefundDetails] = useState<any>()
+  const [file, setFile] = useState<File | null>(null)
+
   const { control, setError, setValue, handleSubmit } =
     useForm<IRefundFormSchemaType>({
       criteriaMode: 'all',
       resolver: zodResolver(refundFormSchema),
     })
   const { handleError } = useErrorHandler()
-
   const { isOpen: isModalOpen, open: openModal } = useSwitch()
-
-  const [file, setFile] = useState<File | null>(null)
 
   const handleUploadFile = useCallback(
     (file: File) => {
@@ -86,7 +85,8 @@ const useRefundForm = (jobId: string, actorId: string) => {
 
   useEffect(() => {
     handleFetchRefundDetails(true)
-  }, [handleFetchRefundDetails])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return {
     control,
