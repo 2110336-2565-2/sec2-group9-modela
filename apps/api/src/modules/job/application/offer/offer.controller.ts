@@ -28,13 +28,15 @@ export class OfferController {
       'Actor has not applied to this job or an offer has already been sent.',
   })
   @ApiUnauthorizedResponse({
-    description: 'User is not logged in or is not a casting',
+    description: 'User is not logged in',
   })
-  @ApiForbiddenResponse({ description: 'User is not the owner of this job' })
+  @ApiForbiddenResponse({
+    description: 'User is not the owner of this job or is not a casting',
+  })
   @ApiNotFoundResponse({ description: 'Job not found' })
   sendJobOffer(
-    @Param('jobId') jobId: number,
-    @Param('actorId') actorId: number,
+    @Param('jobId') jobId: string,
+    @Param('actorId') actorId: string,
     @User() user: JwtDto,
   ) {
     return this.offerService.sendJobOffer(+jobId, user.userId, +actorId)
