@@ -73,6 +73,12 @@ export class ApplicationRepository {
     })
   }
 
+  async deleteApplication(applicationId: number) {
+    return await this.prisma.application.delete({
+      where: { applicationId },
+    })
+  }
+
   async rejectApplication(applicationId: number) {
     return await this.prisma.application.update({
       where: { applicationId },

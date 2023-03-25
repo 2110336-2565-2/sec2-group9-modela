@@ -87,4 +87,19 @@ export class ApplicationController {
       user.userId,
     )
   }
+
+  @Put('/:jobId/application/cancel')
+  @UseAuthGuard(UserType.ACTOR)
+  @ApiOperation({ summary: 'Cancels application for a job' })
+  @ApiOkResponse()
+  @ApiBadRequestResponse({
+    description:
+      'actor didn’t apply for this job or application status is not pending',
+  })
+  @ApiUnauthorizedResponse({ description: 'User is not login' })
+  @ApiNotFoundResponse({ description: 'Job not found' })
+  @ApiForbiddenResponse({ description: 'User is not Actor' })
+  async cancelApplication(@Param('jobId') jobId: string, @User() user: JwtDto) {
+    return await this.applicationService.cancelApplication(+jobId, user.userId)
+  }
 }
