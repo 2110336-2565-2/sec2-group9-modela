@@ -8,8 +8,8 @@ const NotiCardContainer = (props: NotiCardContainerProps) => {
   const { notifications, userType } = props
   return (
     <CardBoxContainer>
-      {notifications?.map((item) => {
-        return <NotiCard userType={userType} {...item} />
+      {notifications?.map((item, index) => {
+        return <NotiCard key={index} userType={userType} {...item} />
       })}
     </CardBoxContainer>
   )

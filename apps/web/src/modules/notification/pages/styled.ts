@@ -17,7 +17,7 @@ export const NotiContainer = styled('div')`
 `
 export const PlaceFill = styled('div')`
   display: flex;
-  width: 20vw;
+  width: 15vw;
   ${(props) => props.theme.breakpoints.down('lg')} {
     display: none;
   }

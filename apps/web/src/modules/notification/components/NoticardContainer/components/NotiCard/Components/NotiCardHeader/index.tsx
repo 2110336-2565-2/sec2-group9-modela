@@ -32,7 +32,7 @@ const NotiCardHeader = (props: HeaderProps) => {
             : castingIconMap[type]}
         </IconContainer>
         <div>
-          <Typography variant="h6">
+          <Typography variant="h6" sx={{ wordBreak: 'break-word' }}>
             {userType === UserType.ACTOR
               ? actorHeaderMap[type]
               : castingHeaderMap[type]}
