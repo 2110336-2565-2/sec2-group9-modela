@@ -39,7 +39,11 @@ const useRefundForm = (jobId: string, actorId: string) => {
   )
 
   const handleSuccess = useCallback(
-    async (data: IRefundFormSchemaType) => {
+    async (data: IRefundFormSchemaType, isDev: boolean) => {
+      if (isDev) {
+        openModal()
+        return
+      }
       try {
         const fileUrl = await uploadFileToS3(file!)
 
@@ -92,7 +96,7 @@ const useRefundForm = (jobId: string, actorId: string) => {
     control,
     refundDetails,
     isModalOpen,
-    handleSubmit: handleSubmit(handleSuccess),
+    handleSubmit: handleSubmit((data) => handleSuccess(data, true)),
     handleUploadFile,
   }
 }
