@@ -7,6 +7,7 @@ import { DebitModule } from 'src/modules/debit/debit.module'
 import { ExampleModule } from 'src/modules/example/example.module'
 import { FileModule } from 'src/modules/file/file.module'
 import { ApplicationModule } from 'src/modules/job/application/application.module'
+import { OfferModule } from 'src/modules/job/application/offer/offer.module'
 import { JobModule } from 'src/modules/job/job.module'
 import { NotificationModule } from 'src/modules/notification/notification.module'
 import { ReportModule } from 'src/modules/report/report.module'
@@ -35,6 +36,7 @@ import { AppService } from './app.service'
     CreditModule,
     DebitModule,
     NotificationModule,
+    OfferModule,
   ],
   controllers: [AppController],
   providers: [AppService],
