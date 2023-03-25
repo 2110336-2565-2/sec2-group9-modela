@@ -8,12 +8,10 @@ import {
 
 import { JobRepository } from '../../job.repository'
 import { ApplicationRepository } from '../application.repository'
-import { OfferRepository } from './offer.repository'
 
 @Injectable()
 export class OfferService {
   constructor(
-    private readonly offerRepository: OfferRepository,
     private readonly applicationRepository: ApplicationRepository,
     private readonly jobRepository: JobRepository,
   ) {}
