@@ -1,5 +1,7 @@
+import { UserType } from '@modela/database'
 import { Button, Grid, Modal, Typography } from '@mui/material'
 import FormController from 'common/components/FormController'
+import withGuard from 'common/hoc/withGuard'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -103,4 +105,4 @@ const RequestRefundPage = () => {
   )
 }
 
-export default RequestRefundPage
+export default withGuard(RequestRefundPage, 'verified', [UserType.CASTING])
