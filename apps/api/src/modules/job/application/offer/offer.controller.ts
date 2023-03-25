@@ -22,7 +22,7 @@ export class OfferController {
   @Put('/:jobId/actors/:actorId/offer')
   @UseAuthGuard(UserType.CASTING)
   @ApiOperation({ summary: 'Sends a job offer to actor' })
-  @ApiOkResponse()
+  @ApiOkResponse({ description: 'Job offer sent' })
   @ApiBadRequestResponse({
     description:
       'Actor has not applied to this job or an offer has already been sent.',
@@ -34,11 +34,11 @@ export class OfferController {
     description: 'User is not the owner of this job or is not a casting',
   })
   @ApiNotFoundResponse({ description: 'Job not found' })
-  sendJobOffer(
+  async sendJobOffer(
     @Param('jobId') jobId: string,
     @Param('actorId') actorId: string,
     @User() user: JwtDto,
   ) {
-    return this.offerService.sendJobOffer(+jobId, user.userId, +actorId)
+    return await this.offerService.sendJobOffer(+jobId, user.userId, +actorId)
   }
 }
