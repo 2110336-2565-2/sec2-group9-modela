@@ -1,5 +1,6 @@
 import {
   ApplicationStatus,
+  GetPendingActorDebitsByJobDto,
   GetPendingJobsDebitsDto,
   JobStatus,
 } from '@modela/dtos'
@@ -26,7 +27,7 @@ export class DebitRepository {
   async getPendingJobsDebits(): Promise<GetPendingJobsDebitsDto[]> {
     const jobs = await this.prisma.job.findMany({
       where: {
-        status: JobStatus.SELECTION_ENDED,
+        status: JobStatus.FINISHED,
         Application: {
           some: {
             isPaid: false,
@@ -46,5 +47,40 @@ export class DebitRepository {
       companyName: job.Casting.companyName,
     }))
     return resultJobs
+  }
+
+  async getPendingDebitsByJobId(
+    jobId: number,
+    jobTitle: string,
+  ): Promise<GetPendingActorDebitsByJobDto> {
+    const applications = await this.prisma.application.findMany({
+      where: {
+        jobId,
+        isPaid: false,
+        status: ApplicationStatus.OFFER_ACCEPTED,
+      },
+      include: {
+        Actor: {
+          include: {
+            User: true,
+          },
+        },
+      },
+    })
+    const resultActor = applications.map((application) => ({
+      actorId: application.Actor.actorId,
+      firstName: application.Actor.User.firstName,
+      middleName: application.Actor.User.middleName,
+      lastName: application.Actor.User.lastName,
+      profileImageUrl: application.Actor.User.profileImageUrl,
+      bankName: application.Actor.User.bankName,
+      bankAccount: application.Actor.User.bankAccount,
+    }))
+    const result: GetPendingActorDebitsByJobDto = {
+      jobId: jobId,
+      title: jobTitle,
+      actorList: resultActor,
+    }
+    return result
   }
 }

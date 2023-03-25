@@ -1,5 +1,8 @@
 import { UserType } from '@modela/database'
-import { GetPendingJobsDebitsDto } from '@modela/dtos'
+import {
+  GetPendingActorDebitsByJobDto,
+  GetPendingJobsDebitsDto,
+} from '@modela/dtos'
 import { Controller, Get, Param, Put } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
@@ -44,5 +47,15 @@ export class DebitController {
   })
   getPendingJobsDebits() {
     return this.debitService.getPendingJobsDebits()
+  }
+
+  @Get('/jobs/:jobId/actors')
+  @UseAuthGuard(UserType.ADMIN)
+  @ApiUnauthorizedResponse({ description: 'User is not logged in' })
+  @ApiNotFoundResponse({ description: 'Job not found' })
+  @ApiForbiddenResponse({ description: 'User is not an admin' })
+  @ApiOkResponse({ type: GetPendingActorDebitsByJobDto })
+  getPendingDebitsByJobId(@Param('jobId') jobId: string) {
+    return this.debitService.getPendingDebitsByJobId(+jobId)
   }
 }

@@ -1,5 +1,8 @@
 import { JobStatus } from '@modela/database'
-import { GetPendingJobsDebitsDto } from '@modela/dtos'
+import {
+  GetPendingActorDebitsByJobDto,
+  GetPendingJobsDebitsDto,
+} from '@modela/dtos'
 import {
   BadRequestException,
   Injectable,
@@ -43,5 +46,18 @@ export class DebitService {
 
   async getPendingJobsDebits(): Promise<GetPendingJobsDebitsDto[]> {
     return await this.repository.getPendingJobsDebits()
+  }
+
+  async getPendingDebitsByJobId(
+    jobId: number,
+  ): Promise<GetPendingActorDebitsByJobDto> {
+    //check if job is exist
+    const job = await this.jobRepository.getBaseJobById(jobId)
+    if (!job) throw new NotFoundException('Job not found')
+
+    if (job.status !== JobStatus.FINISHED)
+      throw new BadRequestException('Job status is not finished')
+
+    return await this.repository.getPendingDebitsByJobId(jobId, job.title)
   }
 }

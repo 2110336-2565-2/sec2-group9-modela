@@ -10,3 +10,37 @@ export class GetPendingJobsDebitsDto {
   @ApiProperty()
   companyName: string
 }
+
+export class PendingActorDebitDto {
+  @ApiProperty()
+  actorId: number
+
+  @ApiProperty()
+  firstName: string
+
+  @ApiProperty()
+  middleName: string
+
+  @ApiProperty()
+  lastName: string
+
+  @ApiProperty()
+  profileImageUrl: string
+
+  @ApiProperty()
+  bankName: string
+
+  @ApiProperty()
+  bankAccount: string
+}
+
+export class GetPendingActorDebitsByJobDto {
+  @ApiProperty()
+  jobId: number
+
+  @ApiProperty()
+  title: string
+
+  @ApiProperty()
+  actorList: PendingActorDebitDto[]
+}
