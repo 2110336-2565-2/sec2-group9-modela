@@ -2,14 +2,9 @@ import { ApplicationStatus } from '@modela/database'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
 
-import { ApplicationRepository } from '../application.repository'
-
 @Injectable()
 export class OfferRepository {
-  constructor(
-    private prisma: PrismaService,
-    private appRepo: ApplicationRepository,
-  ) {}
+  constructor(private prisma: PrismaService) {}
 
   async updateApplicationStatus(
     applicationId: number,
@@ -32,9 +27,5 @@ export class OfferRepository {
         jobId: jobId,
       },
     })
-  }
-
-  async getApplication(actorId: number, jobId: number) {
-    return await this.appRepo.getApplicationbyActorJob(actorId, jobId)
   }
 }

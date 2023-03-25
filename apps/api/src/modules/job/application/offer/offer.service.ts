@@ -6,11 +6,15 @@ import {
   NotFoundException,
 } from '@nestjs/common'
 
+import { ApplicationRepository } from '../application.repository'
 import { OfferRepository } from './offer.repository'
 
 @Injectable()
 export class OfferService {
-  constructor(private readonly offerRepository: OfferRepository) {}
+  constructor(
+    private readonly offerRepository: OfferRepository,
+    private readonly applicationRepository: ApplicationRepository,
+  ) {}
 
   async sendJobOffer(jobId: number, castingId: number, actorId: number) {
     const job = await this.offerRepository.getJobById(jobId)
@@ -20,10 +24,8 @@ export class OfferService {
     if (job.castingId !== castingId) {
       throw new ForbiddenException('You are not the owner of this job')
     }
-    const application = await this.offerRepository.getApplication(
-      actorId,
-      jobId,
-    )
+    const application =
+      await this.applicationRepository.getApplicationbyActorJob(actorId, jobId)
     if (!application) {
       throw new BadRequestException('Actor has not applied to this job')
     }
