@@ -57,9 +57,6 @@ export class OfferService {
     if (!application) {
       throw new BadRequestException('You have not applied to this job')
     }
-    if (application.status === ApplicationStatus.OFFER_ACCEPTED) {
-      throw new BadRequestException('You have already accepted this job offer')
-    }
     if (application.status !== ApplicationStatus.OFFER_SENT) {
       throw new BadRequestException('You cannot accept this job offer')
     }
@@ -84,9 +81,6 @@ export class OfferService {
       await this.applicationRepository.getApplicationbyActorJob(actorId, jobId)
     if (!application) {
       throw new BadRequestException('You have not applied to this job')
-    }
-    if (application.status === ApplicationStatus.OFFER_REJECTED) {
-      throw new BadRequestException('You have already rejected this job offer')
     }
     if (application.status !== ApplicationStatus.OFFER_SENT) {
       throw new BadRequestException('You cannot reject this job offer')
