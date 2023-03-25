@@ -11,13 +11,10 @@ export class SendNotificationDto {
   type: NotificationType
 
   @ApiPropertyOptional()
-  actorId?: number
-
-  @ApiPropertyOptional()
   jobId?: number
 
   @ApiPropertyOptional()
-  refundId?: number
+  applicationId?: number
 }
 
 export class NotificationActorDto {
@@ -42,10 +39,19 @@ export class NotificationJobDto {
   title: string
 
   @ApiPropertyOptional()
+  status?: string
+
+  @ApiPropertyOptional()
+  reason?: string
+
+  @ApiPropertyOptional()
   companyName?: string
 }
 
 export class NotificationDto {
+  @ApiProperty()
+  notificationId: number
+
   @ApiPropertyOptional()
   actor?: NotificationActorDto
 
@@ -55,9 +61,6 @@ export class NotificationDto {
   @ApiProperty({ enum: NotificationType })
   type: NotificationType
 
-  @ApiPropertyOptional()
-  reason?: string
-
   @ApiProperty()
   createdAt: Date
 }
@@ -66,7 +69,7 @@ export class GetNotificationDto {
   @ApiProperty()
   maxPage: number
 
-  @ApiProperty({ isArray: true })
+  @ApiProperty({ type: NotificationDto, isArray: true })
   notifications: NotificationDto[]
 }
 

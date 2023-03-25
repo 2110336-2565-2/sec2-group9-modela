@@ -31,18 +31,19 @@ export class NotificationRepository {
 
     const formattedNotification = {
       actor: {
-        actorId: notification.Actor?.actorId,
-        ...notification.Actor?.User,
+        actorId: notification.Application?.Actor?.actorId,
+        ...notification.Application?.Actor?.User,
       },
       job: {
         jobId: notification.Job?.jobId,
         title: notification.Job?.title,
+        status: notification.Application.status,
         ...notification.Job?.Casting,
+        ...notification.Application?.Refund,
       },
-      ...notification.Refund,
     }
 
-    if (!notification.Actor) {
+    if (!notification.Application.Actor) {
       delete formattedNotification.actor
     }
 
@@ -104,6 +105,7 @@ export class NotificationRepository {
 
     return await Promise.all(
       notifications.map(async ({ notificationId, type, ...rest }) => ({
+        notificationId,
         ...(await this.getNotificationBySchema(notificationId, schema[type])),
         ...rest,
         type,
