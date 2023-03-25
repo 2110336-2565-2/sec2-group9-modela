@@ -107,6 +107,6 @@ export class ApplicationService {
     if (!application)
       throw new BadRequestException(`You didn't apply for this job`)
 
-    this.repository.deleteApplication(application.applicationId)
+    await this.repository.deleteApplication(application.applicationId)
   }
 }
