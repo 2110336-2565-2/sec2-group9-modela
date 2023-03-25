@@ -52,7 +52,9 @@ export class ResumeController {
   @UseAuthGuard(UserType.ACTOR)
   @ApiOkResponse()
   @ApiUnauthorizedResponse({ description: 'User is not logged in' })
-  @ApiForbiddenResponse({ description: 'User is not an actor' })
+  @ApiForbiddenResponse({
+    description: 'User is not an actor or is not the owner of resume',
+  })
   @ApiNotFoundResponse({ description: 'Resume not found' })
   @ApiOperation({ summary: 'updates resume from user profile' })
   updateResume(
