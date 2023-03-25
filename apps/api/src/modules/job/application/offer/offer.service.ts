@@ -1,10 +1,11 @@
-import { ApplicationStatus } from '@modela/database'
+import { ApplicationStatus, NotificationType } from '@modela/database'
 import {
   BadRequestException,
   ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common'
+import { NotificationService } from 'src/modules/notification/notification.service'
 
 import { JobRepository } from '../../job.repository'
 import { ApplicationRepository } from '../application.repository'
@@ -14,6 +15,7 @@ export class OfferService {
   constructor(
     private readonly applicationRepository: ApplicationRepository,
     private readonly jobRepository: JobRepository,
+    private readonly notificationService: NotificationService,
   ) {}
 
   async sendJobOffer(jobId: number, castingId: number, actorId: number) {
@@ -36,6 +38,12 @@ export class OfferService {
       application.applicationId,
       ApplicationStatus.OFFER_SENT,
     )
+    await this.notificationService.createNotification({
+      userId: actorId,
+      jobId: job.jobId,
+      actorId: actorId,
+      type: NotificationType.RECEIVE_OFFER,
+    })
     return { message: 'Job offer sent' }
   }
 
@@ -59,6 +67,12 @@ export class OfferService {
       application.applicationId,
       ApplicationStatus.OFFER_ACCEPTED,
     )
+    await this.notificationService.createNotification({
+      userId: job.castingId,
+      jobId: job.jobId,
+      actorId: actorId,
+      type: NotificationType.ACCEPT_OFFER,
+    })
   }
 
   async rejectJobOffer(jobId: number, actorId: number) {
@@ -81,5 +95,11 @@ export class OfferService {
       application.applicationId,
       ApplicationStatus.OFFER_REJECTED,
     )
+    await this.notificationService.createNotification({
+      userId: job.castingId,
+      jobId: job.jobId,
+      actorId: actorId,
+      type: NotificationType.REJECT_OFFER,
+    })
   }
 }
