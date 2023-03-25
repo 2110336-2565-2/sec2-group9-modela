@@ -8,9 +8,14 @@ import { CardBox } from './styled'
 import { NotiCardPropsWithUserType } from './types'
 
 const NotiCard = (props: NotiCardPropsWithUserType) => {
-  const { type, job, createdAt, userType, reason, actor } = props
+  const { type, job, createdAt, userType, reason, actor, isRead } = props
   return (
-    <CardBox>
+    <CardBox
+      style={{
+        backgroundColor: isRead ? '' : '#EFF8FF',
+        border: isRead ? '1px solid rgba(0, 0, 0, 0.12)' : '1px solid #5B85AA',
+      }}
+    >
       <NotiCardHeader
         userType={userType}
         type={type}
@@ -23,7 +28,8 @@ const NotiCard = (props: NotiCardPropsWithUserType) => {
           type={type}
           userType={userType}
           reason={reason}
-          url={'SSS'}
+          actorId={actor?.actorId}
+          jobId={job?.jobId}
           title={job?.title}
           {...actor}
         />

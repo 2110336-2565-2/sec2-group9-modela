@@ -10,12 +10,13 @@ const NotiCardBody = (props: BodyProps) => {
   const {
     userType,
     type,
-    url,
     firstName,
     middleName,
     lastName,
     title,
     reason,
+    jobId,
+    actorId,
   } = props
   return (
     <BodyContainer>
@@ -26,7 +27,7 @@ const NotiCardBody = (props: BodyProps) => {
         {userType === UserType.CASTING &&
         (type === NotificationType.ACCEPT_OFFER ||
           type === NotificationType.REJECT_OFFER) ? (
-          <Link href={url} underline="none">
+          <Link href={'/profile/' + actorId} underline="none">
             {firstName + ' '}
             {middleName + ' '}
             {lastName}
@@ -35,7 +36,7 @@ const NotiCardBody = (props: BodyProps) => {
           type === NotificationType.APPROVE_REFUND ? (
           reason
         ) : (
-          <Link href={url} underline="none">
+          <Link href={'/job/' + jobId} underline="none">
             {title}
           </Link>
         )}

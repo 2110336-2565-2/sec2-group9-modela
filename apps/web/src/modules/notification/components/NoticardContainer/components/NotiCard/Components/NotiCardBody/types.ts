@@ -4,9 +4,10 @@ export interface BodyProps {
   userType?: UserType
   type: NotificationType
   reason?: string
-  url: string
   firstName?: string
   middleName?: string
   lastName?: string
   title?: string
+  jobId?: number
+  actorId?: number
 }

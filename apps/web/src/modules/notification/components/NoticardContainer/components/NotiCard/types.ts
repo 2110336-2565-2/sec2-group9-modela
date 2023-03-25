@@ -15,6 +15,7 @@ export interface NotiCardProps {
     companyName?: string
   }
   createdAt: Date
+  isRead: boolean
 }
 
 export interface NotiCardPropsWithUserType extends NotiCardProps {
