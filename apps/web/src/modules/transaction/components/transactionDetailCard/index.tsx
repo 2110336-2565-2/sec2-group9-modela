@@ -1,15 +1,13 @@
-import { PendingActorDebitDto } from '@modela/dtos'
 import { Divider, Typography } from '@mui/material'
 import theme from 'common/config/theme'
-import JobCardHeader from 'modules/job/components/JobCardHeader'
-import { useRouter } from 'next/router'
+import ActorCardHeader from 'modules/job/appliedActor/components/ActorCardHeader'
 import React from 'react'
 
 import { CardContainer } from './styled'
+import { transactionDetailCardProps } from './types'
 
-const TransactionDetailCard = (props: PendingActorDebitDto) => {
-  const router = useRouter()
-  const { jobId } = router.query
+const TransactionDetailCard = (props: transactionDetailCardProps) => {
+  console.log(props.data)
   const {
     actorId,
     firstName,
@@ -18,21 +16,25 @@ const TransactionDetailCard = (props: PendingActorDebitDto) => {
     bankName,
     middleName,
     profileImageUrl,
-  } = props
+  } = props.data
 
   return (
     <CardContainer>
-      <JobCardHeader
-        title={firstName + ' ' + middleName + ' ' + lastName}
-        castingId={actorId}
-        castingName="P"
-        companyName="company"
-        jobCastingImageUrl={profileImageUrl}
-        jobId={1}
-        status="OPEN"
+      <ActorCardHeader
+        actorId={actorId}
+        firstName={firstName}
+        lastName={lastName}
+        middleName={middleName}
+        profileImageUrl={profileImageUrl}
       />
-      <Typography>ธนาคาร: {bankName}</Typography>
-      <Typography>เลขบัญชี: {bankAccount}</Typography>
+      <div style={{ height: '1rem' }} />
+
+      <Typography sx={{ color: 'rgba(0,0,0,0.6)' }}>
+        ธนาคาร: {bankName}
+      </Typography>
+      <Typography sx={{ color: 'rgba(0,0,0,0.6)' }}>
+        เลขบัญชี: {bankAccount}
+      </Typography>
       <Divider sx={{ width: '100%', margin: '1rem 0' }} />
       <Typography
         sx={{
@@ -40,7 +42,7 @@ const TransactionDetailCard = (props: PendingActorDebitDto) => {
           cursor: 'pointer',
           alignSelf: 'center',
         }}
-        onClick={() => alert(jobId)}
+        onClick={() => props.markAccepted(actorId)}
       >
         เสร็จสิ้น
       </Typography>

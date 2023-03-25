@@ -1,10 +1,11 @@
 import { styled } from '@mui/material'
 
-export const PageContainer = styled('form')`
+export const PageContainer = styled('div')`
   display: flex;
-  margin: 50px;
   width: 100%;
-  gap: 64px;
+  margin: 20px;
+  margin-top: 40px;
+  gap: 48px;
   align-items: flex-start;
   justify-content: center;
   max-width: 1200px;
@@ -13,6 +14,7 @@ export const PageContainer = styled('form')`
     flex-direction: column;
     margin: 0;
     align-items: stretch;
+    margin-top: 20px;
     gap: 0px;
   }
 `
@@ -30,5 +32,11 @@ export const JobCardContainer = styled('div')`
 
   ${(props) => props.theme.breakpoints.down('sm')} {
     padding: 10px 15px;
+  }
+`
+export const SideDiv = styled('div')`
+  width: 17vw;
+  ${({ theme }) => theme.breakpoints.down('lg')} {
+    display: none;
   }
 `

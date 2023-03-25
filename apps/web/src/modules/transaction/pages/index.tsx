@@ -7,7 +7,7 @@ import React from 'react'
 import TransactionCard from '../components/transactionCard'
 import { MENU_ITEM } from './const'
 import { useTransaction } from './hooks/useTransaction'
-import { JobCardContainer, PageContainer } from './styled'
+import { JobCardContainer, PageContainer, SideDiv } from './styled'
 
 const TransactionPage = () => {
   useNavbarFocus('transaction')
@@ -16,13 +16,18 @@ const TransactionPage = () => {
 
   return (
     <PageContainer>
-      <MenuBar menu={MENU_ITEM} focus="โอนเงินให้นักแสดง" />
+      <MenuBar
+        menu={MENU_ITEM}
+        sx={{ width: '17vw' }}
+        focus="โอนเงินให้นักแสดง"
+      />
       <JobCardContainer>
         {transactionData &&
           transactionData.map((transaction) => (
             <TransactionCard {...transaction} />
           ))}
       </JobCardContainer>
+      <SideDiv />
     </PageContainer>
   )
 }

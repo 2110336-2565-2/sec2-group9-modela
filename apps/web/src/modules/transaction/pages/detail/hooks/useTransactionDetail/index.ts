@@ -25,5 +25,13 @@ export const useTransactionDetail = () => {
     if (router.isReady) fetchData()
   }, [handleError, jobId, router.isReady])
 
-  return { transactionDetail }
+  const markAccepted = async (actorId: number) => {
+    try {
+      await apiClient.put(`/debits/jobs/${jobId}/actors/${actorId}/accept`)
+    } catch (err) {
+      handleError(err)
+    }
+  }
+
+  return { transactionDetail, markAccepted }
 }

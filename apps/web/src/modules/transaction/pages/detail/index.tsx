@@ -7,23 +7,30 @@ import TransactionDetailCard from 'modules/transaction/components/transactionDet
 import React from 'react'
 
 import { MENU_ITEM } from '../const'
-import { JobCardContainer, PageContainer } from '../styled'
+import { JobCardContainer, PageContainer, SideDiv } from '../styled'
 import { useTransactionDetail } from './hooks/useTransactionDetail'
 
 const TransactionDetailPage = () => {
   useNavbarFocus('transaction')
-  const { transactionDetail } = useTransactionDetail()
+  const { transactionDetail, markAccepted } = useTransactionDetail()
 
   return (
     <PageContainer>
-      <MenuBar menu={MENU_ITEM} focus="โอนเงินให้นักแสดง" />
+      <MenuBar
+        menu={MENU_ITEM}
+        sx={{ width: '17vw' }}
+        focus="โอนเงินให้นักแสดง"
+      />
       <JobCardContainer>
-        <Typography variant="h6">งาน: {transactionDetail?.title}</Typography>
+        <Typography variant="h6" sx={{ marginBottom: '1rem' }}>
+          งาน: {transactionDetail?.title}
+        </Typography>
         {transactionDetail &&
           transactionDetail.actorList.map((actor) => (
-            <TransactionDetailCard {...actor} />
+            <TransactionDetailCard data={actor} markAccepted={markAccepted} />
           ))}
       </JobCardContainer>
+      <SideDiv />
     </PageContainer>
   )
 }
