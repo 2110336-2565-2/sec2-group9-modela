@@ -8,11 +8,16 @@ import useRefundForm from './hooks/useRefundForm'
 import { RequestRefundContainer } from './styled'
 
 const RequestRefundPage = () => {
-  const { control, handleUploadFile, handleSubmit, isModalOpen } =
-    useRefundForm()
   const router = useRouter()
-
   const { jobId, actorId } = router.query
+
+  const {
+    control,
+    refundDetails,
+    handleUploadFile,
+    handleSubmit,
+    isModalOpen,
+  } = useRefundForm(jobId as string, actorId as string)
 
   return (
     <>
@@ -28,7 +33,7 @@ const RequestRefundPage = () => {
                   href={`/job/${jobId}`}
                   style={{ textDecoration: 'none', color: 'inherit' }}
                 >
-                  หานักแสดงถ่ายงานพี
+                  {refundDetails?.title}
                 </Link>
               </Typography>
             </Typography>
@@ -41,7 +46,9 @@ const RequestRefundPage = () => {
                   href={`/profile/${actorId}`}
                   style={{ textDecoration: 'none', color: 'inherit' }}
                 >
-                  ณภัทร โกสิยากรณ์
+                  {`${refundDetails?.user.firstname} ${
+                    refundDetails?.user?.middlename || ''
+                  } ${refundDetails?.user.lastname}`}
                 </Link>
               </Typography>
             </Typography>
