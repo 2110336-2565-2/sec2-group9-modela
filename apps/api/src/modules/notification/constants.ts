@@ -42,6 +42,7 @@ export const ActorNotificationSchema: {
   [key in NotificationType]?: Prisma.NotificationSelect
 } = {
   [NotificationType.CANCEL_JOB]: jobQuery,
+  [NotificationType.RECEIVE_OFFER]: jobQuery,
   [NotificationType.ACCEPT_OFFER]: jobQuery,
   [NotificationType.REJECT_OFFER]: jobQuery,
   [NotificationType.APPROVE_REFUND]: {

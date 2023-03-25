@@ -2,7 +2,6 @@ import {
   GetNotificationDto,
   GetNotificationsQuery,
   JwtDto,
-  NotificationDto,
   SendNotificationDto,
   UserType,
 } from '@modela/dtos'
@@ -33,7 +32,7 @@ export class NotificationController {
   @UseAuthGuard(UserType.ACTOR, UserType.CASTING)
   @ApiUnauthorizedResponse({ description: 'User is not logged in' })
   @ApiForbiddenResponse({ description: 'User is admin' })
-  @ApiOkResponse({ type: NotificationDto, isArray: true })
+  @ApiOkResponse({ type: GetNotificationDto })
   @ApiOperation({ summary: 'get notifications' })
   async getNotifications(
     @User() user: JwtDto,
