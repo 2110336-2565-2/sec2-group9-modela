@@ -1,18 +1,24 @@
 import { AxiosError } from 'axios'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
+import useSwitch from 'common/hooks/useSwitch'
 import { apiClient } from 'common/utils/api'
 import { uploadFileToS3 } from 'common/utils/file'
 import { useRouter } from 'next/router'
 import { FormEvent, useCallback, useEffect, useState } from 'react'
+
+import { IUploadedFileDetails } from './types'
 
 const useSendingDetails = (jobId: string) => {
   const router = useRouter()
 
   // This will change to strict type later
   const [job, setJob] = useState<any>({})
-  const [uploadedFile, setUploadedFile] = useState<File>()
-  const [fileUrl, setFileUrl] = useState('')
+  const [uploadedFile, setUploadedFile] = useState<IUploadedFileDetails>({
+    file: null,
+    fileUrl: '',
+  })
   const [error, setError] = useState<string>('')
+  const { isOpen: isModalOpen, open: openSuccessModal } = useSwitch(false)
 
   const { handleError } = useErrorHandler()
 
@@ -48,25 +54,29 @@ const useSendingDetails = (jobId: string) => {
       setError('ไฟล์ขนาดห้ามเกิน 5 MB')
       return
     }
-    URL.revokeObjectURL(fileUrl)
-    setFileUrl(URL.createObjectURL(file))
-    setUploadedFile(file)
+    URL.revokeObjectURL(uploadedFile.fileUrl)
+    setUploadedFile({ file, fileUrl: URL.createObjectURL(file) })
   }
 
   const handleSubmit = (isFetch: boolean) => async (ev: FormEvent) => {
     ev.preventDefault()
-    if (!uploadedFile) {
+    if (!uploadedFile.file) {
       setError('กรุณาอัปโหลดหลักฐานการโอนเงิน')
       return
     }
 
-    if (!isFetch) return
+    // This will be removed after connecting to api
+    if (!isFetch) {
+      openSuccessModal()
+      return
+    }
 
     try {
-      const signedUrl = await uploadFileToS3(uploadedFile)
+      const signedUrl = await uploadFileToS3(uploadedFile.file)
       await apiClient.post(`/credits/jobs/${jobId}`, {
         fileUrl: signedUrl,
       })
+      openSuccessModal()
     } catch (err) {
       handleError(err)
     }
@@ -79,7 +89,8 @@ const useSendingDetails = (jobId: string) => {
   return {
     job,
     error,
-    fileUrl,
+    isModalOpen,
+    fileUrl: uploadedFile.fileUrl,
     handleUploadFile,
     handleSubmit,
   }
