@@ -41,4 +41,42 @@ export class OfferController {
   ) {
     return await this.offerService.sendJobOffer(+jobId, user.userId, +actorId)
   }
+
+  @Put('/:jobId/offer/accept')
+  @UseAuthGuard(UserType.ACTOR)
+  @ApiOperation({ summary: 'Accepts a job offer' })
+  @ApiOkResponse({ description: 'Job offer accepted' })
+  @ApiBadRequestResponse({
+    description:
+      'You have not applied to this job, have already accepted this job offer or cannot accept this job offer',
+  })
+  @ApiUnauthorizedResponse({
+    description: 'User is not logged in',
+  })
+  @ApiForbiddenResponse({
+    description: 'User is not an actor',
+  })
+  @ApiNotFoundResponse({ description: 'Job not found' })
+  async acceptJobOffer(@Param('jobId') jobId: string, @User() user: JwtDto) {
+    return await this.offerService.acceptJobOffer(+jobId, user.userId)
+  }
+
+  @Put('/:jobId/offer/reject')
+  @UseAuthGuard(UserType.ACTOR)
+  @ApiOperation({ summary: 'Rejects a job offer' })
+  @ApiOkResponse({ description: 'Job offer rejected' })
+  @ApiBadRequestResponse({
+    description:
+      'You have not applied to this job, have already rejected this job offer or cannot reject this job offer',
+  })
+  @ApiUnauthorizedResponse({
+    description: 'User is not logged in',
+  })
+  @ApiForbiddenResponse({
+    description: 'User is not an actor',
+  })
+  @ApiNotFoundResponse({ description: 'Job not found' })
+  async rejectJobOffer(@Param('jobId') jobId: string, @User() user: JwtDto) {
+    return await this.offerService.rejectJobOffer(+jobId, user.userId)
+  }
 }

@@ -1,10 +1,11 @@
-import { ApplicationStatus } from '@modela/database'
+import { ApplicationStatus, NotificationType } from '@modela/database'
 import {
   BadRequestException,
   ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common'
+import { NotificationService } from 'src/modules/notification/notification.service'
 
 import { JobRepository } from '../../job.repository'
 import { ApplicationRepository } from '../application.repository'
@@ -14,7 +15,39 @@ export class OfferService {
   constructor(
     private readonly applicationRepository: ApplicationRepository,
     private readonly jobRepository: JobRepository,
+    private readonly notificationService: NotificationService,
   ) {}
+
+  private async updateApplication(
+    jobId: number,
+    actorId: number,
+    action: string,
+    applicationStatus: ApplicationStatus,
+    notificationType: NotificationType,
+  ) {
+    const job = await this.jobRepository.getBaseJobById(jobId)
+    if (!job) {
+      throw new NotFoundException('Job not found')
+    }
+    const application =
+      await this.applicationRepository.getApplicationbyActorJob(actorId, jobId)
+    if (!application) {
+      throw new BadRequestException('You have not applied to this job')
+    }
+    if (application.status !== ApplicationStatus.OFFER_SENT) {
+      throw new BadRequestException(`You cannot ${action} this job offer`)
+    }
+    await this.applicationRepository.updateApplicationStatus(
+      application.applicationId,
+      applicationStatus,
+    )
+    await this.notificationService.createNotification({
+      userId: job.castingId,
+      jobId: job.jobId,
+      actorId: actorId,
+      type: notificationType,
+    })
+  }
 
   async sendJobOffer(jobId: number, castingId: number, actorId: number) {
     const job = await this.jobRepository.getBaseJobById(jobId)
@@ -36,6 +69,32 @@ export class OfferService {
       application.applicationId,
       ApplicationStatus.OFFER_SENT,
     )
+    await this.notificationService.createNotification({
+      userId: actorId,
+      jobId: job.jobId,
+      actorId: actorId,
+      type: NotificationType.RECEIVE_OFFER,
+    })
     return { message: 'Job offer sent' }
+  }
+
+  async acceptJobOffer(jobId: number, actorId: number) {
+    await this.updateApplication(
+      jobId,
+      actorId,
+      'accept',
+      ApplicationStatus.OFFER_ACCEPTED,
+      NotificationType.ACCEPT_OFFER,
+    )
+  }
+
+  async rejectJobOffer(jobId: number, actorId: number) {
+    await this.updateApplication(
+      jobId,
+      actorId,
+      'reject',
+      ApplicationStatus.OFFER_REJECTED,
+      NotificationType.REJECT_OFFER,
+    )
   }
 }
