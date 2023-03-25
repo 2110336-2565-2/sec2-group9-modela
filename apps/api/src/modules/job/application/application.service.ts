@@ -90,4 +90,23 @@ export class ApplicationService {
 
     this.repository.rejectApplication(application.applicationId)
   }
+
+  async cancelApplication(jobId: number, actorId: number) {
+    const job = await this.jobRepository.getBaseJobById(jobId)
+
+    if (!job) throw new NotFoundException('Job not found')
+    if (job.status !== JobStatus.SELECTING) {
+      throw new BadRequestException('Job is not selecting')
+    }
+
+    const application = await this.repository.getApplicationbyActorJob(
+      actorId,
+      jobId,
+    )
+
+    if (!application)
+      throw new BadRequestException(`You didn't apply for this job`)
+
+    this.repository.deleteApplication(application.applicationId)
+  }
 }
