@@ -5,7 +5,7 @@ import UploadFile from 'common/components/UploadFile'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import SendResultModalBody from './components/SendResultModalBody'
+import SendResultModalBody from '../../components/SendResultModalBody'
 import useSendingDetails from './hooks/useSendingDetails'
 import {
   ActionContainer,

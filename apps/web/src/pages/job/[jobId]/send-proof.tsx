@@ -1,1 +1,1 @@
-export { default } from 'modules/job/credit/send'
+export { default } from 'modules/job/credit/pages/send-proof'
