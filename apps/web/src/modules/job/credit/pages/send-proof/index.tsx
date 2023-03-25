@@ -1,7 +1,9 @@
+import { UserType } from '@modela/dtos'
 import { Button, Typography } from '@mui/material'
 import FormController from 'common/components/FormController'
 import Modal from 'common/components/Modal'
 import UploadFile from 'common/components/UploadFile'
+import withGuard from 'common/hoc/withGuard'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -87,4 +89,6 @@ const SendProofOfTransactionPage = () => {
   )
 }
 
-export default SendProofOfTransactionPage
+export default withGuard(SendProofOfTransactionPage, 'verified', [
+  UserType.CASTING,
+])
