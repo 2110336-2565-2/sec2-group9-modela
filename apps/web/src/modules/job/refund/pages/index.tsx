@@ -3,9 +3,9 @@ import FormController from 'common/components/FormController'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import ResultModalBody from './components/ResultModalBody'
+import ResultModalBody from '../components/ResultModalBody'
+import { RequestRefundContainer } from '../pages/styled'
 import useRefundForm from './hooks/useRefundForm'
-import { RequestRefundContainer } from './styled'
 
 const RequestRefundPage = () => {
   const router = useRouter()
