@@ -99,7 +99,7 @@ export class ApplicationController {
   @ApiUnauthorizedResponse({ description: 'User is not login' })
   @ApiNotFoundResponse({ description: 'Job not found' })
   @ApiForbiddenResponse({ description: 'User is not Actor' })
-  cancelApplication(@Param('jobId') jobId: string, @User() user: JwtDto) {
-    return this.applicationService.cancelApplication(+jobId, user.userId)
+  async cancelApplication(@Param('jobId') jobId: string, @User() user: JwtDto) {
+    return await this.applicationService.cancelApplication(+jobId, user.userId)
   }
 }
