@@ -8,16 +8,21 @@ import React from 'react'
 
 import { MENU_ITEM } from '../const'
 import { JobCardContainer, PageContainer } from '../styled'
+import { useTransactionDetail } from './hooks/useTransactionDetail'
 
 const TransactionDetailPage = () => {
   useNavbarFocus('transaction')
+  const { transactionDetail } = useTransactionDetail()
 
   return (
     <PageContainer>
       <MenuBar menu={MENU_ITEM} focus="โอนเงินให้นักแสดง" />
       <JobCardContainer>
-        <Typography variant="h6">งาน: job title</Typography>
-        <TransactionDetailCard />
+        <Typography variant="h6">งาน: {transactionDetail?.title}</Typography>
+        {transactionDetail &&
+          transactionDetail.actorList.map((actor) => (
+            <TransactionDetailCard {...actor} />
+          ))}
       </JobCardContainer>
     </PageContainer>
   )

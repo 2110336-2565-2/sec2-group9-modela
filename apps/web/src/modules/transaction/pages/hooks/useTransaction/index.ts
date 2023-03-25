@@ -1,15 +1,29 @@
+import { GetPendingJobsDebitsDto } from '@modela/dtos'
+import { useErrorHandler } from 'common/hooks/useErrorHandler'
+import { apiClient } from 'common/utils/api'
 import { useEffect, useState } from 'react'
 
 export const useTransaction = () => {
-  const [selectedJob, setSelectedJob] = useState<number | undefined>()
+  const [transactionData, setTransactionData] = useState<
+    GetPendingJobsDebitsDto[] | null
+  >()
+  const { handleError } = useErrorHandler()
 
   useEffect(() => {
-    if (selectedJob) {
-      console.log('selectedJob', selectedJob)
+    const fetchData = async () => {
+      try {
+        const res = await apiClient.get<GetPendingJobsDebitsDto[]>(
+          '/debits/jobs',
+        )
+        setTransactionData(res.data)
+      } catch (err) {
+        handleError(err)
+      }
     }
-  }, [selectedJob])
+    fetchData()
+  }, [handleError])
+
   return {
-    selectedJob,
-    setSelectedJob,
+    transactionData,
   }
 }

@@ -6,18 +6,22 @@ import React from 'react'
 
 import TransactionCard from '../components/transactionCard'
 import { MENU_ITEM } from './const'
+import { useTransaction } from './hooks/useTransaction'
 import { JobCardContainer, PageContainer } from './styled'
 
 const TransactionPage = () => {
   useNavbarFocus('transaction')
+  const { transactionData } = useTransaction()
+  console.log(transactionData)
 
   return (
     <PageContainer>
       <MenuBar menu={MENU_ITEM} focus="โอนเงินให้นักแสดง" />
       <JobCardContainer>
-        <TransactionCard jobId={1} />
-        <TransactionCard jobId={2} />
-        <TransactionCard jobId={3} />
+        {transactionData &&
+          transactionData.map((transaction) => (
+            <TransactionCard {...transaction} />
+          ))}
       </JobCardContainer>
     </PageContainer>
   )
