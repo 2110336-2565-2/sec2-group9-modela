@@ -1,4 +1,4 @@
-import { UserType } from '@modela/database'
+import { UserType } from '@modela/dtos'
 import { Button, Grid, Modal, Typography } from '@mui/material'
 import FormController from 'common/components/FormController'
 import withGuard from 'common/hoc/withGuard'
