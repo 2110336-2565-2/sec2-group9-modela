@@ -9,6 +9,15 @@ export class GetPendingJobsDebitsDto {
 
   @ApiProperty()
   companyName: string
+
+  @ApiProperty()
+  firstname: string
+
+  @ApiProperty()
+  castingId: number
+
+  @ApiProperty()
+  profileImageUrl: string
 }
 
 export class PendingActorDebitDto {

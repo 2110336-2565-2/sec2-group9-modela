@@ -37,7 +37,11 @@ export class DebitRepository {
       },
       include: {
         Application: true,
-        Casting: true,
+        Casting: {
+          include: {
+            User: true,
+          },
+        },
       },
     })
 
@@ -45,6 +49,9 @@ export class DebitRepository {
       jobId: job.jobId,
       title: job.title,
       companyName: job.Casting.companyName,
+      firstname: job.Casting.User.firstName,
+      castingId: job.castingId,
+      profileImageUrl: job.Casting.User.profileImageUrl,
     }))
     return resultJobs
   }
