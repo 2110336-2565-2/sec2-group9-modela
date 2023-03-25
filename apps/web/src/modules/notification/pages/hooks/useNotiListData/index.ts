@@ -93,7 +93,14 @@ const useNotiListData = () => {
     state.rejectRefundCheck,
   ])
 
-  return { fetchData, state, setState, noti, filterData, hasMore }
+  return {
+    fetchData,
+    state,
+    setState,
+    noti,
+    filterData,
+    hasMore,
+  }
 }
 
 export default useNotiListData
