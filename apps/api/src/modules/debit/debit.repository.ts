@@ -33,6 +33,7 @@ export class DebitRepository {
           some: {
             isPaid: false,
             status: ApplicationStatus.OFFER_ACCEPTED,
+            Refund: { none: {} },
           },
         },
       },
