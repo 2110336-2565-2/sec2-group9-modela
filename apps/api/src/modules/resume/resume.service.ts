@@ -15,6 +15,24 @@ export class ResumeService {
     return this.repository.createResume(postResumeDto, user.userId)
   }
 
+  async updateResume(
+    resumeId: number,
+    postResumeDto: PostResumeDto,
+    user: JwtDto,
+  ) {
+    const resume = await this.repository.getResumeById(resumeId)
+    if (!resume) throw new NotFoundException()
+    if (resume.actorId !== user.userId)
+      throw new ForbiddenException('You are not the owner of this resume')
+
+    const updatedResume = await this.repository.updateResume(
+      resumeId,
+      postResumeDto,
+    )
+
+    return updatedResume
+  }
+
   async getResumeById(resumeId: number, user: JwtDto) {
     const resume = await this.repository.getResumeById(resumeId)
     if (!resume) {

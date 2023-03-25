@@ -59,4 +59,12 @@ export class ResumeRepository {
       return deletedResume
     }
   }
+
+  async updateResume(resumeId: number, postResumeDto: PostResumeDto) {
+    const resume = await this.prisma.resume.update({
+      where: { resumeId },
+      data: postResumeDto,
+    })
+    return resume
+  }
 }
