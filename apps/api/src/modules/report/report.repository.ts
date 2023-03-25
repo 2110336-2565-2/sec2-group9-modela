@@ -83,4 +83,22 @@ export class ReportRepository {
     })
     return { jobId: jobId }
   }
+
+  async getRelatedUsers(jobId: number) {
+    const data = await this.prisma.job.findUnique({
+      where: {
+        jobId: jobId,
+      },
+      select: {
+        castingId: true,
+        Application: {
+          select: {
+            actorId: true,
+          },
+        },
+      },
+    })
+
+    return [data.castingId, ...data.Application.map(({ actorId }) => actorId)]
+  }
 }
