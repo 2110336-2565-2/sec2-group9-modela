@@ -18,6 +18,37 @@ export class OfferService {
     private readonly notificationService: NotificationService,
   ) {}
 
+  private async updateApplication(
+    jobId: number,
+    actorId: number,
+    action: string,
+    applicationStatus: ApplicationStatus,
+    notificationType: NotificationType,
+  ) {
+    const job = await this.jobRepository.getBaseJobById(jobId)
+    if (!job) {
+      throw new NotFoundException('Job not found')
+    }
+    const application =
+      await this.applicationRepository.getApplicationbyActorJob(actorId, jobId)
+    if (!application) {
+      throw new BadRequestException('You have not applied to this job')
+    }
+    if (application.status !== ApplicationStatus.OFFER_SENT) {
+      throw new BadRequestException(`You cannot ${action} this job offer`)
+    }
+    await this.applicationRepository.updateApplicationStatus(
+      application.applicationId,
+      applicationStatus,
+    )
+    await this.notificationService.createNotification({
+      userId: job.castingId,
+      jobId: job.jobId,
+      actorId: actorId,
+      type: notificationType,
+    })
+  }
+
   async sendJobOffer(jobId: number, castingId: number, actorId: number) {
     const job = await this.jobRepository.getBaseJobById(jobId)
     if (!job) {
@@ -48,52 +79,22 @@ export class OfferService {
   }
 
   async acceptJobOffer(jobId: number, actorId: number) {
-    const job = await this.jobRepository.getBaseJobById(jobId)
-    if (!job) {
-      throw new NotFoundException('Job not found')
-    }
-    const application =
-      await this.applicationRepository.getApplicationbyActorJob(actorId, jobId)
-    if (!application) {
-      throw new BadRequestException('You have not applied to this job')
-    }
-    if (application.status !== ApplicationStatus.OFFER_SENT) {
-      throw new BadRequestException('You cannot accept this job offer')
-    }
-    await this.applicationRepository.updateApplicationStatus(
-      application.applicationId,
+    this.updateApplication(
+      jobId,
+      actorId,
+      'accept',
       ApplicationStatus.OFFER_ACCEPTED,
+      NotificationType.ACCEPT_OFFER,
     )
-    await this.notificationService.createNotification({
-      userId: job.castingId,
-      jobId: job.jobId,
-      actorId: actorId,
-      type: NotificationType.ACCEPT_OFFER,
-    })
   }
 
   async rejectJobOffer(jobId: number, actorId: number) {
-    const job = await this.jobRepository.getBaseJobById(jobId)
-    if (!job) {
-      throw new NotFoundException('Job not found')
-    }
-    const application =
-      await this.applicationRepository.getApplicationbyActorJob(actorId, jobId)
-    if (!application) {
-      throw new BadRequestException('You have not applied to this job')
-    }
-    if (application.status !== ApplicationStatus.OFFER_SENT) {
-      throw new BadRequestException('You cannot reject this job offer')
-    }
-    await this.applicationRepository.updateApplicationStatus(
-      application.applicationId,
+    this.updateApplication(
+      jobId,
+      actorId,
+      'reject',
       ApplicationStatus.OFFER_REJECTED,
+      NotificationType.REJECT_OFFER,
     )
-    await this.notificationService.createNotification({
-      userId: job.castingId,
-      jobId: job.jobId,
-      actorId: actorId,
-      type: NotificationType.REJECT_OFFER,
-    })
   }
 }
