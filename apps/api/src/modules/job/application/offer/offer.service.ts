@@ -79,7 +79,7 @@ export class OfferService {
   }
 
   async acceptJobOffer(jobId: number, actorId: number) {
-    this.updateApplication(
+    await this.updateApplication(
       jobId,
       actorId,
       'accept',
@@ -89,7 +89,7 @@ export class OfferService {
   }
 
   async rejectJobOffer(jobId: number, actorId: number) {
-    this.updateApplication(
+    await this.updateApplication(
       jobId,
       actorId,
       'reject',
