@@ -1,3 +1,4 @@
+import { RefundStatus } from '@modela/database'
 import {
   ApplicationStatus,
   GetPendingActorDebitsByJobDto,
@@ -65,6 +66,14 @@ export class DebitRepository {
         jobId,
         isPaid: false,
         status: ApplicationStatus.OFFER_ACCEPTED,
+        Refund: {
+          //check refund status is not ACCEPTED
+          every: {
+            refundStatus: {
+              not: RefundStatus.ACCEPTED,
+            },
+          },
+        },
       },
       include: {
         Actor: {
@@ -72,6 +81,7 @@ export class DebitRepository {
             User: true,
           },
         },
+        Refund: true,
       },
     })
     const resultActor = applications.map((application) => ({

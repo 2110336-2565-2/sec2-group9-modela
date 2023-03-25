@@ -51,10 +51,14 @@ export class DebitController {
 
   @Get('/jobs/:jobId/actors')
   @UseAuthGuard(UserType.ADMIN)
+  @ApiBadRequestResponse({ description: 'Job status is not finished' })
   @ApiUnauthorizedResponse({ description: 'User is not logged in' })
   @ApiNotFoundResponse({ description: 'Job not found' })
   @ApiForbiddenResponse({ description: 'User is not an admin' })
   @ApiOkResponse({ type: GetPendingActorDebitsByJobDto })
+  @ApiOperation({
+    summary: 'admin get pending actor transaction of a specified job',
+  })
   getPendingDebitsByJobId(@Param('jobId') jobId: string) {
     return this.debitService.getPendingDebitsByJobId(+jobId)
   }

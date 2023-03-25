@@ -50,6 +50,6 @@ export class GetPendingActorDebitsByJobDto {
   @ApiProperty()
   title: string
 
-  @ApiProperty()
+  @ApiProperty({ type: PendingActorDebitDto, isArray: true })
   actorList: PendingActorDebitDto[]
 }
