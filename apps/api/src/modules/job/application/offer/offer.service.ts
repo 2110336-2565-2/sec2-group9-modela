@@ -44,7 +44,7 @@ export class OfferService {
     await this.notificationService.createNotification({
       userId: job.castingId,
       jobId: job.jobId,
-      actorId: actorId,
+      applicationId: application.applicationId,
       type: notificationType,
     })
   }
@@ -72,7 +72,7 @@ export class OfferService {
     await this.notificationService.createNotification({
       userId: actorId,
       jobId: job.jobId,
-      actorId: actorId,
+      applicationId: application.applicationId,
       type: NotificationType.RECEIVE_OFFER,
     })
     return { message: 'Job offer sent' }
