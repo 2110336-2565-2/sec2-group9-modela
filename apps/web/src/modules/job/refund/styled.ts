@@ -1,6 +1,6 @@
 import { styled } from '@mui/material'
 
-export const RequestRefundContainer = styled('div')`
+export const RequestRefundContainer = styled('form')`
   background-color: white;
   padding: 16px;
   display: flex;
