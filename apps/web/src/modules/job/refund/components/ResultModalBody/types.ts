@@ -1,3 +1,3 @@
 export interface ResultModalBodyProps {
-  jobId: string
+  jobId: number
 }

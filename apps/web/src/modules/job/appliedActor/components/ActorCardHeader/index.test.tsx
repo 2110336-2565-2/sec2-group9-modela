@@ -27,24 +27,34 @@ describe('<ActorCardHeader />', () => {
     jest.clearAllMocks()
   })
 
-  describe('job is not SELECTION_END', () => {
-    it('should render ActorCardHeader correctly', () => {
-      render(<ActorCardHeader jobStatus={JobStatus.OPEN} {...MOCK_PROPS} />)
+  describe('card variant', () => {
+    it('job is not SELECTION_END', () => {
+      render(<ActorCardHeader {...MOCK_PROPS} jobStatus={JobStatus.OPEN} />)
 
       expect(ProfileImageSpy).toBeCalledTimes(1)
       expect(ChipSpy).toBeCalledTimes(1)
     })
-  })
-
-  describe('job is SELECTION_END', () => {
-    it('should render ActorCardHeader correctly', () => {
+    it('job is SELECTION_END but offer not accepted', () => {
       render(
         <ActorCardHeader
-          jobStatus={JobStatus.SELECTION_ENDED}
           {...MOCK_PROPS}
+          jobStatus={JobStatus.SELECTION_ENDED}
+          status={ApplicationStatus.OFFER_REJECTED}
         />,
       )
 
+      expect(ProfileImageSpy).toBeCalledTimes(1)
+      expect(ChipSpy).toBeCalledTimes(1)
+    })
+
+    it('job is SELECTION_END and offer is accepted', () => {
+      render(
+        <ActorCardHeader
+          {...MOCK_PROPS}
+          jobStatus={JobStatus.SELECTION_ENDED}
+          status={ApplicationStatus.OFFER_ACCEPTED}
+        />,
+      )
       expect(ProfileImageSpy).toBeCalledTimes(1)
       expect(IconButtonSpy).toBeCalledWith(
         expect.objectContaining({

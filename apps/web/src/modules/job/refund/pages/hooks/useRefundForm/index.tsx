@@ -3,12 +3,13 @@ import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import useSwitch from 'common/hooks/useSwitch'
 import { apiClient } from 'common/utils/api'
 import { uploadFileToS3 } from 'common/utils/file'
+import { useRouter } from 'next/router'
 import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { IRefundFormSchemaType, refundFormSchema } from './schema'
 
-const useRefundForm = (jobId: string, actorId: string) => {
+const useRefundForm = (jobId: number, actorId: number) => {
   const [refundDetails, setRefundDetails] = useState<any>()
   const [file, setFile] = useState<File | null>(null)
 
@@ -18,6 +19,7 @@ const useRefundForm = (jobId: string, actorId: string) => {
       resolver: zodResolver(refundFormSchema),
     })
   const { handleError } = useErrorHandler()
+  const router = useRouter()
   const { isOpen: isModalOpen, open: openModal } = useSwitch()
 
   const handleUploadFile = useCallback(
@@ -55,10 +57,10 @@ const useRefundForm = (jobId: string, actorId: string) => {
         })
         openModal()
       } catch (error) {
-        console.log(error)
+        handleError(error)
       }
     },
-    [actorId, file, jobId, openModal],
+    [actorId, file, handleError, jobId, openModal],
   )
 
   const handleFetchRefundDetails = useCallback(
@@ -81,10 +83,10 @@ const useRefundForm = (jobId: string, actorId: string) => {
 
         setRefundDetails(data)
       } catch (error) {
-        handleError(error)
+        router.replace(`/job/${jobId}/actor`)
       }
     },
-    [actorId, handleError, jobId],
+    [actorId, jobId, router],
   )
 
   useEffect(() => {

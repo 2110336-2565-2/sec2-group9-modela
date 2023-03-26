@@ -1,4 +1,4 @@
-import { JobStatus } from '@modela/dtos'
+import { ApplicationStatus, JobStatus } from '@modela/dtos'
 import { ReportOutlined } from '@mui/icons-material'
 import { IconButton, Typography } from '@mui/material'
 import Chip from 'common/components/Chip'
@@ -31,7 +31,8 @@ const ActorCardHeader = (props: ActorCardHeaderProps) => {
       <Typography variant="h6" sx={{ flexGrow: 1 }}>
         {firstName} {middleName} {lastName}
       </Typography>
-      {props.jobStatus === JobStatus.SELECTION_ENDED ? (
+      {props.jobStatus === JobStatus.SELECTION_ENDED &&
+      props.status === ApplicationStatus.OFFER_ACCEPTED ? (
         <IconButton
           href={`/job/${jobId}/actor/${actorId}/refund`}
           onClick={(ev) => ev.stopPropagation()}

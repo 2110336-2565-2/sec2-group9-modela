@@ -11,7 +11,8 @@ import useRefundForm from './hooks/useRefundForm'
 
 const RequestRefundPage = () => {
   const router = useRouter()
-  const { jobId, actorId } = router.query
+  const jobId = router.query.jobId || ''
+  const actorId = router.query.actorId || ''
 
   const {
     control,
@@ -19,7 +20,7 @@ const RequestRefundPage = () => {
     handleUploadFile,
     handleSubmit,
     isModalOpen,
-  } = useRefundForm(jobId as string, actorId as string)
+  } = useRefundForm(+jobId, +actorId)
 
   return (
     <>
@@ -99,7 +100,7 @@ const RequestRefundPage = () => {
         </Grid>
       </RequestRefundContainer>
       <Modal open={isModalOpen}>
-        <ResultModalBody jobId={jobId as string} />
+        <ResultModalBody jobId={+jobId} />
       </Modal>
     </>
   )

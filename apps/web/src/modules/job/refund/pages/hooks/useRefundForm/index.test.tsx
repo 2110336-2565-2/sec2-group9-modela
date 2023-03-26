@@ -41,9 +41,9 @@ describe('useRefundForm', () => {
   describe('normal behavior', () => {
     it('should fetch refund details', async () => {
       const { result } = renderHook(
-        ({ jobId, actorId }: { jobId: string; actorId: string }) =>
+        ({ jobId, actorId }: { jobId: number; actorId: number }) =>
           useRefundForm(jobId, actorId),
-        { initialProps: { jobId: '1', actorId: '1' } },
+        { initialProps: { jobId: 1, actorId: 1 } },
       )
 
       waitFor(() => {
@@ -55,9 +55,9 @@ describe('useRefundForm', () => {
   describe('upload file', () => {
     it('file size is less than 5MB', () => {
       const { result } = renderHook(
-        ({ jobId, actorId }: { jobId: string; actorId: string }) =>
+        ({ jobId, actorId }: { jobId: number; actorId: number }) =>
           useRefundForm(jobId, actorId),
-        { initialProps: { jobId: '1', actorId: '1' } },
+        { initialProps: { jobId: 1, actorId: 1 } },
       )
       const file = new File([new ArrayBuffer(10)], 'hello')
 
@@ -73,9 +73,9 @@ describe('useRefundForm', () => {
 
     it('file size is more than 5MB', () => {
       const { result } = renderHook(
-        ({ jobId, actorId }: { jobId: string; actorId: string }) =>
+        ({ jobId, actorId }: { jobId: number; actorId: number }) =>
           useRefundForm(jobId, actorId),
-        { initialProps: { jobId: '1', actorId: '1' } },
+        { initialProps: { jobId: 1, actorId: 1 } },
       )
       const file = new File([new ArrayBuffer(10 * 1024 * 1024)], 'hello')
       act(() => {
