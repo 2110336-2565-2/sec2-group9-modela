@@ -2,7 +2,7 @@ import { GetPendingActorDebitsByJobDto } from '@modela/dtos'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 export const useTransactionDetail = () => {
   const [transactionDetail, setTransactionDetail] =
@@ -15,7 +15,7 @@ export const useTransactionDetail = () => {
     const fetchData = async () => {
       try {
         const res = await apiClient.get<GetPendingActorDebitsByJobDto>(
-          '/debits/jobs/' + jobId + '/actors',
+          `/debits/jobs/${jobId}/actors`,
         )
         setTransactionDetail(res.data)
       } catch (err) {
@@ -25,21 +25,27 @@ export const useTransactionDetail = () => {
     if (router.isReady) fetchData()
   }, [handleError, jobId, router.isReady])
 
-  const actorFilter = (actorId: number) => {
-    if (!transactionDetail) return
-    let actorList = transactionDetail.actorList
-    actorList = actorList.filter((actor) => actor.actorId !== actorId)
-    setTransactionDetail({ ...transactionDetail, actorList })
-  }
+  const actorFilter = useCallback(
+    (actorId: number) => {
+      if (!transactionDetail) return
+      let actorList = transactionDetail.actorList
+      actorList = actorList.filter((actor) => actor.actorId !== actorId)
+      setTransactionDetail({ ...transactionDetail, actorList })
+    },
+    [transactionDetail],
+  )
 
-  const markAccepted = async (actorId: number) => {
-    try {
-      await apiClient.put(`/debits/jobs/${jobId}/actors/${actorId}/accept`)
-      actorFilter(actorId)
-    } catch (err) {
-      handleError(err)
-    }
-  }
+  const markAccepted = useCallback(
+    async (actorId: number) => {
+      try {
+        await apiClient.put(`/debits/jobs/${jobId}/actors/${actorId}/accept`)
+        actorFilter(actorId)
+      } catch (err) {
+        handleError(err)
+      }
+    },
+    [actorFilter, handleError, jobId],
+  )
 
   return { transactionDetail, markAccepted }
 }

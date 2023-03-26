@@ -14,7 +14,7 @@ const TransactionCard = (props: GetPendingJobsDebitsDto) => {
   return (
     <Link
       passHref
-      href={'/transaction/' + jobId}
+      href={`/transaction/${jobId}`}
       style={{ textDecoration: 'none', color: 'inherit' }}
     >
       <CardContainer>
@@ -30,7 +30,7 @@ const TransactionCard = (props: GetPendingJobsDebitsDto) => {
         <Typography>
           รายละเอียดงาน:{' '}
           <Link
-            href={'job/' + jobId}
+            href={`job/${jobId}`}
             style={{
               textDecoration: 'none',
               color: theme.palette.primary.main,

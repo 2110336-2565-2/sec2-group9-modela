@@ -13,7 +13,6 @@ import { JobCardContainer, PageContainer, SideDiv } from './styled'
 const TransactionPage = () => {
   useNavbarFocus('transaction')
   const { transactionData } = useTransaction()
-  console.log(transactionData)
 
   return (
     <PageContainer>
