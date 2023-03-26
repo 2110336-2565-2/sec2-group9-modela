@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import useSwitch from 'common/hooks/useSwitch'
 import { apiClient } from 'common/utils/api'
@@ -8,7 +7,7 @@ import { FormEvent, useCallback, useEffect, useState } from 'react'
 
 import { IUploadedFileDetails } from './types'
 
-const useSendingDetails = (jobId: string) => {
+const useSendingDetails = (jobId: number) => {
   const router = useRouter()
 
   // This will change to strict type later
@@ -38,11 +37,8 @@ const useSendingDetails = (jobId: string) => {
         const res = await apiClient.get(`credits/jobs/${jobId}`)
         setJob(res.data)
       } catch (err) {
-        const errorRes = err as AxiosError
-        if (errorRes.status !== 200) {
-          router.replace(`/jobs/${jobId}`)
-          return
-        }
+        router.replace(`/jobs/${jobId}`)
+        return
       }
     },
     [jobId, router],

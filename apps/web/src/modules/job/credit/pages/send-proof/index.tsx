@@ -18,10 +18,10 @@ import {
 
 const SendProofOfTransactionPage = () => {
   const router = useRouter()
-  const { jobId } = router.query
+  const jobId = router.query.jobId || ''
 
   const { job, error, fileUrl, isModalOpen, handleSubmit, handleUploadFile } =
-    useSendingDetails(jobId as string)
+    useSendingDetails(+jobId)
 
   return (
     <>
@@ -83,7 +83,7 @@ const SendProofOfTransactionPage = () => {
         </ActionContainer>
       </SendProofContainer>
       <Modal open={isModalOpen} contentSx={{ maxWidth: '500px' }}>
-        <SendResultModalBody jobId={jobId as string} />
+        <SendResultModalBody jobId={+jobId} />
       </Modal>
     </>
   )

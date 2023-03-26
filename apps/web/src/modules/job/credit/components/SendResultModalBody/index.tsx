@@ -4,8 +4,7 @@ import Link from 'next/link'
 import { BodyContentContainer } from './styled'
 import { SendResultModalBodyProps } from './types'
 
-const SendResultModalBody = (props: SendResultModalBodyProps) => {
-  const { jobId } = props
+const SendResultModalBody = ({ jobId }: SendResultModalBodyProps) => {
   return (
     <BodyContentContainer>
       <Typography variant="h5" sx={{ textAlign: 'center' }}>
@@ -13,7 +12,7 @@ const SendResultModalBody = (props: SendResultModalBodyProps) => {
       </Typography>
       <Divider />
       <Typography variant="body1" sx={{ textAlign: 'center' }}>
-        หลักฐานของคุณกำลังถูกตรวจสอบ กรุณารอการแจ้งเตือนจากแอดมิน
+        หลักฐานของคุณกำลังถูกตรวจสอบ กรุณาตรวจสอบผลอีกครั้งในภายหลัง
       </Typography>
       <Button
         variant="contained"

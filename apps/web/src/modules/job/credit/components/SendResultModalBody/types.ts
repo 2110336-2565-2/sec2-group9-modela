@@ -1,3 +1,3 @@
 export interface SendResultModalBodyProps {
-  jobId: string
+  jobId: number
 }
