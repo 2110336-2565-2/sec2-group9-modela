@@ -1,4 +1,4 @@
-import { NotificationType, Prisma } from '@modela/database'
+import { ApplicationStatus, NotificationType, Prisma } from '@modela/database'
 
 const jobQuery: Prisma.NotificationSelect = {
   Job: {
@@ -24,14 +24,18 @@ const jobTitleQuery: Prisma.NotificationSelect = {
 }
 
 const actorQuery: Prisma.NotificationSelect = {
-  Actor: {
+  Application: {
     select: {
-      actorId: true,
-      User: {
+      Actor: {
         select: {
-          firstName: true,
-          middleName: true,
-          lastName: true,
+          actorId: true,
+          User: {
+            select: {
+              firstName: true,
+              middleName: true,
+              lastName: true,
+            },
+          },
         },
       },
     },
@@ -42,14 +46,24 @@ export const ActorNotificationSchema: {
   [key in NotificationType]?: Prisma.NotificationSelect
 } = {
   [NotificationType.CANCEL_JOB]: jobQuery,
-  [NotificationType.RECEIVE_OFFER]: jobQuery,
-  [NotificationType.ACCEPT_OFFER]: jobQuery,
-  [NotificationType.REJECT_OFFER]: jobQuery,
+  [NotificationType.RECEIVE_OFFER]: {
+    ...jobQuery,
+    Application: {
+      select: {
+        status: true,
+      },
+    },
+  },
+  [NotificationType.REJECT_APPLICATION]: jobQuery,
   [NotificationType.APPROVE_REFUND]: {
     ...jobQuery,
-    Refund: {
+    Application: {
       select: {
-        reason: true,
+        Refund: {
+          select: {
+            reason: true,
+          },
+        },
       },
     },
   },
@@ -85,15 +99,20 @@ export interface IFindNotification {
       companyName: string
     }
   }
-  Actor?: {
-    actorId: number
-    User?: {
-      firstName: string
-      middleName: string
-      lastName: string
+
+  Application?: {
+    status: ApplicationStatus
+    Actor?: {
+      actorId: number
+      User: {
+        firstName: string
+        middleName: string
+        lastName: string
+      }
     }
-  }
-  Refund?: {
-    reason: string
+
+    Refund?: {
+      reason: string
+    }
   }
 }

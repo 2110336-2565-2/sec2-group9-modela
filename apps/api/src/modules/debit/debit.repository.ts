@@ -33,7 +33,7 @@ export class DebitRepository {
           some: {
             isPaid: false,
             status: ApplicationStatus.OFFER_ACCEPTED,
-            Refund: { none: {} },
+            Refund: null,
           },
         },
       },
@@ -67,12 +67,9 @@ export class DebitRepository {
         jobId,
         isPaid: false,
         status: ApplicationStatus.OFFER_ACCEPTED,
-        Refund: {
-          //check refund status is not ACCEPTED
-          every: {
-            refundStatus: {
-              not: RefundStatus.ACCEPTED,
-            },
+        NOT: {
+          Refund: {
+            refundStatus: RefundStatus.ACCEPTED,
           },
         },
       },

@@ -226,7 +226,7 @@ export const getBaseMock = (
         //Actor
         userId = getActorId(true)
         notiType = faker.helpers.arrayElement([
-          NotificationType.REJECT_OFFER, //use in both
+          NotificationType.REJECT_APPLICATION, //actor
           NotificationType.RECEIVE_OFFER, //actor
           NotificationType.CANCEL_JOB, //use in both
           NotificationType.APPROVE_REFUND, //use in both
@@ -236,7 +236,7 @@ export const getBaseMock = (
         userId = getCastingId(true)
         notiType = faker.helpers.arrayElement([
           NotificationType.ACCEPT_OFFER, //casting
-          NotificationType.REJECT_OFFER, //use in both
+          NotificationType.REJECT_OFFER, //casting
           NotificationType.CANCEL_JOB, //use in both
           NotificationType.APPROVE_REFUND, //use in both
           NotificationType.REJECT_REFUND, //casting
@@ -245,9 +245,8 @@ export const getBaseMock = (
       return {
         notificationId: index,
         userId,
-        actorId: getActorId(true),
+        applicationId: (index % 2) + 1,
         jobId: (index % 5) + 1,
-        refundId: (index % 2) + 1,
         type: notiType,
         isRead: faker.datatype.boolean(),
         createdAt: faker.date.past(),
@@ -255,7 +254,7 @@ export const getBaseMock = (
     case 'credit':
       return {
         creditId: index,
-        jobId: Math.ceil(index / 2),
+        jobId: index,
         proofUrl: faker.internet.url(),
         createdAt: faker.date.past(),
         amount: 5000,

@@ -79,10 +79,9 @@ model Actor {
   shoeSize       Int?
   skinShade      String?
 
-  User         User           @relation(fields: [actorId], references: [userId])
-  Resume       Resume[]
-  Application  Application[]
-  Notification Notification[]
+  User        User          @relation(fields: [actorId], references: [userId])
+  Resume      Resume[]
+  Application Application[]
 }
 
 enum Gender {
@@ -165,10 +164,11 @@ model Application {
   isPaid        Boolean           @default(false)
   createdAt     DateTime          @default(now())
 
-  Job    Job      @relation(fields: [jobId], references: [jobId])
-  Actor  Actor    @relation(fields: [actorId], references: [actorId])
-  Resume Resume   @relation(fields: [resumeId], references: [resumeId])
-  Refund Refund[]
+  Job          Job            @relation(fields: [jobId], references: [jobId])
+  Actor        Actor          @relation(fields: [actorId], references: [actorId])
+  Resume       Resume         @relation(fields: [resumeId], references: [resumeId])
+  Notification Notification[]
+  Refund       Refund?
 
   @@unique([actorId, jobId], name: "applicationIdentifier")
 }
@@ -195,23 +195,22 @@ model Report {
 model Notification {
   notificationId Int              @id @default(autoincrement())
   userId         Int
-  actorId        Int?
+  applicationId  Int?
   jobId          Int?
-  refundId       Int?
   type           NotificationType
   isRead         Boolean          @default(false)
   createdAt      DateTime         @default(now())
 
-  User   User    @relation(fields: [userId], references: [userId])
-  Actor  Actor?  @relation(fields: [actorId], references: [actorId])
-  Job    Job?    @relation(fields: [jobId], references: [jobId])
-  Refund Refund? @relation(fields: [refundId], references: [refundId])
+  User        User         @relation(fields: [userId], references: [userId])
+  Application Application? @relation(fields: [applicationId], references: [applicationId])
+  Job         Job?         @relation(fields: [jobId], references: [jobId])
 }
 
 enum NotificationType {
-  ACCEPT_OFFER //casting
-  REJECT_OFFER //use in both
+  REJECT_APPLICATION //actor
   RECEIVE_OFFER //actor
+  ACCEPT_OFFER //casting
+  REJECT_OFFER //casting
   CANCEL_JOB //use in both
   APPROVE_REFUND //use in both
   REJECT_REFUND //casting
@@ -219,7 +218,7 @@ enum NotificationType {
 
 model Credit {
   creditId  Int      @id @default(autoincrement())
-  jobId     Int
+  jobId     Int      @unique
   proofUrl  String
   amount    Int
   createdAt DateTime @default(now())
@@ -229,14 +228,13 @@ model Credit {
 
 model Refund {
   refundId      Int          @id @default(autoincrement())
-  applicationId Int
+  applicationId Int          @unique
   reason        String
   proofUrl      String
   refundStatus  RefundStatus @default(PENDING)
   createdAt     DateTime     @default(now())
 
-  Application  Application    @relation(fields: [applicationId], references: [applicationId])
-  Notification Notification[]
+  Application Application @relation(fields: [applicationId], references: [applicationId])
 }
 
 enum RefundStatus {

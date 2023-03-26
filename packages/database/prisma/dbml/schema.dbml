@@ -53,7 +53,6 @@ Table Actor {
   User User [not null]
   Resume Resume [not null]
   Application Application [not null]
-  Notification Notification [not null]
 }
 
 Table Casting {
@@ -120,7 +119,8 @@ Table Application {
   Job Job [not null]
   Actor Actor [not null]
   Resume Resume [not null]
-  Refund Refund [not null]
+  Notification Notification [not null]
+  Refund Refund
 
   indexes {
     (actorId, jobId) [unique]
@@ -140,21 +140,19 @@ Table Report {
 Table Notification {
   notificationId Int [pk, increment]
   userId Int [not null]
-  actorId Int
+  applicationId Int
   jobId Int
-  refundId Int
   type NotificationType [not null]
   isRead Boolean [not null, default: false]
   createdAt DateTime [default: `now()`, not null]
   User User [not null]
-  Actor Actor
+  Application Application
   Job Job
-  Refund Refund
 }
 
 Table Credit {
   creditId Int [pk, increment]
-  jobId Int [not null]
+  jobId Int [unique, not null]
   proofUrl String [not null]
   amount Int [not null]
   createdAt DateTime [default: `now()`, not null]
@@ -163,13 +161,12 @@ Table Credit {
 
 Table Refund {
   refundId Int [pk, increment]
-  applicationId Int [not null]
+  applicationId Int [unique, not null]
   reason String [not null]
   proofUrl String [not null]
   refundStatus RefundStatus [not null, default: 'PENDING']
   createdAt DateTime [default: `now()`, not null]
   Application Application [not null]
-  Notification Notification [not null]
 }
 
 Enum UserStatus {
@@ -208,9 +205,10 @@ Enum ApplicationStatus {
 }
 
 Enum NotificationType {
+  REJECT_APPLICATION
+  RECEIVE_OFFER
   ACCEPT_OFFER
   REJECT_OFFER
-  RECEIVE_OFFER
   CANCEL_JOB
   APPROVE_REFUND
   REJECT_REFUND
@@ -243,12 +241,10 @@ Ref: Report.jobId > Job.jobId
 
 Ref: Notification.userId > User.userId
 
-Ref: Notification.actorId > Actor.actorId
+Ref: Notification.applicationId > Application.applicationId
 
 Ref: Notification.jobId > Job.jobId
 
-Ref: Notification.refundId > Refund.refundId
-
 Ref: Credit.jobId > Job.jobId
 
-Ref: Refund.applicationId > Application.applicationId
+Ref: Refund.applicationId - Application.applicationId
