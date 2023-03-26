@@ -3,11 +3,11 @@ import { Typography } from '@mui/material'
 import MenuBar from 'common/components/MenuBar'
 import withGuard from 'common/hoc/withGuard'
 import useNavbarFocus from 'common/hooks/useNavbarFocus'
-import TransactionDetailCard from 'modules/transaction/components/transactionDetailCard'
 import React from 'react'
 
 import { MENU_ITEM } from '../const'
 import { JobCardContainer, PageContainer, SideDiv } from '../styled'
+import TransactionDetailCard from './components/transactionDetailCard'
 import { useTransactionDetail } from './hooks/useTransactionDetail'
 
 const TransactionDetailPage = () => {
