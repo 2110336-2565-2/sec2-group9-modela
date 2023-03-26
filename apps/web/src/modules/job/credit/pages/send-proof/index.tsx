@@ -30,7 +30,10 @@ const SendProofOfTransactionPage = () => {
           <FormController type="title" label="ส่งหลักฐานธุรกรรม" />
           <FormController type="divider" />
           <DetailsContainer>
-            <Typography variant="body1" sx={{ display: 'flex', gap: '6px' }}>
+            <Typography
+              variant="body1"
+              sx={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}
+            >
               งาน:{' '}
               <Typography variant="body1" color="primary">
                 <Link
