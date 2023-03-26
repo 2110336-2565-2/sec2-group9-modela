@@ -26,7 +26,7 @@ const ActorCardHeader = (
       <Typography variant="h6" sx={{ flexGrow: 1 }}>
         {firstName} {middleName} {lastName}
       </Typography>
-      <Chip {...CHIP_VARINTS[status!]} />
+      {status && <Chip {...CHIP_VARINTS[status]} />}
     </HeaderContainer>
   )
 }
