@@ -1,4 +1,4 @@
-import { RefundStatus } from '@modela/database'
+import { NotificationType, RefundStatus } from '@modela/database'
 import {
   BadRequestException,
   Injectable,
@@ -7,6 +7,7 @@ import {
 
 import { ApplicationRepository } from '../job/application/application.repository'
 import { JobRepository } from '../job/job.repository'
+import { NotificationService } from '../notification/notification.service'
 import { RefundRepository } from './refund.repository'
 
 @Injectable()
@@ -15,8 +16,10 @@ export class RefundService {
     private repository: RefundRepository,
     private jobRepository: JobRepository,
     private applicationReposity: ApplicationRepository,
+    private readonly notificationService: NotificationService,
   ) {}
 
+  //TODO: send notification to actor and casting
   async acceptRefund(jobId: number, actorId: number) {
     const job = await this.jobRepository.getBaseJobById(jobId)
     if (!job) throw new NotFoundException('Job not found')
@@ -39,6 +42,22 @@ export class RefundService {
     if (refund.refundStatus !== RefundStatus.PENDING)
       throw new BadRequestException('refund status is not pending')
 
-    return await this.repository.acceptRefund(refund.refundId)
+    const updatedRefund = await this.repository.acceptRefund(refund.refundId)
+
+    //send notification to actor and casting
+    await this.notificationService.createNotification({
+      userId: actorId,
+      jobId: job.jobId,
+      applicationId: application.applicationId,
+      type: NotificationType.APPROVE_REFUND,
+    })
+
+    await this.notificationService.createNotification({
+      userId: job.castingId,
+      jobId: job.jobId,
+      applicationId: application.applicationId,
+      type: NotificationType.APPROVE_REFUND,
+    })
+    return updatedRefund
   }
 }
