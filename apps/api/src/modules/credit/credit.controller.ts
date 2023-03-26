@@ -1,6 +1,6 @@
 import { UserType } from '@modela/database'
 import { GetJobCardDto, GetPendingTransactionDto } from '@modela/dtos'
-import { Controller, Get, Param } from '@nestjs/common'
+import { Controller, Get, Param, Put } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
   ApiForbiddenResponse,
@@ -40,7 +40,7 @@ export class CreditController {
     return this.creditService.getPendingTransactions()
   }
 
-  @Get('/jobs/:jobId/accept')
+  @Put('/jobs/:jobId/accept')
   @UseAuthGuard(UserType.ADMIN)
   @ApiUnauthorizedResponse({ description: 'User is not logged in' })
   @ApiForbiddenResponse({ description: 'User is not an admin' })
@@ -51,7 +51,7 @@ export class CreditController {
     return this.creditService.updatePendingTransactions(+jobId, true)
   }
 
-  @Get('/jobs/:jobId/reject')
+  @Put('/jobs/:jobId/reject')
   @UseAuthGuard(UserType.ADMIN)
   @ApiUnauthorizedResponse({ description: 'User is not logged in' })
   @ApiForbiddenResponse({ description: 'User is not an admin' })
