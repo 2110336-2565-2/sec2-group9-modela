@@ -2,14 +2,11 @@ import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import useSwitch from 'common/hooks/useSwitch'
 import { apiClient } from 'common/utils/api'
 import { uploadFileToS3 } from 'common/utils/file'
-import { useRouter } from 'next/router'
 import { FormEvent, useCallback, useEffect, useState } from 'react'
 
 import { IUploadedFileDetails } from './types'
 
 const useSendingDetails = (jobId: number) => {
-  const router = useRouter()
-
   // This will change to strict type later
   const [job, setJob] = useState<any>({})
   const [uploadedFile, setUploadedFile] = useState<IUploadedFileDetails>({
@@ -37,11 +34,10 @@ const useSendingDetails = (jobId: number) => {
         const res = await apiClient.get(`credits/jobs/${jobId}`)
         setJob(res.data)
       } catch (err) {
-        router.replace(`/jobs/${jobId}`)
-        return
+        handleError(err)
       }
     },
-    [jobId, router],
+    [jobId, handleError],
   )
 
   const handleUploadFile = (file: File) => {
