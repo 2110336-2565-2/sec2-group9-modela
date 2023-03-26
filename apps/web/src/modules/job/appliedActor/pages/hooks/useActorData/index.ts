@@ -1,19 +1,29 @@
-import { ActorDto, ApplicationStatus, GetAppliedActorDto } from '@modela/dtos'
+import {
+  ActorDto,
+  ApplicationStatus,
+  GetAppliedActorDto,
+  JobStatus,
+} from '@modela/dtos'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 const useActorData = (query: {
   name?: string
   status?: ApplicationStatus[]
 }) => {
   const [actorData, setActorData] = useState<ActorDto[] | null>(null)
+  const [jobStatus, setJobStatus] = useState<JobStatus>(JobStatus.OPEN)
 
   const { handleError } = useErrorHandler()
 
   const router = useRouter()
   const { jobId } = router.query
+
+  const handleSetJobStatus = useCallback((jobStatus: JobStatus) => {
+    setJobStatus(jobStatus)
+  }, [])
 
   useEffect(() => {
     const fetchActorData = async () => {
@@ -31,7 +41,7 @@ const useActorData = (query: {
     if (router.isReady) fetchActorData()
   }, [handleError, jobId, router.isReady, query])
 
-  return actorData
+  return { jobStatus, actorData, handleSetJobStatus }
 }
 
 export default useActorData

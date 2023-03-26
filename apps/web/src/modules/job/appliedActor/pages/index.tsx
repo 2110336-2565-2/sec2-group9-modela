@@ -20,14 +20,14 @@ import { CardsContainer, PageContainer, TabletContainer } from './styled'
 const AppliedActorPage = () => {
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
   const { modal, control, onSubmit, query } = useFilter()
-  const actorData = useActorData(query)
+  const { actorData, handleSetJobStatus, jobStatus } = useActorData(query)
 
   if (isMobile && modal.isOpen)
     return <ActorFilterModal onClose={modal.close} control={control} />
 
   return (
     <PageContainer onSubmit={onSubmit}>
-      <JobMenu focus="actor" />
+      <JobMenu focus="actor" setStatus={handleSetJobStatus} />
       <TabletContainer>
         <CardsContainer>
           {!isMobile && <SearchField control={control} onSubmit={onSubmit} />}
@@ -36,7 +36,11 @@ const AppliedActorPage = () => {
               <Typography color="#00000061">ไม่พบนักแสดง</Typography>
             ) : (
               actorData.map((actor) => (
-                <ActorCard key={actor.applicationId} {...actor} />
+                <ActorCard
+                  key={actor.applicationId}
+                  jobStatus={jobStatus}
+                  {...actor}
+                />
               ))
             )
           ) : (

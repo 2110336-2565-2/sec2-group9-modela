@@ -1,13 +1,25 @@
 import { Button } from '@mui/material'
-import React from 'react'
+import React, { MouseEvent } from 'react'
 
 import { ActionContainer } from './styled'
 
 const ActorCardAction = () => {
+  const handleReject = (ev: MouseEvent) => {
+    ev.preventDefault()
+  }
+
+  const handleSendOffer = (ev: MouseEvent) => {
+    ev.preventDefault()
+  }
+
   return (
     <ActionContainer>
-      <Button color="error">ปฏิเสธ</Button>
-      <Button color="success">ส่งข้อเสนอ</Button>
+      <Button color="error" onClick={handleReject}>
+        ปฏิเสธ
+      </Button>
+      <Button color="success" onClick={handleSendOffer}>
+        ส่งข้อเสนอ
+      </Button>
     </ActionContainer>
   )
 }
