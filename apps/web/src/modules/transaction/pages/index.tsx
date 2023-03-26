@@ -24,7 +24,7 @@ const TransactionPage = () => {
       <JobCardContainer>
         {transactionData &&
           transactionData.map((transaction) => (
-            <TransactionCard {...transaction} />
+            <TransactionCard key={transaction.jobId} {...transaction} />
           ))}
         {transactionData && transactionData.length === 0 && (
           <Typography>ไม่มีรายการโอนเงินที่ค้างอยู่</Typography>

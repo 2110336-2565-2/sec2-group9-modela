@@ -27,7 +27,11 @@ const TransactionDetailPage = () => {
         </Typography>
         {transactionDetail &&
           transactionDetail.actorList.map((actor) => (
-            <TransactionDetailCard data={actor} markAccepted={markAccepted} />
+            <TransactionDetailCard
+              key={actor.actorId}
+              data={actor}
+              markAccepted={markAccepted}
+            />
           ))}
       </JobCardContainer>
       <SideDiv />
