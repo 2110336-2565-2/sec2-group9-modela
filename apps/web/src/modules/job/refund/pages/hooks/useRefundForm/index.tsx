@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { AxiosError } from 'axios'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import useSwitch from 'common/hooks/useSwitch'
 import { apiClient } from 'common/utils/api'
@@ -83,10 +84,15 @@ const useRefundForm = (jobId: number, actorId: number) => {
 
         setRefundDetails(data)
       } catch (error) {
-        router.replace(`/job/${jobId}/actor`)
+        const errorRes = error as AxiosError
+        if (errorRes.response?.status === 400) {
+          router.replace(`/job/${jobId}/actor`)
+          return
+        }
+        handleError(error)
       }
     },
-    [actorId, jobId, router],
+    [actorId, jobId, router, handleError],
   )
 
   useEffect(() => {
