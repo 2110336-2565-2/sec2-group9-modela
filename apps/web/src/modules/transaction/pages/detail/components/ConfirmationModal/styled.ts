@@ -18,6 +18,7 @@ export const CardContainer = styled(Card)`
   display: flex;
   flex-direction: column;
   width: 40vw;
+  max-width: 500px;
   height: fit-content;
   top: 50%;
   left: 50%;

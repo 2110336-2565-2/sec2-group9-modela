@@ -9,7 +9,9 @@ const ConfirmationModal = (props: ConfirmationModalProps) => {
   return (
     <CardContainer>
       <HeaderContainer>
-        <Typography variant="h5">ทำเครื่องหมายว่าโอนเสร็จสิ้น</Typography>
+        <Typography variant="h5" textAlign="center">
+          ทำเครื่องหมายว่าโอนเสร็จสิ้น
+        </Typography>
       </HeaderContainer>
 
       <FooterContainer>

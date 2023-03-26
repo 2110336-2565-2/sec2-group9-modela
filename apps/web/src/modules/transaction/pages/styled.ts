@@ -5,10 +5,9 @@ export const PageContainer = styled('div')`
   width: 100%;
   margin: 20px;
   margin-top: 40px;
-  gap: 48px;
+  gap: 36px;
   align-items: flex-start;
   justify-content: center;
-  max-width: 1200px;
 
   ${(props) => props.theme.breakpoints.down('lg')} {
     flex-direction: column;
