@@ -48,7 +48,7 @@ export class CreditRepository {
   }
 
   async getPendingTransactions() {
-    const credits = this.prisma.credit.findMany({
+    const credits = await this.prisma.credit.findMany({
       select: {
         jobId: true,
         proofUrl: true,
@@ -76,5 +76,21 @@ export class CreditRepository {
       },
     })
     return credits
+  }
+
+  async getPendingCreditByJob(jobId: number) {
+    return await this.prisma.credit.findUnique({
+      where: {
+        jobId,
+      },
+    })
+  }
+
+  async removeCreditTrasnaction(jobId: number) {
+    return await this.prisma.credit.delete({
+      where: {
+        jobId,
+      },
+    })
   }
 }
