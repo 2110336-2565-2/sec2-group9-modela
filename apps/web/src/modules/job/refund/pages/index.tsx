@@ -29,7 +29,10 @@ const RequestRefundPage = () => {
           <FormController type="title" label="ส่งคำขอเงินคืน" />
           <FormController type="divider" />
           <Grid item xs={12} sm={12}>
-            <Typography variant="body1" sx={{ display: 'flex', gap: '6px' }}>
+            <Typography
+              variant="body1"
+              sx={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}
+            >
               งาน:{' '}
               <Typography variant="body1" color="primary">
                 <Link
@@ -42,7 +45,10 @@ const RequestRefundPage = () => {
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12}>
-            <Typography variant="body1" sx={{ display: 'flex', gap: '6px' }}>
+            <Typography
+              variant="body1"
+              sx={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}
+            >
               นักแสดงที่ต้องการขอเงินคืน:{' '}
               <Typography variant="body1" color="primary">
                 <Link
@@ -68,7 +74,7 @@ const RequestRefundPage = () => {
             sx={{ alignItems: 'flex-start' }}
             control={control as any}
             name="evidenceUrl"
-            label="เหตุผลที่ต้องการขอเงินคืน"
+            label="อัปโหลดรูปถ่ายหลักฐาน"
             handleUploadFile={handleUploadFile}
           />
           <Grid
