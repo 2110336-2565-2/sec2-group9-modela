@@ -25,15 +25,14 @@ export const useTransactionDetail = () => {
     if (router.isReady) fetchData()
   }, [handleError, jobId, router.isReady])
 
-  const actorFilter = useCallback(
-    (actorId: number) => {
-      if (!transactionDetail) return
+  const actorFilter = useCallback((actorId: number) => {
+    setTransactionDetail((transactionDetail) => {
+      if (!transactionDetail) return transactionDetail
       let actorList = transactionDetail.actorList
       actorList = actorList.filter((actor) => actor.actorId !== actorId)
-      setTransactionDetail({ ...transactionDetail, actorList })
-    },
-    [transactionDetail],
-  )
+      return { ...transactionDetail, actorList }
+    })
+  }, [])
 
   const markAccepted = useCallback(
     async (actorId: number) => {

@@ -19,11 +19,12 @@ const TransactionDetailCard = (props: transactionDetailCardProps) => {
     profileImageUrl,
   } = props.data
   const { open, close, isOpen } = useSwitch()
+  const { markAccepted } = props
 
   const confirm = useCallback(() => {
     close()
-    props.markAccepted(actorId)
-  }, [actorId, close, props])
+    markAccepted(actorId)
+  }, [actorId, close, markAccepted])
 
   return (
     <CardContainer>
