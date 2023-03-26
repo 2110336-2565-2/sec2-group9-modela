@@ -7,7 +7,7 @@ export class RefundRepository {
   constructor(private prisma: PrismaService) {}
 
   async getRefundByApplicationId(applicationId: number) {
-    return await this.prisma.refund.findFirst({
+    return await this.prisma.refund.findUnique({
       where: { applicationId },
     })
   }

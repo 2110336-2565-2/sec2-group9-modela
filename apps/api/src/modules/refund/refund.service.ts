@@ -24,8 +24,10 @@ export class RefundService {
     if (!job) throw new NotFoundException('Job not found')
 
     //find applicationId by jobId and actorId
-    const application =
-      await this.applicationReposity.getApplicationbyActorJobId(actorId, jobId)
+    const application = await this.applicationReposity.getApplicationbyActorJob(
+      actorId,
+      jobId,
+    )
     if (!application)
       throw new BadRequestException('no application of this actor in this job')
 
