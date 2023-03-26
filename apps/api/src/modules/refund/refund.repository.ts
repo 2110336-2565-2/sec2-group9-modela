@@ -20,4 +20,12 @@ export class RefundRepository {
     })
     return updatedRefund
   }
+
+  async rejectRefund(refundId: number) {
+    //delete refund
+    const deletedRefund = await this.prisma.refund.delete({
+      where: { refundId },
+    })
+    return deletedRefund
+  }
 }

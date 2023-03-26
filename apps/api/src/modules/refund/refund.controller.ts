@@ -34,4 +34,21 @@ export class RefundController {
   ) {
     return this.refundService.acceptRefund(+jobId, +actorId)
   }
+
+  @Put('/jobs/:jobId/actors/:actorId/reject')
+  @UseAuthGuard(UserType.ADMIN)
+  @ApiBadRequestResponse({
+    description: 'no refund request of this actor in this job',
+  })
+  @ApiUnauthorizedResponse({ description: 'User is not logged in' })
+  @ApiNotFoundResponse({ description: 'Job not found' })
+  @ApiForbiddenResponse({ description: 'User is not an admin' })
+  @ApiOkResponse()
+  @ApiOperation({ summary: 'admin reject refund request' })
+  rejectRefund(
+    @Param('jobId') jobId: number,
+    @Param('actorId') actorId: number,
+  ) {
+    return this.refundService.rejectRefund(+jobId, +actorId)
+  }
 }

@@ -19,8 +19,7 @@ export class RefundService {
     private readonly notificationService: NotificationService,
   ) {}
 
-  //TODO: send notification to actor and casting
-  async acceptRefund(jobId: number, actorId: number) {
+  async getJobApplicationRefundByActorJobId(jobId: number, actorId: number) {
     const job = await this.jobRepository.getBaseJobById(jobId)
     if (!job) throw new NotFoundException('Job not found')
 
@@ -42,6 +41,12 @@ export class RefundService {
     if (refund.refundStatus !== RefundStatus.PENDING)
       throw new BadRequestException('refund status is not pending')
 
+    return { job, application, refund }
+  }
+
+  async acceptRefund(jobId: number, actorId: number) {
+    const { job, application, refund } =
+      await this.getJobApplicationRefundByActorJobId(jobId, actorId)
     const updatedRefund = await this.repository.acceptRefund(refund.refundId)
 
     //send notification to actor and casting
@@ -57,6 +62,22 @@ export class RefundService {
       jobId: job.jobId,
       applicationId: application.applicationId,
       type: NotificationType.APPROVE_REFUND,
+    })
+    return updatedRefund
+  }
+
+  async rejectRefund(jobId: number, actorId: number) {
+    const { job, application, refund } =
+      await this.getJobApplicationRefundByActorJobId(jobId, actorId)
+
+    const updatedRefund = await this.repository.rejectRefund(refund.refundId)
+
+    //send notification to casting
+    await this.notificationService.createNotification({
+      userId: job.castingId,
+      jobId: job.jobId,
+      applicationId: application.applicationId,
+      type: NotificationType.REJECT_REFUND,
     })
     return updatedRefund
   }
