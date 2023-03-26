@@ -1,4 +1,5 @@
 import { UserType } from '@modela/dtos'
+import { Typography } from '@mui/material'
 import MenuBar from 'common/components/MenuBar'
 import withGuard from 'common/hoc/withGuard'
 import useNavbarFocus from 'common/hooks/useNavbarFocus'
@@ -26,6 +27,9 @@ const TransactionPage = () => {
           transactionData.map((transaction) => (
             <TransactionCard {...transaction} />
           ))}
+        {transactionData && transactionData.length === 0 && (
+          <Typography>ไม่มีรายการโอนเงินที่ค้างอยู่</Typography>
+        )}
       </JobCardContainer>
       <SideDiv />
     </PageContainer>

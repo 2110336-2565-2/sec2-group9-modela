@@ -25,9 +25,17 @@ export const useTransactionDetail = () => {
     if (router.isReady) fetchData()
   }, [handleError, jobId, router.isReady])
 
+  const actorFilter = (actorId: number) => {
+    if (!transactionDetail) return
+    let actorList = transactionDetail.actorList
+    actorList = actorList.filter((actor) => actor.actorId !== actorId)
+    setTransactionDetail({ ...transactionDetail, actorList })
+  }
+
   const markAccepted = async (actorId: number) => {
     try {
       await apiClient.put(`/debits/jobs/${jobId}/actors/${actorId}/accept`)
+      actorFilter(actorId)
     } catch (err) {
       handleError(err)
     }

@@ -1,13 +1,14 @@
-import { Divider, Typography } from '@mui/material'
+import { Divider, Modal, Typography } from '@mui/material'
 import theme from 'common/config/theme'
+import useSwitch from 'common/hooks/useSwitch'
 import ActorCardHeader from 'modules/job/appliedActor/components/ActorCardHeader'
-import React from 'react'
+import React, { useCallback } from 'react'
 
+import ConfirmationModal from '../ConfirmationModal'
 import { CardContainer } from './styled'
 import { transactionDetailCardProps } from './types'
 
 const TransactionDetailCard = (props: transactionDetailCardProps) => {
-  console.log(props.data)
   const {
     actorId,
     firstName,
@@ -17,6 +18,12 @@ const TransactionDetailCard = (props: transactionDetailCardProps) => {
     middleName,
     profileImageUrl,
   } = props.data
+  const { open, close, isOpen } = useSwitch()
+
+  const confirm = useCallback(() => {
+    close()
+    props.markAccepted(actorId)
+  }, [actorId, close, props])
 
   return (
     <CardContainer>
@@ -36,16 +43,21 @@ const TransactionDetailCard = (props: transactionDetailCardProps) => {
         เลขบัญชี: {bankAccount}
       </Typography>
       <Divider sx={{ width: '100%', margin: '1rem 0' }} />
+
       <Typography
         sx={{
           color: theme.palette.success.main,
           cursor: 'pointer',
           alignSelf: 'center',
         }}
-        onClick={() => props.markAccepted(actorId)}
+        onClick={open}
       >
         เสร็จสิ้น
       </Typography>
+
+      <Modal open={isOpen} onClose={close}>
+        <ConfirmationModal close={close} confirm={confirm} />
+      </Modal>
     </CardContainer>
   )
 }
