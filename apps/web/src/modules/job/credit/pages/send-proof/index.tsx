@@ -55,6 +55,7 @@ const SendProofOfTransactionPage = () => {
         <UploadFile
           label="อัปโหลดรูปถ่ายหลักฐานธุรกรรม"
           url={fileUrl}
+          sx={{ marginLeft: '16px', alignItems: 'flex-start' }}
           handleSelectFile={handleUploadFile}
           error={!!error}
           errorMessage={error}

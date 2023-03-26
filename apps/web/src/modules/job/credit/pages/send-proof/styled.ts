@@ -23,7 +23,7 @@ export const SendProofContainer = styled('form')`
   gap: 16px;
   width: 100%;
   max-width: 550px;
-  margin: 32px;
+  margin: 24px;
   height: fit-content;
   border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.12);
