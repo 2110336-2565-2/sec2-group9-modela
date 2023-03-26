@@ -53,9 +53,9 @@ export class JobRepository {
     return { jobId: updatedJob.jobId }
   }
 
-  async confirmJobCredit(id: number) {
+  async confirmJobCredit(jobId: number) {
     const updatedJob = await this.prisma.job.update({
-      where: { jobId: id },
+      where: { jobId },
       data: {
         isPaid: true,
       },

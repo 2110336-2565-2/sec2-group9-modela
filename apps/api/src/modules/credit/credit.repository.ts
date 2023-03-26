@@ -86,7 +86,7 @@ export class CreditRepository {
     })
   }
 
-  async removeCreditTrasnaction(jobId: number) {
+  async removeCreditTransaction(jobId: number) {
     return await this.prisma.credit.delete({
       where: {
         jobId,

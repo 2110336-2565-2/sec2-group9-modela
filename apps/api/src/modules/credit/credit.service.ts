@@ -42,12 +42,12 @@ export class CreditService {
     if (!job) throw new NotFoundException('No job found')
     const credit = await this.repository.getPendingCreditByJob(jobId)
     if (!credit)
-      throw new BadRequestException('No credit trasaction for this job')
+      throw new BadRequestException('No credit transaction for this job')
 
     if (isAccepted) {
       await this.jobRepository.confirmJobCredit(jobId)
     }
 
-    await this.repository.removeCreditTrasnaction(jobId)
+    await this.repository.removeCreditTransaction(jobId)
   }
 }
