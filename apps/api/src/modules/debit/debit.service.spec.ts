@@ -5,6 +5,7 @@ import { PrismaService } from 'src/database/prisma.service'
 
 import { ApplicationRepository } from '../job/application/application.repository'
 import { JobRepository } from '../job/job.repository'
+import { RefundRepository } from '../refund/refund.repository'
 import { DebitRepository } from './debit.repository'
 import { DebitService } from './debit.service'
 
@@ -13,6 +14,7 @@ describe('DebitService', () => {
   let repository: DebitRepository
   let jobRepository: JobRepository
   let applicationRepository: ApplicationRepository
+  let refundRepository: RefundRepository
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -22,6 +24,7 @@ describe('DebitService', () => {
         PrismaService,
         JobRepository,
         ApplicationRepository,
+        RefundRepository,
       ],
     }).compile()
 
@@ -31,6 +34,7 @@ describe('DebitService', () => {
     applicationRepository = module.get<ApplicationRepository>(
       ApplicationRepository,
     )
+    refundRepository = module.get<RefundRepository>(RefundRepository)
   })
 
   it('should be defined', () => {
@@ -58,7 +62,9 @@ describe('DebitService', () => {
             })
             .get(),
         )
-      jest.spyOn(repository, 'getRefundByApplicationId').mockResolvedValue(null)
+      jest
+        .spyOn(refundRepository, 'getRefundByApplicationId')
+        .mockResolvedValue(null)
 
       jest.spyOn(repository, 'markAsPaid').mockResolvedValue(null)
     })
@@ -118,7 +124,7 @@ describe('DebitService', () => {
 
     it('should throw bad request error if application is already refunded', async () => {
       jest
-        .spyOn(repository, 'getRefundByApplicationId')
+        .spyOn(refundRepository, 'getRefundByApplicationId')
         .mockResolvedValue(mock('refund').get())
 
       await expect(

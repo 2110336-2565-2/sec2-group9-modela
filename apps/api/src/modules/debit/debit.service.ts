@@ -11,6 +11,7 @@ import {
 
 import { ApplicationRepository } from '../job/application/application.repository'
 import { JobRepository } from '../job/job.repository'
+import { RefundRepository } from '../refund/refund.repository'
 import { DebitRepository } from './debit.repository'
 
 @Injectable()
@@ -19,6 +20,7 @@ export class DebitService {
     private repository: DebitRepository,
     private applicationRepository: ApplicationRepository,
     private jobRepository: JobRepository,
+    private refundRepository: RefundRepository,
   ) {}
 
   async markAsPaid(jobId: number, actorId: number) {
@@ -36,7 +38,7 @@ export class DebitService {
     if (application.isPaid)
       throw new BadRequestException('Already mark this transaction')
 
-    const refund = await this.repository.getRefundByApplicationId(
+    const refund = await this.refundRepository.getRefundByApplicationId(
       application.applicationId,
     )
     if (refund) throw new BadRequestException('Already refund')
