@@ -40,7 +40,7 @@ const ActorCardHeader = (props: ActorCardHeaderProps) => {
           <ReportOutlined fontSize="medium" color="error" />
         </IconButton>
       ) : (
-        <Chip {...CHIP_VARINTS[status!]} />
+        <>{status && <Chip {...CHIP_VARINTS[status]} />}</>
       )}
     </HeaderContainer>
   )

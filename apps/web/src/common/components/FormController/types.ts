@@ -1,4 +1,5 @@
 import { MenuItemProps } from '@mui/material'
+import { SxPropsWithTheme } from 'common/types/mui'
 import { Control, FieldValues, Path } from 'react-hook-form'
 
 export type IFormControllerProps<T extends FieldValues> = {
@@ -63,6 +64,7 @@ interface IUploadFileField<T extends FieldValues> {
   hideLink?: boolean
   initialName?: string
   accept?: string
+  sx?: SxPropsWithTheme
 }
 
 interface ISelectField<T extends FieldValues>

@@ -65,6 +65,7 @@ const RequestRefundPage = () => {
           />
           <FormController
             type="uploadFile"
+            sx={{ alignItems: 'flex-start' }}
             control={control as any}
             name="evidenceUrl"
             label="เหตุผลที่ต้องการขอเงินคืน"
