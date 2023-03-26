@@ -1,3 +1,4 @@
+import { RefundStatus } from '@modela/database'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
 
@@ -11,8 +12,12 @@ export class RefundRepository {
     })
   }
 
-  async acceptRefund(jobId: number, actorId: number) {
-    //TODO accept refund
-    return { jobId, actorId }
+  async acceptRefund(refundId: number) {
+    //update refund status to accepted
+    const updatedRefund = await this.prisma.refund.update({
+      where: { refundId },
+      data: { refundStatus: RefundStatus.ACCEPTED },
+    })
+    return updatedRefund
   }
 }

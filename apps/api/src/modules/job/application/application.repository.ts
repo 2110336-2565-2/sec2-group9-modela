@@ -100,4 +100,13 @@ export class ApplicationRepository {
     })
     return
   }
+
+  async getApplicationbyActorJobId(actorId: number, jobId: number) {
+    return await this.prisma.application.findFirst({
+      where: {
+        actorId,
+        jobId,
+      },
+    })
+  }
 }
