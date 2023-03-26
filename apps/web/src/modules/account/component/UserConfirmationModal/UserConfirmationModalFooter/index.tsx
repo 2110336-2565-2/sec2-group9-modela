@@ -11,14 +11,16 @@ const UserConfirmationModalFooter = ({
   return (
     <FooterContainer>
       <Button
-        sx={{ backgroundColor: '#AA5B5B', borderRadius: 2 }}
+        sx={{ borderRadius: 2 }}
+        color="error"
         variant="contained"
         onClick={close}
       >
         <Typography variant="button">ปฏิเสธ</Typography>
       </Button>
       <Button
-        sx={{ backgroundColor: '#66A373', borderRadius: 2 }}
+        sx={{ borderRadius: 2 }}
+        color="success"
         variant="contained"
         onClick={confirm}
       >

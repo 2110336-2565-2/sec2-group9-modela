@@ -16,15 +16,17 @@ const ConfirmationModal = (props: ConfirmationModalProps) => {
 
       <FooterContainer>
         <Button
-          sx={{ backgroundColor: '#AA5B5B', borderRadius: 2 }}
+          sx={{ borderRadius: 2 }}
           variant="contained"
+          color="error"
           onClick={close}
         >
           <Typography variant="button">ยกเลิก</Typography>
         </Button>
         <Button
-          sx={{ backgroundColor: '#66A373', borderRadius: 2 }}
+          sx={{ borderRadius: 2 }}
           variant="contained"
+          color="success"
           onClick={confirm}
         >
           <Typography variant="button">ยืนยัน</Typography>
