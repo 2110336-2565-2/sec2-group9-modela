@@ -1,6 +1,6 @@
 import { UserType } from '@modela/database'
 import { JwtDto, PendingRefundDto, SendRefundDto } from '@modela/dtos'
-import { Body, Controller, Get, Param, Put } from '@nestjs/common'
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
   ApiConflictResponse,
@@ -31,7 +31,7 @@ export class RefundController {
     return this.refundService.getPendingRefunds()
   }
 
-  @Put('/jobs/:jobId/actors/:actorId')
+  @Post('/jobs/:jobId/actors/:actorId')
   @UseAuthGuard(UserType.CASTING)
   @ApiBadRequestResponse({
     description:
@@ -44,7 +44,7 @@ export class RefundController {
   @ApiNotFoundResponse({ description: 'Job not found' })
   @ApiForbiddenResponse({ description: 'User is not a casting or owner' })
   @ApiOkResponse()
-  @ApiOperation({ summary: 'admin accept refund request' })
+  @ApiOperation({ summary: 'casting makes request refund' })
   sendRefund(
     @Param('jobId') jobId: number,
     @Param('actorId') actorId: number,

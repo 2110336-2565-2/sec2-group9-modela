@@ -43,7 +43,7 @@ export class RefundService {
     if (castingId !== job.castingId)
       throw new ForbiddenException('User is not owner of job')
     if (job.status !== JobStatus.SELECTION_ENDED)
-      throw new BadRequestException('Job is not ended')
+      throw new BadRequestException('Job status is not selection ended')
     if (!job.isPaid) throw new BadRequestException('Job is not paid')
 
     const application = await this.applicationReposity.getApplicationbyActorJob(
