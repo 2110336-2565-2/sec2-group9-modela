@@ -56,12 +56,12 @@ export const useResumeInfo = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async (name: string, resumeId: number, file?: File) => {
       const currentIdx = resume.findIndex((val) => val.resumeId === resumeId)
+      console.log('handleUpdateResume', currentIdx, name, resumeId)
 
-      if (resume[currentIdx]?.isFirst) {
-        // TODO: Call Create Resume API
-        let resumeUrl = ''
+      let resumeUrl = ''
+      if (file) {
         try {
-          resumeUrl = await uploadFileToS3(file!)
+          resumeUrl = await uploadFileToS3(file)
         } catch (err) {
           handleError(err, {
             400: 'เกิดข้อผิดพลาดในการอัพโหลดรูปภาพ',
@@ -70,7 +70,9 @@ export const useResumeInfo = () => {
           })
           return
         }
+      }
 
+      if (resume[currentIdx].isFirst) {
         try {
           const { resumeId } = (
             await apiClient.post<
@@ -97,8 +99,33 @@ export const useResumeInfo = () => {
           handleError(err)
           throw err
         }
-
         return
+      } else {
+        if (!resumeUrl) resumeUrl = resume[currentIdx].resumeUrl
+        try {
+          console.log({ name, resumeUrl })
+          await apiClient.put<
+            ResumeIdDto,
+            AxiosResponse<ResumeIdDto>,
+            PostResumeDto
+          >(`/resumes/${resumeId}`, {
+            name,
+            resumeUrl,
+          })
+          console.log('handleUpdateResume 2', currentIdx, name, resumeId)
+          const newResume = {
+            name,
+            resumeId,
+            resumeUrl,
+          }
+
+          setResume((prev) => {
+            prev.splice(currentIdx, 1, newResume)
+            return [...prev]
+          })
+        } catch (err) {
+          handleError(err)
+        }
       }
     },
     [handleError, resume],
