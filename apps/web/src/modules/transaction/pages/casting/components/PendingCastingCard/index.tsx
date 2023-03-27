@@ -20,6 +20,8 @@ const PendingCastingCard = (props: PendingCastingCardProps) => {
     bankAccount,
     castingId,
     companyName,
+    handleClickFinish,
+    handleClickReject,
   } = props
   const castingName = `${firstName} ${middleName || ''} ${lastName}`
 
@@ -76,10 +78,18 @@ const PendingCastingCard = (props: PendingCastingCardProps) => {
       </ContentContainer>
       <Divider sx={{ width: '100%' }} />
       <ActionContainer>
-        <Button sx={{ borderRadius: '12px', padding: '4px' }} color="error">
+        <Button
+          onClick={() => handleClickReject(jobId, castingId)}
+          sx={{ borderRadius: '12px', padding: '4px' }}
+          color="error"
+        >
           ไม่อนุมัติ
         </Button>
-        <Button sx={{ borderRadius: '12px', padding: '4px' }} color="success">
+        <Button
+          onClick={() => handleClickFinish(jobId, castingId)}
+          sx={{ borderRadius: '12px', padding: '4px' }}
+          color="success"
+        >
           เสร็จสิ้น
         </Button>
       </ActionContainer>

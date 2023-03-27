@@ -1,4 +1,5 @@
 export interface IJobConfirmModal {
-  jobId: string
-  modalType: 'reject' | 'finish'
+  jobId: number
+  castingId: number
+  modalType: 'reject' | 'accept'
 }

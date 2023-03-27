@@ -14,16 +14,18 @@ const usePendingList = () => {
     useState<IJobConfirmModal | null>(null)
   const { handleError } = useErrorHandler()
 
-  const handleClickFinish = useCallback((jobId: string) => {
+  const handleClickFinish = useCallback((jobId: number, castingId: number) => {
     setJobModalDetails({
       jobId,
-      modalType: 'finish',
+      castingId,
+      modalType: 'accept',
     })
   }, [])
 
-  const handleClickReject = useCallback((jobId: string) => {
+  const handleClickReject = useCallback((jobId: number, castingId: number) => {
     setJobModalDetails({
       jobId,
+      castingId,
       modalType: 'reject',
     })
   }, [])
@@ -32,9 +34,21 @@ const usePendingList = () => {
     setJobModalDetails(null)
   }, [])
 
-  const handleConfirmModal = useCallback(() => {
-    setJobModalDetails(null)
-  }, [])
+  const handleConfirmModal = useCallback(async () => {
+    if (!jobModalDetails) return
+    try {
+      const url = `/credits/jobs/${jobModalDetails.jobId}/${jobModalDetails.modalType}`
+      await apiClient.put(url, {
+        jobId: jobModalDetails.jobId,
+      })
+      setPendingTransaction((prev) =>
+        prev.filter((tx) => tx.jobId !== jobModalDetails.jobId),
+      )
+    } catch (err) {
+      handleError(err)
+    }
+    handleCloseModal()
+  }, [handleCloseModal, handleError, jobModalDetails])
 
   useEffect(() => {
     const fetchData = async () => {
