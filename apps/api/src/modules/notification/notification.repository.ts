@@ -37,13 +37,13 @@ export class NotificationRepository {
       job: {
         jobId: notification.Job?.jobId,
         title: notification.Job?.title,
-        status: notification.Application.status,
+        status: notification.Application?.status,
         ...notification.Job?.Casting,
         ...notification.Application?.Refund,
       },
     }
 
-    if (!notification.Application.Actor) {
+    if (!notification.Application?.Actor) {
       delete formattedNotification.actor
     }
 
