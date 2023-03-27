@@ -1,6 +1,9 @@
-import { NotificationType, RefundStatus } from '@modela/database'
+import { JobStatus, NotificationType, RefundStatus } from '@modela/database'
+import { PendingRefundDto, SendRefundDto } from '@modela/dtos'
 import {
   BadRequestException,
+  ConflictException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common'
@@ -18,6 +21,42 @@ export class RefundService {
     private applicationReposity: ApplicationRepository,
     private readonly notificationService: NotificationService,
   ) {}
+
+  async getPendingRefunds(): Promise<PendingRefundDto[]> {
+    return await this.repository.getPendingRefunds()
+  }
+
+  async sendRefund(
+    jobId: number,
+    actorId: number,
+    data: SendRefundDto,
+    castingId: number,
+  ) {
+    const job = await this.jobRepository.getBaseJobById(jobId)
+
+    if (!job) throw new NotFoundException('Job not found')
+    if (castingId !== job.castingId)
+      throw new ForbiddenException('User is not owner of job')
+    if (job.status !== JobStatus.SELECTION_ENDED)
+      throw new BadRequestException('Job is not ended')
+    if (!job.isPaid) throw new BadRequestException('Job is not paid')
+
+    const application = await this.applicationReposity.getApplicationbyActorJob(
+      actorId,
+      jobId,
+    )
+
+    if (!application)
+      throw new BadRequestException('no application of this actor in this job')
+
+    const refund = await this.repository.getRefundByApplicationId(
+      application.applicationId,
+    )
+
+    if (refund) throw new ConflictException('Refund already requested')
+
+    await this.repository.sendRefund(application.applicationId, data)
+  }
 
   async getJobApplicationRefundByActorJobId(jobId: number, actorId: number) {
     const job = await this.jobRepository.getBaseJobById(jobId)
