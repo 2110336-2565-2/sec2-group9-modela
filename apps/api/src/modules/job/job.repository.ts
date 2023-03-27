@@ -339,4 +339,13 @@ export class JobRepository {
       pendingActorCount,
     }
   }
+
+  async getActorCount(jobId: number) {
+    return await this.prisma.application.count({
+      where: {
+        jobId,
+        status: ApplicationStatus.OFFER_ACCEPTED,
+      },
+    })
+  }
 }

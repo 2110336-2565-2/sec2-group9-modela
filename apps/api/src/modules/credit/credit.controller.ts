@@ -1,6 +1,11 @@
 import { UserType } from '@modela/database'
-import { GetJobCardDto, GetPendingTransactionDto } from '@modela/dtos'
-import { Controller, Get, Param, Put } from '@nestjs/common'
+import {
+  GetJobCardDto,
+  GetPendingTransactionDto,
+  JwtDto,
+  SendProofOfTransactionDto,
+} from '@modela/dtos'
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
   ApiForbiddenResponse,
@@ -38,6 +43,32 @@ export class CreditController {
   @ApiOperation({ summary: 'Admin get list of pending casting transaction' })
   getPendingTransactions() {
     return this.creditService.getPendingTransactions()
+  }
+
+  @Get('/jobs/:jobId')
+  @UseAuthGuard(UserType.CASTING)
+  @ApiUnauthorizedResponse({ description: 'User is not logged in' })
+  @ApiForbiddenResponse({ description: 'User is not a casting' })
+  @ApiNotFoundResponse({ description: 'Job not found' })
+  @ApiBadRequestResponse({ description: 'Job status is not selection end' })
+  @ApiOperation({ summary: 'Casting get transaction detail for job' })
+  getTransactionDetail(@Param('jobId') jobId: string, @User() user: JwtDto) {
+    return this.creditService.getTransactionDetail(+jobId, user.userId)
+  }
+
+  @Post('/jobs/:jobId')
+  @UseAuthGuard(UserType.CASTING)
+  @ApiUnauthorizedResponse({ description: 'User is not logged in' })
+  @ApiForbiddenResponse({ description: 'User is not a casting' })
+  @ApiNotFoundResponse({ description: 'Job not found' })
+  @ApiBadRequestResponse({ description: 'Job status is not selection end' })
+  @ApiOperation({ summary: 'Casting post proof of transaction for job' })
+  sendProofOfTransaction(
+    @Param('jobId') jobId: string,
+    @Body() body: SendProofOfTransactionDto,
+    @User() user: JwtDto,
+  ) {
+    return this.creditService.sendProofOfTransaction(+jobId, body, user.userId)
   }
 
   @Put('/jobs/:jobId/accept')

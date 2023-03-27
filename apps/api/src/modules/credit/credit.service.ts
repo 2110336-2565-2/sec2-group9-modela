@@ -1,6 +1,13 @@
-import { GetJobCardDto, GetPendingTransactionDto } from '@modela/dtos'
+import {
+  GetJobCardDto,
+  GetPendingTransactionDto,
+  GetTransactionDetailDto,
+  JobStatus,
+  SendProofOfTransactionDto,
+} from '@modela/dtos'
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common'
@@ -34,6 +41,52 @@ export class CreditService {
         ...casting,
         ...User,
       }),
+    )
+  }
+
+  async getTransactionDetail(
+    jobId: number,
+    castingId: number,
+  ): Promise<GetTransactionDetailDto> {
+    const job = await this.jobRepository.getBaseJobById(jobId)
+    if (!job) throw new NotFoundException('No job found')
+    if (job.castingId !== castingId)
+      throw new ForbiddenException('User is not owner of this job')
+    if (job.status !== JobStatus.SELECTION_ENDED)
+      throw new BadRequestException('Job selection is not ended')
+    const actorCount = await this.jobRepository.getActorCount(jobId)
+    return {
+      jobId,
+      title: job.title,
+      amount: job.wage * actorCount,
+      //Mock might change later
+      bankAccount: '1234567890',
+      bankName: 'Bank BCA',
+    }
+  }
+
+  async sendProofOfTransaction(
+    jobId: number,
+    data: SendProofOfTransactionDto,
+    castingId: number,
+  ) {
+    const job = await this.jobRepository.getBaseJobById(jobId)
+
+    if (!job) throw new NotFoundException('No job found')
+
+    if (job.castingId !== castingId)
+      throw new ForbiddenException('User is not owner of this job')
+
+    if (job.status !== JobStatus.SELECTION_ENDED)
+      throw new BadRequestException('Job selection is not ended')
+    if (job.isPaid) throw new BadRequestException('Job is already paid')
+
+    const actorCount = await this.jobRepository.getActorCount(jobId)
+
+    await this.repository.createCreditTransaction(
+      jobId,
+      job.wage * actorCount,
+      data.proofUrl,
     )
   }
 

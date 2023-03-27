@@ -78,6 +78,24 @@ export class CreditRepository {
     return credits
   }
 
+  async createCreditTransaction(
+    jobId: number,
+    amount: number,
+    proofUrl: string,
+  ) {
+    return await this.prisma.credit.upsert({
+      where: { jobId },
+      create: {
+        jobId,
+        amount,
+        proofUrl,
+      },
+      update: {
+        proofUrl,
+      },
+    })
+  }
+
   async getPendingCreditByJob(jobId: number) {
     return await this.prisma.credit.findUnique({
       where: {

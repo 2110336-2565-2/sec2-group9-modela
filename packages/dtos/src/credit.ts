@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
+import { IsUrl } from 'class-validator'
 
 export class GetPendingTransactionDto {
   @ApiProperty()
@@ -32,5 +33,28 @@ export class GetPendingTransactionDto {
   bankAccount: string
 
   @ApiProperty()
+  proofUrl: string
+}
+
+export class GetTransactionDetailDto {
+  @ApiProperty()
+  title: string
+
+  @ApiProperty()
+  jobId: number
+
+  @ApiProperty()
+  amount: number
+
+  @ApiProperty()
+  bankName: string
+
+  @ApiProperty()
+  bankAccount: string
+}
+
+export class SendProofOfTransactionDto {
+  @ApiProperty()
+  @IsUrl()
   proofUrl: string
 }
