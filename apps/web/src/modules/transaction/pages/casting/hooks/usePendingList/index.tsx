@@ -38,9 +38,7 @@ const usePendingList = () => {
     if (!jobModalDetails) return
     try {
       const url = `/credits/jobs/${jobModalDetails.jobId}/${jobModalDetails.modalType}`
-      await apiClient.put(url, {
-        jobId: jobModalDetails.jobId,
-      })
+      await apiClient.put(url)
       setPendingTransaction((prev) =>
         prev.filter((tx) => tx.jobId !== jobModalDetails.jobId),
       )
