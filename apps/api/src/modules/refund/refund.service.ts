@@ -1,4 +1,9 @@
-import { JobStatus, NotificationType, RefundStatus } from '@modela/database'
+import {
+  ApplicationStatus,
+  JobStatus,
+  NotificationType,
+  RefundStatus,
+} from '@modela/database'
 import { PendingRefundDto, SendRefundDto } from '@modela/dtos'
 import {
   BadRequestException,
@@ -48,6 +53,8 @@ export class RefundService {
 
     if (!application)
       throw new BadRequestException('no application of this actor in this job')
+    if (application.status !== ApplicationStatus.OFFER_ACCEPTED)
+      throw new BadRequestException('Actor is not accepted this job')
 
     const refund = await this.repository.getRefundByApplicationId(
       application.applicationId,
