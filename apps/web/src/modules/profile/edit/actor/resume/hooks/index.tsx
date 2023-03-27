@@ -103,7 +103,6 @@ export const useResumeInfo = () => {
       } else {
         if (!resumeUrl) resumeUrl = resume[currentIdx].resumeUrl
         try {
-          console.log({ name, resumeUrl })
           await apiClient.put<
             ResumeIdDto,
             AxiosResponse<ResumeIdDto>,
@@ -112,7 +111,6 @@ export const useResumeInfo = () => {
             name,
             resumeUrl,
           })
-          console.log('handleUpdateResume 2', currentIdx, name, resumeId)
           const newResume = {
             name,
             resumeId,
