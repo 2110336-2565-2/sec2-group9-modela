@@ -99,7 +99,7 @@ describe('usePendingList', () => {
           jobId: 1,
         },
       ])
-      const { result } = renderHook(() => usePendingList())
+      const { result, rerender } = renderHook(() => usePendingList())
 
       act(() => {
         result.current.handleClickFinish(1, 1)
@@ -111,9 +111,8 @@ describe('usePendingList', () => {
         modalType: 'accept',
       })
 
-      await act(async () => {
-        await result.current.handleConfirmModal()
-      })
+      await result.current.handleConfirmModal()
+      rerender()
 
       await waitFor(() => {
         expect(putSpy).toBeCalledWith('/credits/jobs/1/accept')
@@ -128,7 +127,7 @@ describe('usePendingList', () => {
           jobId: 1,
         },
       ])
-      const { result } = renderHook(() => usePendingList())
+      const { result, rerender } = renderHook(() => usePendingList())
 
       act(() => {
         result.current.handleClickReject(1, 1)
@@ -140,9 +139,8 @@ describe('usePendingList', () => {
         modalType: 'reject',
       })
 
-      await act(async () => {
-        await result.current.handleConfirmModal()
-      })
+      await result.current.handleConfirmModal()
+      rerender()
 
       expect(putSpy).toBeCalledWith('/credits/jobs/1/reject')
       expect(result.current.jobModalDetails).toBeNull()
