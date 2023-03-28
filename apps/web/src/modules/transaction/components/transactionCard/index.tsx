@@ -27,7 +27,12 @@ const TransactionCard = (props: GetPendingJobsDebitsDto) => {
           jobId={jobId}
           status="OPEN"
         />
-        <Typography>
+        <Typography
+          variant="subtitle2"
+          sx={{
+            color: 'rgba(0, 0, 0, 0.6)',
+          }}
+        >
           รายละเอียดงาน:{' '}
           <Link
             href={`job/${jobId}`}

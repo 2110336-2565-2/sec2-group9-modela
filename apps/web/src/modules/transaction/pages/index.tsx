@@ -17,7 +17,17 @@ const TransactionPage = () => {
           <TransactionCard key={transaction.jobId} {...transaction} />
         ))}
       {transactionData && transactionData.length === 0 && (
-        <Typography>ไม่มีรายการโอนเงินที่ค้างอยู่</Typography>
+        <Typography
+          variant="subtitle1"
+          sx={{
+            width: '100%',
+            textAlign: 'center',
+            color: 'rgba(0, 0, 0, 0.38)',
+            paddingBottom: '12px',
+          }}
+        >
+          ไม่มีรายการโอนเงินที่ค้างอยู่
+        </Typography>
       )}
     </TransactionLayout>
   )

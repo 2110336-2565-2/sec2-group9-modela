@@ -7,7 +7,7 @@ export const CardContainer = styled('div')`
   padding: 0px;
   gap: 12px;
   width: 100%;
-  max-width: 600px;
+  max-width: 650px;
   height: fit-content;
   background-color: white;
   border: 1px solid rgba(0, 0, 0, 0.12);

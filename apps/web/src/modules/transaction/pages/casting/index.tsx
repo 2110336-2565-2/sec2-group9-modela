@@ -1,4 +1,5 @@
 import { UserType } from '@modela/dtos'
+import { Typography } from '@mui/material'
 import Modal from 'common/components/Modal'
 import withGuard from 'common/hoc/withGuard'
 import TransactionLayout from 'modules/transaction/components/TransactionLayout'
@@ -31,6 +32,19 @@ const PendingCastingTransaction = () => {
               {...tx}
             />
           ))}
+          {pendingTransaction.length === 0 && (
+            <Typography
+              variant="subtitle1"
+              sx={{
+                width: '100%',
+                textAlign: 'center',
+                color: 'rgba(0, 0, 0, 0.38)',
+                paddingBottom: '12px',
+              }}
+            >
+              ไม่มีรายการโอนเงิน
+            </Typography>
+          )}
         </CardContainer>
       </TransactionLayout>
       <Modal open={isOpen} contentSx={{ maxWidth: '500px' }}>
