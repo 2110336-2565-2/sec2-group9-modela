@@ -7,7 +7,7 @@ RUN apk add --no-cache libc6-compat
 RUN apk update
 ENV PNPM_HOME="/root/.local/share/pnpm"
 ENV PATH="${PATH}:${PNPM_HOME}"
-RUN npm install -g pnpm
+RUN npm install -g pnpm@7.27.0
 
 # Set working directory
 WORKDIR /app
@@ -23,7 +23,7 @@ RUN apk add --no-cache libc6-compat
 RUN apk update
 ENV PNPM_HOME="/root/.local/share/pnpm"
 ENV PATH="${PATH}:${PNPM_HOME}"
-RUN npm install -g pnpm
+RUN npm install -g pnpm@7.27.0
 WORKDIR /app
 
 # First install dependencies (as they change less often)
@@ -53,7 +53,7 @@ RUN apk add --no-cache libc6-compat
 RUN apk update
 ENV PNPM_HOME="/root/.local/share/pnpm"
 ENV PATH="${PATH}:${PNPM_HOME}"
-RUN npm install -g pnpm
+RUN npm install -g pnpm@7.27.0
 WORKDIR /app
 
 RUN addgroup --system --gid 1001 nodejs

@@ -10,10 +10,10 @@ RUN apk update
 ENV PNPM_HOME="/root/.local/share/pnpm"
 ENV PATH="${PATH}:${PNPM_HOME}"
 
-RUN npm install -g pnpm
+RUN npm install -g pnpm@7.27.0
 # Set working directory
 WORKDIR /app
-RUN pnpm add -g turbo
+RUN pnpm add -g turbo@1.7.0
 COPY . .
 RUN turbo prune --scope=web --docker
 
@@ -24,7 +24,7 @@ RUN apk update
 ENV PNPM_HOME="/root/.local/share/pnpm"
 ENV PATH="${PATH}:${PNPM_HOME}"
 ENV VERCEL_FORCE_NO_BUILD_CACHE="true"
-RUN npm install -g pnpm
+RUN npm install -g pnpm@7.27.0
 WORKDIR /app
 
 ARG stage
@@ -56,7 +56,7 @@ RUN apk add --no-cache libc6-compat
 RUN apk update
 ENV PNPM_HOME="/root/.local/share/pnpm"
 ENV PATH="${PATH}:${PNPM_HOME}"
-RUN npm install -g pnpm
+RUN npm install -g pnpm@7.27.0
 WORKDIR /app
 
 RUN addgroup --system --gid 1001 nodejs
