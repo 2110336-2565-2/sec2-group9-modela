@@ -32,8 +32,8 @@ export class CreditController {
   @ApiForbiddenResponse({ description: 'User is not a casting' })
   @ApiOkResponse({ type: GetJobCardDto, isArray: true })
   @ApiOperation({ summary: 'Casting get list of unpaid jobs' })
-  getUnpaidJob(@User() user) {
-    return this.creditService.getUnpaidJob(user.id)
+  getUnpaidJob(@User() user: JwtDto) {
+    return this.creditService.getUnpaidJob(user.userId)
   }
 
   @Get('/')
