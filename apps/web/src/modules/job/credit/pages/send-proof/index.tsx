@@ -40,17 +40,17 @@ const SendProofOfTransactionPage = () => {
                   href={`/job/${jobId}`}
                   style={{ textDecoration: 'none', color: 'inherit' }}
                 >
-                  {job.title}
+                  {job?.title}
                 </Link>
               </Typography>
             </Typography>
             <div style={{ marginTop: '12px' }}>
               <Typography variant="body1">
-                จำนวนเงินที่ต้องจ่าย: {job.amount}
+                จำนวนเงินที่ต้องจ่าย: {job?.amount}
               </Typography>
-              <Typography variant="body1">ธนาคาร: {job.bankName}</Typography>
+              <Typography variant="body1">ธนาคาร: {job?.bankName}</Typography>
               <Typography variant="body1">
-                เลขบัญชี: {job.bankAccount}
+                เลขบัญชี: {job?.bankAccount}
               </Typography>
             </div>
           </DetailsContainer>

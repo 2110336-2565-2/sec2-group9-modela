@@ -1,3 +1,4 @@
+import { GetTransactionDetailDto } from '@modela/dtos'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import useSwitch from 'common/hooks/useSwitch'
 import { apiClient } from 'common/utils/api'
@@ -8,7 +9,7 @@ import { IUploadedFileDetails } from './types'
 
 const useSendingDetails = (jobId: number) => {
   // This will change to strict type later
-  const [job, setJob] = useState<any>({})
+  const [job, setJob] = useState<GetTransactionDetailDto | null>(null)
   const [uploadedFile, setUploadedFile] = useState<IUploadedFileDetails>({
     file: null,
     fileUrl: '',
@@ -20,7 +21,9 @@ const useSendingDetails = (jobId: number) => {
 
   const handleFetchDetails = useCallback(async () => {
     try {
-      const res = await apiClient.get(`credits/jobs/${jobId}`)
+      const res = await apiClient.get<GetTransactionDetailDto>(
+        `credits/jobs/${jobId}`,
+      )
       setJob(res.data)
     } catch (err) {
       handleError(err)
