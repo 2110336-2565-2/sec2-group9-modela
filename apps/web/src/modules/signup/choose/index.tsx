@@ -8,8 +8,8 @@ import {
 import withGuard from 'common/hoc/withGuard'
 import Image from 'next/image'
 import Link from 'next/link'
-import ActorImage from 'public/actor.png'
-import CastingImage from 'public/casting.png'
+import ActorImage from 'public/actor.svg'
+import CastingImage from 'public/casting.svg'
 
 import {
   CardButtonContainer,
