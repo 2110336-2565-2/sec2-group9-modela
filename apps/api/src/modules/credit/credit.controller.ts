@@ -2,6 +2,7 @@ import { UserType } from '@modela/database'
 import {
   GetJobCardDto,
   GetPendingTransactionDto,
+  GetTransactionDetailDto,
   JwtDto,
   SendProofOfTransactionDto,
 } from '@modela/dtos'
@@ -31,8 +32,8 @@ export class CreditController {
   @ApiForbiddenResponse({ description: 'User is not a casting' })
   @ApiOkResponse({ type: GetJobCardDto, isArray: true })
   @ApiOperation({ summary: 'Casting get list of unpaid jobs' })
-  getUnpaidJob(@User() user) {
-    return this.creditService.getUnpaidJob(user.id)
+  getUnpaidJob(@User() user: JwtDto) {
+    return this.creditService.getUnpaidJob(user.userId)
   }
 
   @Get('/')
@@ -51,6 +52,7 @@ export class CreditController {
   @ApiForbiddenResponse({ description: 'User is not a casting' })
   @ApiNotFoundResponse({ description: 'Job not found' })
   @ApiBadRequestResponse({ description: 'Job status is not selection end' })
+  @ApiOkResponse({ type: GetTransactionDetailDto })
   @ApiOperation({ summary: 'Casting get transaction detail for job' })
   getTransactionDetail(@Param('jobId') jobId: string, @User() user: JwtDto) {
     return this.creditService.getTransactionDetail(+jobId, user.userId)

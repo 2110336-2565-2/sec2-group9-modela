@@ -73,3 +73,28 @@ export class SendRefundDto {
   @IsUrl()
   proofUrl: string
 }
+
+export class RequestRefundInfoUserDto {
+  @ApiProperty()
+  userId: number
+
+  @ApiProperty()
+  firstName: string
+
+  @ApiProperty()
+  middleName: string
+
+  @ApiProperty()
+  lastName: string
+}
+
+export class RequestRefundInfoDto {
+  @ApiProperty()
+  jobId: number
+
+  @ApiProperty()
+  title: string
+
+  @ApiProperty({ type: RequestRefundInfoUserDto })
+  user: RequestRefundInfoUserDto
+}

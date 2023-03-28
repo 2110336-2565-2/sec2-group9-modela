@@ -1,9 +1,12 @@
+import { ConfigService } from '@nestjs/config'
 import { Test, TestingModule } from '@nestjs/testing'
 import { PrismaService } from 'src/database/prisma.service'
 
+import { FileService } from '../file/file.service'
 import { ApplicationRepository } from '../job/application/application.repository'
 import { JobRepository } from '../job/job.repository'
 import { NotificationModule } from '../notification/notification.module'
+import { UserRepository } from '../user/user.repository'
 import { RefundRepository } from './refund.repository'
 import { RefundService } from './refund.service'
 
@@ -23,6 +26,9 @@ describe('RefundService', () => {
         PrismaService,
         JobRepository,
         ApplicationRepository,
+        UserRepository,
+        FileService,
+        ConfigService,
       ],
       imports: [NotificationModule],
     }).compile()

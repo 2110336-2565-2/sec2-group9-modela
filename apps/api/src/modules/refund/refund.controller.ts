@@ -1,5 +1,10 @@
 import { UserType } from '@modela/database'
-import { JwtDto, PendingRefundDto, SendRefundDto } from '@modela/dtos'
+import {
+  JwtDto,
+  PendingRefundDto,
+  RequestRefundInfoDto,
+  SendRefundDto,
+} from '@modela/dtos'
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
@@ -29,6 +34,25 @@ export class RefundController {
   @ApiOkResponse({ type: PendingRefundDto, isArray: true })
   getPendingRefunds() {
     return this.refundService.getPendingRefunds()
+  }
+
+  @Get('/jobs/:jobId/actors/:actorId')
+  @UseAuthGuard(UserType.CASTING)
+  @ApiBadRequestResponse({
+    description:
+      "actor didn't apply for this job or job status is not selection end or this job not paid",
+  })
+  @ApiUnauthorizedResponse({ description: 'User is not logged in' })
+  @ApiNotFoundResponse({ description: 'Job not found' })
+  @ApiForbiddenResponse({ description: 'User is not a casting or owner' })
+  @ApiOkResponse({ type: RequestRefundInfoDto })
+  @ApiOperation({ summary: 'casting get request refund info' })
+  getRefundInfo(
+    @Param('jobId') jobId: string,
+    @Param('actorId') actorId: string,
+    @User() user: JwtDto,
+  ) {
+    return this.refundService.getRefundInfo(+jobId, +actorId, user.userId)
   }
 
   @Post('/jobs/:jobId/actors/:actorId')
