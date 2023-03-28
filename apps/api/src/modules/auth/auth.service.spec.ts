@@ -31,6 +31,10 @@ describe('AuthService', () => {
     jest
       .spyOn(service, 'createJwtToken')
       .mockReturnValue({ message: 'Login Successful' })
+    jest.mock('bcryptjs', () => ({
+      compare: jest.fn().mockResolvedValue(true),
+      hash: jest.fn().mockResolvedValue('hashedPassword'),
+    }))
   })
 
   it('should be defined', () => {
