@@ -41,7 +41,7 @@ const TransactionCard = (props: GetPendingJobsDebitsDto) => {
               color: theme.palette.primary.main,
             }}
           >
-            job title
+            {title}
           </Link>
         </Typography>
       </CardContainer>
