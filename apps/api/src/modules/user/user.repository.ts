@@ -3,6 +3,7 @@ import {
   Casting,
   JobStatus,
   Prisma,
+  RefundStatus,
   User,
   UserStatus,
 } from '@modela/database'
@@ -135,24 +136,38 @@ export class UserRepository {
             User: true,
           },
         },
+        Application: {
+          where: {
+            actorId: paramId,
+            status: ApplicationStatus.OFFER_ACCEPTED,
+          },
+          include: {
+            Refund: true,
+          },
+        },
       },
     })
 
-    const returnJobs = jobs.map((job) => ({
-      jobId: job.jobId,
-      title: job.title,
-      companyName: job.Casting.companyName,
-      description: job.description,
-      status: job.status,
-      actorCount: job.actorCount,
-      gender: job.gender,
-      wage: job.wage,
-      applicationDeadline: job.applicationDeadline,
-      jobCastingImageUrl: job.Casting.User.profileImageUrl,
-      castingId: job.castingId,
-      castingName: job.Casting.User.firstName,
-    }))
-
+    let returnJobs = jobs.map(
+      // assume that there is only one filtered application for each job
+      (job) =>
+        job.Application[0].Refund.refundStatus !== RefundStatus.ACCEPTED && {
+          jobId: job.jobId,
+          title: job.title,
+          companyName: job.Casting.companyName,
+          description: job.description,
+          status: job.status,
+          actorCount: job.actorCount,
+          gender: job.gender,
+          wage: job.wage,
+          applicationDeadline: job.applicationDeadline,
+          jobCastingImageUrl: job.Casting.User.profileImageUrl,
+          castingId: job.castingId,
+          castingName: job.Casting.User.firstName,
+        },
+    )
+    // remove undefined
+    returnJobs = returnJobs.filter((job) => job)
     return returnJobs
   }
 
