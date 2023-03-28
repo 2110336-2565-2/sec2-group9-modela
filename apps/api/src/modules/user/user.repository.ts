@@ -151,7 +151,9 @@ export class UserRepository {
     let returnJobs = jobs.map(
       // assume that there is only one filtered application for each job
       (job) =>
-        job.Application[0].Refund.refundStatus !== RefundStatus.ACCEPTED && {
+        (job.Application[0].Refund
+          ? job.Application[0].Refund.refundStatus !== RefundStatus.ACCEPTED
+          : true) && {
           jobId: job.jobId,
           title: job.title,
           companyName: job.Casting.companyName,
