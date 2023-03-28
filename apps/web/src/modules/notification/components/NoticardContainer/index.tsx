@@ -5,11 +5,28 @@ import { CardBoxContainer } from './styled'
 import { NotiCardContainerProps } from './types'
 
 const NotiCardContainer = (props: NotiCardContainerProps) => {
-  const { notifications, userType } = props
+  const {
+    notifications,
+    userType,
+    openAcceptModal,
+    openRejectModal,
+    setFocusId,
+    setTitle,
+  } = props
   return (
     <CardBoxContainer>
-      {notifications?.map((item, index) => {
-        return <NotiCard key={index} userType={userType} {...item} />
+      {notifications?.map((item) => {
+        return (
+          <NotiCard
+            openAcceptModal={openAcceptModal}
+            openRejectModal={openRejectModal}
+            setFocusId={setFocusId}
+            setTitle={setTitle}
+            key={item.notificationId}
+            userType={userType}
+            {...item}
+          />
+        )
       })}
     </CardBoxContainer>
   )

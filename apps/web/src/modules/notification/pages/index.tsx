@@ -25,6 +25,11 @@ const NotificationPage = () => {
     handleRejectCloseModal,
     handleAcceptModalSubmit,
     handleRejectModalSubmit,
+    handleAcceptModalOpen,
+    handleRejectModalOpen,
+    setFocusId,
+    title,
+    setTitle,
   } = useModalData()
   useNavbarSearch(
     useCallback(() => {
@@ -60,7 +65,16 @@ const NotificationPage = () => {
             </div>
           }
         >
-          {noti && <NotiCardContainer userType={user?.type} {...noti} />}
+          {noti && (
+            <NotiCardContainer
+              userType={user?.type}
+              openAcceptModal={handleAcceptModalOpen}
+              openRejectModal={handleRejectModalOpen}
+              setFocusId={setFocusId}
+              setTitle={setTitle}
+              {...noti}
+            />
+          )}
         </InfiniteScroll>
       </NotiContainer>
       <FilterBoxContainer>
@@ -81,13 +95,13 @@ const NotificationPage = () => {
         isOpen={isAcceptModalOpen}
         handleClose={handleAcceptCloseModal}
         handleSubmit={handleAcceptModalSubmit}
-        title={''}
+        title={title}
       />
       <RejectOfferModal
         isOpen={isRejectModalOpen}
         handleClose={handleRejectCloseModal}
         handleSubmit={handleRejectModalSubmit}
-        title={''}
+        title={title}
       />
     </div>
   )

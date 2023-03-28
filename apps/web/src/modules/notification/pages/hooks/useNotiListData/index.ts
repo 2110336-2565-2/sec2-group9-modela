@@ -17,7 +17,6 @@ const useNotiListData = () => {
 
   const filterData = useCallback(async (state: INotiFilter) => {
     let newType: NotificationType[] = []
-    console.log('State :', state)
     if (state.acceptCheck) {
       newType.push(NotificationType.ACCEPT_OFFER)
     }
@@ -36,7 +35,6 @@ const useNotiListData = () => {
     if (state.rejectRefundCheck) {
       newType.push(NotificationType.REJECT_REFUND)
     }
-    console.log('newType: ', newType)
     setSearch(newType)
 
     setNoti((prevNotis) => ({
@@ -44,7 +42,6 @@ const useNotiListData = () => {
       notifications: [],
       maxPage: 1,
     }))
-    console.log('???')
     setPage(1)
     pageControl.current = 1
 
@@ -52,8 +49,6 @@ const useNotiListData = () => {
   }, [])
 
   const fetchData = useCallback(async () => {
-    console.log('Page : ', page)
-    console.log('PageControl : ', pageControl.current)
     try {
       if (pageControl.current <= page) {
         pageControl.current = page + 1

@@ -1,4 +1,4 @@
-import { NotificationType } from '@modela/database'
+import { ApplicationStatus, NotificationType } from '@modela/database'
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import { Type } from 'class-transformer'
 import { IsEnum, IsNumber, IsOptional, Max, Min } from 'class-validator'
@@ -38,8 +38,8 @@ export class NotificationJobDto {
   @ApiProperty()
   title: string
 
-  @ApiPropertyOptional()
-  status?: string
+  @ApiPropertyOptional({ enum: ApplicationStatus })
+  status?: ApplicationStatus
 
   @ApiPropertyOptional()
   reason?: string

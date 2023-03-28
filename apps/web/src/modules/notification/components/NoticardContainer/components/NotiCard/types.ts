@@ -1,8 +1,10 @@
-import { NotificationType, UserType } from '@modela/dtos'
+import { ApplicationStatus, NotificationType, UserType } from '@modela/dtos'
+import { Dispatch, SetStateAction } from 'react'
 
 export interface NotiCardProps {
   type: NotificationType
   reason?: string
+  notificationId: number
   actor?: {
     actorId?: number
     firstName?: string
@@ -12,6 +14,7 @@ export interface NotiCardProps {
   job?: {
     jobId?: number
     title?: string
+    status?: ApplicationStatus
     companyName?: string
   }
   createdAt: Date
@@ -20,4 +23,8 @@ export interface NotiCardProps {
 
 export interface NotiCardPropsWithUserType extends NotiCardProps {
   userType?: UserType
+  openAcceptModal: () => void
+  openRejectModal: () => void
+  setFocusId: Dispatch<SetStateAction<number>>
+  setTitle: Dispatch<SetStateAction<string>>
 }

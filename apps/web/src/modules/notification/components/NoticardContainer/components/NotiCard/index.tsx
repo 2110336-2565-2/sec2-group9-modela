@@ -8,7 +8,18 @@ import { CardBox } from './styled'
 import { NotiCardPropsWithUserType } from './types'
 
 const NotiCard = (props: NotiCardPropsWithUserType) => {
-  const { type, job, createdAt, userType, actor, isRead } = props
+  const {
+    type,
+    job,
+    createdAt,
+    userType,
+    actor,
+    isRead,
+    openAcceptModal,
+    openRejectModal,
+    setFocusId,
+    setTitle,
+  } = props
   return (
     <CardBox
       style={{
@@ -28,7 +39,15 @@ const NotiCard = (props: NotiCardPropsWithUserType) => {
       )}
       {userType === UserType.ACTOR &&
         type === NotificationType.RECEIVE_OFFER && (
-          <NotiCardFooter jobId={job?.jobId} />
+          <NotiCardFooter
+            jobId={job?.jobId}
+            openAcceptModal={openAcceptModal}
+            openRejectModal={openRejectModal}
+            setFocusId={setFocusId}
+            setTitle={setTitle}
+            jobTitle={job?.title}
+            appStatus={job?.status}
+          />
         )}
     </CardBox>
   )
