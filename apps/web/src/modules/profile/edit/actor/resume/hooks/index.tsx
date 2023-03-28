@@ -56,7 +56,6 @@ export const useResumeInfo = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async (name: string, resumeId: number, file?: File) => {
       const currentIdx = resume.findIndex((val) => val.resumeId === resumeId)
-      console.log('handleUpdateResume', currentIdx, name, resumeId)
 
       let resumeUrl = ''
       if (file) {
@@ -72,7 +71,7 @@ export const useResumeInfo = () => {
         }
       }
 
-      if (resume[currentIdx].isFirst) {
+      if (resume[currentIdx]?.isFirst) {
         try {
           const { resumeId } = (
             await apiClient.post<
