@@ -66,10 +66,6 @@ export class UserController {
   @ApiNotFoundResponse({ description: 'user not found' })
   @ApiForbiddenResponse({ description: 'User is not casting or not this user' })
   getUsersWorkHistory(@Param('id') ParamId: number, @User() user: JwtDto) {
-    return this.userService.getUsersWorkHistory(
-      +ParamId,
-      user.userId,
-      user.type,
-    )
+    return this.userService.getUserWorkHistory(+ParamId, user.userId, user.type)
   }
 }

@@ -74,7 +74,7 @@ export class UserService {
     return updatedUser
   }
 
-  async getUsersWorkHistory(
+  async getUserWorkHistory(
     paramId: number,
     userId: number,
     userType: UserType,
