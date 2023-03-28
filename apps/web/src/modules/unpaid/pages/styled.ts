@@ -1,20 +1,10 @@
 import { styled } from '@mui/material'
 
-export const SearchContainer = styled('div')`
-  padding-top: 3.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  ${(props) => props.theme.breakpoints.down('md')} {
-    display: none;
-  }
-`
-
 export const JobContainer = styled('div')`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-top: 2rem;
+  padding-top: 3rem;
   width: 45vw;
   gap: 1.75rem;
   padding-bottom: 3rem;
