@@ -11,7 +11,11 @@ const TransactionLayout = (props: TransactionLayoutProps) => {
   const { focus, children } = props
   return (
     <PageContainer>
-      <MenuBar menu={MENU_ITEM} sx={{ width: '17vw' }} focus={focus} />
+      <MenuBar
+        menu={MENU_ITEM}
+        sx={{ width: '17vw', minWidth: '300px' }}
+        focus={focus}
+      />
       <JobCardContainer>{children}</JobCardContainer>
       <SideDiv />
     </PageContainer>
