@@ -46,8 +46,8 @@ export class RefundController {
   @ApiOkResponse()
   @ApiOperation({ summary: 'casting makes request refund' })
   sendRefund(
-    @Param('jobId') jobId: number,
-    @Param('actorId') actorId: number,
+    @Param('jobId') jobId: string,
+    @Param('actorId') actorId: string,
     @Body() body: SendRefundDto,
     @User() user: JwtDto,
   ) {
