@@ -26,4 +26,6 @@ describe('UserService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined()
   })
+
+  //TODO: write test for getUserHistory
 })

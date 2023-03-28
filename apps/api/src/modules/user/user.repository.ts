@@ -1,5 +1,16 @@
-import { Casting, Prisma, User, UserStatus } from '@modela/database'
-import { PendingUserDto, UpdateUserStatusDto } from '@modela/dtos'
+import {
+  ApplicationStatus,
+  Casting,
+  JobStatus,
+  Prisma,
+  User,
+  UserStatus,
+} from '@modela/database'
+import {
+  GetJobCardDto,
+  PendingUserDto,
+  UpdateUserStatusDto,
+} from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
 
@@ -102,5 +113,90 @@ export class UserRepository {
       },
     }
     return respondUpdatedUser
+  }
+
+  async getActorsWorkHistory(paramId: number): Promise<GetJobCardDto[]> {
+    const jobs = await this.prisma.job.findMany({
+      orderBy: {
+        jobId: Prisma.SortOrder.desc,
+      },
+      where: {
+        status: JobStatus.FINISHED,
+        Application: {
+          some: {
+            actorId: paramId,
+            status: ApplicationStatus.OFFER_ACCEPTED,
+            Refund: null,
+          },
+        },
+      },
+      include: {
+        Casting: {
+          include: {
+            User: true,
+          },
+        },
+        Application: {
+          where: {
+            actorId: paramId,
+            status: ApplicationStatus.OFFER_ACCEPTED,
+          },
+          include: {
+            Refund: true,
+          },
+        },
+      },
+    })
+    const returnJobs = jobs.map((job) => ({
+      jobId: job.jobId,
+      title: job.title,
+      companyName: job.Casting.companyName,
+      description: job.description,
+      status: job.status,
+      actorCount: job.actorCount,
+      gender: job.gender,
+      wage: job.wage,
+      applicationDeadline: job.applicationDeadline,
+      jobCastingImageUrl: job.Casting.User.profileImageUrl,
+      castingId: job.castingId,
+      castingName: job.Casting.User.firstName,
+    }))
+    return returnJobs
+  }
+
+  async getCastingWorkHistory(paramId: number): Promise<GetJobCardDto[]> {
+    const jobs = await this.prisma.job.findMany({
+      orderBy: {
+        jobId: Prisma.SortOrder.desc,
+      },
+      where: {
+        castingId: paramId,
+        status: JobStatus.FINISHED,
+      },
+      include: {
+        Casting: {
+          include: {
+            User: true,
+          },
+        },
+      },
+    })
+
+    const returnJobs = jobs.map((job) => ({
+      jobId: job.jobId,
+      title: job.title,
+      companyName: job.Casting.companyName,
+      description: job.description,
+      status: job.status,
+      actorCount: job.actorCount,
+      gender: job.gender,
+      wage: job.wage,
+      applicationDeadline: job.applicationDeadline,
+      jobCastingImageUrl: job.Casting.User.profileImageUrl,
+      castingId: job.castingId,
+      castingName: job.Casting.User.firstName,
+    }))
+
+    return returnJobs
   }
 }
