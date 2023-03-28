@@ -14,7 +14,7 @@ export const castingBodyMap = {
   [NotificationType.ACCEPT_OFFER]: 'ดูรายละเอียดนักแสดง: ',
   [NotificationType.REJECT_OFFER]: 'ดูรายละเอียดนักแสดง: ',
   [NotificationType.APPROVE_REFUND]: 'รายละเอียดงาน: ',
-  [NotificationType.REJECT_REFUND]: 'รายละเอียดงาน:',
+  [NotificationType.REJECT_REFUND]: 'รายละเอียดงาน: ',
   [NotificationType.RECEIVE_OFFER]: '',
   [NotificationType.CANCEL_JOB]: '',
   [NotificationType.REJECT_APPLICATION]: '',

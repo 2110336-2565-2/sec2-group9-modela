@@ -8,7 +8,7 @@ import { CardBox } from './styled'
 import { NotiCardPropsWithUserType } from './types'
 
 const NotiCard = (props: NotiCardPropsWithUserType) => {
-  const { type, job, createdAt, userType, reason, actor, isRead } = props
+  const { type, job, createdAt, userType, actor, isRead } = props
   return (
     <CardBox
       style={{
@@ -24,15 +24,7 @@ const NotiCard = (props: NotiCardPropsWithUserType) => {
         {...job}
       />
       {type !== NotificationType.CANCEL_JOB && (
-        <NotiCardBody
-          type={type}
-          userType={userType}
-          reason={reason}
-          actorId={actor?.actorId}
-          jobId={job?.jobId}
-          title={job?.title}
-          {...actor}
-        />
+        <NotiCardBody type={type} userType={userType} {...actor} {...job} />
       )}
       {userType === UserType.ACTOR &&
         type === NotificationType.RECEIVE_OFFER && (
