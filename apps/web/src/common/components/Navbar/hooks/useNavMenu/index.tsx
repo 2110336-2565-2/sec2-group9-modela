@@ -50,7 +50,7 @@ const useNavMenu = (isMobile: boolean) => {
       },
       {
         label: 'การแจ้งเตือน',
-        href: '/',
+        href: '/notification',
         icon: <NotificationsNoneOutlined />,
         focusKey: 'notification',
         notAdmin: true,

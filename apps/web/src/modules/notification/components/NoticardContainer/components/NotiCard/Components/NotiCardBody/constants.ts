@@ -1,12 +1,13 @@
 import { NotificationType } from '@modela/dtos'
 
 export const actorBodyMap = {
-  [NotificationType.REJECT_OFFER]: 'รายละเอียดงาน: ',
+  [NotificationType.REJECT_OFFER]: '',
   [NotificationType.RECEIVE_OFFER]: 'รายละเอียดงาน: ',
   [NotificationType.APPROVE_REFUND]: 'เหตุผล: ',
   [NotificationType.REJECT_REFUND]: '',
   [NotificationType.ACCEPT_OFFER]: '',
   [NotificationType.CANCEL_JOB]: '',
+  [NotificationType.REJECT_APPLICATION]: 'รายละเอียดงาน: ',
 }
 
 export const castingBodyMap = {
@@ -16,4 +17,5 @@ export const castingBodyMap = {
   [NotificationType.REJECT_REFUND]: 'รายละเอียดงาน:',
   [NotificationType.RECEIVE_OFFER]: '',
   [NotificationType.CANCEL_JOB]: '',
+  [NotificationType.REJECT_APPLICATION]: '',
 }

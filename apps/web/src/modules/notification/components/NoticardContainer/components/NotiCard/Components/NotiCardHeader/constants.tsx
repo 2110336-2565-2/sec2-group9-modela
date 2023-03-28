@@ -7,7 +7,7 @@ import {
   MoneyOffCsred,
 } from '@mui/icons-material'
 export const actorIconMap = {
-  [NotificationType.REJECT_OFFER]: <Close sx={{ fontSize: '40px' }} />,
+  [NotificationType.REJECT_APPLICATION]: <Close sx={{ fontSize: '40px' }} />,
   [NotificationType.RECEIVE_OFFER]: <Check sx={{ fontSize: '40px' }} />,
   [NotificationType.CANCEL_JOB]: <Block sx={{ fontSize: '40px' }} />,
   [NotificationType.APPROVE_REFUND]: (
@@ -15,6 +15,7 @@ export const actorIconMap = {
   ),
   [NotificationType.REJECT_REFUND]: <></>,
   [NotificationType.ACCEPT_OFFER]: <></>,
+  [NotificationType.REJECT_OFFER]: <></>,
 }
 
 export const castingIconMap = {
@@ -24,15 +25,17 @@ export const castingIconMap = {
   [NotificationType.APPROVE_REFUND]: <AttachMoney sx={{ fontSize: '40px' }} />,
   [NotificationType.REJECT_REFUND]: <MoneyOffCsred sx={{ fontSize: '40px' }} />,
   [NotificationType.RECEIVE_OFFER]: <></>,
+  [NotificationType.REJECT_APPLICATION]: <></>,
 }
 
 export const actorHeaderMap = {
-  [NotificationType.REJECT_OFFER]: 'ถูกปฏิเสธ: ',
+  [NotificationType.REJECT_APPLICATION]: 'ถูกปฏิเสธ: ',
   [NotificationType.RECEIVE_OFFER]: 'ได้รับข้อเสนองาน: ',
   [NotificationType.CANCEL_JOB]: 'งานถูกยกเลิก: ',
   [NotificationType.APPROVE_REFUND]: 'ถูกระงับเงินจากงาน: ',
   [NotificationType.REJECT_REFUND]: '',
   [NotificationType.ACCEPT_OFFER]: '',
+  [NotificationType.REJECT_OFFER]: '',
 }
 
 export const castingHeaderMap = {
@@ -42,4 +45,5 @@ export const castingHeaderMap = {
   [NotificationType.APPROVE_REFUND]: 'การขอเงินคืนสำเร็จ: ',
   [NotificationType.REJECT_REFUND]: 'การขอเงินคืนไม่สำเร็จ:',
   [NotificationType.RECEIVE_OFFER]: '',
+  [NotificationType.REJECT_APPLICATION]: '',
 }
