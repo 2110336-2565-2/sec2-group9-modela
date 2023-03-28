@@ -9,6 +9,7 @@ import {
 import { Body, Controller, Get, Param, Put } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
+  ApiForbiddenResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -59,9 +60,11 @@ export class UserController {
 
   @Get(':id/history')
   @UseAuthGuard()
+  @ApiUnauthorizedResponse({ description: 'User is not login' })
   @ApiOperation({ summary: 'get work history for casting and actor' })
   @ApiOkResponse({ type: GetJobCardDto })
   @ApiNotFoundResponse({ description: 'user not found' })
+  @ApiForbiddenResponse({ description: 'User is not casting or not this user' })
   getUsersWorkHistory(@Param('id') ParamId: number, @User() user: JwtDto) {
     return this.userService.getUsersWorkHistory(
       +ParamId,

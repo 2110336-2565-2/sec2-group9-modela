@@ -8,6 +8,7 @@ import {
 import { Injectable } from '@nestjs/common'
 import {
   BadRequestException,
+  ForbiddenException,
   NotFoundException,
 } from '@nestjs/common/exceptions'
 
@@ -85,16 +86,16 @@ export class UserService {
     let result: GetJobCardDto[] = []
     if (targetUser.type === UserType.ACTOR) {
       if (userType === UserType.ACTOR && userId !== paramId)
-        throw new BadRequestException('Cannot get other actor work history')
+        throw new ForbiddenException('Cannot get other actor work history')
 
       result = await this.repository.getActorsWorkHistory(paramId)
     } else if (targetUser.type === UserType.CASTING) {
       if (userId !== paramId)
-        throw new BadRequestException('Cannot get other casting work history')
+        throw new ForbiddenException('Cannot get other casting work history')
 
       result = await this.repository.getCastingWorkHistory(paramId)
     } else {
-      throw new BadRequestException('Invalid user type')
+      throw new ForbiddenException('Invalid user type')
     }
 
     return result
