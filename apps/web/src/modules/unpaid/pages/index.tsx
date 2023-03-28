@@ -25,7 +25,11 @@ const UnpaidJobList = () => {
       <JobContainer>
         {unpaidJobData ? (
           unpaidJobData.length === 0 ? (
-            <Typography variant="h4" color="#00000061">
+            <Typography
+              sx={{ justifyContent: 'center', textAlign: 'center' }}
+              variant="h4"
+              color="#00000061"
+            >
               ไม่พบงานที่พร้อมส่งหลักฐานการโอนเงิน
             </Typography>
           ) : (

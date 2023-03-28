@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { GetJobCardDto } from '@modela/dtos'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
@@ -17,17 +18,9 @@ const useUnpaidJobData = () => {
   const [state, setState] = useState<IFilter>(initialIFilter)
   const router = useRouter()
 
-  const filterData = useCallback(
-    async (state: IFilter) => {
-      setSearch({
-        ...search,
-        title: state.title,
-      })
-
-      setUnpaidJobData([...unpaidJobData])
-    },
-    [search, unpaidJobData, setUnpaidJobData],
-  )
+  const filterData = useCallback(async (state: IFilter) => {
+    setSearch((prev) => ({ ...prev, title: state.title }))
+  }, [])
 
   const fetchUnpaidJobData = useCallback(async () => {
     try {
@@ -43,8 +36,11 @@ const useUnpaidJobData = () => {
   }, [handleError, search])
   useEffect(() => {
     filterData(state)
+  }, [state.title, filterData])
+
+  useEffect(() => {
     if (router.isReady) fetchUnpaidJobData()
-  }, [handleError, router.isReady, state, filterData, fetchUnpaidJobData])
+  }, [router.isReady, fetchUnpaidJobData, handleError])
 
   return { unpaidJobData, filterData, state, setState }
 }

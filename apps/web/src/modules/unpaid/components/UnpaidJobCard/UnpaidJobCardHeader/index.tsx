@@ -1,6 +1,5 @@
 import { Typography } from '@mui/material'
 import ProfileImage from 'common/components/ProfileImage'
-import Link from 'next/link'
 import React from 'react'
 
 import { HeaderRow, TitleContainer } from './styled'
@@ -18,18 +17,12 @@ const UnpaidJobCardHeader = (prop: HeaderProps) => {
 
   return (
     <HeaderRow>
-      <Link
-        href={`/profile/${castingId}`}
-        passHref
-        style={{ textDecoration: 'none', color: 'inherit' }}
-      >
-        <ProfileImage
-          src={jobCastingImageUrl}
-          firstName={castingName}
-          userId={castingId}
-          sx={{ marginTop: '4px' }}
-        />
-      </Link>
+      <ProfileImage
+        src={jobCastingImageUrl}
+        firstName={castingName}
+        userId={castingId}
+        sx={{ marginTop: '4px' }}
+      />
       <TitleContainer>
         <Typography variant="h6" sx={{ wordBreak: 'break-word' }}>
           {!isDetail &&
