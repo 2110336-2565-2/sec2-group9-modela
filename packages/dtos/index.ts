@@ -13,6 +13,7 @@ export * from './src/file'
 export * from './src/notification'
 export * from './src/credit'
 export * from './src/debit'
+export * from './src/refund'
 
 export {
   UserStatus,
