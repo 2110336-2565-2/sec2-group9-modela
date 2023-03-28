@@ -42,15 +42,11 @@ const useRefundForm = (jobId: number, actorId: number) => {
   )
 
   const handleSuccess = useCallback(
-    async (data: IRefundFormSchemaType, isDev: boolean) => {
-      if (isDev) {
-        openModal()
-        return
-      }
+    async (data: IRefundFormSchemaType) => {
       try {
         const fileUrl = await uploadFileToS3(file!)
 
-        await apiClient.put(`/refunds/jobs/${jobId}/actors/${actorId}`, {
+        await apiClient.post(`/refunds/jobs/${jobId}/actors/${actorId}`, {
           data: {
             reason: data.reason,
             proof: fileUrl,
@@ -64,39 +60,25 @@ const useRefundForm = (jobId: number, actorId: number) => {
     [actorId, file, handleError, jobId, openModal],
   )
 
-  const handleFetchRefundDetails = useCallback(
-    async (isDev: boolean) => {
-      if (isDev) {
-        setRefundDetails({
-          title: 'งานทดสอบ',
-          user: {
-            firstname: 'ชื่อ',
-            middlename: 'ชื่อกลาง',
-            lastname: 'นามสกุล',
-          },
-        })
+  const handleFetchRefundDetails = useCallback(async () => {
+    try {
+      const { data } = await apiClient.get(
+        `/refunds/jobs/${jobId}/actors/${actorId}`,
+      )
+
+      setRefundDetails(data)
+    } catch (error) {
+      const errorRes = error as AxiosError
+      if (errorRes.response?.status === 400) {
+        router.replace(`/job/${jobId}/actor`)
         return
       }
-      try {
-        const { data } = await apiClient.get(
-          `/refunds/jobs/${jobId}/actors/${actorId}`,
-        )
-
-        setRefundDetails(data)
-      } catch (error) {
-        const errorRes = error as AxiosError
-        if (errorRes.response?.status === 400) {
-          router.replace(`/job/${jobId}/actor`)
-          return
-        }
-        handleError(error)
-      }
-    },
-    [actorId, jobId, router, handleError],
-  )
+      handleError(error)
+    }
+  }, [actorId, jobId, router, handleError])
 
   useEffect(() => {
-    handleFetchRefundDetails(true)
+    handleFetchRefundDetails()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -104,7 +86,7 @@ const useRefundForm = (jobId: number, actorId: number) => {
     control,
     refundDetails,
     isModalOpen,
-    handleSubmit: handleSubmit((data) => handleSuccess(data, true)),
+    handleSubmit: handleSubmit(handleSuccess),
     handleUploadFile,
   }
 }

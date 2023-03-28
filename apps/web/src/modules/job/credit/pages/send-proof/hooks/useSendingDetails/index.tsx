@@ -18,27 +18,14 @@ const useSendingDetails = (jobId: number) => {
 
   const { handleError } = useErrorHandler()
 
-  const handleFetchDetails = useCallback(
-    async (isFetch: boolean) => {
-      setJob({
-        title: 'hello world',
-        jobId: 1,
-        amount: 50000,
-        bankName: 'Kasikorn Bank',
-        bankAccount: '1234567890',
-      })
-
-      if (!isFetch) return
-
-      try {
-        const res = await apiClient.get(`credits/jobs/${jobId}`)
-        setJob(res.data)
-      } catch (err) {
-        handleError(err)
-      }
-    },
-    [jobId, handleError],
-  )
+  const handleFetchDetails = useCallback(async () => {
+    try {
+      const res = await apiClient.get(`credits/jobs/${jobId}`)
+      setJob(res.data)
+    } catch (err) {
+      handleError(err)
+    }
+  }, [jobId, handleError])
 
   const handleUploadFile = (file: File) => {
     setError('')
@@ -50,16 +37,10 @@ const useSendingDetails = (jobId: number) => {
     setUploadedFile({ file, fileUrl: URL.createObjectURL(file) })
   }
 
-  const handleSubmit = (isFetch: boolean) => async (ev: FormEvent) => {
+  const handleSubmit = async (ev: FormEvent) => {
     ev.preventDefault()
     if (!uploadedFile.file) {
       setError('กรุณาอัปโหลดหลักฐานการโอนเงิน')
-      return
-    }
-
-    // This will be removed after connecting to api
-    if (!isFetch) {
-      openSuccessModal()
       return
     }
 
@@ -75,7 +56,7 @@ const useSendingDetails = (jobId: number) => {
   }
 
   useEffect(() => {
-    handleFetchDetails(false)
+    handleFetchDetails()
   }, [handleFetchDetails])
 
   return {

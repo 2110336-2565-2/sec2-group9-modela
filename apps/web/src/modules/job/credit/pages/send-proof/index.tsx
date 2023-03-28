@@ -25,7 +25,7 @@ const SendProofOfTransactionPage = () => {
 
   return (
     <>
-      <SendProofContainer onSubmit={handleSubmit(false)}>
+      <SendProofContainer onSubmit={handleSubmit}>
         <TitleContainer>
           <FormController type="title" label="ส่งหลักฐานธุรกรรม" />
           <FormController type="divider" />
