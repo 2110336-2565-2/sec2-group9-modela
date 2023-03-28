@@ -2,7 +2,7 @@ import { NotificationType, UserType } from '@modela/dtos'
 import { Link, Typography } from '@mui/material'
 import React from 'react'
 
-import { actorBodyMap, castingBodyMap } from './constants'
+import { ACTOR_BODY_MAP, CASTING_BODY_MAP } from './constants'
 import { BodyContainer } from './styled'
 import { BodyProps } from './types'
 
@@ -22,12 +22,12 @@ const NotiCardBody = (props: BodyProps) => {
     <BodyContainer>
       <Typography variant="subtitle2" sx={{ color: 'rgba(0, 0, 0, 0.6)' }}>
         {userType === UserType.ACTOR
-          ? actorBodyMap[type]
-          : castingBodyMap[type]}
+          ? ACTOR_BODY_MAP[type]
+          : CASTING_BODY_MAP[type]}
         {userType === UserType.CASTING &&
         (type === NotificationType.ACCEPT_OFFER ||
           type === NotificationType.REJECT_OFFER) ? (
-          <Link href={'/profile/' + actorId} underline="none">
+          <Link href={`/profile/${actorId}`} underline="none">
             {firstName + ' '}
             {middleName + ' '}
             {lastName}
@@ -36,7 +36,7 @@ const NotiCardBody = (props: BodyProps) => {
           type === NotificationType.APPROVE_REFUND ? (
           reason
         ) : (
-          <Link href={'/job/' + jobId} underline="none">
+          <Link href={`/job/${jobId}`} underline="none">
             {title}
           </Link>
         )}

@@ -16,7 +16,7 @@ const NotiCardFooter = (props: FooterProps) => {
     appStatus,
   } = props
   return (
-    <FooterContainer key={jobId}>
+    <FooterContainer>
       {appStatus === ApplicationStatus.OFFER_ACCEPTED ||
       appStatus === ApplicationStatus.OFFER_REJECTED ? (
         <Typography variant="subtitle2" sx={{ color: 'rgba(0, 0, 0, 0.6)' }}>

@@ -28,7 +28,7 @@ const useModalData = () => {
 
   const handleAcceptModalSubmit = useCallback(async () => {
     try {
-      await apiClient.put<string>(`/jobs/` + focusId + '/offer/accept')
+      await apiClient.put<string>(`/jobs/${focusId}/offer/accept`)
     } catch (err) {
       handleError(err)
     }
@@ -45,7 +45,7 @@ const useModalData = () => {
 
   const handleRejectModalSubmit = useCallback(async () => {
     try {
-      await apiClient.put<string>(`/jobs/` + focusId + '/offer/reject')
+      await apiClient.put<string>(`/jobs/${focusId}/offer/reject`)
     } catch (err) {
       handleError(err)
     }

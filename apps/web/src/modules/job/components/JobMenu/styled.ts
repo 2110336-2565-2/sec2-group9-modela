@@ -24,11 +24,11 @@ export const SummaryContainer = styled('div')`
 `
 
 export const StatusButton = styled(Button)`
-  border-radius: '12px';
-  width: '100%';
-  font-size: '16px';
+  border-radius: 12px;
+  width: 100%;
+  font-size: 16px;
   ${(props) => props.theme.breakpoints.down('lg')} {
-    width: '50%';
+    width: 50%;
     margin: 10px 30px 0 30px;
   }
 `

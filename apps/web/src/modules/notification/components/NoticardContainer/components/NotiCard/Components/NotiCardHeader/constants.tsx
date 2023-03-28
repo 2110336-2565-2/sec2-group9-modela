@@ -6,7 +6,7 @@ import {
   Close,
   MoneyOffCsred,
 } from '@mui/icons-material'
-export const actorIconMap = {
+export const ACTOR_ICON_MAP = {
   [NotificationType.REJECT_APPLICATION]: <Close sx={{ fontSize: '40px' }} />,
   [NotificationType.RECEIVE_OFFER]: <Check sx={{ fontSize: '40px' }} />,
   [NotificationType.CANCEL_JOB]: <Block sx={{ fontSize: '40px' }} />,
@@ -18,7 +18,7 @@ export const actorIconMap = {
   [NotificationType.REJECT_OFFER]: <></>,
 }
 
-export const castingIconMap = {
+export const CASTING_ICON_MAP = {
   [NotificationType.ACCEPT_OFFER]: <Check sx={{ fontSize: '40px' }} />,
   [NotificationType.REJECT_OFFER]: <Close sx={{ fontSize: '40px' }} />,
   [NotificationType.CANCEL_JOB]: <Block sx={{ fontSize: '40px' }} />,
@@ -28,7 +28,7 @@ export const castingIconMap = {
   [NotificationType.REJECT_APPLICATION]: <></>,
 }
 
-export const actorHeaderMap = {
+export const ACTOR_HEADER_MAP = {
   [NotificationType.REJECT_APPLICATION]: 'ถูกปฏิเสธ: ',
   [NotificationType.RECEIVE_OFFER]: 'ได้รับข้อเสนองาน: ',
   [NotificationType.CANCEL_JOB]: 'งานถูกยกเลิก: ',
@@ -38,7 +38,7 @@ export const actorHeaderMap = {
   [NotificationType.REJECT_OFFER]: '',
 }
 
-export const castingHeaderMap = {
+export const CASTING_HEADER_MAP = {
   [NotificationType.ACCEPT_OFFER]: 'นักแสดงรับข้อเสนองาน: ',
   [NotificationType.REJECT_OFFER]: 'นักแสดงปฏิเสธข้อเสนองาน: ',
   [NotificationType.CANCEL_JOB]: 'งานถูกยกเลิก: ',

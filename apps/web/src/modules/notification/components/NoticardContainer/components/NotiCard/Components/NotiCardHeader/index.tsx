@@ -4,10 +4,10 @@ import { formatDate, formatTime } from 'common/utils/formatter'
 import React from 'react'
 
 import {
-  actorHeaderMap,
-  actorIconMap,
-  castingHeaderMap,
-  castingIconMap,
+  ACTOR_HEADER_MAP,
+  ACTOR_ICON_MAP,
+  CASTING_HEADER_MAP,
+  CASTING_ICON_MAP,
 } from './constants'
 import { HeaderContainer, IconContainer } from './styled'
 import { HeaderProps } from './types'
@@ -28,14 +28,14 @@ const NotiCardHeader = (props: HeaderProps) => {
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <IconContainer>
           {userType === UserType.ACTOR
-            ? actorIconMap[type]
-            : castingIconMap[type]}
+            ? ACTOR_ICON_MAP[type]
+            : CASTING_ICON_MAP[type]}
         </IconContainer>
         <div>
           <Typography variant="h6" sx={{ wordBreak: 'break-word' }}>
             {userType === UserType.ACTOR
-              ? actorHeaderMap[type]
-              : castingHeaderMap[type]}
+              ? ACTOR_HEADER_MAP[type]
+              : CASTING_HEADER_MAP[type]}
             {userType === UserType.CASTING &&
             (type === NotificationType.APPROVE_REFUND ||
               type === NotificationType.REJECT_REFUND)
