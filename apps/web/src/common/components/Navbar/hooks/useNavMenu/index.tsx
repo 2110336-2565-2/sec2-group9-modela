@@ -42,6 +42,12 @@ const useNavMenu = (isMobile: boolean) => {
         castingOnly: true,
       },
       {
+        label: 'ส่งหลักฐานธุรกรรม',
+        href: '/unpaid',
+        focusKey: 'unpaid',
+        castingOnly: true,
+      },
+      {
         label: 'งานของฉัน',
         href: '/job/applied',
         icon: <ArticleOutlined />,

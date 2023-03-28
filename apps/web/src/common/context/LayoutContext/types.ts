@@ -23,4 +23,5 @@ export type NavbarFocus =
   | 'createJob'
   | 'transaction'
   | 'account'
+  | 'unpaid'
   | null

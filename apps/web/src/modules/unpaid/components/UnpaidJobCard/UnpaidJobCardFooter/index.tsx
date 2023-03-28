@@ -10,7 +10,7 @@ import { FooterRow, SameDiv } from './styled'
 import { FooterProps } from './types'
 
 const UnpaidJobCardFooter = (prop: FooterProps) => {
-  const { actorCount, wage, status, dueDate, gender } = prop
+  const { actorCount, wage, status, dueDate, gender, jobId } = prop
 
   const genderThai = genderTranslationMap[gender]
 
@@ -70,7 +70,11 @@ const UnpaidJobCardFooter = (prop: FooterProps) => {
           />
           <Typography variant="subtitle1">{formatDate(dueDate)}</Typography>
         </SameDiv>
-        <Button color="primary" sx={{ cursor: 'pointer', marginLeft: 'auto' }}>
+        <Button
+          href={'/job/' + jobId + '/send-proof'}
+          color="success"
+          sx={{ cursor: 'pointer', marginLeft: 'auto' }}
+        >
           ส่งหลักฐานการโอนเงิน
         </Button>
       </FooterRow>
