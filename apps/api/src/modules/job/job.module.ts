@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common'
+import { forwardRef, Module } from '@nestjs/common'
 import { PrismaModule } from 'src/database/prisma.module'
 
 import { RefundModule } from '../refund/refund.module'
@@ -7,7 +7,7 @@ import { JobRepository } from './job.repository'
 import { JobService } from './job.service'
 
 @Module({
-  imports: [PrismaModule, RefundModule],
+  imports: [PrismaModule, forwardRef(() => RefundModule)],
   controllers: [JobController],
   providers: [JobService, JobRepository],
   exports: [JobRepository],

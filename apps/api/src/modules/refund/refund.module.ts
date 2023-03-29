@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common'
+import { forwardRef, Module } from '@nestjs/common'
 import { PrismaModule } from 'src/database/prisma.module'
 
 import { ApplicationModule } from '../job/application/application.module'
@@ -13,7 +13,7 @@ import { RefundService } from './refund.service'
   imports: [
     PrismaModule,
     ApplicationModule,
-    JobModule,
+    forwardRef(() => JobModule),
     NotificationModule,
     UserModule,
   ],
