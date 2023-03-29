@@ -53,7 +53,10 @@ const useRefundForm = (jobId: number, actorId: number) => {
         })
         openModal()
       } catch (error) {
-        handleError(error)
+        handleError(error, {
+          400: 'งานไม่ได้อยู่สถานะคัดเลือกเสร็จสิ้น',
+          409: 'ท่านได้ส่งคำขอคืนเงินแล้ว',
+        })
       }
     },
     [actorId, file, handleError, jobId, openModal],
@@ -68,11 +71,10 @@ const useRefundForm = (jobId: number, actorId: number) => {
       setRefundDetails(data)
     } catch (error) {
       const errorRes = error as AxiosError
+      handleError(error, { 400: 'ไม่สามารถขอเงินคืนได้ ณ ขณะนี้' })
       if (errorRes.response?.status === 400) {
         router.replace(`/job/${jobId}/actor`)
-        return
       }
-      handleError(error)
     }
   }, [actorId, jobId, router, handleError])
 
