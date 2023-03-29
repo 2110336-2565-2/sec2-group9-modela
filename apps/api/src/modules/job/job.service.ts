@@ -21,11 +21,15 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common/exceptions'
 
+import { RefundRepository } from '../refund/refund.repository'
 import { JobRepository } from './job.repository'
 
 @Injectable()
 export class JobService {
-  constructor(private repository: JobRepository) {}
+  constructor(
+    private repository: JobRepository,
+    private refundRepository: RefundRepository,
+  ) {}
 
   private validateJobDto(createJobDto: CreateJobDto) {
     // if minAge is greater than maxAge, throw error
@@ -421,6 +425,9 @@ export class JobService {
       throw new ForbiddenException(
         "You can't update status of this job to this status",
       )
+    if (updateJobStatus === JobStatus.FINISHED) {
+      this.refundRepository.removeRefundsFromJob(id)
+    }
     return this.repository.updateJobStatus(id, updateJobStatus)
   }
 
