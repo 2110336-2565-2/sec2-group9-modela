@@ -49,11 +49,11 @@ const useSendingDetails = (jobId: number) => {
     try {
       const signedUrl = await uploadFileToS3(uploadedFile.file)
       await apiClient.post(`/credits/jobs/${jobId}`, {
-        fileUrl: signedUrl,
+        proofUrl: signedUrl,
       })
       openSuccessModal()
     } catch (err) {
-      handleError(err)
+      handleError(err, { 409: 'ท่านได้ส่งหลักฐานการชำระเงินแล้ว' })
     }
   }
 
