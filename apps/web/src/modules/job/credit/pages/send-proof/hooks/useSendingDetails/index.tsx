@@ -8,7 +8,6 @@ import { FormEvent, useCallback, useEffect, useState } from 'react'
 import { IUploadedFileDetails } from './types'
 
 const useSendingDetails = (jobId: number) => {
-  // This will change to strict type later
   const [job, setJob] = useState<GetTransactionDetailDto | null>(null)
   const [uploadedFile, setUploadedFile] = useState<IUploadedFileDetails>({
     file: null,
