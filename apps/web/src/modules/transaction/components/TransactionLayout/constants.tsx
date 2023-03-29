@@ -16,6 +16,6 @@ export const MENU_ITEM = [
   {
     label: 'ขอเงินคืน',
     icon: <Image src={RefundIcon} alt="refund" />,
-    href: '',
+    href: '/transaction/refund',
   },
 ]
