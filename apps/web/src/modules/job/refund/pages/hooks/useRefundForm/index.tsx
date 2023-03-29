@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { RequestRefundInfoDto } from '@modela/dtos'
 import { AxiosError } from 'axios'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import useSwitch from 'common/hooks/useSwitch'
@@ -11,7 +12,7 @@ import { useForm } from 'react-hook-form'
 import { IRefundFormSchemaType, refundFormSchema } from './schema'
 
 const useRefundForm = (jobId: number, actorId: number) => {
-  const [refundDetails, setRefundDetails] = useState<any>()
+  const [refundDetails, setRefundDetails] = useState<RequestRefundInfoDto>()
   const [file, setFile] = useState<File | null>(null)
 
   const { control, setError, setValue, handleSubmit } =
@@ -62,7 +63,7 @@ const useRefundForm = (jobId: number, actorId: number) => {
 
   const handleFetchRefundDetails = useCallback(async () => {
     try {
-      const { data } = await apiClient.get(
+      const { data } = await apiClient.get<RequestRefundInfoDto>(
         `/refunds/jobs/${jobId}/actors/${actorId}`,
       )
 
