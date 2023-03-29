@@ -15,6 +15,23 @@ const NotiCardFooter = (props: FooterProps) => {
     jobTitle,
     appStatus,
   } = props
+  const setFocustedNotiHandle = () => {
+    if (jobTitle) {
+      setTitle(jobTitle)
+    }
+    if (jobId) {
+      setFocusId(jobId)
+    }
+  }
+  const rejectOnclikcHandle = () => {
+    setFocustedNotiHandle()
+    openRejectModal()
+  }
+  const acceptOnclickHandle = () => {
+    setFocustedNotiHandle()
+    openAcceptModal()
+  }
+
   return (
     <FooterContainer>
       {appStatus === ApplicationStatus.OFFER_ACCEPTED ||
@@ -34,13 +51,7 @@ const NotiCardFooter = (props: FooterProps) => {
               width: 'fit-content',
             }}
             onClick={() => {
-              if (jobTitle) {
-                setTitle(jobTitle)
-              }
-              if (jobId) {
-                setFocusId(jobId)
-              }
-              openRejectModal()
+              rejectOnclikcHandle()
             }}
           >
             ปฏิเสธข้อเสนอ
@@ -53,14 +64,7 @@ const NotiCardFooter = (props: FooterProps) => {
               width: 'fit-content',
             }}
             onClick={() => {
-              if (jobTitle) {
-                setTitle(jobTitle)
-              }
-              if (jobId) {
-                console.log('JobId : ', jobId)
-                setFocusId(jobId)
-              }
-              openAcceptModal()
+              acceptOnclickHandle()
             }}
           >
             ยอมรับข้อเสนอ
