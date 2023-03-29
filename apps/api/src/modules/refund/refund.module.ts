@@ -12,7 +12,7 @@ import { RefundService } from './refund.service'
 @Module({
   imports: [
     PrismaModule,
-    ApplicationModule,
+    forwardRef(() => ApplicationModule),
     forwardRef(() => JobModule),
     NotificationModule,
     UserModule,
