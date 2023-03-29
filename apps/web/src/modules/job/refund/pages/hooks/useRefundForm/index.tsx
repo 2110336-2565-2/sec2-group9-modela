@@ -48,10 +48,8 @@ const useRefundForm = (jobId: number, actorId: number) => {
         const fileUrl = await uploadFileToS3(file!)
 
         await apiClient.post(`/refunds/jobs/${jobId}/actors/${actorId}`, {
-          data: {
-            reason: data.reason,
-            proof: fileUrl,
-          },
+          reason: data.reason,
+          proofUrl: fileUrl,
         })
         openModal()
       } catch (error) {
