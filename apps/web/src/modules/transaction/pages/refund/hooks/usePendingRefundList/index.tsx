@@ -40,7 +40,7 @@ const usePendingRefundList = () => {
       const url = `/refunds/jobs/${jobId}/actors/${actorId}/${modalType}`
       await apiClient.put(url)
       setPendingRefunds((prev) =>
-        prev.filter((tx) => tx.jobId !== jobId && tx.actor.actorId !== actorId),
+        prev.filter((tx) => tx.jobId !== jobId || tx.actor.actorId !== actorId),
       )
     } catch (err) {
       handleError(err)
