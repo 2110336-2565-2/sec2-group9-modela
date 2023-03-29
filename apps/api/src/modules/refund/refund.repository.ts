@@ -125,4 +125,14 @@ export class RefundRepository {
     })
     return deletedRefund
   }
+
+  async removeRefundsFromJob(jobId: number) {
+    await this.prisma.refund.deleteMany({
+      where: {
+        Application: {
+          jobId,
+        },
+      },
+    })
+  }
 }
