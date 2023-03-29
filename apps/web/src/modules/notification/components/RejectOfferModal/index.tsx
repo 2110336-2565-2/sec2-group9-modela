@@ -1,11 +1,6 @@
-import { Divider, Typography } from '@mui/material'
+import { Button, Divider, Typography } from '@mui/material'
 
-import {
-  CancelButton,
-  ModalContentContainer,
-  RootModalContainer,
-  SubmitButton,
-} from './styled'
+import { ModalContentContainer, RootModalContainer } from './styled'
 import { IOfferModalProps } from './types'
 
 const StatusChangeModal = (props: IOfferModalProps) => {
@@ -22,12 +17,12 @@ const StatusChangeModal = (props: IOfferModalProps) => {
         </Typography>
         <Divider variant="fullWidth" />
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <CancelButton variant="contained" onClick={handleClose}>
+          <Button variant="contained" color="error" onClick={handleClose}>
             ยกเลิก
-          </CancelButton>
-          <SubmitButton variant="contained" onClick={handleSubmit}>
+          </Button>
+          <Button variant="contained" color="success" onClick={handleSubmit}>
             ยืนยัน
-          </SubmitButton>
+          </Button>
         </div>
       </ModalContentContainer>
     </RootModalContainer>
