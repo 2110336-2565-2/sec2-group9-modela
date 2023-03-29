@@ -426,9 +426,9 @@ export class JobService {
         "You can't update status of this job to this status",
       )
     if (updateJobStatus === JobStatus.FINISHED) {
-      this.refundRepository.removeRefundsFromJob(id)
+      await this.refundRepository.removeRefundsFromJob(id)
     }
-    return this.repository.updateJobStatus(id, updateJobStatus)
+    return await this.repository.updateJobStatus(id, updateJobStatus)
   }
 
   async getJobSummaryById(
