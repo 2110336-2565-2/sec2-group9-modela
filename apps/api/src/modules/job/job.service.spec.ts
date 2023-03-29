@@ -12,6 +12,7 @@ import {
 import { Test, TestingModule } from '@nestjs/testing'
 import { PrismaService } from 'src/database/prisma.service'
 
+import { RefundRepository } from '../refund/refund.repository'
 import { JobRepository } from './job.repository'
 import { JobService } from './job.service'
 
@@ -64,7 +65,7 @@ describe('JobService', () => {
   beforeEach(async () => {
     //test module
     const module: TestingModule = await Test.createTestingModule({
-      providers: [JobService, JobRepository, PrismaService],
+      providers: [JobService, JobRepository, PrismaService, RefundRepository],
     }).compile()
 
     service = module.get<JobService>(JobService)
