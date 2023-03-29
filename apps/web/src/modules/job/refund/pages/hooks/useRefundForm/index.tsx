@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { RequestRefundInfoDto } from '@modela/dtos'
 import { AxiosError } from 'axios'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import useSwitch from 'common/hooks/useSwitch'
@@ -11,7 +12,7 @@ import { useForm } from 'react-hook-form'
 import { IRefundFormSchemaType, refundFormSchema } from './schema'
 
 const useRefundForm = (jobId: number, actorId: number) => {
-  const [refundDetails, setRefundDetails] = useState<any>()
+  const [refundDetails, setRefundDetails] = useState<RequestRefundInfoDto>()
   const [file, setFile] = useState<File | null>(null)
 
   const { control, setError, setValue, handleSubmit } =
@@ -42,61 +43,43 @@ const useRefundForm = (jobId: number, actorId: number) => {
   )
 
   const handleSuccess = useCallback(
-    async (data: IRefundFormSchemaType, isDev: boolean) => {
-      if (isDev) {
-        openModal()
-        return
-      }
+    async (data: IRefundFormSchemaType) => {
       try {
         const fileUrl = await uploadFileToS3(file!)
 
-        await apiClient.put(`/refunds/jobs/${jobId}/actors/${actorId}`, {
-          data: {
-            reason: data.reason,
-            proof: fileUrl,
-          },
+        await apiClient.post(`/refunds/jobs/${jobId}/actors/${actorId}`, {
+          reason: data.reason,
+          proofUrl: fileUrl,
         })
         openModal()
       } catch (error) {
-        handleError(error)
+        handleError(error, {
+          400: 'งานไม่ได้อยู่สถานะคัดเลือกเสร็จสิ้น',
+          409: 'ท่านได้ส่งคำขอคืนเงินแล้ว',
+        })
       }
     },
     [actorId, file, handleError, jobId, openModal],
   )
 
-  const handleFetchRefundDetails = useCallback(
-    async (isDev: boolean) => {
-      if (isDev) {
-        setRefundDetails({
-          title: 'งานทดสอบ',
-          user: {
-            firstname: 'ชื่อ',
-            middlename: 'ชื่อกลาง',
-            lastname: 'นามสกุล',
-          },
-        })
-        return
-      }
-      try {
-        const { data } = await apiClient.get(
-          `/refunds/jobs/${jobId}/actors/${actorId}`,
-        )
+  const handleFetchRefundDetails = useCallback(async () => {
+    try {
+      const { data } = await apiClient.get<RequestRefundInfoDto>(
+        `/refunds/jobs/${jobId}/actors/${actorId}`,
+      )
 
-        setRefundDetails(data)
-      } catch (error) {
-        const errorRes = error as AxiosError
-        if (errorRes.response?.status === 400) {
-          router.replace(`/job/${jobId}/actor`)
-          return
-        }
-        handleError(error)
+      setRefundDetails(data)
+    } catch (error) {
+      const errorRes = error as AxiosError
+      handleError(error, { 400: 'ไม่สามารถขอเงินคืนได้ ณ ขณะนี้' })
+      if (errorRes.response?.status === 400) {
+        router.replace(`/job/${jobId}/actor`)
       }
-    },
-    [actorId, jobId, router, handleError],
-  )
+    }
+  }, [actorId, jobId, router, handleError])
 
   useEffect(() => {
-    handleFetchRefundDetails(true)
+    handleFetchRefundDetails()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -104,7 +87,7 @@ const useRefundForm = (jobId: number, actorId: number) => {
     control,
     refundDetails,
     isModalOpen,
-    handleSubmit: handleSubmit((data) => handleSuccess(data, true)),
+    handleSubmit: handleSubmit(handleSuccess),
     handleUploadFile,
   }
 }

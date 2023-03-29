@@ -1,14 +1,16 @@
+import { GetTransactionDetailDto } from '@modela/dtos'
+import { AxiosError } from 'axios'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import useSwitch from 'common/hooks/useSwitch'
 import { apiClient } from 'common/utils/api'
 import { uploadFileToS3 } from 'common/utils/file'
+import { useRouter } from 'next/router'
 import { FormEvent, useCallback, useEffect, useState } from 'react'
 
 import { IUploadedFileDetails } from './types'
 
 const useSendingDetails = (jobId: number) => {
-  // This will change to strict type later
-  const [job, setJob] = useState<any>({})
+  const [job, setJob] = useState<GetTransactionDetailDto | null>(null)
   const [uploadedFile, setUploadedFile] = useState<IUploadedFileDetails>({
     file: null,
     fileUrl: '',
@@ -17,28 +19,22 @@ const useSendingDetails = (jobId: number) => {
   const { isOpen: isModalOpen, open: openSuccessModal } = useSwitch(false)
 
   const { handleError } = useErrorHandler()
+  const router = useRouter()
 
-  const handleFetchDetails = useCallback(
-    async (isFetch: boolean) => {
-      setJob({
-        title: 'hello world',
-        jobId: 1,
-        amount: 50000,
-        bankName: 'Kasikorn Bank',
-        bankAccount: '1234567890',
-      })
-
-      if (!isFetch) return
-
-      try {
-        const res = await apiClient.get(`credits/jobs/${jobId}`)
-        setJob(res.data)
-      } catch (err) {
-        handleError(err)
+  const handleFetchDetails = useCallback(async () => {
+    try {
+      const res = await apiClient.get<GetTransactionDetailDto>(
+        `credits/jobs/${jobId}`,
+      )
+      setJob(res.data)
+    } catch (err) {
+      const errorRes = err as AxiosError
+      handleError(err, { 400: 'ไม่สามารถส่งหลักฐานได้ใน ณ ขณะนี้' })
+      if (errorRes.response?.status === 400) {
+        router.replace(`/job/${jobId}/actor`)
       }
-    },
-    [jobId, handleError],
-  )
+    }
+  }, [jobId, handleError, router])
 
   const handleUploadFile = (file: File) => {
     setError('')
@@ -50,32 +46,28 @@ const useSendingDetails = (jobId: number) => {
     setUploadedFile({ file, fileUrl: URL.createObjectURL(file) })
   }
 
-  const handleSubmit = (isFetch: boolean) => async (ev: FormEvent) => {
+  const handleSubmit = async (ev: FormEvent) => {
     ev.preventDefault()
     if (!uploadedFile.file) {
       setError('กรุณาอัปโหลดหลักฐานการโอนเงิน')
       return
     }
 
-    // This will be removed after connecting to api
-    if (!isFetch) {
-      openSuccessModal()
-      return
-    }
-
     try {
       const signedUrl = await uploadFileToS3(uploadedFile.file)
       await apiClient.post(`/credits/jobs/${jobId}`, {
-        fileUrl: signedUrl,
+        proofUrl: signedUrl,
       })
       openSuccessModal()
     } catch (err) {
-      handleError(err)
+      handleError(err, {
+        400: 'ท่านได้ส่งหลักฐานการชำระเงินแล้วหรือการคัดเลือกยังไม่สิ้นสุด',
+      })
     }
   }
 
   useEffect(() => {
-    handleFetchDetails(false)
+    handleFetchDetails()
   }, [handleFetchDetails])
 
   return {

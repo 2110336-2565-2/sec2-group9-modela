@@ -55,9 +55,9 @@ const RequestRefundPage = () => {
                   href={`/profile/${actorId}`}
                   style={{ textDecoration: 'none', color: 'inherit' }}
                 >
-                  {`${refundDetails?.user.firstname} ${
-                    refundDetails?.user?.middlename || ''
-                  } ${refundDetails?.user.lastname}`}
+                  {`${refundDetails?.user.firstName} ${
+                    refundDetails?.user?.middleName || ''
+                  } ${refundDetails?.user.lastName}`}
                 </Link>
               </Typography>
             </Typography>
