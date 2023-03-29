@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { GetNotificationDto, NotificationType } from '@modela/dtos'
+import { Theme, useMediaQuery } from '@mui/material'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
+import useSwitch from 'common/hooks/useSwitch'
 import { apiClient } from 'common/utils/api'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
@@ -14,6 +16,8 @@ const useNotiListData = () => {
   const [page, setPage] = useState(0)
   const [hasMore, setHasMore] = useState(true)
   const pageControl = useRef(1)
+  const isDesktop = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
+  const { isOpen, open, close } = useSwitch()
 
   const filterData = useCallback(async (state: INotiFilter) => {
     let newType: NotificationType[] = []
@@ -78,7 +82,9 @@ const useNotiListData = () => {
   }, [page, search])
 
   useEffect(() => {
-    filterData(state)
+    if (!isOpen || isDesktop) {
+      filterData(state)
+    }
   }, [
     state.acceptCheck,
     state.appRefundCheck,
@@ -95,6 +101,10 @@ const useNotiListData = () => {
     noti,
     filterData,
     hasMore,
+    open,
+    close,
+    isOpen,
+    isDesktop,
   }
 }
 

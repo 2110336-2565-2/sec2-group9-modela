@@ -8,6 +8,7 @@ import InfiniteScroll from 'react-infinite-scroller'
 
 import AcceptOfferModal from '../components/AcceptOfferModal'
 import FilterContainer from '../components/FilterContainer'
+import FilterMobileContainer from '../components/FilterMobileContainer'
 import NotiCardContainer from '../components/NoticardContainer'
 import RejectOfferModal from '../components/RejectOfferModal'
 import useModalData from './hooks/useModalData'
@@ -16,8 +17,18 @@ import { FilterBoxContainer, NotiContainer, PlaceFill } from './styled'
 
 const NotificationPage = () => {
   const { user } = useUser()
-  const { noti, state, setState, filterData, fetchData, hasMore } =
-    useNotiListData()
+  const {
+    noti,
+    state,
+    setState,
+    filterData,
+    fetchData,
+    hasMore,
+    open,
+    close,
+    isOpen,
+    isDesktop,
+  } = useNotiListData()
   const {
     isAcceptModalOpen,
     isRejectModalOpen,
@@ -33,8 +44,8 @@ const NotificationPage = () => {
   } = useModalData()
   useNavbarSearch(
     useCallback(() => {
-      console.log('TEST')
-    }, []),
+      open()
+    }, [open]),
   )
   return (
     <div
@@ -47,7 +58,11 @@ const NotificationPage = () => {
       }}
     >
       <PlaceFill />
-      <NotiContainer>
+      <NotiContainer
+        sx={{
+          display: isOpen && !isDesktop ? 'none' : 'flex',
+        }}
+      >
         <InfiniteScroll
           loadMore={fetchData}
           hasMore={hasMore}
@@ -85,12 +100,6 @@ const NotificationPage = () => {
           filterData={filterData}
         />
       </FilterBoxContainer>
-      {/*<StatusChangeModal
-        isOpen={isModalOpen}
-        status={status!}
-        handleClose={handleCloseModal}
-        handleSubmit={handleStatusChange}
-        />*/}
       <AcceptOfferModal
         isOpen={isAcceptModalOpen}
         handleClose={handleAcceptCloseModal}
@@ -103,6 +112,16 @@ const NotificationPage = () => {
         handleSubmit={handleRejectModalSubmit}
         title={title}
       />
+      {isOpen && (
+        <FilterMobileContainer
+          state={state}
+          setState={setState}
+          isFilterShow={isOpen}
+          closeFilterPage={close}
+          filterData={filterData}
+          userType={user?.type}
+        />
+      )}
     </div>
   )
 }
