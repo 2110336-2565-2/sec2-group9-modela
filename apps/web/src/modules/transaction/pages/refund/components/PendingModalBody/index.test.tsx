@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react'
 
-describe('<ConfirmPendingModalBody />', () => {
+describe('<PendingModalBody />', () => {
   const handleCancel = jest.fn()
   const handleConfirm = jest.fn()
   const { default: PendingModalBody } = require('.') as typeof import('.')

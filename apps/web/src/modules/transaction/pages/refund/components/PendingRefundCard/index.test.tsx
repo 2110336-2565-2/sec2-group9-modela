@@ -3,7 +3,7 @@ import { mockAndSpy } from 'common/utils/testing'
 
 import { PendingRefundCardProps } from './types'
 
-describe('<PendingCastingCard />', () => {
+describe('<PendingRefundCard />', () => {
   const handleClickFinish = jest.fn()
   const handleClickReject = jest.fn()
 
