@@ -3,9 +3,9 @@ import { styled } from '@mui/material'
 export const HeaderRow = styled('div')`
   display: flex;
   width: 100%;
+  margin-bottom: 12px;
   gap: 12px;
   height: fit-content;
-  margin-bottom: 1rem;
   align-items: flex-start;
 `
 

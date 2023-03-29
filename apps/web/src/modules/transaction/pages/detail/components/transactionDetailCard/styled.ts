@@ -10,5 +10,5 @@ export const CardContainer = styled('div')`
   background-color: white;
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 12px;
-  padding: 12px;
+  padding: 12px 16px;
 `

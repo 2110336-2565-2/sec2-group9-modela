@@ -6,7 +6,7 @@ export const MENU_ITEM = [
   {
     label: 'ผู้กำกับโอนเงินเข้า',
     icon: <Input />,
-    href: '',
+    href: '/transaction/casting',
   },
   {
     label: 'โอนเงินให้นักแสดง',

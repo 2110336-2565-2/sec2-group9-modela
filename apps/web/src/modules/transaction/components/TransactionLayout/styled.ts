@@ -33,6 +33,7 @@ export const JobCardContainer = styled('div')`
     padding: 10px 15px;
   }
 `
+
 export const SideDiv = styled('div')`
   width: 17vw;
   ${({ theme }) => theme.breakpoints.down('lg')} {
