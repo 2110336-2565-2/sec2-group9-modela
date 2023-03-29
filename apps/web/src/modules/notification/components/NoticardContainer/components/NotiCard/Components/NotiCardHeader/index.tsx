@@ -23,6 +23,10 @@ const NotiCardHeader = (props: HeaderProps) => {
     middleName,
     lastName,
   } = props
+  const isCastingRefund =
+    userType === UserType.CASTING &&
+    (type === NotificationType.APPROVE_REFUND ||
+      type === NotificationType.REJECT_REFUND)
   return (
     <HeaderContainer>
       <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -36,18 +40,12 @@ const NotiCardHeader = (props: HeaderProps) => {
             {userType === UserType.ACTOR
               ? ACTOR_HEADER_MAP[type]
               : CASTING_HEADER_MAP[type]}
-            {userType === UserType.CASTING &&
-            (type === NotificationType.APPROVE_REFUND ||
-              type === NotificationType.REJECT_REFUND)
+            {isCastingRefund
               ? firstName + ' ' + middleName + ' ' + lastName
               : title}
           </Typography>
           <Typography variant="body1" fontWeight={400}>
-            {userType === UserType.CASTING &&
-            (type === NotificationType.APPROVE_REFUND ||
-              type === NotificationType.REJECT_REFUND)
-              ? ''
-              : companyName}
+            {isCastingRefund ? '' : companyName}
           </Typography>
         </div>
       </div>

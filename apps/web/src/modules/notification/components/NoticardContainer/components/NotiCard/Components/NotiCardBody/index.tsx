@@ -18,22 +18,25 @@ const NotiCardBody = (props: BodyProps) => {
     jobId,
     actorId,
   } = props
+  const isCastingOffer =
+    userType === UserType.CASTING &&
+    (type === NotificationType.ACCEPT_OFFER ||
+      type === NotificationType.REJECT_OFFER)
+  const isActorRefund =
+    userType === UserType.ACTOR && type === NotificationType.APPROVE_REFUND
   return (
     <BodyContainer>
       <Typography variant="subtitle2" sx={{ color: 'rgba(0, 0, 0, 0.6)' }}>
         {userType === UserType.ACTOR
           ? ACTOR_BODY_MAP[type]
           : CASTING_BODY_MAP[type]}
-        {userType === UserType.CASTING &&
-        (type === NotificationType.ACCEPT_OFFER ||
-          type === NotificationType.REJECT_OFFER) ? (
+        {isCastingOffer ? (
           <Link href={`/profile/${actorId}`} underline="none">
             {firstName + ' '}
             {middleName + ' '}
             {lastName}
           </Link>
-        ) : userType === UserType.ACTOR &&
-          type === NotificationType.APPROVE_REFUND ? (
+        ) : isActorRefund ? (
           reason
         ) : (
           <Link href={`/job/${jobId}`} underline="none">
