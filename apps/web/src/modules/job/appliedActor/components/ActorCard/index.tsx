@@ -39,7 +39,7 @@ const ActorCard = (props: ActorCardProps) => {
         {status === ApplicationStatus.PENDING && (
           <>
             <Divider sx={{ margin: '-8px 0' }} />
-            <ActorCardAction />
+            <ActorCardAction actorId={actorId} />
           </>
         )}
       </CardContainer>
