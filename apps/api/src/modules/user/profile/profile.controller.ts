@@ -54,7 +54,7 @@ export class ProfileController {
   @Get()
   @UseAuthGuard(UserType.CASTING, UserType.ACTOR)
   @ApiOperation({
-    summary: `get user's profile (only editable field for initail data in editing page)`,
+    summary: `get user's profile (only editable field for initial data in editing page)`,
   })
   @ApiOkResponse({ type: GetProfileForEditingDto })
   @ApiForbiddenResponse({ description: 'User is not an casting or actor' })
@@ -64,12 +64,15 @@ export class ProfileController {
   }
 
   @Get(':id')
-  @UseAuthGuard(UserType.CASTING, UserType.ACTOR)
+  @UseAuthGuard()
   @ApiOperation({
-    summary: `get user's profile `,
+    summary: `get user's profile`,
   })
   @ApiOkResponse({ type: GetProfileForViewingDto })
-  @ApiForbiddenResponse({ description: 'User is not an casting or actor' })
+  @ApiForbiddenResponse({
+    description:
+      'User is not owner or try to seeing another same user type profile',
+  })
   @ApiUnauthorizedResponse({ description: 'User is not login' })
   @ApiNotFoundResponse({ description: 'User not found' })
   getProfileById(@Param('id') id: number, @User() user: JwtDto) {

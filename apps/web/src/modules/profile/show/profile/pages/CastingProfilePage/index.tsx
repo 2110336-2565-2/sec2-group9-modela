@@ -1,34 +1,18 @@
-import { UserType } from '@modela/dtos'
-import { CircularProgress } from '@mui/material'
-import { useUser } from 'common/context/UserContext'
-import withGuard from 'common/hoc/withGuard'
 import CastingProfileInfo from 'modules/profile/show/components/CastingProfileInfo'
 import React from 'react'
 
-import useCastingProfile from './hooks/useCastingProfile'
 import { CardContainer, RootContainer } from './styled'
+import { CastingProfilePageProps } from './types'
 
-const CastingProfilePage = () => {
-  const { profile, isOpen, userId } = useCastingProfile()
-  const { user } = useUser()
+const CastingProfilePage = (props: CastingProfilePageProps) => {
+  const { profile, userId } = props
   return (
     <RootContainer>
       <CardContainer variant="outlined">
-        {isOpen ? (
-          <CircularProgress />
-        ) : (
-          <>
-            <CastingProfileInfo
-              isOwn={false}
-              {...user}
-              {...profile}
-              userId={parseInt(userId as string, 10)}
-            />
-          </>
-        )}
+        <CastingProfileInfo isOwn={false} {...profile} userId={userId} />
       </CardContainer>
     </RootContainer>
   )
 }
 
-export default withGuard(CastingProfilePage, 'verified', [UserType.ACTOR])
+export default CastingProfilePage

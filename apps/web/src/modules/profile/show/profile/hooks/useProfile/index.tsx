@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   GetActorProfileDto,
+  GetCastingProfileDto,
   GetProfileForViewingDto,
   UserType,
 } from '@modela/dtos'
@@ -10,10 +11,12 @@ import { apiClient } from 'common/utils/api/axiosInstance'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-const useActorProfile = () => {
+const useProfile = () => {
   const router = useRouter()
   const { userId } = router.query
-  const [profile, setProfile] = useState<GetActorProfileDto>()
+  const [profile, setProfile] = useState<
+    GetActorProfileDto | GetCastingProfileDto
+  >()
   const { isOpen, open, close } = useSwitch()
   const [type, setType] = useState<UserType>()
   const { handleError } = useErrorHandler()
@@ -37,13 +40,7 @@ const useActorProfile = () => {
     }
   }, [handleError, router.isReady])
 
-  useEffect(() => {
-    if (type === UserType.CASTING) {
-      router.replace('/404')
-    }
-  }, [type])
-
-  return { profile, isOpen, userId }
+  return { profile, isOpen, type, userId: userId || '' }
 }
 
-export default useActorProfile
+export default useProfile
