@@ -54,14 +54,14 @@ const HistoryPage = () => {
       {/* Place holder not implement in this sprint */}
       {user?.type === UserType.ACTOR && (
         <MenuBar
-          sx={{ width: '17vw' }}
+          sx={{ width: '20vw' }}
           menu={MENU_ITEM_ACTOR}
           focus="ประวัติการทำงาน"
         />
       )}
       {user?.type === UserType.CASTING && (
         <MenuBar
-          sx={{ width: '17vw' }}
+          sx={{ width: '20vw' }}
           menu={MENU_ITEM_CASTING}
           focus="ประวัติการทำงาน"
         />

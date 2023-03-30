@@ -12,7 +12,7 @@ const useJobData = () => {
   const router = useRouter()
   const { user } = useUser()
   const { userId } = router.query
-  let userIdCur = !userId ? user?.userId : userId
+  const userIdCur = !userId ? user?.userId : userId
 
   const fetchData = useCallback(async () => {
     try {

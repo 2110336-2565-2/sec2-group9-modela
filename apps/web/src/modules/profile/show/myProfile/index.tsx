@@ -34,14 +34,14 @@ const MyProfilePage = () => {
     <RootContainer>
       {user?.type === UserType.ACTOR && (
         <MenuBar
-          sx={{ width: '17vw' }}
+          sx={{ width: '20vw' }}
           menu={MENU_ITEM_ACTOR}
           focus="โปรไฟล์"
         />
       )}
       {user?.type === UserType.CASTING && (
         <MenuBar
-          sx={{ width: '17vw' }}
+          sx={{ width: '20vw' }}
           menu={MENU_ITEM_CASTING}
           focus="โปรไฟล์"
         />
