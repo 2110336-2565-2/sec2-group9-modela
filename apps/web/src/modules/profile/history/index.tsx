@@ -87,7 +87,13 @@ const HistoryPage = () => {
               <CircularProgress color="primary" />
             </div>
           )}
-          {job && <JobCardContainer jobs={job} maxPage={job.length} />}
+          {job && (
+            <JobCardContainer
+              isHistory={true}
+              jobs={job}
+              maxPage={job.length}
+            />
+          )}
         </div>
       </JobContainer>
       <PlaceFill />

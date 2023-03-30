@@ -11,4 +11,5 @@ export interface HeaderProps {
   castingName: string
   isReport?: Boolean
   appliedStatus?: ApplicationStatus
+  isHistory?: Boolean
 }
