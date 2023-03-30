@@ -27,8 +27,9 @@ export const StatusButton = styled(Button)`
   border-radius: 12px;
   width: 100%;
   font-size: 16px;
+  display: block;
   ${(props) => props.theme.breakpoints.down('lg')} {
-    width: 50%;
+    width: 35%;
     margin: 10px 30px 0 30px;
   }
 `
