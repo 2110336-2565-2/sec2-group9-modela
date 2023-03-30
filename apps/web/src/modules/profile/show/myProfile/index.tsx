@@ -1,5 +1,9 @@
 import { UserType } from '@modela/dtos'
-import { AccountCircleOutlined, ArticleOutlined } from '@mui/icons-material'
+import {
+  AccountCircleOutlined,
+  ArticleOutlined,
+  HistoryOutlined,
+} from '@mui/icons-material'
 import { CircularProgress } from '@mui/material'
 import MenuBar from 'common/components/MenuBar'
 import withGuard from 'common/hoc/withGuard'
@@ -15,6 +19,11 @@ const MyProfilePage = () => {
   const MENU_ITEM_ACTOR = [
     { icon: <AccountCircleOutlined />, label: 'โปรไฟล์', href: '/profile' },
     { icon: <ArticleOutlined />, label: 'เรซูเม่', href: '/profile/resume' },
+    {
+      icon: <HistoryOutlined />,
+      label: 'ประวัติการทำงาน',
+      href: '/profile/history',
+    },
   ]
   const MENU_ITEM_CASTING = [
     { icon: <AccountCircleOutlined />, label: 'โปรไฟล์', href: '/profile' },
