@@ -4,19 +4,30 @@ import React, { MouseEvent } from 'react'
 import { ActionContainer } from './styled'
 import { ActorCardActionProps } from './types'
 
-const ActorCardAction = ({ openModal }: ActorCardActionProps) => {
-  const handleOpenModal = async (ev: MouseEvent) => {
+const ActorCardAction = ({
+  openModal,
+  setIsRejected,
+}: ActorCardActionProps) => {
+  const openRejectModal = (ev: MouseEvent) => {
     ev.stopPropagation()
     ev.preventDefault()
+    setIsRejected(true)
+    openModal()
+  }
+
+  const openAcceptModal = (ev: MouseEvent) => {
+    ev.stopPropagation()
+    ev.preventDefault()
+    setIsRejected(false)
     openModal()
   }
 
   return (
     <ActionContainer>
-      <Button color="error" onClick={handleOpenModal}>
+      <Button color="error" onClick={openRejectModal}>
         ปฏิเสธ
       </Button>
-      <Button color="success" onClick={handleOpenModal}>
+      <Button color="success" onClick={openAcceptModal}>
         ส่งข้อเสนอ
       </Button>
     </ActionContainer>

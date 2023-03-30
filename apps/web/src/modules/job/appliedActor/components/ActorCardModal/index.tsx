@@ -1,10 +1,22 @@
 import { Button, Divider, Typography } from '@mui/material'
 
+import useActorCardAction from './hooks/useActorCardAction'
 import { ActionContainer, BodyContentContainer } from './styled'
 import { ActorCardModalProps } from './types'
 
 const ActorCardModal = (props: ActorCardModalProps) => {
-  const { close, isRejected } = props
+  const { close, isRejected, actorId } = props
+  const { rejectActor, acceptActor } = useActorCardAction()
+
+  const handleAcceptActor = async () => {
+    await acceptActor(actorId)
+    window.location.reload()
+  }
+
+  const handleRejectActor = async () => {
+    await rejectActor(actorId)
+    window.location.reload()
+  }
 
   return (
     <BodyContentContainer>
@@ -28,7 +40,7 @@ const ActorCardModal = (props: ActorCardModalProps) => {
           sx={{ borderRadius: '12px' }}
           variant="contained"
           color="success"
-          onClick={close}
+          onClick={!isRejected ? handleAcceptActor : handleRejectActor}
         >
           ยืนยัน
         </Button>
