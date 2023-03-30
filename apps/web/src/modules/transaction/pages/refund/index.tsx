@@ -2,8 +2,8 @@ import { UserType } from '@modela/dtos'
 import { Typography } from '@mui/material'
 import Modal from 'common/components/Modal'
 import withGuard from 'common/hoc/withGuard'
-import TransactionLayout from 'modules/transaction/components/TransactionLayout'
 
+import TransactionLayout from '../../components/TransactionLayout'
 import PendingModalBody from './components/PendingModalBody'
 import PendingRefundCard from './components/PendingRefundCard'
 import usePendingRefundList from './hooks/usePendingRefundList'
@@ -22,7 +22,7 @@ const PendingRefundPages = () => {
 
   return (
     <>
-      <TransactionLayout focus="ผู้กำกับโอนเงินเข้า">
+      <TransactionLayout focus="ขอเงินคืน">
         <CardContainer>
           {pendingRefunds.map((tx) => (
             <PendingRefundCard
