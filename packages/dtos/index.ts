@@ -23,4 +23,5 @@ export {
   Gender,
   mock,
   getBaseMock,
+  NotificationType,
 } from '@modela/database'

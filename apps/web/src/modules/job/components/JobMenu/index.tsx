@@ -1,5 +1,5 @@
 import { AccountCircleOutlined, ArticleOutlined } from '@mui/icons-material'
-import { Button, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import MenuBar from 'common/components/MenuBar'
 import { useRouter } from 'next/router'
 import React from 'react'
@@ -7,7 +7,7 @@ import React from 'react'
 import StatusChangeModal from './components/StatusChangeModal'
 import { NEXT_STATUS_NAME, STATUS_NAME } from './constants'
 import useSummaryData from './hooks/useSummaryData'
-import { MenuContainer, SummaryContainer } from './styled'
+import { MenuContainer, StatusButton, SummaryContainer } from './styled'
 import { JobMenuProps } from './types'
 
 const JobMenu = ({ focus, setStatus }: JobMenuProps) => {
@@ -50,17 +50,9 @@ const JobMenu = ({ focus, setStatus }: JobMenuProps) => {
         </Typography>
       </SummaryContainer>
       {NEXT_STATUS_NAME[status!] && (
-        <Button
-          variant="contained"
-          sx={{
-            borderRadius: '12px',
-            width: '100%',
-            fontSize: '16px',
-          }}
-          onClick={handleModalOpen}
-        >
+        <StatusButton variant="contained" onClick={handleModalOpen}>
           {NEXT_STATUS_NAME[status!]}
-        </Button>
+        </StatusButton>
       )}
       <StatusChangeModal
         isOpen={isModalOpen}
