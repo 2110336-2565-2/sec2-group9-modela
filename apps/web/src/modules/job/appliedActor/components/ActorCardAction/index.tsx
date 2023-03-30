@@ -1,31 +1,22 @@
 import { Button } from '@mui/material'
 import React, { MouseEvent } from 'react'
 
-import useActorCardAction from './hooks/useActorCardAction'
 import { ActionContainer } from './styled'
 import { ActorCardActionProps } from './types'
 
-const ActorCardAction = ({ actorId }: ActorCardActionProps) => {
-  const { acceptActor, rejectActor } = useActorCardAction()
-
-  const handleReject = async (ev: MouseEvent) => {
-    ev.preventDefault()
+const ActorCardAction = ({ openModal }: ActorCardActionProps) => {
+  const handleOpenModal = async (ev: MouseEvent) => {
     ev.stopPropagation()
-    await rejectActor(actorId)
-  }
-
-  const handleSendOffer = async (ev: MouseEvent) => {
     ev.preventDefault()
-    ev.stopPropagation()
-    await acceptActor(actorId)
+    openModal()
   }
 
   return (
     <ActionContainer>
-      <Button color="error" onClick={handleReject}>
+      <Button color="error" onClick={handleOpenModal}>
         ปฏิเสธ
       </Button>
-      <Button color="success" onClick={handleSendOffer}>
+      <Button color="success" onClick={handleOpenModal}>
         ส่งข้อเสนอ
       </Button>
     </ActionContainer>

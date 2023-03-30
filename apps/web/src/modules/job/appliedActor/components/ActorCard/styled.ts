@@ -14,3 +14,10 @@ export const ResumeDownloadButton = styled('a')`
   align-items: center;
   text-decoration: none;
 `
+
+export const BodyContentContainer = styled('div')`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+`

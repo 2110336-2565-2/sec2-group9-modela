@@ -1,4 +1,5 @@
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
+import useSwitch from 'common/hooks/useSwitch'
 import { apiClient } from 'common/utils/api'
 import { useRouter } from 'next/router'
 import { useCallback } from 'react'
@@ -6,6 +7,8 @@ import { useCallback } from 'react'
 const useActorCardAction = () => {
   const { handleError } = useErrorHandler()
   const router = useRouter()
+  const { isOpen, open, close } = useSwitch()
+
   const { jobId } = router.query
 
   const rejectActor = useCallback(
@@ -30,7 +33,7 @@ const useActorCardAction = () => {
     [handleError, jobId],
   )
 
-  return { rejectActor, acceptActor }
+  return { rejectActor, acceptActor, isOpen, open, close }
 }
 
 export default useActorCardAction
