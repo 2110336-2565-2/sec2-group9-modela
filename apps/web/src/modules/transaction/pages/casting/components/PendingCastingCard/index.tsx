@@ -1,4 +1,4 @@
-import { JobStatus } from '@modela/database'
+import { JobStatus } from '@modela/dtos'
 import { FileDownloadOutlined } from '@mui/icons-material'
 import { Button, Divider, Typography } from '@mui/material'
 import JobCardHeader from 'modules/job/components/JobCardHeader'
