@@ -24,3 +24,13 @@ export const RootContainer = styled('div')`
   gap: 3.5vw;
   margin: 20px;
 `
+export const PlaceFill = styled('div')`
+  display: flex;
+  flex-direction: column;
+  justify-content: right;
+  padding-top: 3rem;
+  width: 14vw;
+  ${(props) => props.theme.breakpoints.down('lg')} {
+    display: none;
+  }
+`
