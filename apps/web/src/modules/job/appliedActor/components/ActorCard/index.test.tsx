@@ -5,6 +5,7 @@ import {
   mockAndSpy,
   mockAndSpyMany,
 } from 'common/utils/testing'
+import { mockRouter } from 'common/utils/testing/mockRouter'
 import React from 'react'
 
 describe('<ActorCard />', () => {
@@ -35,7 +36,13 @@ describe('<ActorCard />', () => {
     'modules/job/appliedActor/components/ActorCardAction',
   )
 
+  const { mockQuery } = mockRouter()
+
   const { default: ActorCard } = require('.') as typeof import('.')
+
+  beforeEach(() => {
+    mockQuery({ jobId: 1 })
+  })
 
   afterEach(() => {
     jest.clearAllMocks()
