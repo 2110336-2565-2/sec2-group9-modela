@@ -37,6 +37,7 @@ export const StatusButton = styled(Button)`
     margin: 10px 30px 0 30px;
   }
   ${(props) => props.theme.breakpoints.down('sm')} {
+    width: 90%;
     margin: 0;
   }
 `
