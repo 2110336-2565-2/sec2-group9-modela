@@ -9,18 +9,6 @@ export const SearchContainer = styled('div')`
   }
 `
 
-export const NotiContainer = styled('div')`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding-top: 3rem;
-  width: 20vw;
-  gap: 1rem;
-  ${(props) => props.theme.breakpoints.down('lg')} {
-    display: none;
-  }
-`
-
 export const JobContainer = styled('div')`
   display: flex;
   flex-direction: column;
@@ -48,6 +36,14 @@ export const FilterBoxContainer = styled('div')`
     width: 19vw;
   }
   ${(props) => props.theme.breakpoints.down('md')} {
+    display: none;
+  }
+`
+
+export const PlaceFill = styled('div')`
+  display: flex;
+  width: 20vw;
+  ${(props) => props.theme.breakpoints.down('lg')} {
     display: none;
   }
 `
