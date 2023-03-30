@@ -19,13 +19,13 @@ const ProfilePage = () => {
         <CircularProgress sx={{ margin: '32px 16px' }} />
       ) : (
         <>
-          {type === UserType.ACTOR && (
+          {type === UserType.CASTING && (
             <CastingProfilePage
               userId={+userId}
               profile={profile as GetCastingProfileDto}
             />
           )}
-          {type === UserType.CASTING && (
+          {type === UserType.ACTOR && (
             <ActorProfilePage
               userId={+userId}
               profile={profile as GetActorProfileDto}
