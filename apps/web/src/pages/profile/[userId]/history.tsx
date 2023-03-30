@@ -1,1 +1,1 @@
-export { default } from 'modules/profile/edit/pages/'
+export { default } from 'modules/profile/history'

@@ -4,7 +4,6 @@ export const JobContainer = styled('div')`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-top: 3rem;
   width: 45vw;
   gap: 1rem;
   padding-bottom: 3rem;
@@ -13,5 +12,16 @@ export const JobContainer = styled('div')`
   }
   ${(props) => props.theme.breakpoints.down('md')} {
     width: 95vw;
+  }
+`
+
+export const PlaceFill = styled('div')`
+  display: flex;
+  flex-direction: column;
+  justify-content: right;
+  padding-top: 3rem;
+  width: 14vw;
+  ${(props) => props.theme.breakpoints.down('lg')} {
+    display: none;
   }
 `

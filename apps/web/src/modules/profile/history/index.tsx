@@ -8,21 +8,15 @@ import { CircularProgress } from '@mui/material'
 import MenuBar from 'common/components/MenuBar'
 import { useUser } from 'common/context/UserContext'
 import withGuard from 'common/hoc/withGuard'
-import useNavbarSearch from 'common/hooks/useNavbarSearch'
 import JobCardContainer from 'modules/job/list/components/JobCardContainer'
-import React, { useCallback } from 'react'
-import InfiniteScroll from 'react-infinite-scroller'
+import React from 'react'
 
 import useJobData from './hooks/useJobData'
-import { JobContainer } from './styled'
-const JobList = () => {
-  const { job, hasMore, fetchData, isOpen, open, isDesktop } = useJobData()
+import { JobContainer, PlaceFill } from './styled'
+const HistoryPage = () => {
+  const { job } = useJobData()
   const { user } = useUser()
-  useNavbarSearch(
-    useCallback(() => {
-      open()
-    }, [open]),
-  )
+
   const MENU_ITEM_ACTOR = [
     { icon: <AccountCircleOutlined />, label: 'โปรไฟล์', href: '/profile' },
     { icon: <ArticleOutlined />, label: 'เรซูเม่', href: '/profile/resume' },
@@ -54,6 +48,7 @@ const JobList = () => {
         justifyContent: 'left',
         alignItems: 'flex-start',
         gap: '3.5vw',
+        marginTop: '3rem',
       }}
     >
       {/* Place holder not implement in this sprint */}
@@ -61,21 +56,17 @@ const JobList = () => {
         <MenuBar
           sx={{ width: '17vw' }}
           menu={MENU_ITEM_ACTOR}
-          focus="โปรไฟล์"
+          focus="ประวัติการทำงาน"
         />
       )}
       {user?.type === UserType.CASTING && (
         <MenuBar
           sx={{ width: '17vw' }}
           menu={MENU_ITEM_CASTING}
-          focus="โปรไฟล์"
+          focus="ประวัติการทำงาน"
         />
       )}
-      <JobContainer
-        sx={{
-          display: isOpen && !isDesktop ? 'none' : 'flex',
-        }}
-      >
+      <JobContainer>
         <div
           style={{
             display: 'flex',
@@ -83,32 +74,28 @@ const JobList = () => {
             gap: '1rem',
           }}
         >
-          <InfiniteScroll
-            loadMore={fetchData}
-            hasMore={hasMore}
-            loader={
-              <div
-                className="loader"
-                key={0}
-                style={{
-                  display: 'flex',
-                  alignItems: 'column',
-                  justifyContent: 'center',
-                }}
-              >
-                <CircularProgress color="primary" />
-              </div>
-            }
-          >
-            {job && <JobCardContainer {...job} />}
-          </InfiniteScroll>
+          {!job && (
+            <div
+              className="loader"
+              key={0}
+              style={{
+                display: 'flex',
+                alignItems: 'column',
+                justifyContent: 'center',
+              }}
+            >
+              <CircularProgress color="primary" />
+            </div>
+          )}
+          {job && <JobCardContainer jobs={job} maxPage={job.length} />}
         </div>
       </JobContainer>
+      <PlaceFill />
     </div>
   )
 }
 
-export default withGuard(JobList, 'verified', [
+export default withGuard(HistoryPage, 'verified', [
   UserType.ACTOR,
   UserType.CASTING,
 ])
