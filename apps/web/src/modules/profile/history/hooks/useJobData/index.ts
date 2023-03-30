@@ -26,7 +26,9 @@ const useJobData = () => {
   }, [])
 
   useEffect(() => {
-    fetchData()
+    if (router.isReady) {
+      fetchData()
+    }
   }, [router.isReady])
 
   return {
