@@ -11,6 +11,11 @@ export const MenuContainer = styled('div')`
     flex-direction: row;
     justify-content: space-between;
   }
+  ${(props) => props.theme.breakpoints.down('sm')} {
+    flex-direction: column;
+    align-items: center;
+    gap: 0px;
+  }
 `
 
 export const SummaryContainer = styled('div')`
@@ -27,9 +32,11 @@ export const StatusButton = styled(Button)`
   border-radius: 12px;
   width: 100%;
   font-size: 16px;
-  display: block;
   ${(props) => props.theme.breakpoints.down('lg')} {
     width: 35%;
     margin: 10px 30px 0 30px;
+  }
+  ${(props) => props.theme.breakpoints.down('sm')} {
+    margin: 0;
   }
 `
