@@ -58,6 +58,7 @@ export default function JobCard(prop: GetAppliedJobDto) {
           actorCount={actorCount}
           status={status}
           isApplied={true}
+          appliedStatus={appliedStatus}
         />
       </CardContainer>
     </Link>

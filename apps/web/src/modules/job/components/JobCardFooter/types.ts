@@ -1,4 +1,4 @@
-import { Gender, JobStatus } from '@modela/dtos'
+import { ApplicationStatus, Gender, JobStatus } from '@modela/dtos'
 
 export interface FooterProps {
   gender: Gender
@@ -8,4 +8,5 @@ export interface FooterProps {
   status: JobStatus
   jobId?: number
   isApplied?: boolean
+  appliedStatus?: ApplicationStatus
 }

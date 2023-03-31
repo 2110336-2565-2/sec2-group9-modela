@@ -1,4 +1,4 @@
-import { Gender, JobStatus, UserType } from '@modela/dtos'
+import { ApplicationStatus, Gender, JobStatus, UserType } from '@modela/dtos'
 import { EventBusy, Money, Person } from '@mui/icons-material'
 import { Button, Tooltip, Typography } from '@mui/material'
 import theme from 'common/config/theme'
@@ -7,11 +7,20 @@ import { genderTranslationMap } from 'common/types/gender'
 import { formatDate } from 'common/utils/formatter'
 import React from 'react'
 
-import { FooterRow, SameDiv } from './styled'
+import { FooterRow, JobOfferActions, SameDiv } from './styled'
 import { FooterProps } from './types'
 
 const JobCardFooter = (prop: FooterProps) => {
-  const { actorCount, wage, status, dueDate, gender, jobId, isApplied } = prop
+  const {
+    actorCount,
+    wage,
+    status,
+    dueDate,
+    gender,
+    jobId,
+    isApplied,
+    appliedStatus,
+  } = prop
   const { user } = useUser()
 
   const apply: React.MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -90,6 +99,17 @@ const JobCardFooter = (prop: FooterProps) => {
             </Button>
           )}
       </FooterRow>
+      {appliedStatus === ApplicationStatus.OFFER_SENT &&
+        user?.type === UserType.ACTOR && (
+          <JobOfferActions>
+            <Button color="error">
+              <Typography variant="button">ปฏิเสธข้อเสนอ</Typography>
+            </Button>
+            <Button color="success">
+              <Typography variant="button">ยอมรับข้อเสนอ</Typography>
+            </Button>
+          </JobOfferActions>
+        )}
     </>
   )
 }
