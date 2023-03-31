@@ -15,4 +15,5 @@ export interface FooterProps {
   openRejectModal?: () => void
   setFocusId?: Dispatch<SetStateAction<number>>
   setTitle?: Dispatch<SetStateAction<string>>
+  openModal?: () => void
 }
