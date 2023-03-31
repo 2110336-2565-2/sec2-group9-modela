@@ -94,7 +94,7 @@ export class ApplicationController {
   @ApiOkResponse()
   @ApiBadRequestResponse({
     description:
-      'actor didn’t apply for this job or application status is not pending',
+      'actor didn’t apply for this job or application status is not open',
   })
   @ApiUnauthorizedResponse({ description: 'User is not login' })
   @ApiNotFoundResponse({ description: 'Job not found' })
