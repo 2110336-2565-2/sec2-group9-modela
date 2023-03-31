@@ -126,6 +126,17 @@ const JobCardFooter = (prop: FooterProps) => {
               สมัครงาน
             </Button>
           )}
+        {status === JobStatus.OPEN &&
+          isApplied &&
+          appliedStatus === ApplicationStatus.PENDING && (
+            <Button
+              color="error"
+              sx={{ cursor: 'pointer', marginLeft: 'auto' }}
+              onClick={apply}
+            >
+              ยกเลิกสมัครงาน
+            </Button>
+          )}
       </FooterRow>
       {appliedStatus === ApplicationStatus.OFFER_SENT &&
         user?.type === UserType.ACTOR && (
