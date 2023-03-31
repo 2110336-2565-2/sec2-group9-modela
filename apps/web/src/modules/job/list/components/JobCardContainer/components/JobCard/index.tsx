@@ -19,6 +19,7 @@ export default function JobCard(prop: JobCardProps) {
     status,
     isReported,
     isApplied,
+    isHistory,
     ...headerProps
   } = prop
 
@@ -38,6 +39,7 @@ export default function JobCard(prop: JobCardProps) {
           status={status}
           jobId={jobId}
           isReport={isReported}
+          isHistory={isHistory}
           {...headerProps}
         />
         <Typography

@@ -22,6 +22,7 @@ const JobCardHeader = (prop: HeaderProps) => {
     castingName,
     isReport,
     appliedStatus,
+    isHistory,
   } = prop
   const { user } = useUser()
 
@@ -49,7 +50,7 @@ const JobCardHeader = (prop: HeaderProps) => {
           {companyName}
         </Typography>
       </TitleContainer>
-      {user?.type === UserType.ACTOR && !appliedStatus && (
+      {user?.type === UserType.ACTOR && !appliedStatus && !isHistory && (
         <Tooltip title="Report job">
           <IconButton
             href={`/report/${jobId}`}

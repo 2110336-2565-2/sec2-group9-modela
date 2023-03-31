@@ -1,6 +1,6 @@
 import { UserType } from '@modela/dtos'
 import { Add } from '@mui/icons-material'
-import { Button, CircularProgress, Typography } from '@mui/material'
+import { Button, CircularProgress } from '@mui/material'
 import { useUser } from 'common/context/UserContext'
 import withGuard from 'common/hoc/withGuard'
 import useNavbarSearch from 'common/hooks/useNavbarSearch'
@@ -11,13 +11,11 @@ import SearchBox from 'modules/job/list/components/SearchBox'
 import React, { useCallback } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 
-import NotiCardContainer from './components/NotiCardContainer'
 import useJobListData from './hooks/useJobListData'
-import { notiHolder } from './placeholder'
 import {
   FilterBoxContainer,
   JobContainer,
-  NotiContainer,
+  PlaceFill,
   SearchContainer,
 } from './styled'
 const JobList = () => {
@@ -50,19 +48,7 @@ const JobList = () => {
         gap: '3.5vw',
       }}
     >
-      {/* Place holder not implement in this sprint */}
-      <NotiContainer>
-        <Typography variant="body1"> Unread notification </Typography>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '1rem',
-          }}
-        >
-          <NotiCardContainer cardData={notiHolder} />
-        </div>
-      </NotiContainer>
+      <PlaceFill />
 
       <JobContainer
         sx={{

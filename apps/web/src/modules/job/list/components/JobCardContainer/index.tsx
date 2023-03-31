@@ -6,7 +6,7 @@ import { CardBoxContainer } from './styled'
 import { JobCardContainerProps } from './types'
 
 export default function JobCardContainer(prop: JobCardContainerProps) {
-  const { jobs, maxPage } = prop
+  const { jobs, maxPage, isHistory } = prop
   return (
     <CardBoxContainer>
       {maxPage === 0 && (
@@ -34,7 +34,7 @@ export default function JobCardContainer(prop: JobCardContainerProps) {
               gap: '1rem',
             }}
           >
-            <JobCard {...item} />
+            <JobCard isHistory={isHistory} {...item} />
           </div>
         )
       })}
