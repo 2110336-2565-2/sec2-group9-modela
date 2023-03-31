@@ -1,36 +1,52 @@
-import { JobStatus } from '@modela/dtos'
+import { JobStatus } from '@modela/database'
 import { FileDownloadOutlined } from '@mui/icons-material'
 import { Button, Divider, Typography } from '@mui/material'
 import JobCardHeader from 'modules/job/components/JobCardHeader'
 import Link from 'next/link'
 
 import { ActionContainer, CardContainer, ContentContainer } from './styled'
-import { PendingCastingCardProps } from './types'
+import { PendingRefundCardProps } from './types'
 
-const PendingCastingCard = (props: PendingCastingCardProps) => {
+const PendingRefundCard = (props: PendingRefundCardProps) => {
   const {
     title,
-    firstName,
-    middleName,
-    lastName,
+    reason,
+    wage,
+    actor: {
+      actorId,
+      firstName: actorFirstName,
+      lastName: actorLastName,
+      middleName: actorMiddleName,
+    },
+    casting: {
+      bankAccount,
+      bankName,
+      castingId,
+      companyName,
+      firstName: castingFirstName,
+      lastName: castingLastName,
+      middleName: castingMiddleName,
+      profileImageUrl,
+    },
     jobId,
     proofUrl,
-    amount,
-    bankName,
-    bankAccount,
-    castingId,
-    companyName,
     handleClickFinish,
     handleClickReject,
   } = props
-  const castingName = `${firstName} ${middleName || ''} ${lastName}`
+
+  const castingName = `${castingFirstName} ${
+    castingMiddleName || ''
+  } ${castingLastName}`
+  const actorName = `${actorFirstName} ${
+    actorMiddleName || ''
+  } ${actorLastName}`
 
   return (
     <CardContainer>
       <JobCardHeader
         title={castingName}
         companyName={companyName}
-        jobCastingImageUrl={''}
+        jobCastingImageUrl={profileImageUrl}
         status={JobStatus.SELECTION_ENDED}
         jobId={jobId}
         castingId={castingId}
@@ -54,10 +70,26 @@ const PendingCastingCard = (props: PendingCastingCardProps) => {
             </Typography>
           </Link>
         </Typography>
+        <Typography variant="body1">
+          นักแสดงที่ขอเงินคืน:
+          <Link
+            href={`/profile/${actorId}`}
+            style={{
+              textDecoration: 'none',
+            }}
+          >
+            <Typography
+              component="span"
+              sx={{ marginLeft: '4px' }}
+              color="primary"
+            >
+              {actorName}
+            </Typography>
+          </Link>
+        </Typography>
+        <Typography variant="body1">เหตุผลที่ขอเงินคืน: {reason}</Typography>
         <div>
-          <Typography variant="body1">
-            จำนวนเงินที่ต้องจ่าย: {amount}
-          </Typography>
+          <Typography variant="body1">จำนวนเงินที่ต้องจ่าย: {wage}</Typography>
           <Typography variant="body1">ธนาคาร: {bankName}</Typography>
           <Typography variant="body1">เลขบัญชี: {bankAccount}</Typography>
         </div>
@@ -72,29 +104,29 @@ const PendingCastingCard = (props: PendingCastingCardProps) => {
         >
           <FileDownloadOutlined color="primary" />
           <Typography variant="button" color="primary">
-            รูปถ่ายหลักฐานธุรกรรม
+            รูปถ่ายหลักฐานการขอเงินคืน
           </Typography>
         </Link>
       </ContentContainer>
       <Divider sx={{ width: '100%' }} />
       <ActionContainer>
         <Button
-          onClick={() => handleClickReject(jobId, castingId)}
+          onClick={() => handleClickReject(jobId, actorId)}
           sx={{ borderRadius: '12px', padding: '4px' }}
           color="error"
         >
           ไม่อนุมัติ
         </Button>
         <Button
-          onClick={() => handleClickFinish(jobId, castingId)}
+          onClick={() => handleClickFinish(jobId, actorId)}
           sx={{ borderRadius: '12px', padding: '4px' }}
           color="success"
         >
-          เสร็จสิ้น
+          อนุมัติ
         </Button>
       </ActionContainer>
     </CardContainer>
   )
 }
 
-export default PendingCastingCard
+export default PendingRefundCard
