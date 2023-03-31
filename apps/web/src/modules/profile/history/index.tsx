@@ -14,7 +14,7 @@ import React from 'react'
 import useJobData from './hooks/useJobData'
 import { JobContainer, PlaceFill } from './styled'
 const HistoryPage = () => {
-  const { job } = useJobData()
+  const { job, userIdCur } = useJobData()
   const { user } = useUser()
 
   const MENU_ITEM_ACTOR = [
@@ -31,12 +31,12 @@ const HistoryPage = () => {
     {
       icon: <AccountCircleOutlined />,
       label: 'โปรไฟล์',
-      href: `/profile/${user?.userId}`,
+      href: `/profile/${userIdCur}`,
     },
     {
       icon: <HistoryOutlined />,
       label: 'ประวัติการทำงาน',
-      href: `/profile/${user?.userId}/history`,
+      href: `/profile/${userIdCur}/history`,
     },
   ]
 
@@ -59,7 +59,7 @@ const HistoryPage = () => {
           focus="ประวัติการทำงาน"
         />
       )}
-      {user?.type === UserType.CASTING && (
+      {(user?.type === UserType.CASTING || user?.type === UserType.ADMIN) && (
         <MenuBar
           sx={{ width: '20vw' }}
           menu={MENU_ITEM_CASTING}
@@ -104,4 +104,5 @@ const HistoryPage = () => {
 export default withGuard(HistoryPage, 'verified', [
   UserType.ACTOR,
   UserType.CASTING,
+  UserType.ADMIN,
 ])

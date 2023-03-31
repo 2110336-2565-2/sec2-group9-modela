@@ -34,6 +34,7 @@ const useJobData = () => {
   return {
     job,
     fetchData,
+    userIdCur,
   }
 }
 
