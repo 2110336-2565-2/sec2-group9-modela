@@ -1,4 +1,4 @@
-import { Add } from '@mui/icons-material'
+import { Add, HistoryOutlined } from '@mui/icons-material'
 import { AccountCircleOutlined, ArticleOutlined } from '@mui/icons-material'
 import {
   CircularProgress,
@@ -45,6 +45,11 @@ const ActorResume = () => {
             icon: <ArticleOutlined />,
             href: '/profile/resume',
             label: 'เรซูเม่',
+          },
+          {
+            icon: <HistoryOutlined />,
+            label: 'ประวัติการทำงาน',
+            href: `/profile/history`,
           },
         ]}
       />
