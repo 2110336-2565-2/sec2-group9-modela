@@ -1,4 +1,4 @@
-import { ApplicationStatus, JobStatus } from '@modela/dtos'
+import { ApplicationStatus } from '@modela/dtos'
 import { render } from '@testing-library/react'
 import { mockAndSpy, mockAndSpyMany } from 'common/utils/testing'
 import { mockRouter } from 'common/utils/testing/mockRouter'
@@ -12,6 +12,7 @@ describe('<ActorCardHeader />', () => {
     middleName: 'middleName',
     actorId: 1,
     status: ApplicationStatus.OFFER_ACCEPTED,
+    isRefundable: false,
   }
 
   const ProfileImageSpy = mockAndSpy('common/components/ProfileImage')
@@ -27,42 +28,30 @@ describe('<ActorCardHeader />', () => {
     jest.clearAllMocks()
   })
 
-  describe('card variant', () => {
-    it('job is not SELECTION_END', () => {
-      render(<ActorCardHeader {...MOCK_PROPS} jobStatus={JobStatus.OPEN} />)
+  describe('normal behavior', () => {
+    describe('display', () => {
+      it('should display card header correctly', () => {
+        render(<ActorCardHeader {...MOCK_PROPS} />)
 
-      expect(ProfileImageSpy).toBeCalledTimes(1)
-      expect(ChipSpy).toBeCalledTimes(1)
+        expect(ProfileImageSpy).toBeCalledTimes(1)
+        expect(ChipSpy).toBeCalledTimes(1)
+      })
     })
-    it('job is SELECTION_END but offer not accepted', () => {
-      render(
-        <ActorCardHeader
-          {...MOCK_PROPS}
-          jobStatus={JobStatus.SELECTION_ENDED}
-          status={ApplicationStatus.OFFER_REJECTED}
-        />,
-      )
+  })
 
-      expect(ProfileImageSpy).toBeCalledTimes(1)
-      expect(ChipSpy).toBeCalledTimes(1)
-    })
-
-    it('job is SELECTION_END and offer is accepted', () => {
-      render(
-        <ActorCardHeader
-          {...MOCK_PROPS}
-          jobStatus={JobStatus.SELECTION_ENDED}
-          status={ApplicationStatus.OFFER_ACCEPTED}
-        />,
-      )
-      expect(ProfileImageSpy).toBeCalledTimes(1)
-      expect(IconButtonSpy).toBeCalledWith(
-        expect.objectContaining({
-          href: '/job/1/actor/1/refund',
-        }),
-      )
-      expect(ChipSpy).toBeCalledTimes(0)
-      expect(ReportOutlinedSpy).toBeCalledTimes(1)
+  describe('application is refundable', () => {
+    describe('display', () => {
+      it('should display refund button instead of status chip', () => {
+        render(<ActorCardHeader {...MOCK_PROPS} isRefundable />)
+        expect(ProfileImageSpy).toBeCalledTimes(1)
+        expect(IconButtonSpy).toBeCalledWith(
+          expect.objectContaining({
+            href: '/job/1/actor/1/refund',
+          }),
+        )
+        expect(ChipSpy).toBeCalledTimes(0)
+        expect(ReportOutlinedSpy).toBeCalledTimes(1)
+      })
     })
   })
 })
