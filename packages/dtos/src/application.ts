@@ -29,6 +29,9 @@ export class ActorDto {
 
   @ApiProperty()
   status?: ApplicationStatus
+
+  @ApiPropertyOptional()
+  isRefundable?: boolean
 }
 
 export class GetAppliedActorDto {

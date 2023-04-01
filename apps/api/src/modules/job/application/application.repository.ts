@@ -33,14 +33,19 @@ export class ApplicationRepository {
         status: true,
         actorId: true,
         applicationId: true,
+        Refund: true,
       },
     })
 
-    let result = application.map(({ Actor: { User }, Resume, ...rest }) => ({
-      ...rest,
-      ...User,
-      ...Resume,
-    }))
+    let result = application.map(
+      ({ Actor: { User }, Resume, Refund, status, ...rest }) => ({
+        ...rest,
+        ...User,
+        ...Resume,
+        status,
+        isRefundable: !Refund && status === ApplicationStatus.OFFER_ACCEPTED,
+      }),
+    )
 
     if (query.name && query.name !== '') {
       result = result.filter(({ firstName, middleName, lastName }) =>

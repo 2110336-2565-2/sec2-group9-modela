@@ -1,4 +1,3 @@
-import { ApplicationStatus, JobStatus } from '@modela/dtos'
 import { ReportOutlined } from '@mui/icons-material'
 import { IconButton, Typography } from '@mui/material'
 import Chip from 'common/components/Chip'
@@ -11,8 +10,15 @@ import { HeaderContainer } from './styled'
 import { ActorCardHeaderProps } from './types'
 
 const ActorCardHeader = (props: ActorCardHeaderProps) => {
-  const { firstName, middleName, lastName, profileImageUrl, actorId, status } =
-    props
+  const {
+    firstName,
+    middleName,
+    lastName,
+    profileImageUrl,
+    actorId,
+    status,
+    isRefundable,
+  } = props
 
   const router = useRouter()
   const { jobId } = router.query
@@ -31,8 +37,7 @@ const ActorCardHeader = (props: ActorCardHeaderProps) => {
       <Typography variant="h6" sx={{ flexGrow: 1 }}>
         {firstName} {middleName} {lastName}
       </Typography>
-      {props.jobStatus === JobStatus.SELECTION_ENDED &&
-      props.status === ApplicationStatus.OFFER_ACCEPTED ? (
+      {isRefundable ? (
         <IconButton
           href={`/job/${jobId}/actor/${actorId}/refund`}
           onClick={(ev) => ev.stopPropagation()}
