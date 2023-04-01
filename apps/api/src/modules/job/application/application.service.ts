@@ -106,6 +106,8 @@ export class ApplicationService {
 
     if (!application)
       throw new BadRequestException(`You didn't apply for this job`)
+    if (application.status !== ApplicationStatus.PENDING)
+      throw new BadRequestException('Application is not pending')
 
     await this.repository.deleteApplication(application.applicationId)
   }
