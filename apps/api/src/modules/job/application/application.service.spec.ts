@@ -53,6 +53,7 @@ describe('ApplicationService', () => {
         resumeUrl: '',
         status: ApplicationStatus.PENDING,
         applicationId: idx + 2,
+        isRefundable: false,
       }))
 
     beforeEach(() => {
