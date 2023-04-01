@@ -5,14 +5,14 @@ import useNavbarFocus from 'common/hooks/useNavbarFocus'
 import useNavbarSearch from 'common/hooks/useNavbarSearch'
 import FilterMobileContainer from 'modules/job/appliedJob/components/FilterMobileContainer'
 import SearchBox from 'modules/job/appliedJob/components/SearchBox'
+import AcceptOfferModal from 'modules/notification/components/AcceptOfferModal'
+import RejectOfferModal from 'modules/notification/components/RejectOfferModal'
+import useModalData from 'modules/notification/pages/hooks/useModalData'
 import { useCallback } from 'react'
 
-import AcceptOfferModal from '../components/AcceptOfferModal'
 import FilterContainer from '../components/FilterContainer'
 import JobCardContainer from '../components/JobCardContainer'
-import RejectOfferModal from '../components/RejectOfferModal'
 import useJobListData from './hooks/useJobListData'
-import useModalData from './hooks/useModalData'
 import {
   FilterBoxContainer,
   JobContainer,
