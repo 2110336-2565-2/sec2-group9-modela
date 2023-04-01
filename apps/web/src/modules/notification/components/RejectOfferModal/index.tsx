@@ -1,13 +1,20 @@
 import { Button, Divider, Typography } from '@mui/material'
 
-import { ModalContentContainer, RootModalContainer } from './styled'
-import { IOfferModalProps } from './types'
+import {
+  RejectOfferModalContentContainer,
+  RejectOfferModalRootContainer,
+} from './styled'
+import { RejectOfferModalProps } from './types'
 
-const StatusChangeModal = (props: IOfferModalProps) => {
+const RejectOfferModal = (props: RejectOfferModalProps) => {
   const { isOpen, handleClose, handleSubmit, title } = props
   return (
-    <RootModalContainer disableAutoFocus open={isOpen} onClose={handleClose}>
-      <ModalContentContainer>
+    <RejectOfferModalRootContainer
+      disableAutoFocus
+      open={isOpen}
+      onClose={handleClose}
+    >
+      <RejectOfferModalContentContainer>
         <Typography sx={{ margin: 'auto' }} variant="h5">
           ยืนยันปฏิเสธข้อเสนองาน
         </Typography>
@@ -24,9 +31,9 @@ const StatusChangeModal = (props: IOfferModalProps) => {
             ยืนยัน
           </Button>
         </div>
-      </ModalContentContainer>
-    </RootModalContainer>
+      </RejectOfferModalContentContainer>
+    </RejectOfferModalRootContainer>
   )
 }
 
-export default StatusChangeModal
+export default RejectOfferModal

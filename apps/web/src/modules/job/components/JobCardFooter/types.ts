@@ -1,4 +1,5 @@
-import { Gender, JobStatus } from '@modela/dtos'
+import { ApplicationStatus, Gender, JobStatus } from '@modela/dtos'
+import { Dispatch, SetStateAction } from 'react'
 
 export interface FooterProps {
   gender: Gender
@@ -7,5 +8,11 @@ export interface FooterProps {
   dueDate: Date
   status: JobStatus
   jobId?: number
+  jobTitle?: string
   isApplied?: boolean
+  appliedStatus?: ApplicationStatus
+  openAcceptModal?: () => void
+  openRejectModal?: () => void
+  setFocusId?: Dispatch<SetStateAction<number>>
+  setTitle?: Dispatch<SetStateAction<string>>
 }

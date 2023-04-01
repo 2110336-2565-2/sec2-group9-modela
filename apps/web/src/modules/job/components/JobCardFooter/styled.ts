@@ -19,3 +19,12 @@ export const SameDiv = styled('div')`
   padding: 0px;
   margin-right: 5px;
 `
+export const JobOfferActions = styled('div')`
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: 1rem;
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
+`

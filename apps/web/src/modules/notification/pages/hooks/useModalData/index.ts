@@ -29,6 +29,7 @@ const useModalData = () => {
   const handleAcceptModalSubmit = useCallback(async () => {
     try {
       await apiClient.put<string>(`/jobs/${focusId}/offer/accept`)
+      window.location.reload()
     } catch (err) {
       handleError(err)
     }
@@ -46,6 +47,7 @@ const useModalData = () => {
   const handleRejectModalSubmit = useCallback(async () => {
     try {
       await apiClient.put<string>(`/jobs/${focusId}/offer/reject`)
+      window.location.reload()
     } catch (err) {
       handleError(err)
     }
