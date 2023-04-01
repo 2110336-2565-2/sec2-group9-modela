@@ -20,11 +20,39 @@ const JobCardFooter = (prop: FooterProps) => {
     jobId,
     isApplied,
     appliedStatus,
+    openAcceptModal,
+    openRejectModal,
+    setFocusId,
+    setTitle,
+    jobTitle,
   } = prop
   const { user } = useUser()
 
   const apply: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.stopPropagation()
+  }
+
+  const setFocustedJobHandle = () => {
+    if (jobTitle) {
+      setTitle?.(jobTitle)
+    }
+    if (jobId) {
+      setFocusId?.(jobId)
+    }
+  }
+  const rejectOnclickHandle: React.MouseEventHandler<HTMLButtonElement> = (
+    e,
+  ) => {
+    e.preventDefault()
+    setFocustedJobHandle()
+    openRejectModal?.()
+  }
+  const acceptOnclickHandle: React.MouseEventHandler<HTMLButtonElement> = (
+    e,
+  ) => {
+    e.preventDefault()
+    setFocustedJobHandle()
+    openAcceptModal?.()
   }
 
   const genderThai = genderTranslationMap[gender]
@@ -102,10 +130,10 @@ const JobCardFooter = (prop: FooterProps) => {
       {appliedStatus === ApplicationStatus.OFFER_SENT &&
         user?.type === UserType.ACTOR && (
           <JobOfferActions>
-            <Button color="error">
+            <Button color="error" onClick={rejectOnclickHandle}>
               <Typography variant="button">ปฏิเสธข้อเสนอ</Typography>
             </Button>
-            <Button color="success">
+            <Button color="success" onClick={acceptOnclickHandle}>
               <Typography variant="button">ยอมรับข้อเสนอ</Typography>
             </Button>
           </JobOfferActions>

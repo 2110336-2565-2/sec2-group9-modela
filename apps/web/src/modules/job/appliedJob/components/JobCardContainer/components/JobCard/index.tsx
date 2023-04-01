@@ -1,4 +1,4 @@
-import { GetAppliedJobDto, JobStatus } from '@modela/dtos'
+import { JobStatus } from '@modela/dtos'
 import { Divider, Typography } from '@mui/material'
 import Footer from 'modules/job/components/JobCardFooter'
 import Header from 'modules/job/components/JobCardHeader'
@@ -6,8 +6,9 @@ import Link from 'next/link'
 import React from 'react'
 
 import { CardContainer } from './styled'
+import { GetAppliedJobDtoWithModalInfo } from './types'
 
-export default function JobCard(prop: GetAppliedJobDto) {
+export default function JobCard(prop: GetAppliedJobDtoWithModalInfo) {
   const {
     actorCount,
     description,
@@ -17,6 +18,10 @@ export default function JobCard(prop: GetAppliedJobDto) {
     jobId,
     status,
     appliedStatus,
+    openAcceptModal,
+    openRejectModal,
+    setFocusId,
+    setTitle,
     ...headerProps
   } = prop
   return (
@@ -59,6 +64,12 @@ export default function JobCard(prop: GetAppliedJobDto) {
           status={status}
           isApplied={true}
           appliedStatus={appliedStatus}
+          jobId={jobId}
+          jobTitle={headerProps.title}
+          openAcceptModal={openAcceptModal}
+          openRejectModal={openRejectModal}
+          setFocusId={setFocusId}
+          setTitle={setTitle}
         />
       </CardContainer>
     </Link>
