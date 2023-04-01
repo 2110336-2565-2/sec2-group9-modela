@@ -95,8 +95,8 @@ export class ApplicationService {
     const job = await this.jobRepository.getBaseJobById(jobId)
 
     if (!job) throw new NotFoundException('Job not found')
-    if (job.status !== JobStatus.SELECTING) {
-      throw new BadRequestException('Job is not selecting')
+    if (job.status !== JobStatus.OPEN) {
+      throw new BadRequestException('Job status is not open')
     }
 
     const application = await this.repository.getApplicationbyActorJob(
@@ -106,6 +106,8 @@ export class ApplicationService {
 
     if (!application)
       throw new BadRequestException(`You didn't apply for this job`)
+    if (application.status !== ApplicationStatus.PENDING)
+      throw new BadRequestException('Application is not pending')
 
     await this.repository.deleteApplication(application.applicationId)
   }
