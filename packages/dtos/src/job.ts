@@ -319,6 +319,9 @@ export class GetJobDto extends EditJobDto {
 
   @ApiProperty()
   isApplied?: boolean
+
+  @ApiProperty()
+  isPaid?: boolean
 }
 
 export class JobIdDto {
