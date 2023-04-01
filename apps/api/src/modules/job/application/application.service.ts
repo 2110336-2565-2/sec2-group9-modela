@@ -35,7 +35,12 @@ export class ApplicationService {
     if (job.castingId !== userId)
       throw new ForbiddenException('User is not the owner of this job')
 
-    return { actors: await this.repository.getApplicationByJobId(id, query) }
+    let actors = await this.repository.getApplicationByJobId(id, query)
+
+    if (job.status !== JobStatus.SELECTION_ENDED || !job.isPaid)
+      actors = actors.map((actor) => ({ ...actor, isRefundable: false }))
+
+    return { actors: actors }
   }
 
   async applyJob(jobId: number, resumeId: number, userId: number) {

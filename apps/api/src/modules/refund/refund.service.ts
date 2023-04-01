@@ -62,6 +62,13 @@ export class RefundService {
       throw new BadRequestException('Actor is not accepted this job')
     const { userId, firstName, middleName, lastName } =
       await this.userRepository.getUserById(actorId)
+
+    const refund = await this.repository.getRefundByApplicationId(
+      application.applicationId,
+    )
+
+    if (refund) throw new ConflictException('Refund already requested')
+
     return {
       jobId,
       title: job.title,
