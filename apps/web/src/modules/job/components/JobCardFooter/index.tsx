@@ -58,7 +58,7 @@ const JobCardFooter = (prop: FooterProps) => {
   const cancel: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.stopPropagation()
     e.preventDefault()
-    openModal!()
+    openModal?.()
   }
 
   const genderThai = genderTranslationMap[gender]
