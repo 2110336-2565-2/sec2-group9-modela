@@ -49,7 +49,7 @@ const PendingUserCardFooter = ({
 
   return (
     <FooterContainer>
-      <Button color="error" onClick={handleOpenReject}>
+      <Button color="reject" onClick={handleOpenReject}>
         <Typography variant="button">ปฏิเสธ</Typography>
       </Button>
       <Modal open={isOpenReject} onClose={closeReject}>

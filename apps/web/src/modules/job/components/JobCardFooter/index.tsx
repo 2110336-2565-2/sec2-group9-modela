@@ -136,7 +136,7 @@ const JobCardFooter = (props: FooterProps) => {
           isApplied &&
           appliedStatus === ApplicationStatus.PENDING && (
             <Button
-              color="error"
+              color="reject"
               sx={{ cursor: 'pointer', marginLeft: 'auto' }}
               onClick={cancel}
             >
@@ -147,7 +147,7 @@ const JobCardFooter = (props: FooterProps) => {
       {appliedStatus === ApplicationStatus.OFFER_SENT &&
         user?.type === UserType.ACTOR && (
           <JobOfferActions>
-            <Button color="error" onClick={rejectOnclickHandle}>
+            <Button color="reject" onClick={rejectOnclickHandle}>
               <Typography variant="button">ปฏิเสธข้อเสนอ</Typography>
             </Button>
             <Button color="success" onClick={acceptOnclickHandle}>

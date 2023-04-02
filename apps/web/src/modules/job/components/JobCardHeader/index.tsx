@@ -76,7 +76,8 @@ const JobCardHeader = (props: HeaderProps) => {
       {user?.type === UserType.ADMIN && isReport && (
         <Chip
           label="ถูกแจ้งปัญหา"
-          sx={{ color: '#AA5B5B', background: 'rgba(170, 91, 91, 0.2)' }}
+          color="reject"
+          sx={{ background: 'rgba(170, 91, 91, 0.2)' }}
         />
       )}
     </HeaderRow>

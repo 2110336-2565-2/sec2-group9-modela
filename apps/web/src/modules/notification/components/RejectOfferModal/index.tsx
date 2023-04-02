@@ -24,7 +24,7 @@ const RejectOfferModal = (props: RejectOfferModalProps) => {
         </Typography>
         <Divider variant="fullWidth" />
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Button variant="contained" color="error" onClick={handleClose}>
+          <Button variant="contained" color="reject" onClick={handleClose}>
             ยกเลิก
           </Button>
           <Button variant="contained" color="success" onClick={handleSubmit}>

@@ -18,7 +18,7 @@ const ConfirmationModal = (props: ConfirmationModalProps) => {
         <Button
           sx={{ borderRadius: 2 }}
           variant="contained"
-          color="error"
+          color="reject"
           onClick={close}
         >
           <Typography variant="button">ยกเลิก</Typography>

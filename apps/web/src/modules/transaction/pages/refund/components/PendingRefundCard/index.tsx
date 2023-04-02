@@ -113,7 +113,7 @@ const PendingRefundCard = (props: PendingRefundCardProps) => {
         <Button
           onClick={() => handleClickReject(jobId, actorId)}
           sx={{ borderRadius: '12px', padding: '4px' }}
-          color="error"
+          color="reject"
         >
           ไม่อนุมัติ
         </Button>

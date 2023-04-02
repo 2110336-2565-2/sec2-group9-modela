@@ -44,8 +44,8 @@ const NotiCardFooter = (props: FooterProps) => {
       ) : (
         <>
           <Button
+            color="reject"
             sx={{
-              color: '#AA5B5B',
               cursor: 'pointer',
               marginRight: 'auto',
               width: 'fit-content',
@@ -57,8 +57,8 @@ const NotiCardFooter = (props: FooterProps) => {
             ปฏิเสธข้อเสนอ
           </Button>
           <Button
+            color="success"
             sx={{
-              color: '#66A373',
               cursor: 'pointer',
               marginLeft: 'auto',
               width: 'fit-content',

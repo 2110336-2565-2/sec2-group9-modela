@@ -22,12 +22,17 @@ const theme = createTheme({
       default: '#FFFFFF',
       paper: '#FFFFFF',
     },
+    reject: {
+      main: '#AA5B5B',
+      contrastText: '#FFFFFF',
+    },
     error: {
       main: '#B00020',
       contrastText: '#FFFFFF',
     },
     success: {
-      main: '#32A31F',
+      main: '#66A373',
+      contrastText: '#FFFFFF',
     },
     common: {
       black: '#000000',

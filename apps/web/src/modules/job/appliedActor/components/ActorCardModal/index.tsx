@@ -31,7 +31,7 @@ const ActorCardModal = (props: ActorCardModalProps) => {
         <Button
           sx={{ borderRadius: '12px' }}
           variant="contained"
-          color="error"
+          color="reject"
           onClick={close}
         >
           ยกเลิก
