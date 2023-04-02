@@ -25,6 +25,7 @@ const JobCardFooter = (prop: FooterProps) => {
     setFocusId,
     setTitle,
     jobTitle,
+    openModal,
   } = prop
   const { user } = useUser()
 
@@ -53,6 +54,11 @@ const JobCardFooter = (prop: FooterProps) => {
     e.preventDefault()
     setFocustedJobHandle()
     openAcceptModal?.()
+  }
+  const cancel: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.stopPropagation()
+    e.preventDefault()
+    openModal?.()
   }
 
   const genderThai = genderTranslationMap[gender]
@@ -124,6 +130,17 @@ const JobCardFooter = (prop: FooterProps) => {
               onClick={apply}
             >
               สมัครงาน
+            </Button>
+          )}
+        {status === JobStatus.OPEN &&
+          isApplied &&
+          appliedStatus === ApplicationStatus.PENDING && (
+            <Button
+              color="error"
+              sx={{ cursor: 'pointer', marginLeft: 'auto' }}
+              onClick={cancel}
+            >
+              ยกเลิกสมัครงาน
             </Button>
           )}
       </FooterRow>
