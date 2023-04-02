@@ -10,7 +10,7 @@ import React from 'react'
 import { FooterRow, JobOfferActions, SameDiv } from './styled'
 import { FooterProps } from './types'
 
-const JobCardFooter = (prop: FooterProps) => {
+const JobCardFooter = (props: FooterProps) => {
   const {
     actorCount,
     wage,
@@ -26,7 +26,7 @@ const JobCardFooter = (prop: FooterProps) => {
     setTitle,
     jobTitle,
     openModal,
-  } = prop
+  } = props
   const { user } = useUser()
 
   const apply: React.MouseEventHandler<HTMLButtonElement> = (e) => {

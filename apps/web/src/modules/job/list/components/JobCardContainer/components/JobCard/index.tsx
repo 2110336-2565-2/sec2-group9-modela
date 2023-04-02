@@ -8,7 +8,7 @@ import React from 'react'
 import { CardContainer } from './styled'
 import { JobCardProps } from './types'
 
-export default function JobCard(prop: JobCardProps) {
+export default function JobCard(props: JobCardProps) {
   const {
     actorCount,
     description,
@@ -21,7 +21,7 @@ export default function JobCard(prop: JobCardProps) {
     isApplied,
     isHistory,
     ...headerProps
-  } = prop
+  } = props
 
   return (
     <Link

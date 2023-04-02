@@ -5,7 +5,7 @@ import React from 'react'
 import { HeaderRow, TitleContainer } from './styled'
 import { HeaderProps } from './types'
 
-const UnpaidJobCardHeader = (prop: HeaderProps) => {
+const UnpaidJobCardHeader = (props: HeaderProps) => {
   const {
     jobCastingImageUrl,
     companyName,
@@ -13,7 +13,7 @@ const UnpaidJobCardHeader = (prop: HeaderProps) => {
     isDetail,
     castingId,
     castingName,
-  } = prop
+  } = props
 
   return (
     <HeaderRow>

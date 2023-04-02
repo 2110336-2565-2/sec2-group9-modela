@@ -10,8 +10,8 @@ import {
   RejectButton,
 } from './styled'
 
-const JobReportCard = (prop: GetReportsDto) => {
-  const { jobTitle, jobId, reports } = prop
+const JobReportCard = (props: GetReportsDto) => {
+  const { jobTitle, jobId, reports } = props
   const { rejectJob, rejectReport } = useReport()
 
   return (

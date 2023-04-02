@@ -11,7 +11,7 @@ import CancelAppliedModal from '../CancelAppliedModal'
 import { CardContainer } from './styled'
 import { GetAppliedJobDtoWithModalInfo } from './types'
 
-export default function JobCard(prop: GetAppliedJobDtoWithModalInfo) {
+export default function JobCard(props: GetAppliedJobDtoWithModalInfo) {
   const {
     actorCount,
     description,
@@ -26,7 +26,7 @@ export default function JobCard(prop: GetAppliedJobDtoWithModalInfo) {
     setFocusId,
     setTitle,
     ...headerProps
-  } = prop
+  } = props
 
   const { isOpen, close, open } = useSwitch()
 

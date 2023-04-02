@@ -6,8 +6,8 @@ import React from 'react'
 import { formLayout } from './constant'
 import { ShootingFormProps } from './types'
 
-const ShootingForm = (prop: ShootingFormProps) => {
-  const { index, control, remove } = prop
+const ShootingForm = (props: ShootingFormProps) => {
+  const { index, control, remove } = props
   return (
     <>
       <Grid item xs={12}>

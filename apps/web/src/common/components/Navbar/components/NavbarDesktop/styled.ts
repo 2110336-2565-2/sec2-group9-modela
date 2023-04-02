@@ -17,7 +17,7 @@ export const NavbarContainer = styled('div')`
 `
 
 export const NavbarItem = styled(Typography, {
-  shouldForwardProp: (prop) => prop !== 'focus',
+  shouldForwardProp: (props) => props !== 'focus',
 })<{ focus?: boolean }>`
   color: ${({ theme }) => theme.palette.primary.contrastText};
   font-weight: ${(props) => (props.focus ? 500 : 300)};

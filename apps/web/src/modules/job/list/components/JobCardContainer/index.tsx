@@ -5,8 +5,8 @@ import JobCard from './components/JobCard'
 import { CardBoxContainer } from './styled'
 import { JobCardContainerProps } from './types'
 
-export default function JobCardContainer(prop: JobCardContainerProps) {
-  const { jobs, maxPage, isHistory } = prop
+export default function JobCardContainer(props: JobCardContainerProps) {
+  const { jobs, maxPage, isHistory } = props
   return (
     <CardBoxContainer>
       {maxPage === 0 && (

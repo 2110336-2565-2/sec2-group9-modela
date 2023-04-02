@@ -4,11 +4,11 @@ import React from 'react'
 
 import { AddShootingButtonProps } from './type'
 
-const AddShootingButton = (prop: AddShootingButtonProps) => {
+const AddShootingButton = (props: AddShootingButtonProps) => {
   return (
     <div style={{ display: 'flex', cursor: 'pointer', marginLeft: '20px' }}>
       <Add color="primary" />
-      <Typography onClick={prop.onClick} color="primary">
+      <Typography onClick={props.onClick} color="primary">
         เพิ่มการถ่ายทำ
       </Typography>
     </div>

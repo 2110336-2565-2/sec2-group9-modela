@@ -4,8 +4,8 @@ import React from 'react'
 
 import { SearchBoxProps } from './types'
 
-export default function SearchBox(prop: SearchBoxProps) {
-  const { filterData, state, setState, labels } = prop
+export default function SearchBox(props: SearchBoxProps) {
+  const { filterData, state, setState, labels } = props
   return (
     <form
       onSubmit={(event) => {
