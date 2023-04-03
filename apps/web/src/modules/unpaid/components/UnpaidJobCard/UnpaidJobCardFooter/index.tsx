@@ -9,8 +9,8 @@ import React from 'react'
 import { FooterRow, SameDiv } from './styled'
 import { FooterProps } from './types'
 
-const UnpaidJobCardFooter = (prop: FooterProps) => {
-  const { actorCount, wage, status, dueDate, gender, jobId } = prop
+const UnpaidJobCardFooter = (props: FooterProps) => {
+  const { actorCount, wage, status, dueDate, gender, jobId } = props
 
   const genderThai = genderTranslationMap[gender]
 

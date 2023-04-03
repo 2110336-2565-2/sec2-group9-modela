@@ -8,7 +8,7 @@ import React from 'react'
 import ShootingDetail from './components/ShootingDetail'
 import { CardContainer, CorporateRow, DescriptionRow } from './styled'
 
-const JobCard = (prop: GetJobDto) => {
+const JobCard = (props: GetJobDto) => {
   const {
     actorCount,
     description,
@@ -23,7 +23,7 @@ const JobCard = (prop: GetJobDto) => {
     jobId,
     isApplied,
     ...headerProps
-  } = prop
+  } = props
 
   const genderThai = genderTranslationMap[gender]
 

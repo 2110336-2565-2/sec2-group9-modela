@@ -10,7 +10,7 @@ import ApplicationStatusChip from './components/applicationStatusChip'
 import { HeaderRow, TitleContainer } from './styled'
 import { HeaderProps } from './types'
 
-const JobCardHeader = (prop: HeaderProps) => {
+const JobCardHeader = (props: HeaderProps) => {
   const {
     jobCastingImageUrl,
     companyName,
@@ -23,7 +23,7 @@ const JobCardHeader = (prop: HeaderProps) => {
     isReport,
     appliedStatus,
     isHistory,
-  } = prop
+  } = props
   const { user } = useUser()
 
   return (

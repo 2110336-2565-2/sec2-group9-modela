@@ -6,7 +6,7 @@ import { CardContainer } from './styled'
 import UnpaidJobCardFooter from './UnpaidJobCardFooter'
 import UnpaidJobCardHeader from './UnpaidJobCardHeader'
 
-export default function UnpaidJobCard(prop: GetJobCardDto) {
+export default function UnpaidJobCard(props: GetJobCardDto) {
   const {
     actorCount,
     description,
@@ -17,7 +17,7 @@ export default function UnpaidJobCard(prop: GetJobCardDto) {
     status,
     isApplied,
     ...headerProps
-  } = prop
+  } = props
 
   return (
     <CardContainer>

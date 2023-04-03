@@ -10,8 +10,8 @@ import React, { useMemo } from 'react'
 import { Line } from './styled'
 import { ShootingDetailProps } from './types'
 
-const ShootingDetail = (prop: ShootingDetailProps) => {
-  const { data, idx } = prop
+const ShootingDetail = (props: ShootingDetailProps) => {
+  const { data, idx } = props
   const Date = useMemo(() => {
     const startDate = formatDate(data.startDate)
     const endDate = formatDate(data.endDate)
