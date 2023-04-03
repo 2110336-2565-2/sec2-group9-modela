@@ -1,4 +1,4 @@
-import { Alert, Snackbar } from '@mui/material'
+import { Snackbar } from '@mui/material'
 import React, { createContext, useCallback, useContext, useState } from 'react'
 
 import { CustomAlert } from './styled'
@@ -31,19 +31,13 @@ export const SnackbarProvider = ({ children }: React.PropsWithChildren<{}>) => {
       {children}
       {show && (
         <Snackbar open={show} autoHideDuration={duration} onClose={handleClose}>
-          {type === 'success' ? (
-            <CustomAlert
-              onClose={handleClose}
-              severity={type}
-              sx={{ width: '100%' }}
-            >
-              {message}
-            </CustomAlert>
-          ) : (
-            <Alert onClose={handleClose} severity={type} sx={{ width: '100%' }}>
-              {message}
-            </Alert>
-          )}
+          <CustomAlert
+            onClose={handleClose}
+            severity={type}
+            sx={{ width: '100%' }}
+          >
+            {message}
+          </CustomAlert>
         </Snackbar>
       )}
     </SnackbarContext.Provider>
