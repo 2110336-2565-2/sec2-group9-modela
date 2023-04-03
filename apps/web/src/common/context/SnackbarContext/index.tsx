@@ -1,6 +1,7 @@
-import { Alert, Snackbar } from '@mui/material'
+import { Snackbar } from '@mui/material'
 import React, { createContext, useCallback, useContext, useState } from 'react'
 
+import { CustomAlert } from './styled'
 import { ISnackbarContext, SnackbarType } from './types'
 
 const SnackbarContext = createContext<ISnackbarContext>({} as ISnackbarContext)
@@ -30,9 +31,13 @@ export const SnackbarProvider = ({ children }: React.PropsWithChildren<{}>) => {
       {children}
       {show && (
         <Snackbar open={show} autoHideDuration={duration} onClose={handleClose}>
-          <Alert onClose={handleClose} severity={type} sx={{ width: '100%' }}>
+          <CustomAlert
+            onClose={handleClose}
+            severity={type}
+            sx={{ width: '100%' }}
+          >
             {message}
-          </Alert>
+          </CustomAlert>
         </Snackbar>
       )}
     </SnackbarContext.Provider>

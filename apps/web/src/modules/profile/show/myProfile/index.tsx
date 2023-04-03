@@ -51,10 +51,9 @@ const MyProfilePage = () => {
           <CircularProgress />
         ) : (
           <>
-            {user?.type === UserType.ACTOR && (
+            {user?.type === UserType.ACTOR ? (
               <ActorProfileInfo isOwn={true} {...user} {...profile} />
-            )}
-            {user?.type === UserType.CASTING && (
+            ) : (
               <CastingProfileInfo isOwn={true} {...user} {...profile} />
             )}
           </>
