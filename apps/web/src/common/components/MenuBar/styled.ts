@@ -5,6 +5,8 @@ export const MenuContainer = styled(Card)`
   padding: 16px 32px;
   display: flex;
   flex-direction: column;
+  position: sticky;
+  top: 80px;
   gap: 16px;
   z-index: 2;
 
