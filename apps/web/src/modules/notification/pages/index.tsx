@@ -55,6 +55,7 @@ const NotificationPage = () => {
         justifyContent: 'left',
         alignItems: 'flex-start',
         gap: '3.5vw',
+        height: '100%',
       }}
     >
       <PlaceFill />
