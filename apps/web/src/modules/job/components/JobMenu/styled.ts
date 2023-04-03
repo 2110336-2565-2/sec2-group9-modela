@@ -10,6 +10,8 @@ export const MenuContainer = styled('div')`
 
   ${(props) => props.theme.breakpoints.down('lg')} {
     margin-top: 45px;
+    position: relative;
+    top: 0;
     flex-direction: row;
     justify-content: space-between;
   }
