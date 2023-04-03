@@ -97,7 +97,6 @@ const JobList = () => {
           style={{
             display: 'flex',
             flexDirection: 'column',
-            width: '20vw',
             gap: '1rem',
             height: '100%',
           }}
@@ -108,7 +107,7 @@ const JobList = () => {
               variant="contained"
               sx={{
                 borderRadius: '12px',
-                width: '80%',
+                width: '100%',
                 maxWidth: '250px',
                 marginLeft: '1rem',
                 fontSize: '16px',

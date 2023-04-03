@@ -30,16 +30,12 @@ export const FilterBoxContainer = styled('div')`
   flex-direction: column;
   justify-content: right;
   padding-top: 3rem;
-  width: 20vw;
+  width: 14vw;
   gap: 1rem;
   position: sticky;
   top: 48px;
-  height: 80vh;
-  overflow-y: auto;
-  overflow-x: hidden;
   ${(props) => props.theme.breakpoints.down('lg')} {
-    width: 24vw;
-    min-width: 240px;
+    width: 19vw;
   }
   ${(props) => props.theme.breakpoints.down('md')} {
     display: none;
