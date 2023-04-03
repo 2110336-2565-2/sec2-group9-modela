@@ -109,7 +109,7 @@ const JobList = () => {
                 borderRadius: '12px',
                 width: '100%',
                 maxWidth: '250px',
-                marginLeft: '1rem',
+                marginLeft: '0.5rem',
                 fontSize: '16px',
               }}
               startIcon={<Add />}
