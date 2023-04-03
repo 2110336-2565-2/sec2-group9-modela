@@ -97,6 +97,7 @@ const JobList = () => {
             display: 'flex',
             flexDirection: 'column',
             gap: '1rem',
+            height: '100%',
           }}
         >
           <FilterContainer
