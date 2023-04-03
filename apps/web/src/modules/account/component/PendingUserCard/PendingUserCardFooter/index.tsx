@@ -61,7 +61,7 @@ const PendingUserCardFooter = ({
           display: 'flex',
           flexDirection: 'column',
           gap: '12px',
-          maxWidth: '400px',
+          maxWidth: '500px',
         }}
       >
         <UserRejectionModal setReason={setModalReason} reject={handleReject} />

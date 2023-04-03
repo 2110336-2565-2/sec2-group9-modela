@@ -1,5 +1,3 @@
-import { Modal as MUIModal } from '@mui/material'
-
 import { ContentContainer, RootContainer } from './styled'
 import { ModalProps } from './types'
 
@@ -13,13 +11,16 @@ const Modal = (props: ModalProps) => {
     ...modalProps
   } = props
   return (
-    <MUIModal {...modalProps}>
-      <RootContainer sx={rootSx} className={rootClassName}>
-        <ContentContainer sx={contentSx} className={contentClassName}>
-          {children}
-        </ContentContainer>
-      </RootContainer>
-    </MUIModal>
+    <RootContainer
+      disableEnforceFocus
+      sx={rootSx}
+      className={rootClassName}
+      {...modalProps}
+    >
+      <ContentContainer sx={contentSx} className={contentClassName}>
+        {children}
+      </ContentContainer>
+    </RootContainer>
   )
 }
 
