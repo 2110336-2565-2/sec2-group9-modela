@@ -38,6 +38,7 @@ const useActorForm = (defaultValues: ActorInfoDto) => {
       try {
         const formData = new FormData()
         Object.entries(data).forEach(([key, val]) => {
+          if (typeof val === 'undefined') return
           formData.append(key, val)
         })
 
