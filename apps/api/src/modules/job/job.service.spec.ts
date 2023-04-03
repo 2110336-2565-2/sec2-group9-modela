@@ -642,6 +642,7 @@ describe('JobService', () => {
       status: JobStatus.OPEN,
       pendingActorCount: 1,
       castingId: 1,
+      isPaid: true,
     }
     const MOCK_JOB_ID = 1
     const MOCK_USER_ID = 1
