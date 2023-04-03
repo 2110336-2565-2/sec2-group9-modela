@@ -46,6 +46,7 @@ const JobList = () => {
         justifyContent: 'left',
         alignItems: 'flex-start',
         gap: '3.5vw',
+        height: '100%',
       }}
     >
       <PlaceFill />
@@ -98,6 +99,7 @@ const JobList = () => {
             display: 'flex',
             flexDirection: 'column',
             gap: '1rem',
+            height: '100%',
           }}
         >
           {user?.type === UserType.CASTING && (

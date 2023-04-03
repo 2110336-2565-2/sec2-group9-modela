@@ -8,7 +8,7 @@ import { ActorFilterProps } from './types'
 
 const ActorFilter = ({ control }: ActorFilterProps) => {
   return (
-    <div>
+    <div style={{ position: 'sticky', top: '48px' }}>
       <Typography variant="body1" sx={{ marginLeft: '8px' }}>
         สถานะการสมัคร
       </Typography>

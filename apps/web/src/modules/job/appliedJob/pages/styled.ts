@@ -32,6 +32,8 @@ export const FilterBoxContainer = styled('div')`
   padding-top: 3rem;
   width: 14vw;
   gap: 1rem;
+  position: sticky;
+  top: 48px;
   ${(props) => props.theme.breakpoints.down('lg')} {
     width: 19vw;
   }

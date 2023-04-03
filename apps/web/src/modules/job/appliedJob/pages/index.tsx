@@ -32,6 +32,7 @@ const AppliedJobPage = () => {
     isLoading,
     isDesktop,
   } = useJobListData()
+
   const {
     isAcceptModalOpen,
     isRejectModalOpen,
@@ -45,11 +46,13 @@ const AppliedJobPage = () => {
     title,
     setTitle,
   } = useModalData()
+
   useNavbarSearch(
     useCallback(() => {
       open()
     }, [open]),
   )
+
   useNavbarFocus('jobs')
   return (
     <div
@@ -59,6 +62,7 @@ const AppliedJobPage = () => {
         justifyContent: 'center',
         alignItems: 'flex-start',
         gap: '3.5vw',
+        height: '100%',
       }}
     >
       <PlaceFill />
@@ -107,18 +111,6 @@ const AppliedJobPage = () => {
           )}
         </div>
       </JobContainer>
-      <AcceptOfferModal
-        isOpen={isAcceptModalOpen}
-        handleClose={handleAcceptCloseModal}
-        handleSubmit={handleAcceptModalSubmit}
-        title={title}
-      />
-      <RejectOfferModal
-        isOpen={isRejectModalOpen}
-        handleClose={handleRejectCloseModal}
-        handleSubmit={handleRejectModalSubmit}
-        title={title}
-      />
       <FilterBoxContainer>
         <div
           style={{
@@ -145,6 +137,19 @@ const AppliedJobPage = () => {
           filterData={filterData}
         />
       )}
+
+      <AcceptOfferModal
+        isOpen={isAcceptModalOpen}
+        handleClose={handleAcceptCloseModal}
+        handleSubmit={handleAcceptModalSubmit}
+        title={title}
+      />
+      <RejectOfferModal
+        isOpen={isRejectModalOpen}
+        handleClose={handleRejectCloseModal}
+        handleSubmit={handleRejectModalSubmit}
+        title={title}
+      />
     </div>
   )
 }
