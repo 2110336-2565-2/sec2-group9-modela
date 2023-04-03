@@ -27,7 +27,7 @@ export class ActorDto {
   @ApiProperty()
   description?: string
 
-  @ApiProperty()
+  @ApiProperty({ enum: ApplicationStatus })
   status?: ApplicationStatus
 
   @ApiPropertyOptional()

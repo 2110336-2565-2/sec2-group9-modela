@@ -42,7 +42,7 @@ export class PendingRefundActorDto {
 }
 
 export class PendingRefundDto {
-  @ApiProperty()
+  @ApiProperty({ type: PendingRefundCastingDto })
   casting: PendingRefundCastingDto
 
   @ApiProperty()
@@ -51,7 +51,7 @@ export class PendingRefundDto {
   @ApiProperty()
   title: string
 
-  @ApiProperty()
+  @ApiProperty({ type: PendingRefundActorDto })
   actor: PendingRefundActorDto
 
   @ApiProperty()

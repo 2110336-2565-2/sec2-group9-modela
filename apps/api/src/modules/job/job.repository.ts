@@ -322,7 +322,7 @@ export class JobRepository {
   ): Promise<JobSummaryDto & { castingId: number }> {
     const job = await this.prisma.job.findUnique({
       where: { jobId },
-      select: { status: true, castingId: true },
+      select: { status: true, castingId: true, isPaid: true },
     })
 
     if (!job) return null
@@ -337,6 +337,7 @@ export class JobRepository {
     return {
       castingId: job.castingId,
       status: job.status,
+      isPaid: job.isPaid,
       pendingActorCount,
     }
   }

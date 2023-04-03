@@ -416,6 +416,10 @@ export class JobService {
       )
     }
 
+    if (updateJobStatus === JobStatus.FINISHED && !job.isPaid) {
+      throw new BadRequestException('Job is not paid yet')
+    }
+
     if (
       this.JobStatusToNumber(job.status) + 1 !==
         this.JobStatusToNumber(updateJobStatus) &&

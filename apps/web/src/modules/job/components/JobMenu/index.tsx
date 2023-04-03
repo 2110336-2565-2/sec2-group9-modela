@@ -1,3 +1,4 @@
+import { JobStatus } from '@modela/dtos'
 import { AccountCircleOutlined, ArticleOutlined } from '@mui/icons-material'
 import { Typography } from '@mui/material'
 import MenuBar from 'common/components/MenuBar'
@@ -20,6 +21,7 @@ const JobMenu = ({ focus, setStatus }: JobMenuProps) => {
     handleCloseModal,
     handleStatusChange,
     handleModalOpen,
+    isPaid,
   } = useSummaryData(setStatus)
 
   return (
@@ -48,9 +50,18 @@ const JobMenu = ({ focus, setStatus }: JobMenuProps) => {
         <Typography variant="body1" sx={{ marginTop: '-4px' }}>
           มีนักแสดงที่กำลังรออยู่ {pendingActorCount} คน
         </Typography>
+        {status === JobStatus.SELECTION_ENDED && !isPaid && (
+          <Typography variant="body1" color="error" sx={{ fontWeight: 700 }}>
+            กรุณาโอนเงินก่อนจึงจะสามารถเปลี่ยนสถานะต่อได้
+          </Typography>
+        )}
       </SummaryContainer>
       {NEXT_STATUS_NAME[status!] && (
-        <StatusButton variant="contained" onClick={handleModalOpen}>
+        <StatusButton
+          variant="contained"
+          onClick={handleModalOpen}
+          disabled={status === JobStatus.SELECTION_ENDED && !isPaid}
+        >
           {NEXT_STATUS_NAME[status!]}
         </StatusButton>
       )}

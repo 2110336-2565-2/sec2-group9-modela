@@ -194,7 +194,7 @@ export class CreateJobDto implements EditJobType {
 
   @IsEnum(Gender, { each: true })
   @IsNotEmpty()
-  @ApiProperty()
+  @ApiProperty({ enum: Gender })
   gender: Gender
 
   @IsNumber()
@@ -257,7 +257,7 @@ export class GetJobCardDto extends OmitType(EditJobDto, [
 
 export class GetJobCardByAdminDto extends GetJobCardDto {
   @ApiProperty()
-  isReported: Boolean
+  isReported: boolean
 }
 
 export class SearchAppliedJobDto {
@@ -308,7 +308,7 @@ export class GetJobDto extends EditJobDto {
   @ApiProperty()
   jobCastingImageUrl: string
 
-  @ApiProperty()
+  @ApiProperty({ enum: JobStatus })
   status: JobStatus
 
   @ApiProperty()
@@ -335,4 +335,7 @@ export class JobSummaryDto {
 
   @ApiProperty()
   pendingActorCount: number
+
+  @ApiProperty()
+  isPaid: boolean
 }
