@@ -60,7 +60,7 @@ const PendingUserCardFooter = ({
         contentSx={{
           display: 'flex',
           flexDirection: 'column',
-          gap: '10px',
+          gap: '12px',
           maxWidth: '400px',
         }}
       >
@@ -76,7 +76,7 @@ const PendingUserCardFooter = ({
         contentSx={{
           display: 'flex',
           flexDirection: 'column',
-          gap: '10px',
+          gap: '12px',
           maxWidth: '400px',
         }}
       >

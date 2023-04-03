@@ -11,7 +11,7 @@ const UserRejectionModal = ({ setReason, reject }: UserRejectionModalProps) => {
       <HeaderContainer>
         <Typography variant="h5">เหตุผลในการปฏิเสธ</Typography>
       </HeaderContainer>
-      <Divider sx={{ margin: '20px 8px 12px 8px' }} />
+      <Divider />
       <TextField
         required
         multiline
