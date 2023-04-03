@@ -104,8 +104,8 @@ const useJobListData = () => {
           maxPage: res.maxPage,
         }))
         setHasMore(res.maxPage > page)
+        setPage((prev) => prev + 1)
       }
-      setPage((prev) => prev + 1)
     } catch (err) {
       handleError(err)
     }
