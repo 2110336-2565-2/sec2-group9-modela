@@ -335,4 +335,7 @@ export class JobSummaryDto {
 
   @ApiProperty()
   pendingActorCount: number
+
+  @ApiProperty()
+  isPaid: boolean
 }

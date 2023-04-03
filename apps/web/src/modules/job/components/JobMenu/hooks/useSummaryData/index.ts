@@ -11,6 +11,7 @@ const useSummaryData = (setStatus?: (status: JobStatus) => void) => {
   const [summary, setSummary] = useState<Partial<JobSummaryDto>>({
     status: undefined,
     pendingActorCount: undefined,
+    isPaid: undefined,
   })
   const { isOpen: isModalOpen, close, open } = useSwitch()
   const { handleError } = useErrorHandler()
@@ -42,7 +43,9 @@ const useSummaryData = (setStatus?: (status: JobStatus) => void) => {
       needUpdate()
       close()
     } catch (err) {
-      handleError(err)
+      handleError(err, {
+        400: 'กรุณาโอนเงินก่อนจึงจะสามารถเปลี่ยนสถานะต่อได้',
+      })
     }
   }, [jobId, summary.status, needUpdate, close, handleError])
 
@@ -57,6 +60,7 @@ const useSummaryData = (setStatus?: (status: JobStatus) => void) => {
   return {
     status: summary.status,
     pendingActorCount: summary.pendingActorCount,
+    isPaid: summary.isPaid,
     isModalOpen,
     handleCloseModal,
     handleStatusChange,
