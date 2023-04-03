@@ -57,7 +57,9 @@ class MockConstructor<T, R> {
       MOCKS.push({ ...MOCK, ...this.overrides })
     }
 
-    MOCKS.map((mock) => this.omitFields.forEach((field) => delete mock[field]))
+    MOCKS.forEach((mock) =>
+      this.omitFields.forEach((field) => delete mock[field]),
+    )
     if (this.pickFields)
       MOCKS = MOCKS.map((mock) => {
         const MOCK: any = {}
