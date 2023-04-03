@@ -5,9 +5,13 @@ export const MenuContainer = styled('div')`
   flex-direction: column;
   gap: 10px;
   margin-bottom: -10px;
+  position: sticky;
+  top: 80px;
 
   ${(props) => props.theme.breakpoints.down('lg')} {
     margin-top: 45px;
+    position: relative;
+    top: 0;
     flex-direction: row;
     justify-content: space-between;
   }
@@ -19,6 +23,8 @@ export const MenuContainer = styled('div')`
 `
 
 export const SummaryContainer = styled('div')`
+  position: sticky;
+  top: 300;
   ${(props) => props.theme.breakpoints.down('lg')} {
     margin: 10px 30px 0 30px;
   }

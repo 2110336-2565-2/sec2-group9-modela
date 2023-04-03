@@ -20,6 +20,7 @@ export const TabletContainer = styled('div')`
   display: flex;
   gap: 64px;
   flex-grow: 1;
+  height: 100%;
 
   ${(props) => props.theme.breakpoints.down('lg')} {
     margin: 25px 30px;
