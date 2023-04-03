@@ -19,7 +19,7 @@ const DeleteModal = (props: IDeleteModalProps) => {
         <Typography sx={{ textAlign: 'center' }}>
           ยืนยันทำการลบเรซูเม่: {name}
         </Typography>
-        <Typography color="reject" fontWeight={500} textAlign="center">
+        <Typography color="error" fontWeight={500} textAlign="center">
           หมายเหตุ: เรซูเม่ที่ถูกใช้ในการสมัครไปแล้วจะยังคงอยู่ในระบบ
         </Typography>
         <ActionButtonContainer>

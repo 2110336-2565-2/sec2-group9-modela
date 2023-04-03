@@ -45,7 +45,7 @@ const UploadFile: FC<IUploadFileProps> = (props) => {
         <Typography
           sx={{ textAlign: 'center' }}
           variant="subtitle2"
-          color="reject"
+          color="error"
         >
           {errorMessage}
         </Typography>
