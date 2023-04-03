@@ -1,11 +1,9 @@
-import { Divider, Typography } from '@mui/material'
+import { Button, Divider, Typography } from '@mui/material'
 
 import {
   ActionButtonContainer,
-  CancelButton,
   ModalContentContainer,
   RootModalContainer,
-  SubmitButton,
 } from './styled'
 import { IDeleteModalProps } from './types'
 
@@ -25,12 +23,12 @@ const DeleteModal = (props: IDeleteModalProps) => {
           หมายเหตุ: เรซูเม่ที่ถูกใช้ในการสมัครไปแล้วจะยังคงอยู่ในระบบ
         </Typography>
         <ActionButtonContainer>
-          <CancelButton variant="contained" onClick={handleClose}>
+          <Button color="reject" variant="contained" onClick={handleClose}>
             ยกเลิก
-          </CancelButton>
-          <SubmitButton variant="contained" onClick={handleSubmit}>
+          </Button>
+          <Button color="success" variant="contained" onClick={handleSubmit}>
             ยืนยัน
-          </SubmitButton>
+          </Button>
         </ActionButtonContainer>
       </ModalContentContainer>
     </RootModalContainer>

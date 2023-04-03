@@ -24,7 +24,7 @@ const ActorCardAction = ({
 
   return (
     <ActionContainer>
-      <Button color="error" onClick={openRejectModal}>
+      <Button color="reject" onClick={openRejectModal}>
         ปฏิเสธ
       </Button>
       <Button color="success" onClick={openAcceptModal}>

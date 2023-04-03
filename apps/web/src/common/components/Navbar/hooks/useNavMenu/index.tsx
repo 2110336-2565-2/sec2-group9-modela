@@ -6,6 +6,7 @@ import {
   ArticleOutlined,
   LoginOutlined,
   LogoutOutlined,
+  MonetizationOnOutlined,
   NotificationsNoneOutlined,
   PersonAddAltOutlined,
   PostAddOutlined,
@@ -45,6 +46,7 @@ const useNavMenu = (isMobile: boolean) => {
         label: 'ส่งหลักฐานธุรกรรม',
         href: '/unpaid',
         focusKey: 'unpaid',
+        icon: <MonetizationOnOutlined />,
         castingOnly: true,
       },
       {

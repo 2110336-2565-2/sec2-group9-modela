@@ -25,7 +25,7 @@ module.exports = {
     ),
   },
   // Add more setup options before each test is run
-  setupFilesAfterEnv: ['<rootDir>/__mock__/jest.setup.js'],
+  setupFilesAfterEnv: ['<rootDir>/__mock__/jest.setup.jsx'],
   testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
   testEnvironment: 'jsdom',
   transform: {

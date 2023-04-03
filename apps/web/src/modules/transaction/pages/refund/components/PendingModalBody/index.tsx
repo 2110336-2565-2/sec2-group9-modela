@@ -14,7 +14,7 @@ const PendingModalBody = (props: ConfirmPendingModalProps) => {
         <Button
           sx={{ borderRadius: '12px' }}
           variant="contained"
-          color="error"
+          color="reject"
           onClick={handleCancel}
         >
           ยกเลิก

@@ -70,7 +70,7 @@ const SendProofOfTransactionPage = () => {
           >
             <Button
               variant="contained"
-              color="error"
+              color="reject"
               sx={{ borderRadius: '12px' }}
             >
               ยกเลิก

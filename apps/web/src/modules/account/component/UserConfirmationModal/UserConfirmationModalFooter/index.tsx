@@ -12,7 +12,7 @@ const UserConfirmationModalFooter = ({
     <FooterContainer>
       <Button
         sx={{ borderRadius: 2 }}
-        color="error"
+        color="reject"
         variant="contained"
         onClick={close}
       >

@@ -81,7 +81,7 @@ const PendingCastingCard = (props: PendingCastingCardProps) => {
         <Button
           onClick={() => handleClickReject(jobId, castingId)}
           sx={{ borderRadius: '12px', padding: '4px' }}
-          color="error"
+          color="reject"
         >
           ไม่อนุมัติ
         </Button>

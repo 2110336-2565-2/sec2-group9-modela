@@ -1,6 +1,6 @@
-import { styled } from '@mui/material'
+import { Modal, styled } from '@mui/material'
 
-export const RootContainer = styled('div')`
+export const RootContainer = styled(Modal)`
   display: flex;
   width: 100%;
   height: 100%;

@@ -1,13 +1,8 @@
-import { Divider, Typography } from '@mui/material'
+import { Button, Divider, Typography } from '@mui/material'
 
 import { NEXT_STATUS_NAME } from '../../constants'
 import { ADDITION_DESC } from './constants'
-import {
-  CancelButton,
-  ModalContentContainer,
-  RootModalContainer,
-  SubmitButton,
-} from './styled'
+import { ModalContentContainer, RootModalContainer } from './styled'
 import { IChangeStatusModalProps } from './types'
 
 const StatusChangeModal = (props: IChangeStatusModalProps) => {
@@ -32,12 +27,12 @@ const StatusChangeModal = (props: IChangeStatusModalProps) => {
           </Typography>
         </Typography>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <CancelButton variant="contained" onClick={handleClose}>
+          <Button color="reject" variant="contained" onClick={handleClose}>
             ยกเลิก
-          </CancelButton>
-          <SubmitButton variant="contained" onClick={handleSubmit}>
+          </Button>
+          <Button color="success" variant="contained" onClick={handleSubmit}>
             ยืนยัน
-          </SubmitButton>
+          </Button>
         </div>
       </ModalContentContainer>
     </RootModalContainer>

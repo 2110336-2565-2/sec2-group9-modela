@@ -58,7 +58,7 @@ const ResumeEdit = (props: IResumeEditProps) => {
         ) : (
           <ButtonContainer>
             <Button
-              color="error"
+              color="reject"
               variant="text"
               onClick={handleCancel}
               sx={{ padding: 0 }}

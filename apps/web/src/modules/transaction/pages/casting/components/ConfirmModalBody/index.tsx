@@ -21,7 +21,7 @@ const ConfirmModalBody = (props: ConfirmModalBodyProps) => {
         <Button
           sx={{ borderRadius: '12px' }}
           variant="contained"
-          color="error"
+          color="reject"
           onClick={handleCancel}
         >
           ยกเลิก
