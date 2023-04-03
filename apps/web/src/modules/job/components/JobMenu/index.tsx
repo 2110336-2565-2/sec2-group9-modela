@@ -1,4 +1,4 @@
-import { JobStatus } from '@modela/database'
+import { JobStatus } from '@modela/dtos'
 import { AccountCircleOutlined, ArticleOutlined } from '@mui/icons-material'
 import { Typography } from '@mui/material'
 import MenuBar from 'common/components/MenuBar'
