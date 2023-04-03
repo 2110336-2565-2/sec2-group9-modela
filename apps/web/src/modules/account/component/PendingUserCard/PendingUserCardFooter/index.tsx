@@ -1,4 +1,5 @@
-import { Button, Modal, Typography } from '@mui/material'
+import { Button, Typography } from '@mui/material'
+import Modal from 'common/components/Modal'
 import useSwitch from 'common/hooks/useSwitch'
 import React from 'react'
 import { useCallback } from 'react'
@@ -52,13 +53,33 @@ const PendingUserCardFooter = ({
       <Button color="reject" onClick={handleOpenReject}>
         <Typography variant="button">ปฏิเสธ</Typography>
       </Button>
-      <Modal open={isOpenReject} onClose={closeReject}>
+      <Modal
+        open={isOpenReject}
+        onClose={closeReject}
+        rootSx={{ padding: '10px' }}
+        contentSx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '10px',
+          maxWidth: '400px',
+        }}
+      >
         <UserRejectionModal setReason={setModalReason} reject={handleReject} />
       </Modal>
       <Button color="success" onClick={handleOpenAccept}>
         <Typography variant="button">อนุมัติ</Typography>
       </Button>
-      <Modal open={isOpenAccept} onClose={closeAccept}>
+      <Modal
+        open={isOpenAccept}
+        onClose={closeAccept}
+        rootSx={{ padding: '10px' }}
+        contentSx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '10px',
+          maxWidth: '400px',
+        }}
+      >
         <UserConfirmationModal
           userId={userId}
           close={closeAccept}
