@@ -7,7 +7,7 @@ export class SendNotificationDto {
   @ApiProperty()
   userId: number
 
-  @ApiProperty()
+  @ApiProperty({ enum: NotificationType })
   type: NotificationType
 
   @ApiPropertyOptional()
@@ -52,10 +52,10 @@ export class NotificationDto {
   @ApiProperty()
   notificationId: number
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: NotificationActorDto })
   actor?: NotificationActorDto
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: NotificationJobDto })
   job?: NotificationJobDto
 
   @ApiProperty({ enum: NotificationType })

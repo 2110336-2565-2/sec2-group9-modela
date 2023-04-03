@@ -12,10 +12,10 @@ export class GetUserDto implements Partial<User & Casting> {
   @ApiProperty()
   lastName: string
 
-  @ApiProperty()
+  @ApiProperty({ enum: UserStatus })
   status: UserStatus
 
-  @ApiProperty()
+  @ApiProperty({ enum: UserType })
   type: UserType
 
   @ApiProperty()
@@ -31,7 +31,7 @@ export class GetUserDto implements Partial<User & Casting> {
 export class UpdateUserStatusDto {
   @IsNotEmpty()
   @IsEnum(UserStatus)
-  @ApiProperty({enum: UserStatus})
+  @ApiProperty({ enum: UserStatus })
   status: UserStatus
 
   @IsOptional()
@@ -40,44 +40,44 @@ export class UpdateUserStatusDto {
   rejectedReason?: string
 }
 
-export class PendingUserDataDto{
+export class PendingUserDataDto {
   @ApiProperty()
-  userId: number;
+  userId: number
 
   @ApiProperty()
-  firstName: string;
+  firstName: string
 
   @ApiProperty()
-  middleName?: string;
+  middleName?: string
 
   @ApiProperty()
-  lastName: string;
+  lastName: string
 
   @ApiPropertyOptional()
   rejectedReason?: string
 
   // Casting
   @ApiProperty()
-  companyName?: string;
+  companyName?: string
 
   @ApiProperty()
-  companyId?: string;
+  companyId?: string
 
   @ApiProperty()
-  employmentCertUrl?: string;
+  employmentCertUrl?: string
 
   // Actor
   @ApiProperty()
-  idCardImageUrl?: string;
+  idCardImageUrl?: string
 
   @ApiProperty()
-  ssn?: string;
+  ssn?: string
 }
 
 export class PendingUserDto {
-  @ApiProperty()
+  @ApiProperty({ enum: UserType })
   type: UserType
 
-  @ApiProperty()
+  @ApiProperty({ type: PendingUserDataDto })
   data: PendingUserDataDto
 }

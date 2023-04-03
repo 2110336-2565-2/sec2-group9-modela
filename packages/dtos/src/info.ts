@@ -13,7 +13,7 @@ export class ActorInfoWithReasonDto {
   @ApiProperty()
   rejectedReason: string
 
-  @ApiProperty()
+  @ApiProperty({ type: ActorInfoDto, isArray: true })
   data: ActorInfoDto
 }
 
@@ -37,7 +37,7 @@ export class CastingInfoWithReasonDto {
   @ApiProperty()
   rejectedReason: string
 
-  @ApiProperty()
+  @ApiProperty({ type: CastingInfoDto })
   data: CastingInfoDto
 }
 

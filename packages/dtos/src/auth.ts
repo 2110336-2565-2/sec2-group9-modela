@@ -61,7 +61,7 @@ export class SignupActorDto implements Partial<Actor & User> {
   ssn: string
 
   @IsEnum(Gender)
-  @ApiProperty()
+  @ApiProperty({ enum: Gender })
   gender: Gender
 
   @IsPhoneNumber('TH')
