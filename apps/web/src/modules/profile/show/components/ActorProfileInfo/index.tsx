@@ -4,7 +4,7 @@ import ProfileImage from 'common/components/ProfileImage'
 import React from 'react'
 
 import InfoText from '../InfoText'
-import { ContentContainer, SubContentContainer } from './styled'
+import { ContentContainer, StyledRating, SubContentContainer } from './styled'
 import { ProfileInfoProps } from './types'
 
 export default function ActorProfileInfo(props: ProfileInfoProps) {
@@ -52,6 +52,12 @@ export default function ActorProfileInfo(props: ProfileInfoProps) {
           }}
         />
       </Grid>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+        <StyledRating value={2.62} precision={0.01} readOnly />
+        <Typography variant="subtitle2" sx={{ paddingTop: '2px' }}>
+          2.62 คะแนน
+        </Typography>
+      </div>
       <ContentContainer>
         <SubContentContainer sx={{ width: '50%' }}>
           <InfoText main="ชื่อเล่น" info={nickname} />
