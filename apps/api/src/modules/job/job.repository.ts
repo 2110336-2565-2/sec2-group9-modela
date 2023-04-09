@@ -269,6 +269,7 @@ export class JobRepository {
       castingId: job.castingId,
       castingName: job.Casting.User.firstName,
       appliedStatus: job.Application[0].status,
+      isPaid: job.isPaid,
     }))
 
     return jobsWithApplicationStatus

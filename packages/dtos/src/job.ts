@@ -253,6 +253,9 @@ export class GetJobCardDto extends OmitType(EditJobDto, [
 
   @ApiProperty({ enum: JobStatus })
   status: JobStatus
+
+  @ApiProperty()
+  isPaid?: boolean
 }
 
 export class GetJobCardByAdminDto extends GetJobCardDto {
