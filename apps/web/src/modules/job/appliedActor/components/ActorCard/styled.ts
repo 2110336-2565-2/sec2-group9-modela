@@ -7,10 +7,3 @@ export const CardContainer = styled(Card)`
   gap: 16px;
   padding: 16px 14px 8px 14px;
 `
-export const ResumeDownloadButton = styled('a')`
-  display: flex;
-  width: fit-content;
-  gap: 8px;
-  align-items: center;
-  text-decoration: none;
-`

@@ -1,5 +1,4 @@
-import { ApplicationStatus } from '@modela/dtos'
-import { FileDownloadOutlined } from '@mui/icons-material'
+import { ApplicationStatus, JobStatus } from '@modela/dtos'
 import { Divider, Typography } from '@mui/material'
 import Modal from 'common/components/Modal'
 import Link from 'next/link'
@@ -9,11 +8,14 @@ import ActorCardAction from '../ActorCardAction'
 import ActorCardHeader from '../ActorCardHeader'
 import ActorCardModal from '../ActorCardModal'
 import useActorCardAction from '../ActorCardModal/hooks/useActorCardAction'
-import { CardContainer, ResumeDownloadButton } from './styled'
+import ActorCardReview from '../ActorCardReview'
+import ResumeDownloadButton from '../ResumeDownloadButton'
+import { CardContainer } from './styled'
 import { ActorCardProps } from './types'
 
 const ActorCard = (props: ActorCardProps) => {
-  const { actorId, status, description, resumeUrl, ...headerProps } = props
+  const { actorId, status, description, resumeUrl, jobStatus, ...headerProps } =
+    props
   const { open, close, isOpen, isRejected, setIsRejected } =
     useActorCardAction()
   return (
@@ -29,19 +31,12 @@ const ActorCard = (props: ActorCardProps) => {
           <Typography variant="subtitle2" color="#00000099">
             {description}
           </Typography>
-          <ResumeDownloadButton
-            target="_blank"
-            rel="noopener"
-            href={resumeUrl}
-            onClick={(e) => {
-              e.stopPropagation()
-            }}
-          >
-            <FileDownloadOutlined color="primary" />
-            <Typography variant="subtitle2" color="primary">
-              เรซูเม่
-            </Typography>
-          </ResumeDownloadButton>
+          {jobStatus === JobStatus.FINISHED ? (
+            <ActorCardReview />
+          ) : (
+            <ResumeDownloadButton resumeUrl={resumeUrl} />
+          )}
+
           {status === ApplicationStatus.PENDING && (
             <>
               <Divider sx={{ margin: '-8px 0' }} />
