@@ -123,7 +123,7 @@ export class ApplicationController {
     @Body() ratingDto: RatingDto,
     @User() user: JwtDto,
   ) {
-    this.applicationService.rateActor(
+    return await this.applicationService.rateActor(
       +jobId,
       +actorId,
       user.userId,
