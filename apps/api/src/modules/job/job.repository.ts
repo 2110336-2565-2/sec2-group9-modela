@@ -209,6 +209,7 @@ export class JobRepository {
       castingId: job.castingId,
       castingName: job.Casting.User.firstName,
       isReported: job.Report.length > 0,
+      isPaid: job.isPaid,
     }))
     return selectedFields
   }
