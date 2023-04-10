@@ -164,7 +164,7 @@ export class JobRepository {
       castingName: job.Casting.User.firstName,
       isApplied:
         user.type === UserType.ACTOR ? job.Application.length > 0 : undefined,
-      isPaid: job.isPaid,
+      isPaid: user.type === UserType.CASTING ? job.isPaid : undefined,
     }))
     return selectedFields
   }
