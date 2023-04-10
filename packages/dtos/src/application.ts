@@ -1,6 +1,13 @@
 import { ApplicationStatus } from '@modela/database'
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
-import { IsEnum, IsOptional, IsString } from 'class-validator'
+import {
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Max,
+  Min,
+} from 'class-validator'
 
 export class ActorDto {
   @ApiProperty()
@@ -54,4 +61,12 @@ export class GetAppliedActorQuery {
 export class GetApplicationId {
   @ApiProperty()
   applicationId: number
+}
+
+export class RatingDto {
+  @ApiProperty()
+  @IsNumber()
+  @Min(1)
+  @Max(5)
+  rating: number
 }

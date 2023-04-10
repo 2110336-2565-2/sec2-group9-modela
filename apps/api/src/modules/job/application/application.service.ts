@@ -116,4 +116,37 @@ export class ApplicationService {
 
     await this.repository.deleteApplication(application.applicationId)
   }
+
+  async rateActor(
+    jobId: number,
+    actorId: number,
+    castingId: number,
+    rating: number,
+  ) {
+    const job = await this.jobRepository.getBaseJobById(jobId)
+
+    if (!job) throw new NotFoundException('Job not found')
+
+    if (job.status !== JobStatus.FINISHED)
+      throw new BadRequestException('Job is not finished')
+
+    if (job.castingId !== castingId)
+      throw new ForbiddenException('User is not the owner of this job')
+
+    const application = await this.repository.getApplicationbyActorJob(
+      actorId,
+      jobId,
+    )
+
+    if (!application)
+      throw new BadRequestException(`Actor didn't apply for this job`)
+
+    if (application.status !== ApplicationStatus.OFFER_ACCEPTED)
+      throw new BadRequestException('Application is not offer accepted')
+
+    if (application.rating !== null)
+      throw new BadRequestException('Actor already rated')
+
+    await this.repository.rateActor(application.applicationId, rating)
+  }
 }
