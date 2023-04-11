@@ -115,6 +115,5 @@ export class ApplicationRepository {
         rating: rating,
       },
     })
-    return
   }
 }
