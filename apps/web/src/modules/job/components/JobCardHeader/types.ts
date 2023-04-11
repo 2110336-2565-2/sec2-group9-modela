@@ -12,4 +12,5 @@ export interface HeaderProps {
   isReport?: Boolean
   appliedStatus?: ApplicationStatus
   isHistory?: Boolean
+  isPaid?: Boolean
 }

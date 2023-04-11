@@ -1,5 +1,9 @@
 import { JobStatus, UserType } from '@modela/dtos'
-import { EditOutlined, ReportOutlined } from '@mui/icons-material'
+import {
+  EditOutlined,
+  MoneyOffOutlined,
+  ReportOutlined,
+} from '@mui/icons-material'
 import { Chip, IconButton, Tooltip, Typography } from '@mui/material'
 import ProfileImage from 'common/components/ProfileImage'
 import { useUser } from 'common/context/UserContext'
@@ -23,6 +27,7 @@ const JobCardHeader = (props: HeaderProps) => {
     isReport,
     appliedStatus,
     isHistory,
+    isPaid,
   } = props
   const { user } = useUser()
 
@@ -63,6 +68,16 @@ const JobCardHeader = (props: HeaderProps) => {
       {appliedStatus && (
         <ApplicationStatusChip applicationStatus={appliedStatus} />
       )}
+      {user?.type === UserType.CASTING &&
+        status === JobStatus.SELECTION_ENDED && (
+          <div>
+            {isPaid ? (
+              <MoneyOffOutlined fontSize="small" color="success" />
+            ) : (
+              <MoneyOffOutlined fontSize="small" color="error" />
+            )}
+          </div>
+        )}
       {user?.type === UserType.CASTING && status === JobStatus.OPEN && (
         <Tooltip title="Edit job">
           <IconButton
