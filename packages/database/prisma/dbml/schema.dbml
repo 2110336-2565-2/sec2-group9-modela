@@ -115,6 +115,7 @@ Table Application {
   resumeId Int [not null]
   status ApplicationStatus [not null]
   isPaid Boolean [not null, default: false]
+  rating Int
   createdAt DateTime [default: `now()`, not null]
   Job Job [not null]
   Actor Actor [not null]

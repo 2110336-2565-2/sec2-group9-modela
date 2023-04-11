@@ -4,6 +4,7 @@ import {
   GetAppliedActorDto,
   GetAppliedActorQuery,
   JwtDto,
+  RatingDto,
   ResumeIdDto,
 } from '@modela/dtos'
 import { Controller, Get, Param } from '@nestjs/common'
@@ -101,5 +102,32 @@ export class ApplicationController {
   @ApiForbiddenResponse({ description: 'User is not Actor' })
   async cancelApplication(@Param('jobId') jobId: string, @User() user: JwtDto) {
     return await this.applicationService.cancelApplication(+jobId, user.userId)
+  }
+
+  @Post(':jobId/actors/:actorId/rating')
+  @UseAuthGuard(UserType.CASTING)
+  @ApiOperation({ summary: 'casting rate actor application' })
+  @ApiCreatedResponse()
+  @ApiBadRequestResponse({
+    description:
+      'actor didn’t apply for this job or application status is not offer accepted and job is not finished',
+  })
+  @ApiUnauthorizedResponse({ description: 'User is not login' })
+  @ApiNotFoundResponse({ description: 'Job not found' })
+  @ApiForbiddenResponse({
+    description: 'User is not Casting or User is not the owner of this job',
+  })
+  async rateActor(
+    @Param('jobId') jobId: string,
+    @Param('actorId') actorId: string,
+    @Body() ratingDto: RatingDto,
+    @User() user: JwtDto,
+  ) {
+    return await this.applicationService.rateActor(
+      +jobId,
+      +actorId,
+      user.userId,
+      ratingDto.rating,
+    )
   }
 }

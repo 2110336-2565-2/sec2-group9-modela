@@ -105,4 +105,15 @@ export class ApplicationRepository {
     })
     return
   }
+
+  async rateActor(applicationId: number, rating: number) {
+    await this.prisma.application.update({
+      where: {
+        applicationId,
+      },
+      data: {
+        rating: rating,
+      },
+    })
+  }
 }

@@ -162,6 +162,7 @@ model Application {
   resumeId      Int
   status        ApplicationStatus
   isPaid        Boolean           @default(false)
+  rating        Int?
   createdAt     DateTime          @default(now())
 
   Job          Job            @relation(fields: [jobId], references: [jobId])

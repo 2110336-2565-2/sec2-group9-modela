@@ -44,6 +44,10 @@ export class CreditService {
     )
   }
 
+  calculateTransactionAmount(wage: number, actorCount: number) {
+    return wage * actorCount * 1.1
+  }
+
   async getTransactionDetail(
     jobId: number,
     castingId: number,
@@ -58,7 +62,7 @@ export class CreditService {
     return {
       jobId,
       title: job.title,
-      amount: job.wage * actorCount,
+      amount: this.calculateTransactionAmount(job.wage, actorCount),
       //Mock might change later
       bankAccount: '1234567890',
       bankName: 'Bank BCA',
@@ -85,7 +89,7 @@ export class CreditService {
 
     await this.repository.createCreditTransaction(
       jobId,
-      job.wage * actorCount,
+      this.calculateTransactionAmount(job.wage, actorCount),
       data.proofUrl,
     )
   }
