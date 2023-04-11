@@ -1,5 +1,6 @@
-import { JobStatus, UserType } from '@modela/dtos'
+import { ApplicationStatus, JobStatus, UserType } from '@modela/dtos'
 import {
+  AttachMoneyOutlined,
   EditOutlined,
   MoneyOffOutlined,
   ReportOutlined,
@@ -65,16 +66,35 @@ const JobCardHeader = (props: HeaderProps) => {
           </IconButton>
         </Tooltip>
       )}
+      {user?.type === UserType.ACTOR &&
+        status === JobStatus.SELECTION_ENDED &&
+        appliedStatus === ApplicationStatus.OFFER_ACCEPTED && (
+          <div style={{ paddingTop: '5px' }}>
+            {isPaid ? (
+              <Tooltip title="Job is paid">
+                <AttachMoneyOutlined fontSize="small" color="success" />
+              </Tooltip>
+            ) : (
+              <Tooltip title="Job is unpaid">
+                <MoneyOffOutlined fontSize="small" color="error" />
+              </Tooltip>
+            )}
+          </div>
+        )}
       {appliedStatus && (
         <ApplicationStatusChip applicationStatus={appliedStatus} />
       )}
       {user?.type === UserType.CASTING &&
         status === JobStatus.SELECTION_ENDED && (
-          <div>
+          <div style={{ padding: '8px' }}>
             {isPaid ? (
-              <MoneyOffOutlined fontSize="small" color="success" />
+              <Tooltip title="Job is paid">
+                <AttachMoneyOutlined fontSize="small" color="success" />
+              </Tooltip>
             ) : (
-              <MoneyOffOutlined fontSize="small" color="error" />
+              <Tooltip title="Job is unpaid">
+                <MoneyOffOutlined fontSize="small" color="error" />
+              </Tooltip>
             )}
           </div>
         )}
