@@ -164,7 +164,7 @@ export class JobRepository {
       castingName: job.Casting.User.firstName,
       isApplied:
         user.type === UserType.ACTOR ? job.Application.length > 0 : undefined,
-      isPaid: job.isPaid,
+      isPaid: user.type === UserType.CASTING ? job.isPaid : undefined,
     }))
     return selectedFields
   }
@@ -209,6 +209,7 @@ export class JobRepository {
       castingId: job.castingId,
       castingName: job.Casting.User.firstName,
       isReported: job.Report.length > 0,
+      isPaid: job.isPaid,
     }))
     return selectedFields
   }
@@ -269,6 +270,7 @@ export class JobRepository {
       castingId: job.castingId,
       castingName: job.Casting.User.firstName,
       appliedStatus: job.Application[0].status,
+      isPaid: job.isPaid,
     }))
 
     return jobsWithApplicationStatus
