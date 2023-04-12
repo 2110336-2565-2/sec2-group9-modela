@@ -1,6 +1,6 @@
 import { GetJobCardDto } from '@modela/dtos'
 
 export interface JobCardProps extends GetJobCardDto {
-  isReported?: Boolean
+  isReported?: boolean
   isHistory?: boolean
 }
