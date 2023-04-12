@@ -9,8 +9,8 @@ export interface HeaderProps {
   isDetail?: boolean
   castingId: number
   castingName: string
-  isReport?: Boolean
+  isReport?: boolean
   appliedStatus?: ApplicationStatus
-  isHistory?: Boolean
-  isPaid?: Boolean
+  isHistory?: boolean
+  isPaid?: boolean
 }

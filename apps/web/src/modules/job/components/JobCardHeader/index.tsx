@@ -57,7 +57,7 @@ const JobCardHeader = (props: HeaderProps) => {
         </Typography>
       </TitleContainer>
       {user?.type === UserType.ACTOR && !appliedStatus && !isHistory && (
-        <Tooltip title="Report job">
+        <Tooltip title="แจ้งปัญหางาน">
           <IconButton
             href={`/report/${jobId}`}
             onClick={(ev) => ev.stopPropagation()}
@@ -71,11 +71,11 @@ const JobCardHeader = (props: HeaderProps) => {
         appliedStatus === ApplicationStatus.OFFER_ACCEPTED && (
           <div style={{ paddingTop: '5px' }}>
             {isPaid ? (
-              <Tooltip title="Job is paid">
+              <Tooltip title="งานนี้จ่ายเงินแล้ว">
                 <AttachMoneyOutlined fontSize="small" color="success" />
               </Tooltip>
             ) : (
-              <Tooltip title="Job is unpaid">
+              <Tooltip title="งานนี้ยังไม่จ่ายเงิน">
                 <MoneyOffOutlined fontSize="small" color="error" />
               </Tooltip>
             )}
@@ -88,18 +88,18 @@ const JobCardHeader = (props: HeaderProps) => {
         status === JobStatus.SELECTION_ENDED && (
           <div style={{ padding: '8px' }}>
             {isPaid ? (
-              <Tooltip title="Job is paid">
+              <Tooltip title="งานนี้จ่ายเงินแล้ว">
                 <AttachMoneyOutlined fontSize="small" color="success" />
               </Tooltip>
             ) : (
-              <Tooltip title="Job is unpaid">
+              <Tooltip title="งานนี้ยังไม่จ่ายเงิน">
                 <MoneyOffOutlined fontSize="small" color="error" />
               </Tooltip>
             )}
           </div>
         )}
       {user?.type === UserType.CASTING && status === JobStatus.OPEN && (
-        <Tooltip title="Edit job">
+        <Tooltip title="แก้ไขงาน">
           <IconButton
             href={`/job/${jobId}/edit`}
             onClick={(ev) => ev.stopPropagation()}
