@@ -1,5 +1,10 @@
-import { JobStatus, UserType } from '@modela/dtos'
-import { EditOutlined, ReportOutlined } from '@mui/icons-material'
+import { ApplicationStatus, JobStatus, UserType } from '@modela/dtos'
+import {
+  AttachMoneyOutlined,
+  EditOutlined,
+  MoneyOffOutlined,
+  ReportOutlined,
+} from '@mui/icons-material'
 import { Chip, IconButton, Tooltip, Typography } from '@mui/material'
 import ProfileImage from 'common/components/ProfileImage'
 import { useUser } from 'common/context/UserContext'
@@ -23,6 +28,7 @@ const JobCardHeader = (props: HeaderProps) => {
     isReport,
     appliedStatus,
     isHistory,
+    isPaid,
   } = props
   const { user } = useUser()
 
@@ -51,7 +57,7 @@ const JobCardHeader = (props: HeaderProps) => {
         </Typography>
       </TitleContainer>
       {user?.type === UserType.ACTOR && !appliedStatus && !isHistory && (
-        <Tooltip title="Report job">
+        <Tooltip title="แจ้งปัญหางาน">
           <IconButton
             href={`/report/${jobId}`}
             onClick={(ev) => ev.stopPropagation()}
@@ -60,11 +66,40 @@ const JobCardHeader = (props: HeaderProps) => {
           </IconButton>
         </Tooltip>
       )}
+      {user?.type === UserType.ACTOR &&
+        status === JobStatus.SELECTION_ENDED &&
+        appliedStatus === ApplicationStatus.OFFER_ACCEPTED && (
+          <div style={{ paddingTop: '5px' }}>
+            {isPaid ? (
+              <Tooltip title="งานนี้จ่ายเงินแล้ว">
+                <AttachMoneyOutlined fontSize="small" color="success" />
+              </Tooltip>
+            ) : (
+              <Tooltip title="งานนี้ยังไม่จ่ายเงิน">
+                <MoneyOffOutlined fontSize="small" color="error" />
+              </Tooltip>
+            )}
+          </div>
+        )}
       {appliedStatus && (
         <ApplicationStatusChip applicationStatus={appliedStatus} />
       )}
+      {user?.type === UserType.CASTING &&
+        status === JobStatus.SELECTION_ENDED && (
+          <div style={{ padding: '8px' }}>
+            {isPaid ? (
+              <Tooltip title="งานนี้จ่ายเงินแล้ว">
+                <AttachMoneyOutlined fontSize="small" color="success" />
+              </Tooltip>
+            ) : (
+              <Tooltip title="งานนี้ยังไม่จ่ายเงิน">
+                <MoneyOffOutlined fontSize="small" color="error" />
+              </Tooltip>
+            )}
+          </div>
+        )}
       {user?.type === UserType.CASTING && status === JobStatus.OPEN && (
-        <Tooltip title="Edit job">
+        <Tooltip title="แก้ไขงาน">
           <IconButton
             href={`/job/${jobId}/edit`}
             onClick={(ev) => ev.stopPropagation()}
