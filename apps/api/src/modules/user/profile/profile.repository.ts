@@ -74,7 +74,11 @@ export class ProfileRepository {
         userId: id,
       },
       include: {
-        Actor: true,
+        Actor: {
+          include: {
+            Application: true,
+          },
+        },
         Casting: true,
       },
     })
@@ -97,6 +101,15 @@ export class ProfileRepository {
     if (user.type === UserType.ACTOR) {
       //calculate age from birthDate
       let actorAge = 0
+      let rating = 0
+      let ratingCount = 0
+
+      user.Actor.Application.forEach((application) => {
+        if (application.rating === null) return
+        rating += application.rating
+        ratingCount++
+      })
+
       if (user.Actor.birthDate) {
         const birthDate = new Date(user.Actor.birthDate)
         const today = new Date()
@@ -124,6 +137,7 @@ export class ProfileRepository {
         hips: user.Actor.hips,
         shoeSize: user.Actor.shoeSize,
         skinShade: user.Actor.skinShade,
+        rating: ratingCount !== 0 ? rating / ratingCount : undefined,
       }
       returnUser.data = actorProfile
       return returnUser

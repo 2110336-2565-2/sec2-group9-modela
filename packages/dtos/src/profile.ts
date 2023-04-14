@@ -1,5 +1,5 @@
 import { Actor, Casting, Gender, User, UserType } from '@modela/database'
-import { ApiProperty, refs } from '@nestjs/swagger'
+import { ApiExtraModels, ApiProperty, refs } from '@nestjs/swagger'
 import {
   IsDateString,
   IsInt,
@@ -123,37 +123,40 @@ export class GetUserProfileDto implements Partial<User> {
   phoneNumber?: string
 
   @ApiProperty()
-  firstName: string;
+  firstName: string
 
   @ApiProperty()
-  middleName?: string;
+  middleName?: string
 
   @ApiProperty()
-  lastName: string;
+  lastName: string
 
   @ApiProperty()
-  description?: string;
+  description?: string
 }
 
 export class GetCastingProfileDto extends GetUserProfileDto {
   @ApiProperty()
-  companyName: string;
+  companyName: string
 }
-export class GetActorProfileDto extends GetUserProfileDto implements EditActorProfileDto {
+export class GetActorProfileDto
+  extends GetUserProfileDto
+  implements EditActorProfileDto
+{
   @ApiProperty()
-  prefix?: string;
+  prefix?: string
 
   @ApiProperty()
-  nationality?: string;
+  nationality?: string
 
   @ApiProperty({ enum: Gender })
-  gender?: Gender;
+  gender?: Gender
 
   @ApiProperty()
   ethnicity?: string
-  
+
   @ApiProperty()
-  age?: number;
+  age?: number
 
   @ApiProperty()
   religion?: string
@@ -189,12 +192,11 @@ export class GetActorProfileDto extends GetUserProfileDto implements EditActorPr
   @ApiProperty()
   skinShade?: string
 
-  
-
-
-
+  @ApiProperty()
+  rating?: number
 }
 
+@ApiExtraModels(GetActorProfileDto, GetCastingProfileDto)
 export class GetProfileForViewingDto {
   @ApiProperty({ enum: UserType, example: UserType.ACTOR })
   type: UserType
