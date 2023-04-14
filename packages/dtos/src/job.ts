@@ -255,6 +255,9 @@ export class GetJobCardDto extends OmitType(EditJobDto, [
   status: JobStatus
 
   @ApiProperty()
+  rating?: number
+
+  @ApiProperty()
   isPaid?: boolean
 }
 

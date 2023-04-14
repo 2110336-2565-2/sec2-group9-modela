@@ -141,13 +141,10 @@ export class UserRepository {
             actorId: paramId,
             status: ApplicationStatus.OFFER_ACCEPTED,
           },
-          include: {
-            Refund: true,
-          },
         },
       },
     })
-    const returnJobs = jobs.map((job) => ({
+    const returnJobs: GetJobCardDto[] = jobs.map((job) => ({
       jobId: job.jobId,
       title: job.title,
       companyName: job.Casting.companyName,
@@ -160,7 +157,9 @@ export class UserRepository {
       jobCastingImageUrl: job.Casting.User.profileImageUrl,
       castingId: job.castingId,
       castingName: job.Casting.User.firstName,
+      rating: job.Application[0].rating,
     }))
+
     return returnJobs
   }
 

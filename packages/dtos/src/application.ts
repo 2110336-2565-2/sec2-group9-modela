@@ -39,6 +39,9 @@ export class ActorDto {
 
   @ApiPropertyOptional()
   isRefundable?: boolean
+
+  @ApiProperty()
+  rating?: number
 }
 
 export class GetAppliedActorDto {

@@ -1,4 +1,9 @@
-import { ActorDto, ApplicationStatus, GetAppliedActorQuery } from '@modela/dtos'
+import {
+  ActorDto,
+  ApplicationStatus,
+  GetAppliedActorQuery,
+  JobStatus,
+} from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
 
@@ -25,6 +30,11 @@ export class ApplicationRepository {
             },
           },
         },
+        Job: {
+          select: {
+            status: true,
+          },
+        },
         Resume: {
           select: {
             resumeUrl: true,
@@ -33,16 +43,25 @@ export class ApplicationRepository {
         status: true,
         actorId: true,
         applicationId: true,
+        rating: true,
         Refund: true,
       },
     })
 
     let result = application.map(
-      ({ Actor: { User }, Resume, Refund, status, ...rest }) => ({
+      ({
+        Actor: { User },
+        Resume,
+        Refund,
+        status,
+        Job: { status: jobStatus },
+        rating,
+        ...rest
+      }) => ({
         ...rest,
         ...User,
         ...Resume,
-        status,
+        rating: jobStatus === JobStatus.FINISHED ? rating : undefined,
         isRefundable: !Refund && status === ApplicationStatus.OFFER_ACCEPTED,
       }),
     )
