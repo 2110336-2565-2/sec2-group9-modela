@@ -157,8 +157,7 @@ export class UserRepository {
       jobCastingImageUrl: job.Casting.User.profileImageUrl,
       castingId: job.castingId,
       castingName: job.Casting.User.firstName,
-      rating:
-        job.Application.length !== 0 ? job.Application[0].rating : undefined,
+      rating: job.Application[0].rating,
     }))
 
     return returnJobs

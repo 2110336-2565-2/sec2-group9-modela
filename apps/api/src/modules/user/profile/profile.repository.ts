@@ -137,7 +137,7 @@ export class ProfileRepository {
         hips: user.Actor.hips,
         shoeSize: user.Actor.shoeSize,
         skinShade: user.Actor.skinShade,
-        rating: ratingCount !== 0 ? rating / ratingCount : undefined,
+        rating: ratingCount !== 0 ? rating / ratingCount : null,
       }
       returnUser.data = actorProfile
       return returnUser
