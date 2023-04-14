@@ -1,12 +1,24 @@
+import { UserType } from '@modela/dtos'
 import { Typography } from '@mui/material'
+import JobCard from 'common/components/JobCard'
+import { JobCardType } from 'common/components/JobCard/types'
+import { useUser } from 'common/context/UserContext'
 import React from 'react'
 
-import JobCard from './components/JobCard'
 import { CardBoxContainer } from './styled'
 import { JobCardContainerProps } from './types'
 
 export default function JobCardContainer(props: JobCardContainerProps) {
   const { jobs, maxPage, isHistory } = props
+  const { user } = useUser()
+
+  let cardType: JobCardType = 'base'
+  if (isHistory) cardType = 'base'
+  else if (user?.type === UserType.ACTOR) cardType = 'report'
+  // TODO
+  // else if (user?.type === UserType.CASTING) cardType = 'edit'
+  // else if (user?.type === UserType.ADMIN) cardType = 'admin'
+
   return (
     <CardBoxContainer>
       {maxPage === 0 && (
@@ -34,7 +46,7 @@ export default function JobCardContainer(props: JobCardContainerProps) {
               gap: '1rem',
             }}
           >
-            <JobCard isHistory={isHistory} {...item} />
+            <JobCard {...item} type={cardType} />
           </div>
         )
       })}
