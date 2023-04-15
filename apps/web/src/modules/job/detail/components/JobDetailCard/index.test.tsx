@@ -1,6 +1,6 @@
 import { GetJobDto, mock } from '@modela/dtos'
 import { render } from '@testing-library/react'
-import { mockAndSpy } from 'common/utils/testing'
+import { mockAndSpy, mockComponent, mockUser } from 'common/utils/testing'
 import { mockRouter } from 'common/utils/testing/mockRouter'
 import React from 'react'
 
@@ -14,10 +14,15 @@ describe('<JobCard />', () => {
   }
 
   mockRouter(true, { jobId: 1 })
+  mockUser()
 
   const ShootingDetailMock = mockAndSpy(
-    'modules/job/detail/components/JobCard/components/ShootingDetail',
+    'modules/job/detail/components/JobDetailCard/components/ShootingDetail',
   )
+  jest.doMock('./utils', () => ({
+    getHeader: () => mockComponent()[1],
+    getFooter: () => mockComponent()[1],
+  }))
 
   const { default: JobCard } = require('.') as typeof import('.')
 

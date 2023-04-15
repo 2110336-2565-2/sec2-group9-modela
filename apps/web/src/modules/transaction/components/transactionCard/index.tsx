@@ -1,7 +1,7 @@
 import { GetPendingJobsDebitsDto } from '@modela/dtos'
 import { Typography } from '@mui/material'
+import BaseHeader from 'common/components/JobCard/JobCardHeader/BaseHeader'
 import theme from 'common/config/theme'
-import JobCardHeader from 'modules/job/components/JobCardHeader'
 import Link from 'next/link'
 import React from 'react'
 
@@ -18,14 +18,12 @@ const TransactionCard = (props: GetPendingJobsDebitsDto) => {
       style={{ textDecoration: 'none', color: 'inherit' }}
     >
       <CardContainer>
-        <JobCardHeader
+        <BaseHeader
           title={title}
           castingId={castingId}
           castingName={firstname}
           companyName={companyName}
           jobCastingImageUrl={profileImageUrl}
-          jobId={jobId}
-          status="OPEN"
         />
         <Typography
           variant="subtitle2"

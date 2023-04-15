@@ -1,6 +1,9 @@
 import { GetJobCardDto } from '@modela/dtos'
 
-export type WithJobCardHeaderProps = Pick<
-  GetJobCardDto,
-  'title' | 'jobCastingImageUrl' | 'companyName' | 'castingId' | 'castingName'
->
+export interface WithJobCardHeaderProps
+  extends Pick<
+    GetJobCardDto,
+    'title' | 'jobCastingImageUrl' | 'companyName' | 'castingId' | 'castingName'
+  > {
+  fullTitle?: boolean
+}

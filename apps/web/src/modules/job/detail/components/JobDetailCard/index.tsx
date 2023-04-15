@@ -1,14 +1,14 @@
 import { GetJobDto, ShootingDto } from '@modela/dtos'
 import { Divider, Typography } from '@mui/material'
+import { useUser } from 'common/context/UserContext'
 import { genderTranslationMap } from 'common/types/gender'
-import JobCardFooter from 'modules/job/components/JobCardFooter'
-import JobCardHeader from 'modules/job/components/JobCardHeader'
 import React from 'react'
 
 import ShootingDetail from './components/ShootingDetail'
 import { CardContainer, CorporateRow, DescriptionRow } from './styled'
+import { getFooter, getHeader } from './utils'
 
-const JobCard = (props: GetJobDto) => {
+const JobDetailCard = (props: GetJobDto) => {
   const {
     actorCount,
     description,
@@ -27,9 +27,24 @@ const JobCard = (props: GetJobDto) => {
 
   const genderThai = genderTranslationMap[gender]
 
+  const footerProps = {
+    applicationDeadline,
+    gender,
+    wage,
+    actorCount,
+    isApplied,
+    status,
+    jobId,
+  }
+
+  const { user } = useUser()
+
+  const Header = getHeader(user!.type)
+  const Footer = getFooter(user!.type)
+
   return (
     <CardContainer>
-      <JobCardHeader {...headerProps} jobId={jobId} status={status} isDetail />
+      <Header {...headerProps} jobId={jobId} status={status} fullTitle />
       <CorporateRow>
         <Typography
           variant="subtitle2"
@@ -75,16 +90,8 @@ const JobCard = (props: GetJobDto) => {
       ))}
 
       <Divider sx={{ width: '100%', marginTop: '1rem' }} />
-      <JobCardFooter
-        dueDate={applicationDeadline}
-        gender={gender}
-        wage={wage}
-        actorCount={actorCount}
-        isApplied={isApplied}
-        status={status}
-        jobId={jobId}
-      />
+      <Footer {...footerProps} />
     </CardContainer>
   )
 }
-export default JobCard
+export default JobDetailCard

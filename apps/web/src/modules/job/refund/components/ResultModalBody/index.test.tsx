@@ -12,7 +12,7 @@ describe('<ResultModalBody />', () => {
 
   describe('normal behavior', () => {
     it('should render correctly', () => {
-      const { queryByText } = render(<ResultModalBody jobId="12" />)
+      const { queryByText } = render(<ResultModalBody jobId={12} />)
 
       const el = queryByText('ยืนยัน') as HTMLButtonElement
       expect(el).toBeDefined()

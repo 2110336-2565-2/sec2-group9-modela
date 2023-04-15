@@ -13,6 +13,10 @@ const AcceptOfferModal = (props: AcceptOfferModalProps) => {
       disableAutoFocus
       open={isOpen}
       onClose={handleClose}
+      onClick={(e) => {
+        e.stopPropagation()
+        e.preventDefault()
+      }}
     >
       <AcceptOfferModalContentContainer>
         <Typography sx={{ margin: 'auto' }} variant="h5">

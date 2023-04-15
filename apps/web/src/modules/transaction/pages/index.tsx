@@ -3,7 +3,7 @@ import { Typography } from '@mui/material'
 import withGuard from 'common/hoc/withGuard'
 import React from 'react'
 
-import TransactionCard from '../components/transactionCard'
+import TransactionCard from '../components/TransactionCard'
 import TransactionLayout from '../components/TransactionLayout'
 import { useTransaction } from './hooks/useTransaction'
 

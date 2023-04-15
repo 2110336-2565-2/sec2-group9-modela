@@ -15,7 +15,7 @@ const OfferAction = ({ appliedStatus, title, jobId }: OfferActionProps) => {
   const acceptModal = useSwitch()
   const { handleError } = useErrorHandler()
 
-  const handleAcceptModalSubmit = useCallback(async () => {
+  const handleAccept = useCallback(async () => {
     try {
       await apiClient.put<string>(`/jobs/${jobId}/offer/accept`)
       window.location.reload()
@@ -25,7 +25,7 @@ const OfferAction = ({ appliedStatus, title, jobId }: OfferActionProps) => {
     acceptModal.close()
   }, [acceptModal, jobId, handleError])
 
-  const handleRejectModalSubmit = useCallback(async () => {
+  const handleReject = useCallback(async () => {
     try {
       await apiClient.put<string>(`/jobs/${jobId}/offer/reject`)
       window.location.reload()
@@ -34,7 +34,6 @@ const OfferAction = ({ appliedStatus, title, jobId }: OfferActionProps) => {
     }
     rejectModal.close()
   }, [jobId, handleError, rejectModal])
-
   if (appliedStatus !== ApplicationStatus.OFFER_SENT) return null
 
   return (
@@ -44,6 +43,7 @@ const OfferAction = ({ appliedStatus, title, jobId }: OfferActionProps) => {
           color="reject"
           onClick={(e) => {
             e.stopPropagation()
+            e.preventDefault()
             rejectModal.open()
           }}
         >
@@ -53,6 +53,7 @@ const OfferAction = ({ appliedStatus, title, jobId }: OfferActionProps) => {
           color="success"
           onClick={(e) => {
             e.stopPropagation()
+            e.preventDefault()
             acceptModal.open()
           }}
         >
@@ -64,15 +65,15 @@ const OfferAction = ({ appliedStatus, title, jobId }: OfferActionProps) => {
           isOpen={true}
           title={title}
           handleClose={acceptModal.close}
-          handleSubmit={handleAcceptModalSubmit}
+          handleSubmit={handleAccept}
         />
       )}
       {rejectModal.isOpen && (
         <RejectOfferModal
           isOpen={true}
           title={title}
-          handleClose={acceptModal.close}
-          handleSubmit={handleRejectModalSubmit}
+          handleClose={rejectModal.close}
+          handleSubmit={handleReject}
         />
       )}
     </>

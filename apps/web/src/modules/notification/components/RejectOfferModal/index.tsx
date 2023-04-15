@@ -13,6 +13,10 @@ const RejectOfferModal = (props: RejectOfferModalProps) => {
       disableAutoFocus
       open={isOpen}
       onClose={handleClose}
+      onClick={(e) => {
+        e.stopPropagation()
+        e.preventDefault()
+      }}
     >
       <RejectOfferModalContentContainer>
         <Typography sx={{ margin: 'auto' }} variant="h5">

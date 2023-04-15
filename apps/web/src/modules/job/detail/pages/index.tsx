@@ -4,7 +4,7 @@ import withGuard from 'common/hoc/withGuard'
 import JobMenu from 'modules/job/components/JobMenu'
 import React from 'react'
 
-import JobCard from '../components/JobCard'
+import JobDetailCard from '../components/JobDetailCard'
 import useJobData from './hooks/useJobData'
 import { JobCardContainer, PageContainer } from './styled'
 
@@ -19,7 +19,7 @@ const JobDetailPage = () => {
         <>
           {type === UserType.CASTING && <JobMenu focus="detail" />}
           <JobCardContainer>
-            <JobCard {...job} />
+            <JobDetailCard {...job} />
           </JobCardContainer>
           {type === UserType.CASTING && <div style={{ width: '10vw' }} />}
         </>

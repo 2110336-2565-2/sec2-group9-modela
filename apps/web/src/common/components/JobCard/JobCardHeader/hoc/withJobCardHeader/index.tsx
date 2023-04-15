@@ -11,8 +11,14 @@ const withJobCardHeader = <T extends Record<string, any>>(
   WrappedComponent: React.ComponentType<T>,
 ) => {
   const WithJobCardHeader = (props: T & WithJobCardHeaderProps) => {
-    const { jobCastingImageUrl, companyName, title, castingId, castingName } =
-      props
+    const {
+      jobCastingImageUrl,
+      companyName,
+      title,
+      castingId,
+      castingName,
+      fullTitle,
+    } = props
 
     return (
       <HeaderRow>
@@ -30,7 +36,7 @@ const withJobCardHeader = <T extends Record<string, any>>(
         </Link>
         <TitleContainer>
           <Typography variant="h6" sx={{ wordBreak: 'break-word' }}>
-            {getTitle(title)}
+            {fullTitle ? title : getTitle(title)}
           </Typography>
           <Typography fontWeight={400} sx={{ wordBreak: 'break-word' }}>
             {companyName}

@@ -33,10 +33,9 @@ export default function JobCard(props: JobCardProps) {
         <Description variant="subtitle2">
           {getDescription(description)}
         </Description>
-
         <Divider variant="fullWidth" sx={{ width: '100%' }} />
         <Footer {...props} />
-        {Action && <Action />}
+        {Action && <Action {...props} />}
       </CardContainer>
     </Link>
   )
