@@ -3,6 +3,7 @@ import { Button, Modal } from '@mui/material'
 import useSwitch from 'common/hooks/useSwitch'
 import React, { MouseEvent } from 'react'
 
+import withJobCardFooter from '../hoc/withJobCardFooter'
 import CancelAppliedModal from './CancelAppliedModal'
 import { CancelApplyFooterProps } from './types'
 
@@ -39,4 +40,4 @@ const CancelApplyFooter = ({
   )
 }
 
-export default CancelApplyFooter
+export default withJobCardFooter<CancelApplyFooterProps>(CancelApplyFooter)

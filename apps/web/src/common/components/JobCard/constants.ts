@@ -1,6 +1,7 @@
 import ApplyFooter from './JobCardFooter/ApplyFooter'
 import BaseFooter from './JobCardFooter/BaseFooter'
 import CancelApplyFooter from './JobCardFooter/CancelApplyFooter'
+import UnpaidFooter from './JobCardFooter/UnpaidFooter'
 import ApplicationStatusHeader from './JobCardHeader/ApplicationStatusHeader'
 import BaseHeader from './JobCardHeader/BaseHeader'
 import EditHeader from './JobCardHeader/EditHeader'
@@ -27,5 +28,9 @@ export const JobCardComponents = {
   applied: {
     Header: ApplicationStatusHeader,
     Footer: CancelApplyFooter,
+  },
+  unpaid: {
+    Header: BaseHeader,
+    Footer: UnpaidFooter,
   },
 }

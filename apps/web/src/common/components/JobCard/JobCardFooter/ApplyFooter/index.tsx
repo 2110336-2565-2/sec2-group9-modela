@@ -2,6 +2,7 @@ import { JobStatus } from '@modela/dtos'
 import { Button } from '@mui/material'
 import React from 'react'
 
+import withJobCardFooter from '../hoc/withJobCardFooter'
 import { ApplyFooterProps } from './types'
 
 const ApplyFooter = ({ jobId, isApplied, status }: ApplyFooterProps) => {
@@ -19,4 +20,4 @@ const ApplyFooter = ({ jobId, isApplied, status }: ApplyFooterProps) => {
   )
 }
 
-export default ApplyFooter
+export default withJobCardFooter<ApplyFooterProps>(ApplyFooter)

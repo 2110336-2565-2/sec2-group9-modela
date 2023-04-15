@@ -1,10 +1,10 @@
 import { UserType } from '@modela/dtos'
 import { CircularProgress, Typography } from '@mui/material'
+import JobCard from 'common/components/JobCard'
 import withGuard from 'common/hoc/withGuard'
 import useNavbarFocus from 'common/hooks/useNavbarFocus'
 import React from 'react'
 
-import UnpaidJobCard from '../components/UnpaidJobCard'
 import useUnpaidJobData from '../hooks/useUnpaidJobData'
 import { JobContainer } from './styled'
 const UnpaidJobList = () => {
@@ -25,7 +25,7 @@ const UnpaidJobList = () => {
             </Typography>
           ) : (
             unpaidJobData.map((user) => (
-              <UnpaidJobCard key={user.jobId} {...user} />
+              <JobCard key={user.jobId} {...user} type="unpaid" />
             ))
           )
         ) : (
