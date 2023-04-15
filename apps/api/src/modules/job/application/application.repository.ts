@@ -61,6 +61,7 @@ export class ApplicationRepository {
         ...rest,
         ...User,
         ...Resume,
+        status,
         rating: jobStatus === JobStatus.FINISHED ? rating : undefined,
         isRefundable: !Refund && status === ApplicationStatus.OFFER_ACCEPTED,
       }),
