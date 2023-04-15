@@ -120,7 +120,7 @@ const JobCardFooter = (props: FooterProps) => {
           <Typography variant="subtitle1">{formatDate(dueDate)}</Typography>
         </SameDiv>
 
-        {status === JobStatus.OPEN &&
+        {/* {status === JobStatus.OPEN &&
           user?.type === UserType.ACTOR &&
           !isApplied && (
             <Button
@@ -131,8 +131,8 @@ const JobCardFooter = (props: FooterProps) => {
             >
               สมัครงาน
             </Button>
-          )}
-        {status === JobStatus.OPEN &&
+          )} */}
+        {/* {status === JobStatus.OPEN &&
           isApplied &&
           appliedStatus === ApplicationStatus.PENDING && (
             <Button
@@ -142,7 +142,7 @@ const JobCardFooter = (props: FooterProps) => {
             >
               ยกเลิกสมัครงาน
             </Button>
-          )}
+          )} */}
       </FooterRow>
       {appliedStatus === ApplicationStatus.OFFER_SENT &&
         user?.type === UserType.ACTOR && (

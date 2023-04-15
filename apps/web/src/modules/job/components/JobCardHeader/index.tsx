@@ -56,7 +56,7 @@ const JobCardHeader = (props: HeaderProps) => {
           {companyName}
         </Typography>
       </TitleContainer>
-      {user?.type === UserType.ACTOR && !appliedStatus && !isHistory && (
+      {/* {user?.type === UserType.ACTOR && !appliedStatus && !isHistory && (
         <Tooltip title="แจ้งปัญหางาน">
           <IconButton
             href={`/report/${jobId}`}
@@ -65,7 +65,7 @@ const JobCardHeader = (props: HeaderProps) => {
             <ReportOutlined fontSize="small" color="error" />
           </IconButton>
         </Tooltip>
-      )}
+      )} */}
       {user?.type === UserType.ACTOR &&
         status === JobStatus.SELECTION_ENDED &&
         appliedStatus === ApplicationStatus.OFFER_ACCEPTED && (
@@ -81,9 +81,9 @@ const JobCardHeader = (props: HeaderProps) => {
             )}
           </div>
         )}
-      {appliedStatus && (
+      {/* {appliedStatus && (
         <ApplicationStatusChip applicationStatus={appliedStatus} />
-      )}
+      )} */}
       {user?.type === UserType.CASTING &&
         status === JobStatus.SELECTION_ENDED && (
           <div style={{ padding: '8px' }}>
@@ -98,7 +98,7 @@ const JobCardHeader = (props: HeaderProps) => {
             )}
           </div>
         )}
-      {user?.type === UserType.CASTING && status === JobStatus.OPEN && (
+      {/* {user?.type === UserType.CASTING && status === JobStatus.OPEN && (
         <Tooltip title="แก้ไขงาน">
           <IconButton
             href={`/job/${jobId}/edit`}
@@ -107,13 +107,13 @@ const JobCardHeader = (props: HeaderProps) => {
             <EditOutlined fontSize="small" color="primary" />
           </IconButton>
         </Tooltip>
-      )}
-      {user?.type === UserType.ADMIN && isReport && (
+      )} */}
+      {/* {user?.type === UserType.ADMIN && isReport && (
         <Chip
           label="ถูกแจ้งปัญหา"
           sx={{ color: '#AA5B5B', background: 'rgba(170, 91, 91, 0.2)' }}
         />
-      )}
+      )} */}
     </HeaderRow>
   )
 }

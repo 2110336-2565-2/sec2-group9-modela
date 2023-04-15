@@ -11,7 +11,7 @@ import { getDescription } from './utils'
 export default function JobCard(props: JobCardProps) {
   const { type, description, jobId, status, isReported } = props
 
-  const { Header, Footer } = JobCardComponents[type]
+  const { Header, Footer, Action } = JobCardComponents[type]
 
   return (
     <Link
@@ -36,6 +36,7 @@ export default function JobCard(props: JobCardProps) {
 
         <Divider variant="fullWidth" sx={{ width: '100%' }} />
         <Footer {...props} />
+        {Action && <Action />}
       </CardContainer>
     </Link>
   )

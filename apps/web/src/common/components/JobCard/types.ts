@@ -1,5 +1,6 @@
 import { GetJobCardDto } from '@modela/dtos'
 
+import { OfferActionProps } from './JobCardAction/OfferAction/types'
 import { ApplyFooterProps } from './JobCardFooter/ApplyFooter/types'
 import { CancelApplyFooterProps } from './JobCardFooter/CancelApplyFooter/types'
 import { WithJobCardFooterProps } from './JobCardFooter/hoc/withJobCardFooter/types'
@@ -30,7 +31,8 @@ export type ReportedJobCardProps = BaseJobCardProps &
 
 export type AppliedJobCardProps = BaseJobCardProps &
   ApplicationStatusHeaderProps &
-  CancelApplyFooterProps & { type: 'applied' }
+  CancelApplyFooterProps &
+  OfferActionProps & { type: 'applied' }
 
 export type UnpaidJobCardProps = BaseJobCardProps &
   UnpaidFooterProps & { type: 'unpaid' }

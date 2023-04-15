@@ -1,3 +1,6 @@
+import { FC } from 'react'
+
+import OfferAction from './JobCardAction/OfferAction'
 import ApplyFooter from './JobCardFooter/ApplyFooter'
 import BaseFooter from './JobCardFooter/BaseFooter'
 import CancelApplyFooter from './JobCardFooter/CancelApplyFooter'
@@ -8,7 +11,13 @@ import EditHeader from './JobCardHeader/EditHeader'
 import ReportedHeader from './JobCardHeader/ReportedHeader'
 import ReportHeader from './JobCardHeader/ReportHeader'
 
-export const JobCardComponents = {
+export const JobCardComponents: {
+  [key: string]: {
+    Header: FC<any>
+    Footer: FC<any>
+    Action?: FC<any>
+  }
+} = {
   base: {
     Header: BaseHeader,
     Footer: BaseFooter,
@@ -28,6 +37,7 @@ export const JobCardComponents = {
   applied: {
     Header: ApplicationStatusHeader,
     Footer: CancelApplyFooter,
+    Action: OfferAction,
   },
   unpaid: {
     Header: BaseHeader,
