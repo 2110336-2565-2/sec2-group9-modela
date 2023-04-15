@@ -1,6 +1,10 @@
 import { GetJobCardDto } from '@modela/dtos'
 
+import { ApplyFooterProps } from './JobCardFooter/ApplyFooter/types'
+import { CancelApplyFooterProps } from './JobCardFooter/CancelApplyFooter/types'
 import { WithJobCardFooterProps } from './JobCardFooter/hoc/withJobCardFooter/types'
+import { ApplicationStatusHeaderProps } from './JobCardHeader/ApplicationStatusHeader/types'
+import { EditHeaderProps } from './JobCardHeader/EditHeader/types'
 import { WithJobCardHeaderProps } from './JobCardHeader/hoc/withJobCardHeader/types'
 import { ReportHeaderProps } from './JobCardHeader/ReportHeader/types'
 
@@ -13,11 +17,27 @@ export type BaseJobCardProps = WithJobCardFooterProps &
   WithJobCardHeaderProps &
   JobCardContentProps
 
-export type ReportableJobCardProps = BaseJobCardProps &
-  ReportHeaderProps & { type: 'report' }
+export type ReportWithApplyJobCardProps = BaseJobCardProps &
+  ReportHeaderProps &
+  ApplyFooterProps & { type: 'reportWithApply' }
+
+export type EditableJobCardProps = BaseJobCardProps &
+  EditHeaderProps & { type: 'edit' }
+
+export type ReportedJobCardProps = BaseJobCardProps &
+  EditHeaderProps & { type: 'reported' }
+
+export type AppliedJobCard = BaseJobCardProps &
+  ApplicationStatusHeaderProps &
+  CancelApplyFooterProps & { type: 'applied' }
 
 export type BasedJobCardProps = BaseJobCardProps & { type: 'base' }
 
-export type JobCardProps = ReportableJobCardProps | BasedJobCardProps
+export type JobCardProps =
+  | ReportWithApplyJobCardProps
+  | BasedJobCardProps
+  | EditableJobCardProps
+  | ReportedJobCardProps
+  | AppliedJobCard
 
 export type JobCardType = JobCardProps['type']

@@ -2,10 +2,10 @@ import { ReportOutlined } from '@mui/icons-material'
 import { IconButton, Typography } from '@mui/material'
 import Chip from 'common/components/Chip'
 import ProfileImage from 'common/components/ProfileImage'
+import { CHIP_VARIANTS } from 'common/constants/ApplicationStatusChip'
 import { useRouter } from 'next/router'
 import React from 'react'
 
-import { CHIP_VARINTS } from './constants'
 import { HeaderContainer } from './styled'
 import { ActorCardHeaderProps } from './types'
 
@@ -45,7 +45,7 @@ const ActorCardHeader = (props: ActorCardHeaderProps) => {
           <ReportOutlined fontSize="medium" color="error" />
         </IconButton>
       ) : (
-        <>{status && <Chip {...CHIP_VARINTS[status]} />}</>
+        <>{status && <Chip {...CHIP_VARIANTS[status]} />}</>
       )}
     </HeaderContainer>
   )

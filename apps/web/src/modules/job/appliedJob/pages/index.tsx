@@ -5,9 +5,6 @@ import useNavbarFocus from 'common/hooks/useNavbarFocus'
 import useNavbarSearch from 'common/hooks/useNavbarSearch'
 import FilterMobileContainer from 'modules/job/appliedJob/components/FilterMobileContainer'
 import SearchBox from 'modules/job/appliedJob/components/SearchBox'
-import AcceptOfferModal from 'modules/notification/components/AcceptOfferModal'
-import RejectOfferModal from 'modules/notification/components/RejectOfferModal'
-import useModalData from 'modules/notification/pages/hooks/useModalData'
 import { useCallback } from 'react'
 
 import FilterContainer from '../components/FilterContainer'
@@ -32,20 +29,6 @@ const AppliedJobPage = () => {
     isLoading,
     isDesktop,
   } = useJobListData()
-
-  const {
-    isAcceptModalOpen,
-    isRejectModalOpen,
-    handleAcceptCloseModal,
-    handleRejectCloseModal,
-    handleAcceptModalSubmit,
-    handleRejectModalSubmit,
-    handleAcceptModalOpen,
-    handleRejectModalOpen,
-    setFocusId,
-    title,
-    setTitle,
-  } = useModalData()
 
   useNavbarSearch(
     useCallback(() => {
@@ -100,15 +83,7 @@ const AppliedJobPage = () => {
               <CircularProgress color="primary" />
             </div>
           )}
-          {!isLoading && (
-            <JobCardContainer
-              openAcceptModal={handleAcceptModalOpen}
-              openRejectModal={handleRejectModalOpen}
-              setFocusId={setFocusId}
-              setTitle={setTitle}
-              {...job}
-            />
-          )}
+          {!isLoading && <JobCardContainer {...job} />}
         </div>
       </JobContainer>
       <FilterBoxContainer>
@@ -137,19 +112,6 @@ const AppliedJobPage = () => {
           filterData={filterData}
         />
       )}
-
-      <AcceptOfferModal
-        isOpen={isAcceptModalOpen}
-        handleClose={handleAcceptCloseModal}
-        handleSubmit={handleAcceptModalSubmit}
-        title={title}
-      />
-      <RejectOfferModal
-        isOpen={isRejectModalOpen}
-        handleClose={handleRejectCloseModal}
-        handleSubmit={handleRejectModalSubmit}
-        title={title}
-      />
     </div>
   )
 }

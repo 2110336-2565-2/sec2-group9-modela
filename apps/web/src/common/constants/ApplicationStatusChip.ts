@@ -1,7 +1,7 @@
 import { ApplicationStatus } from '@modela/dtos'
 import { ChipProps } from 'common/components/Chip/types'
 
-export const CHIP_VARINTS: { [key in ApplicationStatus]: ChipProps } = {
+export const CHIP_VARIANTS: { [key in ApplicationStatus]: ChipProps } = {
   [ApplicationStatus.PENDING]: {
     label: 'รอคัดเลือก',
     variant: 'orange',

@@ -1,12 +1,12 @@
 import { Typography } from '@mui/material'
+import JobCard from 'common/components/JobCard'
 import React from 'react'
 
-import JobCard from './components/JobCard'
 import { CardBoxContainer } from './styled'
 import { JobCardContainerProps } from './types'
 
 export default function JobCardContainer(props: JobCardContainerProps) {
-  const { jobs, openAcceptModal, openRejectModal, setFocusId, setTitle } = props
+  const { jobs } = props
   return (
     <CardBoxContainer>
       {jobs.length === 0 && (
@@ -34,13 +34,7 @@ export default function JobCardContainer(props: JobCardContainerProps) {
               gap: '1rem',
             }}
           >
-            <JobCard
-              openAcceptModal={openAcceptModal}
-              openRejectModal={openRejectModal}
-              setFocusId={setFocusId}
-              setTitle={setTitle}
-              {...item}
-            />
+            <JobCard type="applied" {...item} />
           </div>
         )
       })}

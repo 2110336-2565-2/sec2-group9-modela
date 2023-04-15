@@ -14,10 +14,9 @@ export default function JobCardContainer(props: JobCardContainerProps) {
 
   let cardType: JobCardType = 'base'
   if (isHistory) cardType = 'base'
-  else if (user?.type === UserType.ACTOR) cardType = 'report'
-  // TODO
-  // else if (user?.type === UserType.CASTING) cardType = 'edit'
-  // else if (user?.type === UserType.ADMIN) cardType = 'admin'
+  else if (user?.type === UserType.ACTOR) cardType = 'reportWithApply'
+  else if (user?.type === UserType.CASTING) cardType = 'edit'
+  else if (user?.type === UserType.ADMIN) cardType = 'reported'
 
   return (
     <CardBoxContainer>

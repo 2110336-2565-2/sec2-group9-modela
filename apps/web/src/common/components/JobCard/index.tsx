@@ -15,7 +15,11 @@ export default function JobCard(props: JobCardProps) {
 
   return (
     <Link
-      href={isReported ? `/job/${jobId}/reports` : `/job/${jobId}`}
+      href={
+        isReported && type === 'reported'
+          ? `/job/${jobId}/reports`
+          : `/job/${jobId}`
+      }
       passHref
       style={{ textDecoration: 'none', color: 'inherit' }}
     >
