@@ -43,6 +43,15 @@ const NotiCardFooter = (props: FooterProps) => {
 
   if (appStatus === ApplicationStatus.OFFER_REJECTED)
     return (
+      <FooterContainer>
+        <Typography variant="subtitle2" sx={{ color: 'rgba(0, 0, 0, 0.6)' }}>
+          คุณได้ปฏิเสธข้อเสนอนี้ไปแล้ว
+        </Typography>
+      </FooterContainer>
+    )
+
+  if (appStatus === ApplicationStatus.OFFER_SENT)
+    return (
       <>
         <Button
           color="reject"
