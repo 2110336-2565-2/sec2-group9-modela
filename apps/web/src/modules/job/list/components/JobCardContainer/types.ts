@@ -1,7 +1,7 @@
-import { JobCardProps } from './components/JobCard/types'
+import { GetJobCardDto } from '@modela/dtos'
 
 export interface JobCardContainerProps {
-  jobs: JobCardProps[]
+  jobs: GetJobCardDto[]
   maxPage: number
   isHistory?: boolean
 }

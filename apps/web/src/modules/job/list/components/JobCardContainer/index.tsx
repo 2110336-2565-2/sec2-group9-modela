@@ -1,12 +1,19 @@
 import { Typography } from '@mui/material'
+import JobCard from 'common/components/JobCard'
+import { JobCardType } from 'common/components/JobCard/types'
+import { useUser } from 'common/context/UserContext'
 import React from 'react'
 
-import JobCard from './components/JobCard'
 import { CardBoxContainer } from './styled'
 import { JobCardContainerProps } from './types'
+import { getCardType } from './utils'
 
 export default function JobCardContainer(props: JobCardContainerProps) {
   const { jobs, maxPage, isHistory } = props
+  const { user } = useUser()
+
+  let cardType: JobCardType = getCardType(user!.type, isHistory)
+
   return (
     <CardBoxContainer>
       {maxPage === 0 && (
@@ -34,7 +41,7 @@ export default function JobCardContainer(props: JobCardContainerProps) {
               gap: '1rem',
             }}
           >
-            <JobCard isHistory={isHistory} {...item} />
+            <JobCard {...item} type={cardType} />
           </div>
         )
       })}

@@ -1,7 +1,6 @@
-import { JobStatus } from '@modela/dtos'
 import { FileDownloadOutlined } from '@mui/icons-material'
 import { Button, Divider, Typography } from '@mui/material'
-import JobCardHeader from 'modules/job/components/JobCardHeader'
+import BaseHeader from 'common/components/JobCard/JobCardHeader/BaseHeader'
 import Link from 'next/link'
 
 import { ActionContainer, CardContainer, ContentContainer } from './styled'
@@ -27,12 +26,10 @@ const PendingCastingCard = (props: PendingCastingCardProps) => {
 
   return (
     <CardContainer>
-      <JobCardHeader
+      <BaseHeader
         title={castingName}
         companyName={companyName}
         jobCastingImageUrl={''}
-        status={JobStatus.SELECTION_ENDED}
-        jobId={jobId}
         castingId={castingId}
         castingName={castingName}
       />
