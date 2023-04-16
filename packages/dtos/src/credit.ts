@@ -34,6 +34,9 @@ export class GetPendingTransactionDto {
 
   @ApiProperty()
   proofUrl: string
+
+  @ApiProperty()
+  profileImageUrl: string
 }
 
 export class GetTransactionDetailDto {

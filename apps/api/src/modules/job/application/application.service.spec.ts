@@ -80,7 +80,7 @@ describe('ApplicationService', () => {
       ).rejects.toThrow(NotFoundException)
     })
 
-    it('should throw forbidden error if user is not owener of this job', async () => {
+    it('should throw forbidden error if user is not owner of this job', async () => {
       jest.spyOn(jobRepository, 'getBaseJobById').mockResolvedValue(
         mock('job')
           .override({ castingId: MOCK_CASTING_ID + 1 })
@@ -185,11 +185,14 @@ describe('ApplicationService', () => {
     const MOCK_APPLICATION_ID = 1
 
     beforeEach(() => {
-      jest
-        .spyOn(jobRepository, 'getBaseJobById')
-        .mockResolvedValue(
-          mock('job').override({ castingId: MOCK_CASTING_ID }).get(),
-        )
+      jest.spyOn(jobRepository, 'getBaseJobById').mockResolvedValue(
+        mock('job')
+          .override({
+            castingId: MOCK_CASTING_ID,
+            status: JobStatus.SELECTING,
+          })
+          .get(),
+      )
       jest.spyOn(repository, 'getApplicationbyActorJob').mockResolvedValue(
         mock('application')
           .override({
@@ -210,6 +213,19 @@ describe('ApplicationService', () => {
       )
 
       expect(repository.rejectApplication).toBeCalledWith(MOCK_APPLICATION_ID)
+    })
+
+    it('should throw bad request error if job is not selecting', async () => {
+      jest
+        .spyOn(jobRepository, 'getBaseJobById')
+        .mockResolvedValue(
+          mock('job')
+            .override({ castingId: MOCK_CASTING_ID, status: JobStatus.OPEN })
+            .get(),
+        )
+      await expect(
+        service.rejectApplication(MOCK_JOB_ID, MOCK_ACTOR_ID, MOCK_CASTING_ID),
+      ).rejects.toThrow(BadRequestException)
     })
 
     it('should throw not found error if application not found', async () => {

@@ -1,4 +1,8 @@
-import { ApplicationStatus, NotificationType } from '@modela/database'
+import {
+  ApplicationStatus,
+  JobStatus,
+  NotificationType,
+} from '@modela/database'
 import {
   BadRequestException,
   ForbiddenException,
@@ -29,6 +33,11 @@ export class OfferService {
     if (!job) {
       throw new NotFoundException('Job not found')
     }
+
+    if (job.status !== JobStatus.SELECTING) {
+      throw new BadRequestException(`You cannot ${action} this job offer`)
+    }
+
     const application =
       await this.applicationRepository.getApplicationbyActorJob(actorId, jobId)
     if (!application) {
@@ -56,6 +65,9 @@ export class OfferService {
     }
     if (job.castingId !== castingId) {
       throw new ForbiddenException('You are not the owner of this job')
+    }
+    if (job.status !== JobStatus.SELECTING) {
+      throw new BadRequestException(`Job is not selecting now`)
     }
     const application =
       await this.applicationRepository.getApplicationbyActorJob(actorId, jobId)
