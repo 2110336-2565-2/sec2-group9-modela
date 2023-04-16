@@ -82,6 +82,9 @@ export class ApplicationService {
     if (job.castingId !== castingId)
       throw new ForbiddenException('User is not the owner of this job')
 
+    if (job.status !== JobStatus.SELECTING)
+      throw new BadRequestException('Job is not selecting')
+
     const application = await this.repository.getApplicationbyActorJob(
       actorId,
       jobId,
