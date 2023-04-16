@@ -1,5 +1,5 @@
 import { act, render } from '@testing-library/react'
-import { mockRouter } from 'common/utils/testing/mockRouter'
+import { mockRouter } from 'common/utils/testing'
 
 describe('<ResultModalBody />', () => {
   const { replaceSpy } = mockRouter(true)

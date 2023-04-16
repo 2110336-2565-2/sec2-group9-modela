@@ -1,8 +1,7 @@
 import { UserStatus } from '@modela/database'
 import { UserType } from '@modela/dtos'
 import { render } from '@testing-library/react'
-import { mockComponent, mockUser } from 'common/utils/testing'
-import { mockRouter } from 'common/utils/testing/mockRouter'
+import { mockComponent, mockRouter, mockUser } from 'common/utils/testing'
 import React from 'react'
 
 import { GuardType } from './types'

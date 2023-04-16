@@ -1,7 +1,10 @@
 import { JobStatus } from '@modela/database'
 import { render } from '@testing-library/react'
-import { expectToBeCalledWith, mockAndSpy } from 'common/utils/testing'
-import { mockRouter } from 'common/utils/testing/mockRouter'
+import {
+  expectToBeCalledWith,
+  mockAndSpy,
+  mockRouter,
+} from 'common/utils/testing'
 import React from 'react'
 
 describe('<JobMenu />', () => {

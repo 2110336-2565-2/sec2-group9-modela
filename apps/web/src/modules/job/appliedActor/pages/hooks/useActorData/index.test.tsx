@@ -1,6 +1,5 @@
 import { renderHook, waitFor } from '@testing-library/react'
-import { mockApiClient } from 'common/utils/testing'
-import { mockRouter } from 'common/utils/testing/mockRouter'
+import { mockApiClient, mockRouter } from 'common/utils/testing'
 
 describe('useActorData()', () => {
   const MOCK_QUERY = {

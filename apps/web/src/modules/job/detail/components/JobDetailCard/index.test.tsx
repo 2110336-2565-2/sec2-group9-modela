@@ -1,7 +1,11 @@
 import { GetJobDto, mock } from '@modela/dtos'
 import { render } from '@testing-library/react'
-import { mockAndSpy, mockComponent, mockUser } from 'common/utils/testing'
-import { mockRouter } from 'common/utils/testing/mockRouter'
+import {
+  mockAndSpy,
+  mockComponent,
+  mockRouter,
+  mockUser,
+} from 'common/utils/testing'
 import React from 'react'
 
 describe('<JobCard />', () => {

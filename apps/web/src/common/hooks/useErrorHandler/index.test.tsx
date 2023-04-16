@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react'
 import { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
-import { mockRouter } from 'common/utils/testing/mockRouter'
+import { mockRouter } from 'common/utils/testing'
 
 describe('useErrorHandler()', () => {
   const { replaceSpy } = mockRouter()

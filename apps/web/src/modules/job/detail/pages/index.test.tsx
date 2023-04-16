@@ -1,8 +1,12 @@
 import { UserStatus } from '@modela/database'
 import { GetJobDto, mock, UserType } from '@modela/dtos'
 import { render, waitFor } from '@testing-library/react'
-import { mockAndSpy, mockApiClient, mockUser } from 'common/utils/testing'
-import { mockRouter } from 'common/utils/testing/mockRouter'
+import {
+  mockAndSpy,
+  mockApiClient,
+  mockRouter,
+  mockUser,
+} from 'common/utils/testing'
 import React from 'react'
 
 describe('<JobDetailPage />', () => {

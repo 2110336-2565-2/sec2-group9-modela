@@ -4,8 +4,8 @@ import {
   expectToBeCalledWith,
   mockAndSpy,
   mockAndSpyMany,
+  mockRouter,
 } from 'common/utils/testing'
-import { mockRouter } from 'common/utils/testing/mockRouter'
 import React from 'react'
 
 describe('<ActorCard />', () => {

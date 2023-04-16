@@ -1,7 +1,6 @@
 import { ApplicationStatus } from '@modela/dtos'
 import { render } from '@testing-library/react'
-import { mockAndSpy, mockAndSpyMany } from 'common/utils/testing'
-import { mockRouter } from 'common/utils/testing/mockRouter'
+import { mockAndSpy, mockAndSpyMany, mockRouter } from 'common/utils/testing'
 import React from 'react'
 
 describe('<ActorCardHeader />', () => {
