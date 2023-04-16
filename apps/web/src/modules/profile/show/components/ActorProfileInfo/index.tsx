@@ -92,7 +92,6 @@ export default function ActorProfileInfo(props: ProfileInfoProps) {
             borderRadius: '12px',
             width: 'fit-content',
             maxWidth: '250px',
-            marginLeft: '1rem',
             fontSize: '16px',
           }}
           startIcon={<Edit />}
