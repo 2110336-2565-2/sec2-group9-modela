@@ -21,6 +21,7 @@ const PendingCastingCard = (props: PendingCastingCardProps) => {
     companyName,
     handleClickFinish,
     handleClickReject,
+    profileImageUrl,
   } = props
   const castingName = `${firstName} ${middleName || ''} ${lastName}`
 
@@ -29,7 +30,7 @@ const PendingCastingCard = (props: PendingCastingCardProps) => {
       <BaseHeader
         title={castingName}
         companyName={companyName}
-        jobCastingImageUrl={''}
+        jobCastingImageUrl={profileImageUrl}
         castingId={castingId}
         castingName={castingName}
       />
