@@ -4,6 +4,7 @@ import { OfferActionProps } from './JobCardAction/OfferAction/types'
 import { ApplyFooterProps } from './JobCardFooter/ApplyFooter/types'
 import { CancelApplyFooterProps } from './JobCardFooter/CancelApplyFooter/types'
 import { WithJobCardFooterProps } from './JobCardFooter/hoc/withJobCardFooter/types'
+import { RatingFooterProps } from './JobCardFooter/RatingFooter/types'
 import { UnpaidFooterProps } from './JobCardFooter/UnpaidFooter/types'
 import { ApplicationStatusHeaderProps } from './JobCardHeader/ApplicationStatusHeader/types'
 import { EditHeaderProps } from './JobCardHeader/EditHeader/types'
@@ -37,6 +38,9 @@ export type AppliedJobCardProps = BaseJobCardProps &
 export type UnpaidJobCardProps = BaseJobCardProps &
   UnpaidFooterProps & { type: 'unpaid' }
 
+export type HistoryJobCardProps = BaseJobCardProps &
+  RatingFooterProps & { type: 'history' }
+
 export type BasedJobCardProps = BaseJobCardProps & { type: 'base' }
 
 export type JobCardProps =
@@ -46,5 +50,6 @@ export type JobCardProps =
   | ReportedJobCardProps
   | AppliedJobCardProps
   | UnpaidJobCardProps
+  | HistoryJobCardProps
 
 export type JobCardType = JobCardProps['type']
