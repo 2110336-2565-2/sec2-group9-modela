@@ -47,9 +47,11 @@ const JobMenu = ({ focus, setStatus }: JobMenuProps) => {
           สถานะปัจจุบัน:{' '}
           <span style={{ fontWeight: 700 }}>{STATUS_NAME[status!]}</span>
         </Typography>
-        <Typography variant="body1" sx={{ marginTop: '-4px' }}>
-          มีนักแสดงที่กำลังรออยู่ {pendingActorCount} คน
-        </Typography>
+        {(status === JobStatus.OPEN || status === JobStatus.SELECTING) && (
+          <Typography variant="body1" sx={{ marginTop: '-4px' }}>
+            มีนักแสดงที่กำลังรออยู่ {pendingActorCount} คน
+          </Typography>
+        )}
         {status === JobStatus.SELECTION_ENDED && !isPaid && (
           <Typography variant="body1" color="error" sx={{ fontWeight: 700 }}>
             กรุณาโอนเงินก่อนจึงจะสามารถเปลี่ยนสถานะต่อได้

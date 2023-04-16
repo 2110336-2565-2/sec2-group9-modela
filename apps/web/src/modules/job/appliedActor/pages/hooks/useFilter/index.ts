@@ -12,7 +12,7 @@ const useFilter = () => {
     name?: string
     status?: ApplicationStatus[]
   }>({
-    status: [ApplicationStatus.PENDING],
+    status: [],
   })
 
   const modal = useSwitch()
@@ -21,7 +21,7 @@ const useFilter = () => {
   const { control, watch, handleSubmit } = useForm<ActorQuery>({
     criteriaMode: 'all',
     defaultValues: {
-      [ApplicationStatus.PENDING]: true,
+      [ApplicationStatus.PENDING]: false,
       [ApplicationStatus.REJECTED]: false,
       [ApplicationStatus.OFFER_SENT]: false,
       [ApplicationStatus.OFFER_ACCEPTED]: false,

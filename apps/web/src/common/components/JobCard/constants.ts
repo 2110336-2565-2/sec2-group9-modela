@@ -4,6 +4,7 @@ import OfferAction from './JobCardAction/OfferAction'
 import ApplyFooter from './JobCardFooter/ApplyFooter'
 import BaseFooter from './JobCardFooter/BaseFooter'
 import CancelApplyFooter from './JobCardFooter/CancelApplyFooter'
+import RatingFooter from './JobCardFooter/RatingFooter'
 import UnpaidFooter from './JobCardFooter/UnpaidFooter'
 import ApplicationStatusHeader from './JobCardHeader/ApplicationStatusHeader'
 import BaseHeader from './JobCardHeader/BaseHeader'
@@ -42,5 +43,9 @@ export const JobCardComponents: {
   unpaid: {
     Header: BaseHeader,
     Footer: UnpaidFooter,
+  },
+  history: {
+    Header: BaseHeader,
+    Footer: RatingFooter,
   },
 }

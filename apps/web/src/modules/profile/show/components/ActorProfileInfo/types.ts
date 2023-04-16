@@ -22,4 +22,5 @@ export interface ProfileInfoProps {
   skinShade?: string
   description?: string
   isOwn: boolean
+  rating?: number
 }

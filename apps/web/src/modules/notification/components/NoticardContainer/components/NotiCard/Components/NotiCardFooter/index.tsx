@@ -32,45 +32,52 @@ const NotiCardFooter = (props: FooterProps) => {
     openAcceptModal()
   }
 
+  if (appStatus === ApplicationStatus.OFFER_ACCEPTED)
+    return (
+      <FooterContainer>
+        <Typography variant="subtitle2" sx={{ color: 'rgba(0, 0, 0, 0.6)' }}>
+          คุณได้ตอบรับข้อเสนอนี้ไปแล้ว
+        </Typography>
+      </FooterContainer>
+    )
+
+  if (appStatus === ApplicationStatus.OFFER_REJECTED)
+    return (
+      <>
+        <Button
+          color="reject"
+          sx={{
+            cursor: 'pointer',
+            marginRight: 'auto',
+            width: 'fit-content',
+          }}
+          onClick={() => {
+            rejectOnclikcHandle()
+          }}
+        >
+          ปฏิเสธข้อเสนอ
+        </Button>
+        <Button
+          color="success"
+          sx={{
+            cursor: 'pointer',
+            marginLeft: 'auto',
+            width: 'fit-content',
+          }}
+          onClick={() => {
+            acceptOnclickHandle()
+          }}
+        >
+          ยอมรับข้อเสนอ
+        </Button>
+      </>
+    )
+
   return (
     <FooterContainer>
-      {appStatus === ApplicationStatus.OFFER_ACCEPTED ||
-      appStatus === ApplicationStatus.OFFER_REJECTED ? (
-        <Typography variant="subtitle2" sx={{ color: 'rgba(0, 0, 0, 0.6)' }}>
-          คุณได้
-          {appStatus === ApplicationStatus.OFFER_ACCEPTED ? 'ตอบรับ' : 'ปฏิเสธ'}
-          ข้อเสนอนี้ไปแล้ว
-        </Typography>
-      ) : (
-        <>
-          <Button
-            color="reject"
-            sx={{
-              cursor: 'pointer',
-              marginRight: 'auto',
-              width: 'fit-content',
-            }}
-            onClick={() => {
-              rejectOnclikcHandle()
-            }}
-          >
-            ปฏิเสธข้อเสนอ
-          </Button>
-          <Button
-            color="success"
-            sx={{
-              cursor: 'pointer',
-              marginLeft: 'auto',
-              width: 'fit-content',
-            }}
-            onClick={() => {
-              acceptOnclickHandle()
-            }}
-          >
-            ยอมรับข้อเสนอ
-          </Button>
-        </>
-      )}
+      <Typography variant="subtitle2" sx={{ color: 'rgba(0, 0, 0, 0.6)' }}>
+        คุณไม่ได้ตอบรับข้อเสนอนี้
+      </Typography>
     </FooterContainer>
   )
 }
