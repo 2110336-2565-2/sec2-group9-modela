@@ -40,6 +40,7 @@ export class CreditService {
         ...job,
         ...casting,
         ...User,
+        amount: credit.amount.toNumber(),
       }),
     )
   }
