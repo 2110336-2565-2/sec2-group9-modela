@@ -1,4 +1,4 @@
-import { JobStatus } from '@modela/database'
+import { JobStatus } from '@modela/dtos'
 import { EditOutlined } from '@mui/icons-material'
 import { IconButton, Tooltip } from '@mui/material'
 import React from 'react'

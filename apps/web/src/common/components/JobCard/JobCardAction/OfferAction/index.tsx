@@ -1,4 +1,4 @@
-import { ApplicationStatus } from '@modela/dtos'
+import { ApplicationStatus, JobStatus } from '@modela/dtos'
 import { Button, Typography } from '@mui/material'
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import useSwitch from 'common/hooks/useSwitch'
@@ -10,7 +10,12 @@ import React, { useCallback } from 'react'
 import { JobOfferActions } from './styled'
 import { OfferActionProps } from './types'
 
-const OfferAction = ({ appliedStatus, title, jobId }: OfferActionProps) => {
+const OfferAction = ({
+  appliedStatus,
+  title,
+  jobId,
+  status,
+}: OfferActionProps) => {
   const rejectModal = useSwitch()
   const acceptModal = useSwitch()
   const { handleError } = useErrorHandler()
@@ -34,7 +39,11 @@ const OfferAction = ({ appliedStatus, title, jobId }: OfferActionProps) => {
     }
     rejectModal.close()
   }, [jobId, handleError, rejectModal])
-  if (appliedStatus !== ApplicationStatus.OFFER_SENT) return null
+  if (
+    appliedStatus !== ApplicationStatus.OFFER_SENT ||
+    status !== JobStatus.SELECTING
+  )
+    return null
 
   return (
     <>

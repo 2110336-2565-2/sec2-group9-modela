@@ -1,4 +1,4 @@
-import { UserType } from '@modela/database'
+import { UserType } from '@modela/dtos'
 
 export const getCardType = (userType: UserType, isHistory?: boolean) => {
   if (isHistory) return 'base'
