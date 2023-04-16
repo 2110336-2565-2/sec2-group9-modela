@@ -67,6 +67,7 @@ export class CreditRepository {
                     lastName: true,
                     bankName: true,
                     bankAccount: true,
+                    profileImageUrl: true,
                   },
                 },
               },
