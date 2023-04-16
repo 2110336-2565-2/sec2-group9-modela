@@ -1,4 +1,4 @@
-import { ApplicationStatus } from '@modela/dtos'
+import { ApplicationStatus, JobStatus } from '@modela/dtos'
 import { render } from '@testing-library/react'
 import { mockAndSpy, mockAndSpyMany, mockRouter } from 'common/utils/testing'
 import React from 'react'
@@ -41,7 +41,13 @@ describe('<ActorCardHeader />', () => {
   describe('application is refundable', () => {
     describe('display', () => {
       it('should display refund button instead of status chip', () => {
-        render(<ActorCardHeader {...MOCK_PROPS} isRefundable />)
+        render(
+          <ActorCardHeader
+            {...MOCK_PROPS}
+            jobStatus={JobStatus.SELECTION_ENDED}
+            isRefundable
+          />,
+        )
         expect(ProfileImageSpy).toBeCalledTimes(1)
         expect(IconButtonSpy).toBeCalledWith(
           expect.objectContaining({

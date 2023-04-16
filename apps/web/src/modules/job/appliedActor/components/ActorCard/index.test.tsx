@@ -3,7 +3,6 @@ import { render } from '@testing-library/react'
 import {
   expectToBeCalledWith,
   mockAndSpy,
-  mockAndSpyMany,
   mockRouter,
 } from 'common/utils/testing'
 import React from 'react'
@@ -22,15 +21,14 @@ describe('<ActorCard />', () => {
     description: 'description',
   }
 
-  const JOB_STATUS = JobStatus.OPEN
+  const JOB_STATUS = JobStatus.SELECTING
 
   const LinkSpy = mockAndSpy('next/link')
   const ActorCardHeaderSpy = mockAndSpy(
     'modules/job/appliedActor/components/ActorCardHeader',
   )
-  const [ResumeDownloadButtonSpy] = mockAndSpyMany(
-    'modules/job/appliedActor/components/ActorCard/styled',
-    ['ResumeDownloadButton'],
+  const ResumeDownloadButtonSpy = mockAndSpy(
+    'modules/job/appliedActor/components/ResumeDownloadButton',
   )
   const ActorCardActionSpy = mockAndSpy(
     'modules/job/appliedActor/components/ActorCardAction',
@@ -62,11 +60,11 @@ describe('<ActorCard />', () => {
     })
 
     describe('event', () => {
-      it('should open resume click on ResumeDownloadButton', () => {
+      it('should open resume when click on ResumeDownloadButton', () => {
         render(<ActorCard jobStatus={JOB_STATUS} {...MOCK_ACTOR} />)
 
         expectToBeCalledWith(ResumeDownloadButtonSpy, {
-          href: MOCK_ACTOR.resumeUrl,
+          resumeUrl: MOCK_ACTOR.resumeUrl,
         })
       })
 
