@@ -93,7 +93,7 @@ export class ApplicationService {
     if (application.status !== ApplicationStatus.PENDING)
       throw new BadRequestException('Application is not pending')
 
-    this.repository.rejectApplication(application.applicationId)
+    await this.repository.rejectApplication(application.applicationId)
   }
 
   async cancelApplication(jobId: number, actorId: number) {
