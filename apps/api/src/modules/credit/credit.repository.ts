@@ -1,4 +1,4 @@
-import { JobStatus } from '@modela/database'
+import { JobStatus, Prisma } from '@modela/database'
 import { GetJobCardDto } from '@modela/dtos'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/database/prisma.service'
@@ -76,6 +76,7 @@ export class CreditRepository {
         },
       },
     })
+
     return credits
   }
 
@@ -88,7 +89,7 @@ export class CreditRepository {
       where: { jobId },
       create: {
         jobId,
-        amount,
+        amount: new Prisma.Decimal(amount),
         proofUrl,
       },
       update: {

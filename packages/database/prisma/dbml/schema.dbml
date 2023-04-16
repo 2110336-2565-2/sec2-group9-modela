@@ -155,7 +155,7 @@ Table Credit {
   creditId Int [pk, increment]
   jobId Int [unique, not null]
   proofUrl String [not null]
-  amount Int [not null]
+  amount Decimal [not null]
   createdAt DateTime [default: `now()`, not null]
   Job Job [not null]
 }

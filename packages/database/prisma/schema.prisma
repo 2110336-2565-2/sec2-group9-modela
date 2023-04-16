@@ -221,7 +221,7 @@ model Credit {
   creditId  Int      @id @default(autoincrement())
   jobId     Int      @unique
   proofUrl  String
-  amount    Int
+  amount    Decimal
   createdAt DateTime @default(now())
 
   Job Job @relation(fields: [jobId], references: [jobId])
