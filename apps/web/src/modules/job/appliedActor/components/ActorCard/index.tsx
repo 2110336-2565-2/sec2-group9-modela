@@ -49,16 +49,17 @@ const ActorCard = (props: ActorCardProps) => {
             <ResumeDownloadButton resumeUrl={resumeUrl} />
           )}
 
-          {status === ApplicationStatus.PENDING && (
-            <>
-              <Divider sx={{ margin: '-8px 0' }} />
-              <ActorCardAction
-                actorId={actorId}
-                openModal={open}
-                setIsRejected={setIsRejected}
-              />
-            </>
-          )}
+          {status === ApplicationStatus.PENDING &&
+            jobStatus === JobStatus.SELECTING && (
+              <>
+                <Divider sx={{ margin: '-8px 0' }} />
+                <ActorCardAction
+                  actorId={actorId}
+                  openModal={open}
+                  setIsRejected={setIsRejected}
+                />
+              </>
+            )}
         </CardContainer>
       </Link>
       <Modal open={isOpen}>
