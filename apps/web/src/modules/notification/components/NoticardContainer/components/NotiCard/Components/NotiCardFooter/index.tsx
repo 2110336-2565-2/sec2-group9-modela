@@ -52,7 +52,7 @@ const NotiCardFooter = (props: FooterProps) => {
 
   if (appStatus === ApplicationStatus.OFFER_SENT)
     return (
-      <>
+      <FooterContainer>
         <Button
           color="reject"
           sx={{
@@ -79,7 +79,7 @@ const NotiCardFooter = (props: FooterProps) => {
         >
           ยอมรับข้อเสนอ
         </Button>
-      </>
+      </FooterContainer>
     )
 
   return (
