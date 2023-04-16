@@ -3,9 +3,13 @@ import React from 'react'
 
 import useReview from './hooks/useReview'
 import { RatingContainer, StyledRating } from './styled'
+import { ActorCardReviewProps } from './types'
 
-const ActorCardReview = () => {
-  const { handleScoreClick, score, handleSubmit, isSubmitted } = useReview()
+const ActorCardReview = ({ rating, actorId }: ActorCardReviewProps) => {
+  const { handleScoreClick, score, handleSubmit, isSubmitted } = useReview(
+    actorId,
+    rating,
+  )
 
   return (
     <RatingContainer>

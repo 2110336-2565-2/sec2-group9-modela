@@ -14,10 +14,18 @@ import { CardContainer } from './styled'
 import { ActorCardProps } from './types'
 
 const ActorCard = (props: ActorCardProps) => {
-  const { actorId, status, description, resumeUrl, jobStatus, ...headerProps } =
-    props
+  const {
+    actorId,
+    status,
+    description,
+    resumeUrl,
+    jobStatus,
+    rating,
+    ...headerProps
+  } = props
   const { open, close, isOpen, isRejected, setIsRejected } =
     useActorCardAction()
+
   return (
     <>
       <Link
@@ -31,9 +39,13 @@ const ActorCard = (props: ActorCardProps) => {
           <Typography variant="subtitle2" color="#00000099">
             {description}
           </Typography>
-          {jobStatus === JobStatus.FINISHED ? (
-            <ActorCardReview />
-          ) : (
+
+          {jobStatus === JobStatus.FINISHED &&
+            status === ApplicationStatus.OFFER_ACCEPTED && (
+              <ActorCardReview rating={rating} actorId={actorId} />
+            )}
+
+          {jobStatus !== JobStatus.FINISHED && (
             <ResumeDownloadButton resumeUrl={resumeUrl} />
           )}
 

@@ -1,9 +1,16 @@
 import { useErrorHandler } from 'common/hooks/useErrorHandler'
+import { apiClient } from 'common/utils/api'
+import { useRouter } from 'next/router'
 import { MouseEvent, SyntheticEvent, useCallback, useState } from 'react'
 
-const useReview = () => {
-  const [score, setScore] = useState<number | null>(0)
-  const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
+const useReview = (actorId: number, rating?: number) => {
+  const router = useRouter()
+  const { jobId } = router.query
+
+  const [score, setScore] = useState<number | null>(rating || 0)
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(
+    rating !== null && rating !== undefined,
+  )
   const { handleError } = useErrorHandler()
 
   const handleScoreClick = useCallback(
@@ -15,12 +22,13 @@ const useReview = () => {
     [],
   )
 
-  const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
     try {
-      // call api
-
+      await apiClient.post(`/jobs/${jobId}/actors/${actorId}/rating`, {
+        rating: score,
+      })
       setIsSubmitted(true)
     } catch (e) {
       handleError(e)
