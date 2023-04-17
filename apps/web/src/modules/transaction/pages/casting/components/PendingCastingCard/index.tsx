@@ -54,7 +54,7 @@ const PendingCastingCard = (props: PendingCastingCardProps) => {
         </Typography>
         <div>
           <Typography variant="body1">
-            จำนวนเงินที่ต้องจ่าย: {amount}
+            จำนวนเงินที่ต้องจ่าย: {amount.toFixed(2)}
           </Typography>
           <Typography variant="body1">ธนาคาร: {bankName}</Typography>
           <Typography variant="body1">เลขบัญชี: {bankAccount}</Typography>
