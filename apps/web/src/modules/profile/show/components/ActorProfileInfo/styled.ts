@@ -1,4 +1,4 @@
-import { styled } from '@mui/material'
+import { Rating, styled } from '@mui/material'
 
 export const ContentContainer = styled('div')`
   display: flex;
@@ -16,4 +16,10 @@ export const SubContentContainer = styled('div')`
   height: fit-content;
   gap: 8px;
   border: none;
+`
+
+export const StyledRating = styled(Rating)`
+  .MuiRating-icon {
+    color: black;
+  }
 `
