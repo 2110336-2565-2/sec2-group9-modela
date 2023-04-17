@@ -1,12 +1,10 @@
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { fireEvent, render } from '@testing-library/react'
-import { mockRouter } from 'common/utils/testing/mockRouter'
 import { initialIFilter } from 'modules/job/list/pages/types'
 import React from 'react'
 describe('<FilterContainer/>', () => {
   const state = initialIFilter
-  mockRouter()
 
   const { default: FilterContainer } = require('.') as typeof import('.')
 

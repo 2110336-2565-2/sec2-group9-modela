@@ -12,11 +12,24 @@ import {
   Max,
   Min,
 } from 'class-validator'
-import { Gender, Job, JobStatus, Shooting } from '@modela/database'
+import {
+  ApplicationStatus,
+  Gender,
+  Job,
+  JobStatus,
+  Shooting,
+} from '@modela/database'
 
 export enum SearchJobStatus {
   'OPEN' = 'OPEN',
   'CLOSE' = 'CLOSE',
+}
+
+export enum SearchJobByAdminStatus {
+  'OPEN' = 'OPEN',
+  'CLOSE' = 'CLOSE',
+  'CANCELLED' = 'CANCELLED',
+  'REPORTED' = 'REPORTED',
 }
 
 const maxInt32 = 2147483647 //max int32
@@ -26,7 +39,7 @@ export class SearchJobDto {
   @IsNumber()
   @Min(1)
   @Max(20)
-  @ApiPropertyOptional({ 
+  @ApiPropertyOptional({
     default: 20,
   }) //Only for test in swagger, will set default again in job.service.ts
   limit: number
@@ -115,6 +128,13 @@ export class SearchJobDto {
   castingId?: number
 }
 
+export class SearchJobByAdminDto extends OmitType(SearchJobDto, ['status']) {
+  @IsOptional()
+  @IsEnum(SearchJobByAdminStatus, { each: true })
+  @ApiPropertyOptional({ enum: SearchJobByAdminStatus, isArray: true })
+  status?: SearchJobByAdminStatus[]
+}
+
 export class ShootingDto implements Partial<Shooting> {
   @IsString()
   @IsNotEmpty()
@@ -174,7 +194,7 @@ export class CreateJobDto implements EditJobType {
 
   @IsEnum(Gender, { each: true })
   @IsNotEmpty()
-  @ApiProperty()
+  @ApiProperty({ enum: Gender })
   gender: Gender
 
   @IsNumber()
@@ -201,6 +221,11 @@ export class CreateJobDto implements EditJobType {
 }
 
 export class EditJobDto extends CreateJobDto {}
+export class EditJobStatusDto {
+  @IsEnum(JobStatus)
+  @ApiProperty({ enum: JobStatus })
+  status: JobStatus
+}
 
 export class GetJobCardDto extends OmitType(EditJobDto, [
   'role',
@@ -218,12 +243,62 @@ export class GetJobCardDto extends OmitType(EditJobDto, [
   jobCastingImageUrl: string
 
   @ApiProperty()
+  castingId: number
+
+  @ApiProperty()
+  castingName: string
+
+  @ApiProperty()
+  isApplied?: boolean
+
+  @ApiProperty({ enum: JobStatus })
   status: JobStatus
+
+  @ApiProperty()
+  rating?: number
+
+  @ApiProperty()
+  isPaid?: boolean
+}
+
+export class GetJobCardByAdminDto extends GetJobCardDto {
+  @ApiProperty()
+  isReported: boolean
+}
+
+export class SearchAppliedJobDto {
+  @IsOptional()
+  @IsString()
+  @ApiPropertyOptional()
+  title?: string
+
+  @IsOptional()
+  @IsEnum(ApplicationStatus, { each: true })
+  @ApiPropertyOptional({ enum: ApplicationStatus, isArray: true })
+  applicationStatus?: ApplicationStatus[]
+
+  @IsOptional()
+  @IsEnum(JobStatus, { each: true })
+  @ApiPropertyOptional({ enum: JobStatus, isArray: true })
+  status?: JobStatus[]
+}
+
+export class GetAppliedJobDto extends GetJobCardDto {
+  @ApiProperty({ enum: ApplicationStatus })
+  appliedStatus: ApplicationStatus
 }
 
 export class GetJobCardWithMaxPageDto {
   @ApiProperty({ type: GetJobCardDto, isArray: true })
   jobs: GetJobCardDto[]
+
+  @ApiProperty()
+  maxPage: number
+}
+
+export class GetJobCardByAdminWithMaxPageDto {
+  @ApiProperty({ type: GetJobCardByAdminDto, isArray: true })
+  jobs: GetJobCardByAdminDto[]
 
   @ApiProperty()
   maxPage: number
@@ -239,11 +314,34 @@ export class GetJobDto extends EditJobDto {
   @ApiProperty()
   jobCastingImageUrl: string
 
-  @ApiProperty()
+  @ApiProperty({ enum: JobStatus })
   status: JobStatus
+
+  @ApiProperty()
+  castingId: number
+
+  @ApiProperty()
+  castingName: string
+
+  @ApiProperty()
+  isApplied?: boolean
+
+  @ApiProperty()
+  isPaid?: boolean
 }
 
 export class JobIdDto {
   @ApiProperty()
   jobId: number
+}
+
+export class JobSummaryDto {
+  @ApiProperty({ enum: JobStatus })
+  status: JobStatus
+
+  @ApiProperty()
+  pendingActorCount: number
+
+  @ApiProperty()
+  isPaid: boolean
 }

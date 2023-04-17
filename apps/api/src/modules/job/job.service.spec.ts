@@ -1,4 +1,4 @@
-import { JobStatus, mock, UserType } from '@modela/database'
+import { JobStatus, mock, UserStatus, UserType } from '@modela/database'
 import {
   GetJobCardDto,
   GetJobCardWithMaxPageDto,
@@ -12,6 +12,7 @@ import {
 import { Test, TestingModule } from '@nestjs/testing'
 import { PrismaService } from 'src/database/prisma.service'
 
+import { RefundRepository } from '../refund/refund.repository'
 import { JobRepository } from './job.repository'
 import { JobService } from './job.service'
 
@@ -57,19 +58,6 @@ function createValidJob() {
   return MOCK_JOB
 }
 
-function createValidJobWithID(userId: number, jobId: number) {
-  const BASE_JOB = createValidJob()
-  const MOCK_JOB = {
-    ...BASE_JOB,
-    castingId: userId,
-    jobId: jobId,
-    companyName: 'test',
-    jobCastingImageUrl: 'test',
-    status: JobStatus.OPEN,
-  }
-  return MOCK_JOB
-}
-
 describe('JobService', () => {
   let service: JobService
   let repository: JobRepository
@@ -77,7 +65,7 @@ describe('JobService', () => {
   beforeEach(async () => {
     //test module
     const module: TestingModule = await Test.createTestingModule({
-      providers: [JobService, JobRepository, PrismaService],
+      providers: [JobService, JobRepository, PrismaService, RefundRepository],
     }).compile()
 
     service = module.get<JobService>(JobService)
@@ -127,6 +115,7 @@ describe('JobService', () => {
           ...mock('job').omit(['jobId']).get(),
           ...mock('casting').pick(['companyName']).get(),
           jobCastingImageUrl: userData.profileImageUrl,
+          castingName: mock('user').get().firstName,
         }
       },
     )
@@ -134,12 +123,12 @@ describe('JobService', () => {
     const MOCK_USER_ACTOR = {
       userId: 1,
       type: UserType.ACTOR,
-      isVerified: true,
+      status: UserStatus.ACCEPTED,
     }
     const MOCK_USER_CASTING = {
       userId: MOCK_CASTING_ID,
       type: UserType.CASTING,
-      isVerified: true,
+      status: UserStatus.ACCEPTED,
     }
 
     //begin each findAll test
@@ -189,7 +178,10 @@ describe('JobService', () => {
               skip: (pageQuery - 1) * limitQuery,
               where: defaultWhere,
             }
-            expect(repository.getJobJoined).toBeCalledWith(prismaParams)
+            expect(repository.getJobJoined).toBeCalledWith(
+              prismaParams,
+              MOCK_USER_ACTOR,
+            )
           }
         }
       }) //end it
@@ -215,26 +207,32 @@ describe('JobService', () => {
       const itMockedJobDataNotEqualCastingId = Array.from(
         { length: Math.ceil(jobDataLength / 2) },
         (v, i) => {
-          const userData = mock('user').pick(['profileImageUrl']).get()
+          const userData = mock('user')
+            .pick(['profileImageUrl', 'firstName'])
+            .get()
           return {
             jobId: i + Math.floor(jobDataLength / 2) + 1,
             ...mock('job').omit(['jobId']).get(),
             castingId: MOCK_CASTING_ID + 1,
             ...mock('casting').pick(['companyName']).get(),
             jobCastingImageUrl: userData.profileImageUrl,
+            castingName: userData.firstName,
           }
         },
       )
       const itMockedJobData = Array.from(
         { length: Math.floor(jobDataLength / 2) },
         (v, i) => {
-          const userData = mock('user').pick(['profileImageUrl']).get()
+          const userData = mock('user')
+            .pick(['profileImageUrl', 'firstName'])
+            .get()
           return {
             jobId: i + 1,
             ...mock('job').omit(['jobId']).get(),
             castingId: MOCK_CASTING_ID,
             ...mock('casting').pick(['companyName']).get(),
             jobCastingImageUrl: userData.profileImageUrl,
+            castingName: userData.firstName,
           }
         },
       ).concat(itMockedJobDataNotEqualCastingId)
@@ -284,7 +282,14 @@ describe('JobService', () => {
             skip: (pageQuery - 1) * limitQuery,
             where: thisWhere,
           }
-          expect(repository.getJobJoined).toBeCalledWith(prismaParams)
+          expect(repository.getJobJoined).toBeCalledWith(
+            prismaParams,
+            MOCK_USER_CASTING,
+          )
+          expect(repository.getJobJoined).toBeCalledWith(
+            prismaParams,
+            MOCK_USER_ACTOR,
+          )
         })
       })
     })
@@ -329,7 +334,10 @@ describe('JobService', () => {
           skip: (pageQuery - 1) * limitQuery,
           where: thisWhere,
         }
-        expect(repository.getJobJoined).toBeCalledWith(prismaParams)
+        expect(repository.getJobJoined).toBeCalledWith(
+          prismaParams,
+          MOCK_USER_CASTING,
+        )
       })
     })
   })
@@ -342,24 +350,22 @@ describe('JobService', () => {
       shooting: mock('shooting').get(3),
       companyName: mock('casting').get().companyName,
       jobCastingImageUrl: mock('user').get().profileImageUrl,
+      castingName: mock('user').get().firstName,
     }
 
     const MOCK_USER = {
       userId: 2,
       type: UserType.ACTOR,
-      isVerified: true,
+      status: UserStatus.ACCEPTED,
     }
     describe('normal behavior', () => {
       it('should get job by id successfully', async () => {
         jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_JOB)
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { castingId, ...result } = MOCK_JOB
-
         await expect(service.findOne(MOCK_JOB_ID, MOCK_USER)).resolves.toEqual(
-          result,
+          MOCK_JOB,
         )
-        expect(repository.getJobById).toBeCalledWith(MOCK_JOB_ID)
+        expect(repository.getJobById).toBeCalledWith(MOCK_JOB_ID, MOCK_USER)
       })
     })
 
@@ -431,20 +437,29 @@ describe('JobService', () => {
   describe('updateJob', () => {
     const MOCK_CASTING_ID = 1
     const MOCK_UPDATED_TITLE = 'updated title'
+    const result = mock('job').get()
+
+    beforeEach(() => {
+      jest.spyOn(repository, 'getBaseJobById').mockResolvedValue(
+        mock('job')
+          .override({
+            castingId: MOCK_CASTING_ID,
+            jobId: result.jobId,
+            status: JobStatus.OPEN,
+          })
+          .get(),
+      )
+    })
 
     describe('normal behavior', () => {
       it('should update the job successfully', async () => {
         const MOCK_JOB = createValidJob()
 
-        const result = mock('job').get()
         jest
           .spyOn(repository, 'updateJob')
           .mockResolvedValue({ jobId: result.jobId })
 
         const newId = result.jobId
-
-        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
-        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
 
         MOCK_JOB.title = MOCK_UPDATED_TITLE
         await service.update(newId, MOCK_JOB, MOCK_CASTING_ID)
@@ -456,16 +471,11 @@ describe('JobService', () => {
         const MOCK_INVALID_USER_ID = 2394082
         const MOCK_JOB = createValidJob()
 
-        const result = mock('job').get()
-
         jest
           .spyOn(repository, 'updateJob')
           .mockResolvedValue({ jobId: result.jobId })
 
         const newId = result.jobId
-
-        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
-        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
 
         MOCK_JOB.title = MOCK_UPDATED_TITLE
 
@@ -483,16 +493,11 @@ describe('JobService', () => {
           MOCK_JOB.shooting[0].endDate.getHours() - 1,
         )
 
-        const result = mock('job').get()
-
         jest
           .spyOn(repository, 'updateJob')
           .mockResolvedValue({ jobId: result.jobId })
 
         const newId = result.jobId
-
-        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
-        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
 
         MOCK_JOB.title = MOCK_UPDATED_TITLE
 
@@ -510,16 +515,11 @@ describe('JobService', () => {
           MOCK_JOB.shooting[0].endDate.getDate() - 1,
         )
 
-        const result = mock('job').get()
-
         jest
           .spyOn(repository, 'updateJob')
           .mockResolvedValue({ jobId: result.jobId })
 
         const newId = result.jobId
-
-        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
-        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
 
         MOCK_JOB.title = MOCK_UPDATED_TITLE
 
@@ -535,16 +535,11 @@ describe('JobService', () => {
         MOCK_JOB.minAge = 100
         MOCK_JOB.maxAge = 10
 
-        const result = mock('job').get()
-
         jest
           .spyOn(repository, 'updateJob')
           .mockResolvedValue({ jobId: result.jobId })
 
         const newId = result.jobId
-
-        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
-        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
 
         MOCK_JOB.title = MOCK_UPDATED_TITLE
 
@@ -562,16 +557,11 @@ describe('JobService', () => {
           MOCK_JOB.shooting[0].startDate.getDate() - 1,
         )
 
-        const result = mock('job').get()
-
         jest
           .spyOn(repository, 'updateJob')
           .mockResolvedValue({ jobId: result.jobId })
 
         const newId = result.jobId
-
-        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
-        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
 
         MOCK_JOB.title = MOCK_UPDATED_TITLE
 
@@ -588,16 +578,11 @@ describe('JobService', () => {
           MOCK_JOB.applicationDeadline.getDate() - 1,
         )
 
-        const result = mock('job').get()
-
         jest
           .spyOn(repository, 'updateJob')
           .mockResolvedValue({ jobId: result.jobId })
 
         const newId = result.jobId
-
-        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
-        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
 
         MOCK_JOB.title = MOCK_UPDATED_TITLE
 
@@ -611,14 +596,13 @@ describe('JobService', () => {
       it('should be not found due to giving an ID which should not exist', async () => {
         const MOCK_JOB = createValidJob()
 
-        const result = mock('job').get()
-
         jest
           .spyOn(repository, 'updateJob')
           .mockResolvedValue({ jobId: result.jobId })
 
         const newId = 98094832
-        jest.spyOn(repository, 'getJobById').mockResolvedValue(null)
+
+        jest.spyOn(repository, 'getBaseJobById').mockResolvedValue(null)
 
         MOCK_JOB.title = MOCK_UPDATED_TITLE
 
@@ -636,16 +620,11 @@ describe('JobService', () => {
           MOCK_JOB.shooting[0].endDate.getMinutes() - 1,
         )
 
-        const result = mock('job').get()
-
         jest
           .spyOn(repository, 'updateJob')
           .mockResolvedValue({ jobId: result.jobId })
 
         const newId = result.jobId
-
-        const MOCK_GET_JOB = createValidJobWithID(MOCK_CASTING_ID, newId)
-        jest.spyOn(repository, 'getJobById').mockResolvedValue(MOCK_GET_JOB)
 
         MOCK_JOB.title = MOCK_UPDATED_TITLE
 
@@ -655,6 +634,47 @@ describe('JobService', () => {
 
         expect(repository.updateJob).not.toBeCalled()
       })
+    })
+  })
+
+  describe('get job summary by id', () => {
+    const MOCK_JOB_SUMMARY = {
+      status: JobStatus.OPEN,
+      pendingActorCount: 1,
+      castingId: 1,
+      isPaid: true,
+    }
+    const MOCK_JOB_ID = 1
+    const MOCK_USER_ID = 1
+
+    it('should return job summary', async () => {
+      jest
+        .spyOn(repository, 'getJobSummaryById')
+        .mockResolvedValue(MOCK_JOB_SUMMARY)
+
+      const result = await service.getJobSummaryById(MOCK_JOB_ID, MOCK_USER_ID)
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { castingId, ...rest } = MOCK_JOB_SUMMARY
+      expect(result).toEqual(rest)
+    })
+
+    it('should throw not found exception', async () => {
+      jest.spyOn(repository, 'getJobSummaryById').mockResolvedValue(null)
+
+      await expect(
+        service.getJobSummaryById(MOCK_JOB_ID, MOCK_USER_ID),
+      ).rejects.toThrow(NotFoundException)
+    })
+
+    it('should throw forbidden exception', async () => {
+      jest
+        .spyOn(repository, 'getJobSummaryById')
+        .mockResolvedValue({ ...MOCK_JOB_SUMMARY, castingId: 2 })
+
+      await expect(
+        service.getJobSummaryById(MOCK_JOB_ID, MOCK_USER_ID),
+      ).rejects.toThrow(ForbiddenException)
     })
   })
 })

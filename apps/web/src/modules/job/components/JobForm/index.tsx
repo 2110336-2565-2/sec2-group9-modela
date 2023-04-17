@@ -1,7 +1,6 @@
 import { Grid } from '@mui/material'
 import FormController from 'common/components/FormController'
 import React from 'react'
-import { Control, FieldValues } from 'react-hook-form'
 
 import AddShootingButton from './components/AddShootingButton'
 import ShootingForm from './components/ShootingForm'
@@ -43,7 +42,7 @@ const PostJobPage = ({ edit, initialValues }: JobFormProps) => {
               )
             return (
               <FormController
-                control={control as unknown as Control<FieldValues>}
+                control={control as any}
                 key={JSON.stringify(props)}
                 {...props}
               />

@@ -20,7 +20,7 @@ describe('FormController', () => {
     'common/components/PasswordTextField',
   )
 
-  jest.doMock('./components/UploadFile', () => mockUploadFile)
+  jest.doMock('common/components/UploadFile', () => mockUploadFile)
 
   test('should render TextField if type is textField', () => {
     const { default: FormController } = require('.') as typeof import('.')
@@ -92,15 +92,7 @@ describe('FormController', () => {
   })
   test('should render Divider if type is divider', () => {
     const { default: FormController } = require('.') as typeof import('.')
-    render(
-      <FormController
-        label="Hello"
-        fullWidth={false}
-        sm={12}
-        xs={12}
-        type="divider"
-      />,
-    )
+    render(<FormController sm={12} xs={12} type="divider" />)
 
     expect(mockDivider).toBeCalled()
   })

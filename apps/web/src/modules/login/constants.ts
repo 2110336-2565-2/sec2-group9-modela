@@ -2,10 +2,7 @@ import { IFormControllerProps } from 'common/components/FormController/types'
 
 import { ILoginSchemaType } from './hooks/useLoginForm/schema'
 
-export const FORM_LAYOUT: Omit<
-  IFormControllerProps<ILoginSchemaType>,
-  'control'
->[] = [
+export const FORM_LAYOUT: IFormControllerProps<ILoginSchemaType>[] = [
   {
     type: 'divider',
   },

@@ -38,15 +38,15 @@ const ReportPage = () => {
       <Controller
         name="description"
         control={control}
-        render={(prop) => (
+        render={(props) => (
           <TextField
             fullWidth
             multiline
             rows={3}
-            {...prop.field}
-            inputRef={prop.field.ref}
-            error={prop.fieldState.invalid}
-            helperText={prop.fieldState.error?.message}
+            {...props.field}
+            inputRef={props.field.ref}
+            error={props.fieldState.invalid}
+            helperText={props.fieldState.error?.message}
             placeholder="เหตุผล"
           />
         )}
@@ -66,4 +66,4 @@ const ReportPage = () => {
   )
 }
 
-export default withGuard(ReportPage, [UserType.ACTOR])
+export default withGuard(ReportPage, 'verified', [UserType.ACTOR])

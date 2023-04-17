@@ -9,7 +9,7 @@ import {
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
 import { compare, hash } from 'bcryptjs'
-import { Response } from 'express'
+import { Express, Response } from 'express'
 
 import { AuthRepository } from './auth.repository'
 
@@ -21,16 +21,23 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async createCasting(signupCastingDto: SignupCastingDto, res: Response) {
+  async createCasting(
+    signupCastingDto: SignupCastingDto,
+    file: Express.Multer.File,
+    res: Response,
+  ) {
     const { password, email } = signupCastingDto
     if (await this.repository.getUserByEmail(email))
       throw new ConflictException('This email is already used')
     try {
       const hashedPassword = await hash(password, 10)
-      const user = await this.repository.createCasting({
-        ...signupCastingDto,
-        password: hashedPassword,
-      })
+      const user = await this.repository.createCasting(
+        {
+          ...signupCastingDto,
+          password: hashedPassword,
+        },
+        file,
+      )
       return this.createJwtToken(user, res)
     } catch (e) {
       console.log(e)
@@ -38,16 +45,23 @@ export class AuthService {
     }
   }
 
-  async createActor(signupActorDto: SignupActorDto, res: Response) {
+  async createActor(
+    signupActorDto: SignupActorDto,
+    file: Express.Multer.File,
+    res: Response,
+  ) {
     const { password, email } = signupActorDto
     if (await this.repository.getUserByEmail(email))
       throw new ConflictException('This email is already used')
     try {
       const hashedPassword = await hash(password, 10)
-      const user = await this.repository.createActor({
-        ...signupActorDto,
-        password: hashedPassword,
-      })
+      const user = await this.repository.createActor(
+        {
+          ...signupActorDto,
+          password: hashedPassword,
+        },
+        file,
+      )
       return this.createJwtToken(user, res)
     } catch (e) {
       console.log(e)
@@ -65,8 +79,8 @@ export class AuthService {
   }
 
   createJwtToken(user: User, res: Response) {
-    const { userId, type, isVerified } = user
-    const token: string = this.jwtService.sign({ userId, type, isVerified })
+    const { userId, type, status } = user
+    const token: string = this.jwtService.sign({ userId, type, status })
     res.cookie('token', token, {
       httpOnly: true,
       secure: this.configService.get<boolean>('cookie.secure'),

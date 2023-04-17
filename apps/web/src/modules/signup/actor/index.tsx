@@ -1,8 +1,7 @@
 import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material'
 import FormController from 'common/components/FormController'
-import withNotLoggedInGuard from 'common/hoc/withNotLoggedInGuard'
+import withGuard from 'common/hoc/withGuard'
 import React from 'react'
-import { Control, FieldValues } from 'react-hook-form'
 
 import { FORM_LAYOUT } from './constants'
 import useActorForm from './hooks/useActorForm'
@@ -27,7 +26,7 @@ const ActorSignUp = () => {
           {FORM_LAYOUT.map((props) => (
             <FormController
               // I do not know why I cannot directly pass control
-              control={control as unknown as Control<FieldValues>}
+              control={control as any}
               key={JSON.stringify(props)}
               handleUploadFile={
                 props.type === 'uploadFile' ? handleUploadFile : undefined
@@ -57,4 +56,4 @@ const ActorSignUp = () => {
   )
 }
 
-export default withNotLoggedInGuard(ActorSignUp)
+export default withGuard(ActorSignUp, 'notLoggedIn')

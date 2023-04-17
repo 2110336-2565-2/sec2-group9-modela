@@ -7,7 +7,8 @@ RUN apk add --no-cache libc6-compat
 RUN apk update
 ENV PNPM_HOME="/root/.local/share/pnpm"
 ENV PATH="${PATH}:${PNPM_HOME}"
-RUN npm install -g pnpm
+RUN npm install -g pnpm@7.27.0
+
 # Set working directory
 WORKDIR /app
 RUN pnpm add -g turbo@1.7.0
@@ -22,7 +23,7 @@ RUN apk add --no-cache libc6-compat
 RUN apk update
 ENV PNPM_HOME="/root/.local/share/pnpm"
 ENV PATH="${PATH}:${PNPM_HOME}"
-RUN npm install -g pnpm
+RUN npm install -g pnpm@7.27.0
 WORKDIR /app
 
 # First install dependencies (as they change less often)
@@ -36,8 +37,6 @@ RUN pnpm install --frozen-lockfile --prefer-offline --config.ignore-scripts=true
 # Build the project and its dependencies
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
-
-RUN sed -i '$ d' ./packages/database/index.ts ./packages/dtos/index.ts
 
 # Uncomment and use build args to enable remote caching
 # ARG TURBO_TEAM
@@ -54,13 +53,13 @@ RUN apk add --no-cache libc6-compat
 RUN apk update
 ENV PNPM_HOME="/root/.local/share/pnpm"
 ENV PATH="${PATH}:${PNPM_HOME}"
-RUN npm install -g pnpm
+RUN npm install -g pnpm@7.27.0
 WORKDIR /app
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nestjs
 
-RUN pnpm add -g prisma
+RUN pnpm add -g prisma@4.9.0 dotenv-cli ts-node typescript
 
 COPY --from=installer /app/node_modules ./node_modules
 COPY --from=installer --chown=nestjs:nodejs  /app/apps ./apps

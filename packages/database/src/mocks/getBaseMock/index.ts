@@ -1,5 +1,13 @@
 import { faker } from '@faker-js/faker'
-import { ApplicationStatus, Gender, JobStatus, UserType } from '@prisma/client'
+import {
+  ApplicationStatus,
+  Gender,
+  JobStatus,
+  NotificationType,
+  RefundStatus,
+  UserStatus,
+  UserType,
+} from '@prisma/client'
 
 import {
   NUMBER_OF_ACTOR,
@@ -29,9 +37,20 @@ const getCastingId = (verified?: boolean) => {
   return id
 }
 
-const resumeActorIdList: number[] = []
-const getActorByResumeId = (resumeId: number, ignoreIntegrity?: boolean) =>
-  ignoreIntegrity ? getId() : resumeActorIdList[resumeId - 1]
+const actorResumeDict: { [k: number]: number[] } = {}
+const getUniqueActorId = (index: number, ignoreIntegrity?: boolean) => {
+  const actorResumeList = Object.keys(actorResumeDict)
+  return ignoreIntegrity
+    ? getId()
+    : parseInt(actorResumeList[index % actorResumeList.length])
+}
+
+const getResumeByActorId = (actorId: number, ignoreIntegrity?: boolean) => {
+  const resumes = actorResumeDict[actorId]
+  return ignoreIntegrity
+    ? getId()
+    : resumes[faker.datatype.number({ min: 0, max: resumes.length - 1 })]
+}
 
 export const getBaseMock = (
   model: BaseModel,
@@ -45,18 +64,37 @@ export const getBaseMock = (
         name: faker.name.firstName(),
       }
     case 'user':
+      const type =
+        index <= NUMBER_OF_ADMIN
+          ? UserType.ADMIN
+          : index <= NUMBER_OF_ADMIN + NUMBER_OF_ACTOR
+          ? UserType.ACTOR
+          : UserType.CASTING
+
+      const getType = () => {
+        if (type === UserType.ADMIN) return `admin`
+        if (type === UserType.ACTOR) return `actor`
+        if (type === UserType.CASTING) return `casting`
+      }
+
+      const getStatus = () => {
+        if (type === UserType.ADMIN) return UserStatus.ACCEPTED
+        if (index % 10 === 0) return UserStatus.REJECTED
+        if (index % 10 === 9) return UserStatus.PENDING
+        return UserStatus.ACCEPTED
+      }
+
+      const status = getStatus()
+
       return {
         userId: index,
-        email: faker.helpers.unique(faker.internet.email),
+        email: `${getType()}${((index - 1) % 10) + 1}@gmail.com`,
         password:
           '$2a$10$jikY3o7Apw/.NMTQjtLC1OMLUwEM73dpWaM7T5WEmjB5lguG/wZce',
-        type:
-          index <= NUMBER_OF_ADMIN
-            ? UserType.ADMIN
-            : index <= NUMBER_OF_ADMIN + NUMBER_OF_ACTOR
-            ? UserType.ACTOR
-            : UserType.CASTING,
-        isVerified: index % 2 === 0,
+        type,
+        status,
+        rejectedReason:
+          status === UserStatus.REJECTED ? faker.lorem.sentence() : null,
         profileImageUrl: faker.image.avatar(),
         phoneNumber: faker.phone.number(),
         bankName: faker.company.name(),
@@ -65,12 +103,12 @@ export const getBaseMock = (
         middleName: faker.name.middleName(),
         lastName: faker.name.lastName(),
         createdAt: faker.date.past(),
+        description: faker.lorem.paragraph(),
       }
     case 'actor':
       return {
         actorId: index + NUMBER_OF_ADMIN,
-        idCardImageUrl: faker.image.image(640, 480, true),
-        age: faker.datatype.number({ min: 10, max: 80 }),
+        idCardImageUrl: `user/credential/${index + NUMBER_OF_ADMIN}`,
         prefix: faker.name.prefix(),
         nickname: faker.internet.userName(),
         nationality: faker.address.country(),
@@ -83,7 +121,6 @@ export const getBaseMock = (
         ethnicity: faker.address.country(),
         birthDate: faker.date.birthdate(),
         religion: faker.word.noun(),
-        description: faker.lorem.paragraph(),
         hairColor: faker.color.human(),
         eyeColor: faker.color.human(),
         height: faker.datatype.number({ min: 100, max: 200 }),
@@ -93,18 +130,22 @@ export const getBaseMock = (
         hips: faker.datatype.number({ min: 20, max: 40 }),
         shoeSize: faker.datatype.number({ min: 40, max: 50 }),
         skinShade: faker.color.human(),
-        bodyModifications: faker.lorem.sentence(),
       }
     case 'casting':
       return {
         castingId: index + NUMBER_OF_ADMIN + NUMBER_OF_ACTOR,
         companyName: faker.company.name(),
         companyId: faker.random.numeric(13),
-        employmentCertUrl: faker.internet.url(),
+        employmentCertUrl: `user/credential/${
+          index + NUMBER_OF_ADMIN + NUMBER_OF_ACTOR
+        }`,
       }
     case 'resume': {
       const actorId = getActorId(true)
-      resumeActorIdList.push(actorId)
+      actorResumeDict[actorId] = [
+        ...(actorResumeDict[actorId] ? actorResumeDict[actorId] : []),
+        index,
+      ]
       return {
         resumeId: index,
         actorId,
@@ -117,7 +158,7 @@ export const getBaseMock = (
         jobId: index,
         castingId: getCastingId(true),
         title: faker.name.jobTitle(),
-        description: faker.name.jobDescriptor(),
+        description: faker.lorem.paragraphs(),
         status: faker.helpers.arrayElement([
           JobStatus.CANCELLED,
           JobStatus.FINISHED,
@@ -137,6 +178,7 @@ export const getBaseMock = (
         actorCount: faker.datatype.number({ min: 1, max: 10 }),
         wage: faker.datatype.number({ min: 10000, max: 1000000 }),
         applicationDeadline: faker.date.past(),
+        isPaid: index % 2 == 0,
         createdAt: faker.date.past(),
         updatedAt: faker.date.past(),
       }
@@ -151,19 +193,21 @@ export const getBaseMock = (
         endTime: faker.date.soon(),
       }
     case 'application': {
-      const resumeId = getId()
+      const actorId = getUniqueActorId(index, ignoreIntegrity)
+      const applicationStatus = [
+        ApplicationStatus.OFFER_ACCEPTED,
+        ApplicationStatus.OFFER_REJECTED,
+        ApplicationStatus.OFFER_SENT,
+        ApplicationStatus.PENDING,
+        ApplicationStatus.REJECTED,
+      ][index % 5]
       return {
         applicationId: index,
-        jobId: getId(),
-        actorId: getActorByResumeId(resumeId, ignoreIntegrity),
-        resumeId,
-        status: faker.helpers.arrayElement([
-          ApplicationStatus.OFFER_ACCEPTED,
-          ApplicationStatus.OFFER_REJECTED,
-          ApplicationStatus.OFFER_SENT,
-          ApplicationStatus.PENDING,
-          ApplicationStatus.REJECTED,
-        ]),
+        jobId: Math.ceil(index / 2),
+        actorId,
+        resumeId: getResumeByActorId(actorId, ignoreIntegrity),
+        status: applicationStatus,
+        isPaid: index % 10 === 0,
         createdAt: faker.date.past(),
       }
     }
@@ -176,12 +220,53 @@ export const getBaseMock = (
         createdAt: faker.date.past(),
       }
     case 'notification':
+      let userId
+      let notiType
+      if (index % 2 === 0) {
+        //Actor
+        userId = getActorId(true)
+        notiType = faker.helpers.arrayElement([
+          NotificationType.REJECT_APPLICATION, //actor
+          NotificationType.RECEIVE_OFFER, //actor
+          NotificationType.CANCEL_JOB, //use in both
+          NotificationType.APPROVE_REFUND, //use in both
+        ])
+      } else {
+        //Casting
+        userId = getCastingId(true)
+        notiType = faker.helpers.arrayElement([
+          NotificationType.ACCEPT_OFFER, //casting
+          NotificationType.REJECT_OFFER, //casting
+          NotificationType.CANCEL_JOB, //use in both
+          NotificationType.APPROVE_REFUND, //use in both
+          NotificationType.REJECT_REFUND, //casting
+        ])
+      }
       return {
         notificationId: index,
-        userId: index % 2 === 0 ? getActorId(true) : getCastingId(true),
-        message: faker.lorem.sentence(),
-        link: faker.internet.url(),
+        userId,
+        applicationId: (index % 2) + 1,
+        jobId: (index % 5) + 1,
+        type: notiType,
         isRead: faker.datatype.boolean(),
+        createdAt: faker.date.past(),
+      }
+    case 'credit':
+      return {
+        creditId: index,
+        jobId: index,
+        proofUrl: faker.internet.url(),
+        createdAt: faker.date.past(),
+        amount: 5000,
+      }
+    case 'refund':
+      return {
+        refundId: index,
+        applicationId: index,
+        reason: faker.lorem.lines(),
+        proofUrl: faker.image.business(),
+        refundStatus:
+          index % 2 === 0 ? RefundStatus.ACCEPTED : RefundStatus.PENDING,
         createdAt: faker.date.past(),
       }
   }

@@ -19,6 +19,8 @@
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/multer": "^1.4.7",
     "tsconfig": "workspace:*",
     "typescript": "^4.7.4"
   }

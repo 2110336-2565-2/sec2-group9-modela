@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { GetJobDto, PostReportDto } from '@modela/dtos'
 import { useSnackbar } from 'common/context/SnackbarContext'
+import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
 import { useRouter } from 'next/router'
 import {
@@ -17,6 +18,7 @@ import { IReportSchemaType, ReportSchema } from './schema'
 const useReport = () => {
   const router = useRouter()
   const { jid } = router.query
+  const { handleError } = useErrorHandler()
   const [loading, setLoading] = useState(false)
   const [jobName, setJobName] = useState('')
   const { displaySnackbar } = useSnackbar()
@@ -35,19 +37,19 @@ const useReport = () => {
         const postBody: PostReportDto = {
           reason: data.description,
         }
-        await apiClient.post('report/job/' + jid, postBody)
+        await apiClient.post('reports/jobs/' + jid, postBody)
         displaySnackbar(
           'ขอบคุณที่แจ้งปัญหา ทางทีมงานจะดำเนินการตรวจสอบต่อไป',
           'success',
         )
         router.push('/job', undefined, { shallow: true })
       } catch (err) {
-        console.log(err)
+        handleError(err)
       } finally {
         setLoading(false)
       }
     },
-    [router],
+    [displaySnackbar, handleError, jid, router],
   )
 
   const handleClickSubmit: FormEventHandler<HTMLFormElement> = useMemo(
@@ -59,16 +61,16 @@ const useReport = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = (await apiClient.get<GetJobDto>('/job/' + jid)).data
+        const res = (await apiClient.get<GetJobDto>('/jobs/' + jid)).data
         setJobName(res.title)
-      } catch (e) {
-        console.log(e)
+      } catch (err) {
+        handleError(err)
       }
     }
     if (router.isReady) {
       fetchData()
     }
-  }, [jid])
+  }, [handleError, jid, router.isReady])
 
   return {
     jid,

@@ -1,10 +1,12 @@
+import { UserStatus } from '@modela/database'
 import { GetUserDto, UserType } from '@modela/dtos'
 
 export const mockUser = (
   type: UserType = UserType.ACTOR,
-  isVerified: boolean = true,
+  status: UserStatus = UserStatus.ACCEPTED,
 ) => {
   const MOCK_USER = {
+    userId: 1,
     firstName: 'Ayaka',
     middleName: '<3',
     lastName: 'Kamisato',
@@ -18,7 +20,7 @@ export const mockUser = (
   let returnUser: GetUserDto = {
     ...MOCK_USER,
     companyName: type === UserType.CASTING ? MOCK_USER.companyName : undefined,
-    isVerified,
+    status,
     type,
   }
 
@@ -37,8 +39,8 @@ export const mockUser = (
     mockReturn(returnUser)
   }
 
-  const mockVerify = (isVerified: boolean) => {
-    returnUser = { ...returnUser, isVerified }
+  const mockVerify = (status: UserStatus) => {
+    returnUser = { ...returnUser, status }
     mockReturn(returnUser)
   }
 

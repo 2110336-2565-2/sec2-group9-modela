@@ -5,11 +5,11 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material'
-import withNotLoggedInGuard from 'common/hoc/withNotLoggedInGuard'
+import withGuard from 'common/hoc/withGuard'
 import Image from 'next/image'
 import Link from 'next/link'
-import ActorImage from 'public/actor.png'
-import CastingImage from 'public/casting.png'
+import ActorImage from 'public/actor.svg'
+import CastingImage from 'public/casting.svg'
 
 import {
   CardButtonContainer,
@@ -78,4 +78,4 @@ const ChooseSignup = () => {
   )
 }
 
-export default withNotLoggedInGuard(ChooseSignup)
+export default withGuard(ChooseSignup, 'notLoggedIn')

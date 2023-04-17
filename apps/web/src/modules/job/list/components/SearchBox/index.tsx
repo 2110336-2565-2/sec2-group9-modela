@@ -4,8 +4,8 @@ import React from 'react'
 
 import { SearchBoxProps } from './types'
 
-export default function SearchBox(prop: SearchBoxProps) {
-  const { filterData, state, setState, labels } = prop
+export default function SearchBox(props: SearchBoxProps) {
+  const { filterData, state, setState, labels } = props
   return (
     <form
       onSubmit={(event) => {
@@ -18,7 +18,7 @@ export default function SearchBox(prop: SearchBoxProps) {
         fullWidth={true}
         value={state.title}
         onChange={(event) => {
-          setState({ ...state, title: event.target.value })
+          setState((prev) => ({ ...prev, title: event.target.value }))
         }}
         InputProps={{
           endAdornment: (

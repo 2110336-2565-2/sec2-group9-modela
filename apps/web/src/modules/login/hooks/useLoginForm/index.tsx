@@ -1,8 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LoginDto } from '@modela/dtos'
-import { AxiosError } from 'axios'
-import { useSnackbar } from 'common/context/SnackbarContext'
 import { useUser } from 'common/context/UserContext'
+import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
 import { useRouter } from 'next/router'
 import { FormEventHandler, useCallback, useState } from 'react'
@@ -13,7 +12,6 @@ import { ILoginSchemaType, LoginSchema } from './schema'
 const useLoginForm = () => {
   const router = useRouter()
   const { refetch } = useUser()
-  const { displaySnackbar } = useSnackbar()
 
   const { register, handleSubmit, control, setError } =
     useForm<ILoginSchemaType>({
@@ -22,6 +20,7 @@ const useLoginForm = () => {
     })
 
   const [loading, setLoading] = useState(false)
+  const { handleError } = useErrorHandler()
 
   const handleSuccess: SubmitHandler<ILoginSchemaType> = useCallback(
     async (data) => {
@@ -31,19 +30,12 @@ const useLoginForm = () => {
         await refetch()
         router.push('/job')
       } catch (err) {
-        const error = err as AxiosError<{ message: string }>
-
-        if (error.response?.status === 401) {
-          displaySnackbar('อีเมลหรือรหัสผ่านไม่ถูกต้อง', 'error')
-          return
-        }
-
-        displaySnackbar('เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ', 'error')
+        handleError(err, { 401: 'อีเมลหรือรหัสผ่านไม่ถูกต้อง' })
       } finally {
         setLoading(false)
       }
     },
-    [displaySnackbar, refetch, router],
+    [handleError, refetch, router],
   )
 
   const handleClickSubmit: FormEventHandler<HTMLFormElement> =

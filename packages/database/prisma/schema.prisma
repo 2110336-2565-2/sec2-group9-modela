@@ -20,12 +20,15 @@ model Example {
 }
 
 model User {
-  userId     Int      @id @default(autoincrement())
-  email      String   @unique
-  password   String
-  type       UserType
-  isVerified Boolean  @default(false)
-  createdAt  DateTime @default(now())
+  userId    Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  type      UserType
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  status         UserStatus @default(PENDING)
+  rejectedReason String?
 
   // basic info
   profileImageUrl String?
@@ -35,11 +38,18 @@ model User {
   firstName       String
   middleName      String?
   lastName        String
+  description     String?
 
   Actor        Actor?
   Casting      Casting?
   Report       Report[]
   Notification Notification[]
+}
+
+enum UserStatus {
+  ACCEPTED
+  PENDING
+  REJECTED
 }
 
 enum UserType {
@@ -49,28 +59,25 @@ enum UserType {
 }
 
 model Actor {
-  actorId           Int       @id
-  idCardImageUrl    String
-  age               Int?
-  prefix            String?
-  nickname          String?
-  nationality       String?
-  ssn               String?
-  gender            Gender?
-  ethnicity         String?
-  birthDate         DateTime?
-  religion          String?
-  description       String?
-  hairColor         String?
-  eyeColor          String?
-  height            Float?
-  weight            Float?
-  bust              Float?
-  waist             Float?
-  hips              Float?
-  shoeSize          Int?
-  skinShade         String?
-  bodyModifications String?
+  actorId        Int       @id
+  idCardImageUrl String
+  prefix         String?
+  nickname       String?
+  nationality    String?
+  ssn            String?
+  gender         Gender?
+  ethnicity      String?
+  birthDate      DateTime?
+  religion       String?
+  hairColor      String?
+  eyeColor       String?
+  height         Float?
+  weight         Float?
+  bust           Float?
+  waist          Float?
+  hips           Float?
+  shoeSize       Int?
+  skinShade      String?
 
   User        User          @relation(fields: [actorId], references: [userId])
   Resume      Resume[]
@@ -96,10 +103,10 @@ model Casting {
 model Resume {
   resumeId  Int    @id @default(autoincrement())
   name      String
-  actorId   Int
+  actorId   Int?
   resumeUrl String
 
-  Actor       Actor         @relation(fields: [actorId], references: [actorId])
+  Actor       Actor?        @relation(fields: [actorId], references: [actorId])
   Application Application[]
 }
 
@@ -115,14 +122,17 @@ model Job {
   gender              Gender
   actorCount          Int
   wage                Int
+  isPaid              Boolean   @default(false)
   applicationDeadline DateTime
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
 
-  Casting     Casting       @relation(fields: [castingId], references: [castingId])
-  Application Application[]
-  Report      Report[]
-  Shooting    Shooting[]
+  Casting      Casting        @relation(fields: [castingId], references: [castingId])
+  Application  Application[]
+  Report       Report[]
+  Shooting     Shooting[]
+  Notification Notification[]
+  Credit       Credit[]
 }
 
 model Shooting {
@@ -151,11 +161,17 @@ model Application {
   actorId       Int
   resumeId      Int
   status        ApplicationStatus
+  isPaid        Boolean           @default(false)
+  rating        Int?
   createdAt     DateTime          @default(now())
 
-  Job    Job    @relation(fields: [jobId], references: [jobId])
-  Actor  Actor  @relation(fields: [actorId], references: [actorId])
-  Resume Resume @relation(fields: [resumeId], references: [resumeId])
+  Job          Job            @relation(fields: [jobId], references: [jobId])
+  Actor        Actor          @relation(fields: [actorId], references: [actorId])
+  Resume       Resume         @relation(fields: [resumeId], references: [resumeId])
+  Notification Notification[]
+  Refund       Refund?
+
+  @@unique([actorId, jobId], name: "applicationIdentifier")
 }
 
 enum ApplicationStatus {
@@ -178,12 +194,51 @@ model Report {
 }
 
 model Notification {
-  notificationId Int      @id @default(autoincrement())
+  notificationId Int              @id @default(autoincrement())
   userId         Int
-  message        String
-  link           String
-  isRead         Boolean  @default(false)
-  createdAt      DateTime @default(now())
+  applicationId  Int?
+  jobId          Int?
+  type           NotificationType
+  isRead         Boolean          @default(false)
+  createdAt      DateTime         @default(now())
 
-  User User @relation(fields: [userId], references: [userId])
+  User        User         @relation(fields: [userId], references: [userId])
+  Application Application? @relation(fields: [applicationId], references: [applicationId])
+  Job         Job?         @relation(fields: [jobId], references: [jobId])
+}
+
+enum NotificationType {
+  REJECT_APPLICATION //actor
+  RECEIVE_OFFER //actor
+  ACCEPT_OFFER //casting
+  REJECT_OFFER //casting
+  CANCEL_JOB //use in both
+  APPROVE_REFUND //use in both
+  REJECT_REFUND //casting
+}
+
+model Credit {
+  creditId  Int      @id @default(autoincrement())
+  jobId     Int      @unique
+  proofUrl  String
+  amount    Decimal
+  createdAt DateTime @default(now())
+
+  Job Job @relation(fields: [jobId], references: [jobId])
+}
+
+model Refund {
+  refundId      Int          @id @default(autoincrement())
+  applicationId Int          @unique
+  reason        String
+  proofUrl      String
+  refundStatus  RefundStatus @default(PENDING)
+  createdAt     DateTime     @default(now())
+
+  Application Application @relation(fields: [applicationId], references: [applicationId])
+}
+
+enum RefundStatus {
+  PENDING
+  ACCEPTED
 }

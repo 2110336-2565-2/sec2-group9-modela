@@ -6,7 +6,7 @@ describe('useUserData()', () => {
   const { getSpy, mockGetReturn } = mockApiClient()
 
   const MOCK_USER_DATA = mock('user')
-    .pick(['firstName', 'isVerified', 'type'])
+    .pick(['firstName', 'status', 'type'])
     .get()
 
   mockGetReturn({ user: MOCK_USER_DATA })
@@ -30,7 +30,7 @@ describe('useUserData()', () => {
     it('should fetch user data correctly', async () => {
       const { result } = renderHook(useUserData)
 
-      expect(getSpy).toBeCalledWith('/user/me')
+      expect(getSpy).toBeCalledWith('/users/me')
 
       await waitFor(() => expect(result.current.isLoading).toBe(false))
       expect(result.current.user).toEqual({ user: MOCK_USER_DATA })

@@ -4,10 +4,10 @@ import {
   expectToBeCalledWith,
   mockAndSpy,
   mockAndSpyMany,
+  mockRouter,
   mockUser,
   mockUseSwitch,
 } from 'common/utils/testing'
-import { mockRouter } from 'common/utils/testing/mockRouter'
 import React from 'react'
 
 describe('<NavbarMobile />', () => {

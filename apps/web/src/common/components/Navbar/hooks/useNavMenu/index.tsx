@@ -1,13 +1,18 @@
+import { UserStatus } from '@modela/database'
 import { UserType } from '@modela/dtos'
 import {
+  AccountBalanceWalletOutlined,
   AccountCircleOutlined,
   ArticleOutlined,
   LoginOutlined,
   LogoutOutlined,
+  MonetizationOnOutlined,
   NotificationsNoneOutlined,
+  PersonAddAltOutlined,
   PostAddOutlined,
 } from '@mui/icons-material'
 import { useUser } from 'common/context/UserContext'
+import { useErrorHandler } from 'common/hooks/useErrorHandler'
 import { apiClient } from 'common/utils/api'
 import { useRouter } from 'next/router'
 import { useCallback, useMemo } from 'react'
@@ -15,6 +20,7 @@ import { useCallback, useMemo } from 'react'
 const useNavMenu = (isMobile: boolean) => {
   const router = useRouter()
   const { user, reset } = useUser()
+  const { handleError } = useErrorHandler()
 
   const handleLogout = useCallback(async () => {
     try {
@@ -22,9 +28,9 @@ const useNavMenu = (isMobile: boolean) => {
       reset()
       router.push('/login')
     } catch (err) {
-      console.log(err)
+      handleError(err)
     }
-  }, [reset, router])
+  }, [handleError, reset, router])
 
   const VERIFIED_MENU = useMemo(
     () => [
@@ -37,17 +43,51 @@ const useNavMenu = (isMobile: boolean) => {
         castingOnly: true,
       },
       {
+        label: 'ส่งหลักฐานธุรกรรม',
+        href: '/unpaid',
+        focusKey: 'unpaid',
+        icon: <MonetizationOnOutlined />,
+        castingOnly: true,
+      },
+      {
         label: 'งานของฉัน',
-        href: '/',
+        href: '/job/applied',
         icon: <ArticleOutlined />,
         focusKey: 'jobs',
+        notAdmin: true,
       },
       {
         label: 'การแจ้งเตือน',
-        href: '/',
+        href: '/notification',
         icon: <NotificationsNoneOutlined />,
         focusKey: 'notification',
+        notAdmin: true,
       },
+
+      // admin
+      {
+        label: 'คำขอสมัครสมาชิก',
+        href: '/account',
+        icon: <PersonAddAltOutlined />,
+        focusKey: 'account',
+        adminOnly: true,
+      },
+      {
+        label: 'งานทั้งหมด',
+        href: '/job',
+        icon: <ArticleOutlined />,
+        focusKey: 'jobs',
+        adminOnly: true,
+      },
+      {
+        label: 'รายการธุรกรรม',
+        href: '/transaction',
+        icon: <AccountBalanceWalletOutlined />,
+        focusKey: 'transaction',
+        adminOnly: true,
+      },
+
+      // right part
       {
         label: 'divider',
         desktopOnly: true,
@@ -56,9 +96,10 @@ const useNavMenu = (isMobile: boolean) => {
       },
       {
         label: 'โปรไฟล์',
-        href: '/',
+        href: '/profile',
         icon: <AccountCircleOutlined />,
         focusKey: 'profile',
+        notAdmin: true,
       },
       {
         label: `สวัสดี คุณ ${user?.firstName}`,
@@ -91,7 +132,7 @@ const useNavMenu = (isMobile: boolean) => {
       return VERIFIED_MENU.filter(
         (item) => item.allowNotLoggedIn || item.onlyNotLoggedIn,
       )
-    if (!user.isVerified)
+    if (user.status !== UserStatus.ACCEPTED)
       return VERIFIED_MENU.filter(
         (item) => item.allowNotVerified && !item.onlyNotLoggedIn,
       )
@@ -99,9 +140,15 @@ const useNavMenu = (isMobile: boolean) => {
   }, [VERIFIED_MENU, user])
 
   const getMenuByRole = useCallback(() => {
+    let users = getMenuByUser()
     if (user?.type !== UserType.CASTING)
-      return getMenuByUser().filter((item) => !item.castingOnly)
-    return getMenuByUser()
+      users = users.filter((item) => !item.castingOnly)
+    if (user?.type === UserType.ADMIN)
+      users = users.filter((item) => !item.notAdmin)
+    if (user?.type !== UserType.ADMIN)
+      users = users.filter((item) => !item.adminOnly)
+
+    return users
   }, [getMenuByUser, user?.type])
 
   const getMenuByScreenSize = useCallback(

@@ -12,10 +12,12 @@ export const NavbarContainer = styled('div')`
   align-items: center;
   gap: min(50px, 3%);
   box-shadow: ${({ theme }) => theme.shadows[3]};
+
+  height: 60px;
 `
 
 export const NavbarItem = styled(Typography, {
-  shouldForwardProp: (prop) => prop !== 'focus',
+  shouldForwardProp: (props) => props !== 'focus',
 })<{ focus?: boolean }>`
   color: ${({ theme }) => theme.palette.primary.contrastText};
   font-weight: ${(props) => (props.focus ? 500 : 300)};

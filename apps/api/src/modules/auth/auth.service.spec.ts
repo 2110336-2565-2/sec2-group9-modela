@@ -6,6 +6,7 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { response } from 'express'
 import { PrismaService } from 'src/database/prisma.service'
 
+import { FileService } from '../file/file.service'
 import { AuthRepository } from './auth.repository'
 import { AuthService } from './auth.service'
 
@@ -21,6 +22,7 @@ describe('AuthService', () => {
         PrismaService,
         JwtService,
         ConfigService,
+        FileService,
       ],
     }).compile()
 
@@ -29,6 +31,10 @@ describe('AuthService', () => {
     jest
       .spyOn(service, 'createJwtToken')
       .mockReturnValue({ message: 'Login Successful' })
+    jest.mock('bcryptjs', () => ({
+      compare: jest.fn().mockResolvedValue(true),
+      hash: jest.fn().mockResolvedValue('hashedPassword'),
+    }))
   })
 
   it('should be defined', () => {
@@ -37,6 +43,7 @@ describe('AuthService', () => {
 
   describe('createCasting', () => {
     const mockUser = mock('user').get()
+    const mockFile = null
     const { email, password, firstName, middleName, lastName } = mockUser
     const signupCastingDto = {
       email,
@@ -51,13 +58,15 @@ describe('AuthService', () => {
       jest.spyOn(repository, 'getUserByEmail').mockResolvedValue(null)
       jest.spyOn(repository, 'createCasting').mockResolvedValue(mockUser)
 
-      await service.createCasting(signupCastingDto, response)
+      await service.createCasting(signupCastingDto, mockFile, response)
       const { password, ...rest } = signupCastingDto
       expect(repository.createCasting).toBeCalledWith(
         expect.objectContaining(rest),
+        mockFile,
       )
       expect(repository.createCasting).toBeCalledWith(
         expect.not.objectContaining({ password }),
+        mockFile,
       )
     })
 
@@ -69,7 +78,7 @@ describe('AuthService', () => {
         jest.spyOn(repository, 'createCasting').mockResolvedValue(null)
 
         await expect(
-          service.createCasting(signupCastingDto, response),
+          service.createCasting(signupCastingDto, mockFile, response),
         ).rejects.toThrow(ConflictException)
       })
     })
@@ -77,6 +86,7 @@ describe('AuthService', () => {
 
   describe('createActor', () => {
     const mockUser = mock('user').get()
+    const mockFile = null
     const { email, password, firstName, middleName, lastName, phoneNumber } =
       mockUser
     const signupActorDto = {
@@ -95,13 +105,15 @@ describe('AuthService', () => {
       jest.spyOn(repository, 'getUserByEmail').mockResolvedValue(null)
       jest.spyOn(repository, 'createActor').mockResolvedValue(mockUser)
 
-      await service.createActor(signupActorDto, response)
+      await service.createActor(signupActorDto, mockFile, response)
       const { password, ...rest } = signupActorDto
       expect(repository.createActor).toBeCalledWith(
         expect.objectContaining(rest),
+        mockFile,
       )
       expect(repository.createActor).toBeCalledWith(
         expect.not.objectContaining({ password }),
+        mockFile,
       )
     })
 
@@ -113,7 +125,7 @@ describe('AuthService', () => {
         jest.spyOn(repository, 'createActor').mockResolvedValue(null)
 
         await expect(
-          service.createActor(signupActorDto, response),
+          service.createActor(signupActorDto, mockFile, response),
         ).rejects.toThrow(ConflictException)
       })
     })

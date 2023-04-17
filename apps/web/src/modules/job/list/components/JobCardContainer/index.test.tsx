@@ -1,7 +1,6 @@
 import { GetJobCardWithMaxPageDto, mock } from '@modela/dtos'
 import { render } from '@testing-library/react'
-import { mockAndSpy } from 'common/utils/testing'
-import { mockRouter } from 'common/utils/testing/mockRouter'
+import { mockAndSpy, mockUser } from 'common/utils/testing'
 import React from 'react'
 
 describe('<JobCardContainer/>', () => {
@@ -12,6 +11,7 @@ describe('<JobCardContainer/>', () => {
       .map((job) => ({
         companyName: mock('casting').get().companyName,
         jobCastingImageUrl: mock('user').get().profileImageUrl || '',
+        castingName: mock('user').get().firstName,
         ...job,
       })),
   }
@@ -20,11 +20,8 @@ describe('<JobCardContainer/>', () => {
     jobs: [],
   }
 
-  mockRouter()
-
-  const jobCardMock = mockAndSpy(
-    'modules/job/list/components/JobCardContainer/components/JobCard',
-  )
+  const jobCardMock = mockAndSpy('common/components/JobCard')
+  mockUser()
 
   const { default: JobCardContainer } = require('.') as typeof import('.')
 
