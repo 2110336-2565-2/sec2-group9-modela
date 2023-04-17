@@ -86,7 +86,9 @@ const PendingRefundCard = (props: PendingRefundCardProps) => {
         </Typography>
         <Typography variant="body1">เหตุผลที่ขอเงินคืน: {reason}</Typography>
         <div>
-          <Typography variant="body1">จำนวนเงินที่ต้องจ่าย: {wage}</Typography>
+          <Typography variant="body1">
+            จำนวนเงินที่ต้องจ่าย: {wage.toFixed(2)}
+          </Typography>
           <Typography variant="body1">ธนาคาร: {bankName}</Typography>
           <Typography variant="body1">เลขบัญชี: {bankAccount}</Typography>
         </div>

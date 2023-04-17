@@ -46,7 +46,7 @@ const SendProofOfTransactionPage = () => {
             </Typography>
             <div style={{ marginTop: '12px' }}>
               <Typography variant="body1">
-                จำนวนเงินที่ต้องจ่าย: {job?.amount}
+                จำนวนเงินที่ต้องจ่าย: {job?.amount.toFixed(2)}
               </Typography>
               <Typography variant="body1">ธนาคาร: {job?.bankName}</Typography>
               <Typography variant="body1">
