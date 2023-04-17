@@ -1,5 +1,10 @@
 import { Actor, Casting, Gender, User, UserType } from '@modela/database'
-import { ApiExtraModels, ApiProperty, refs } from '@nestjs/swagger'
+import {
+  ApiExtraModels,
+  ApiProperty,
+  ApiPropertyOptional,
+  refs,
+} from '@nestjs/swagger'
 import {
   IsDateString,
   IsInt,
@@ -10,27 +15,27 @@ import {
 } from 'class-validator'
 
 export class EditUserProfileDto implements Partial<User> {
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsString()
   @IsOptional()
   profileImageUrl?: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsPhoneNumber('TH')
   @IsOptional()
   phoneNumber?: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsString()
   description?: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsString()
   bankName?: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsString()
   bankAccount?: string
@@ -39,68 +44,68 @@ export class EditUserProfileDto implements Partial<User> {
 export class EditCastingProfileDto extends EditUserProfileDto {}
 
 export class EditActorProfileDto extends EditUserProfileDto {
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsString()
   @IsOptional()
   nickname?: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsNumber()
   @IsOptional()
   height?: number
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsNumber()
   @IsOptional()
   weight?: number
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsString()
   eyeColor?: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsString()
   hairColor?: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsNumber()
   waist?: number
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsNumber()
   bust?: number
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsNumber()
   hips?: number
 
   // assume that it is EU format
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsInt()
   shoeSize?: number
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsString()
   skinShade?: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsString()
   ethnicity?: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsString()
   religion?: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsDateString()
   birthDate?: Date
@@ -116,22 +121,22 @@ export class GetProfileForEditingDto {
   data: EditActorProfileDto | EditCastingProfileDto
 }
 export class GetUserProfileDto implements Partial<User> {
-  @ApiProperty()
+  @ApiPropertyOptional()
   profileImageUrl?: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   phoneNumber?: string
 
   @ApiProperty()
   firstName: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   middleName?: string
 
   @ApiProperty()
   lastName: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   description?: string
 }
 
@@ -143,56 +148,56 @@ export class GetActorProfileDto
   extends GetUserProfileDto
   implements EditActorProfileDto
 {
-  @ApiProperty()
+  @ApiPropertyOptional()
   prefix?: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   nationality?: string
 
-  @ApiProperty({ enum: Gender })
+  @ApiPropertyOptional({ enum: Gender })
   gender?: Gender
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   ethnicity?: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   age?: number
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   religion?: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   nickname?: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   height?: number
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   weight?: number
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   eyeColor?: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   hairColor?: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   waist?: number
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   bust?: number
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   hips?: number
 
   // assume that it is EU format
-  @ApiProperty()
+  @ApiPropertyOptional()
   shoeSize?: number
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   skinShade?: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   rating?: number
 }
 

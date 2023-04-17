@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger'
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import { IsUrl } from 'class-validator'
 
 export class GetPendingTransactionDto {
@@ -8,7 +8,7 @@ export class GetPendingTransactionDto {
   @ApiProperty()
   firstName: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   middleName?: string
 
   @ApiProperty()
