@@ -1,5 +1,5 @@
 import { mock, NotificationType } from '@modela/database'
-import { NotFoundException } from '@nestjs/common'
+import { InternalServerErrorException, NotFoundException } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import { PrismaService } from 'src/database/prisma.service'
 
@@ -44,18 +44,35 @@ describe('ReportService', () => {
     const MOCK_JOB_ID = 1
     const MOCK_USER_ID = 2
 
-    it('should post report correctly', async () => {
+    beforeEach(() => {
       jest.spyOn(repository, 'createReport').mockResolvedValue()
       jest
         .spyOn(jobRepository, 'getBaseJobById')
         .mockResolvedValue(mock('job').get())
+    })
 
+    it('should post report correctly', async () => {
       await service.postReport(MOCK_JOB_ID, postReportDto, MOCK_USER_ID)
       expect(repository.createReport).toBeCalledWith(
         MOCK_JOB_ID,
         MOCK_USER_ID,
         postReportDto.reason,
       )
+    })
+
+    it('should throw not found error if job is not found', async () => {
+      jest.spyOn(jobRepository, 'getBaseJobById').mockResolvedValue(null)
+
+      await expect(
+        service.postReport(MOCK_JOB_ID, postReportDto, MOCK_USER_ID),
+      ).rejects.toThrow(NotFoundException)
+    })
+
+    it('should throw internal server error if unknow error occurs', () => {
+      jest.spyOn(repository, 'createReport').mockRejectedValue(new Error())
+      expect(
+        service.postReport(MOCK_JOB_ID, postReportDto, MOCK_USER_ID),
+      ).rejects.toThrow(InternalServerErrorException)
     })
   })
 
@@ -103,11 +120,15 @@ describe('ReportService', () => {
   })
 
   describe('acceptReport', () => {
-    it('should accept report correctly', async () => {
-      const MOCK_USERS_ID = [1, 2, 3]
-      const MOCK_JOB = mock('job').override({ jobId: 1 }).get()
-      const MOCK_JOB_ID = 1
+    const MOCK_USERS_ID = [1, 2, 3]
+    const MOCK_JOB = mock('job').override({ jobId: 1 }).get()
+    const MOCK_JOB_ID = 1
+
+    beforeEach(() => {
       jest.spyOn(jobRepository, 'getBaseJobById').mockResolvedValue(MOCK_JOB)
+    })
+
+    it('should accept report correctly', async () => {
       jest
         .spyOn(repository, 'cancelJob')
         .mockResolvedValue({ jobId: MOCK_JOB_ID })
@@ -132,10 +153,17 @@ describe('ReportService', () => {
       expect(result).toEqual({ jobId: MOCK_JOB_ID })
     })
 
-    it('should throw error if job does not exist', async () => {
+    it('should throw not found error if job does not exist', async () => {
       jest.spyOn(jobRepository, 'getBaseJobById').mockResolvedValue(undefined)
 
       await expect(service.acceptReport(1)).rejects.toThrow(NotFoundException)
+    })
+
+    it('should throw internal server error if unknow error occurs', () => {
+      jest.spyOn(repository, 'cancelJob').mockRejectedValue(new Error())
+      expect(service.acceptReport(1)).rejects.toThrow(
+        InternalServerErrorException,
+      )
     })
   })
 
@@ -143,8 +171,11 @@ describe('ReportService', () => {
     const MOCK_JOB = mock('job').override({ jobId: 1 }).get()
     const MOCK_JOB_ID = 1
 
-    it('should reject reports correctly', async () => {
+    beforeEach(() => {
       jest.spyOn(jobRepository, 'getBaseJobById').mockResolvedValue(MOCK_JOB)
+    })
+
+    it('should reject reports correctly', async () => {
       jest
         .spyOn(repository, 'rejectReportForJob')
         .mockResolvedValue({ jobId: MOCK_JOB_ID })
@@ -158,6 +189,15 @@ describe('ReportService', () => {
       jest.spyOn(jobRepository, 'getBaseJobById').mockResolvedValue(undefined)
 
       await expect(service.rejectReport(1)).rejects.toThrow(NotFoundException)
+    })
+
+    it('should throw internal server error if unknow error occurs', () => {
+      jest
+        .spyOn(repository, 'rejectReportForJob')
+        .mockRejectedValue(new Error())
+      expect(service.rejectReport(1)).rejects.toThrow(
+        InternalServerErrorException,
+      )
     })
   })
 })
