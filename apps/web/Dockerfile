@@ -1,7 +1,7 @@
 # This Dockerfile is copy-pasted into our main docs at /docs/handbook/deploying-with-docker.
 # Make sure you update both files!
 
-FROM node:alpine AS builder
+FROM node:18.16.0-alpine AS builder
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
 RUN apk update
@@ -18,7 +18,7 @@ COPY . .
 RUN turbo prune --scope=web --docker
 
 # Add lockfile and package.json's of isolated subworkspace
-FROM node:alpine AS installer
+FROM node:18.16.0-alpine AS installer
 RUN apk add --no-cache libc6-compat
 RUN apk update
 ENV PNPM_HOME="/root/.local/share/pnpm"
@@ -50,7 +50,7 @@ RUN pnpm prune --prod --config.ignore-scripts=true
 
 RUN rm -rf ./apps/web/.next/cache
 
-FROM node:alpine AS runner
+FROM node:18.16.0-alpine AS runner
 
 RUN apk add --no-cache libc6-compat
 RUN apk update
