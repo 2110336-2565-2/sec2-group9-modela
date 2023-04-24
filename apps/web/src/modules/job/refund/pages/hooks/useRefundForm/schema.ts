@@ -1,9 +1,11 @@
 import { z } from 'zod'
 
 const refundFormSchema = z.object({
-  reason: z.string({
-    required_error: 'กรุณากรอกเหตุผล',
-  }),
+  reason: z
+    .string({
+      required_error: 'กรุณากรอกเหตุผล',
+    })
+    .min(1, 'กรุณากรอกเหตุผล'),
   evidenceUrl: z.string({
     required_error: 'กรุณาอัปโหลดหลักฐาน',
   }),

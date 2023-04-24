@@ -6,6 +6,7 @@ const castingSignupSchema = z
       .string({
         required_error: 'กรุณากรอกอีเมล',
       })
+      .min(1, 'กรุณากรอกอีเมล')
       .email('รูปแบบอีเมลไม่ถูกต้อง'),
     firstName: z
       .string({
@@ -26,16 +27,21 @@ const castingSignupSchema = z
       })
       .trim()
       .min(1, 'กรุณากรอกชื่อบริษัท'),
-    password: z.string({
-      required_error: 'กรุณากรอกรหัสผ่าน',
-    }),
-    confirmPassword: z.string({
-      required_error: 'กรุณากรอกยืนยันรหัสผ่าน',
-    }),
+    password: z
+      .string({
+        required_error: 'กรุณากรอกรหัสผ่าน',
+      })
+      .min(1, 'กรุณากรอกรหัสผ่าน'),
+    confirmPassword: z
+      .string({
+        required_error: 'กรุณากรอกยืนยันรหัสผ่าน',
+      })
+      .min(1, 'กรุณากรอกยืนยันรหัสผ่าน'),
     companyId: z
       .string({
         required_error: 'กรุณากรอกเลขจดทะเบียน',
       })
+      .min(1, 'กรุณากรอกเลขจดทะเบียน')
       .refine((arg) => /^[0-9]{13}$/.test(arg), 'รูปแบบไม่ถูกต้อง'),
     employmentCertUrl: z.string({
       required_error: 'กรุณาอัปโหลดรูปถ่าย',
