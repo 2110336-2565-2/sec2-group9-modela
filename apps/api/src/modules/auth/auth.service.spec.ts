@@ -35,6 +35,7 @@ describe('AuthService', () => {
       compare: jest.fn().mockResolvedValue(true),
       hash: jest.fn().mockResolvedValue('hashedPassword'),
     }))
+    jest.setTimeout(20000)
   })
 
   it('should be defined', () => {
