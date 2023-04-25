@@ -7,6 +7,7 @@ const actorSignupSchema = z
       .string({
         required_error: 'กรุณากรอกอีเมล',
       })
+      .min(1, 'กรุณากรอกอีเมล')
       .email('รูปแบบอีเมลไม่ถูกต้อง'),
     firstName: z
       .string({
@@ -27,16 +28,21 @@ const actorSignupSchema = z
       })
       .trim()
       .min(1, 'กรุณากรอกสัญชาติ'),
-    password: z.string({
-      required_error: 'กรุณากรอกรหัสผ่าน',
-    }),
-    confirmPassword: z.string({
-      required_error: 'กรุณากรอกยืนยันรหัสผ่าน',
-    }),
+    password: z
+      .string({
+        required_error: 'กรุณากรอกรหัสผ่าน',
+      })
+      .min(1, 'กรุณากรอกรหัสผ่าน'),
+    confirmPassword: z
+      .string({
+        required_error: 'กรุณากรอกยืนยันรหัสผ่าน',
+      })
+      .min(1, 'กรุณากรอกยืนยันรหัสผ่าน'),
     phoneNumber: z
       .string({
         required_error: 'กรุณากรอกเบอร์โทรศัพท์',
       })
+      .min(1, 'กรุณากรอกเบอร์โทรศัพท์')
       .refine(
         (arg) => /^((\+66)|0)((2[0-9]{7})|([3-9][0-9]{8}))$/.test(arg),
         'รูปแบบเบอร์โทรศัพท์ไม่ถูกต้อง',
@@ -52,6 +58,7 @@ const actorSignupSchema = z
       .string({
         required_error: 'กรุณากรอกเลขบัตรประชาชน / เลขพาสปอร์ต',
       })
+      .min(1, 'กรุณากรอกเลขบัตรประชาชน / เลขพาสปอร์ต')
       .refine((arg) => /^([0-9]|[A-Z])+$/.test(arg), 'รูปแบบไม่ถูกต้อง'),
     idCardImageUrl: z.string({
       required_error: 'กรุณาอัปโหลดรูปถ่าย',
