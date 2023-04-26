@@ -6,7 +6,7 @@ export class GetUserDto implements Partial<User & Casting> {
   @ApiProperty()
   firstName: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   middleName?: string
 
   @ApiProperty()
@@ -18,10 +18,10 @@ export class GetUserDto implements Partial<User & Casting> {
   @ApiProperty({ enum: UserType })
   type: UserType
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   profileImageUrl?: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   companyName?: string
 
   @ApiProperty()
@@ -47,7 +47,7 @@ export class PendingUserDataDto {
   @ApiProperty()
   firstName: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   middleName?: string
 
   @ApiProperty()
@@ -57,20 +57,20 @@ export class PendingUserDataDto {
   rejectedReason?: string
 
   // Casting
-  @ApiProperty()
+  @ApiPropertyOptional()
   companyName?: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   companyId?: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   employmentCertUrl?: string
 
   // Actor
-  @ApiProperty()
+  @ApiPropertyOptional()
   idCardImageUrl?: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   ssn?: string
 }
 

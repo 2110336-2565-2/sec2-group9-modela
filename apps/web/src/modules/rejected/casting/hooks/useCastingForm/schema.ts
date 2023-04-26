@@ -25,6 +25,7 @@ const editCastingInfoSchema = z.object({
     .string({
       required_error: 'กรุณากรอกเลขจดทะเบียนของบริษัท',
     })
+    .min(1, 'กรุณากรอกเลขจดทะเบียนของบริษัท')
     .refine((arg) => /^[0-9]{13}$/.test(arg), 'รูปแบบไม่ถูกต้อง'),
   employmentCertUrl: z.string({
     required_error: 'กรุณาอัปโหลดหนังสือรับรองการทำงาน',

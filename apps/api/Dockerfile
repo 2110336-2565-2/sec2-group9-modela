@@ -1,7 +1,7 @@
 # The web Dockerfile is copy-pasted into our main docs at /docs/handbook/deploying-with-docker.
 # Make sure you update this Dockerfile, the Dockerfile in the web workspace and copy that over to Dockerfile in the docs.
 
-FROM node:alpine AS builder
+FROM node:18.16.0-alpine AS builder
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
 RUN apk update
@@ -16,7 +16,7 @@ COPY . .
 RUN turbo prune --scope=api --docker
 
 # Add lockfile and package.json's of isolated subworkspace
-FROM node:alpine AS installer
+FROM node:18.16.0-alpine AS installer
 RUN addgroup --system --gid 1001 nestjs
 RUN adduser --system --uid 1001 nestjs
 RUN apk add --no-cache libc6-compat
@@ -47,7 +47,7 @@ COPY turbo.json turbo.json
 RUN pnpm turbo run build --scope=api
 RUN pnpm prune --prod --config.ignore-scripts=true
 
-FROM node:alpine AS runner
+FROM node:18.16.0-alpine AS runner
 
 RUN apk add --no-cache libc6-compat
 RUN apk update

@@ -25,9 +25,7 @@ const EditActorProfileSchema = z.object({
         'รูปแบบเบอร์โทรศัพท์ไม่ถูกต้อง',
       ),
   ),
-  bankAccount: z.string({
-    required_error: 'กรุณากรอกเลขบัญชี',
-  }),
+  bankAccount: z.optional(z.string()),
   bankName: z.optional(z.string()),
 })
 

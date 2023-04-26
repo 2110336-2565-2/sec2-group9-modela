@@ -111,7 +111,7 @@ export class SignupCastingDto implements Partial<Casting & User> {
 }
 
 export class SignupCastingWithFileDto extends SignupCastingDto {
-  @ApiPropertyOptional({ type: 'string', format: 'binary' })
+  @ApiProperty({ type: 'string', format: 'binary' })
   file: Express.Multer.File
 }
 

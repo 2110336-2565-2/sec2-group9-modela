@@ -39,7 +39,7 @@ const useActorData = (query: {
     }
 
     if (router.isReady) fetchActorData()
-  }, [handleError, jobId, router.isReady, query])
+  }, [handleError, jobId, router.isReady, jobStatus, query])
 
   return { jobStatus, actorData, handleSetJobStatus }
 }

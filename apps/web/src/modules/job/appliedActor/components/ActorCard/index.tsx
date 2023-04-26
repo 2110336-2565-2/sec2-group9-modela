@@ -34,7 +34,12 @@ const ActorCard = (props: ActorCardProps) => {
         style={{ textDecoration: 'none', color: 'inherit', width: '100%' }}
       >
         <CardContainer variant="outlined">
-          <ActorCardHeader {...headerProps} actorId={actorId} status={status} />
+          <ActorCardHeader
+            {...headerProps}
+            jobStatus={jobStatus}
+            actorId={actorId}
+            status={status}
+          />
 
           <Typography variant="subtitle2" color="#00000099">
             {description}

@@ -5,7 +5,7 @@ export class ActorInfoDto extends OmitType(SignupActorDto, [
   'email',
   'password',
 ]) {
-  @ApiProperty()
+  @ApiPropertyOptional()
   idCardImageUrl?: string
 }
 

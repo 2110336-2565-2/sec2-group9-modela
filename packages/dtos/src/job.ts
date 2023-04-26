@@ -248,16 +248,16 @@ export class GetJobCardDto extends OmitType(EditJobDto, [
   @ApiProperty()
   castingName: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   isApplied?: boolean
 
   @ApiProperty({ enum: JobStatus })
   status: JobStatus
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   rating?: number
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   isPaid?: boolean
 }
 
@@ -323,10 +323,10 @@ export class GetJobDto extends EditJobDto {
   @ApiProperty()
   castingName: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   isApplied?: boolean
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   isPaid?: boolean
 }
 

@@ -19,7 +19,7 @@ export class ActorDto {
   @ApiProperty()
   firstName: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   middleName?: string
 
   @ApiProperty()
@@ -28,19 +28,19 @@ export class ActorDto {
   @ApiProperty()
   resumeUrl: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   profileImageUrl?: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   description?: string
 
-  @ApiProperty({ enum: ApplicationStatus })
+  @ApiPropertyOptional({ enum: ApplicationStatus })
   status?: ApplicationStatus
 
   @ApiPropertyOptional()
   isRefundable?: boolean
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   rating?: number
 }
 
