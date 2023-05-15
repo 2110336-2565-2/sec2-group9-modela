@@ -1,6 +1,8 @@
-# Modela
+<h1 align="center">Modela</h1>
 
-A platform for matching between Actor and Casting
+## What is it ?
+
+A platform for matching between Actor and Casting recruiting for acting
 
 ## Project Structure
 
