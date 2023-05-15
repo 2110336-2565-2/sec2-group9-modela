@@ -2,7 +2,7 @@
 
 ## What is it ?
 
-A platform for matching between Actor and Casting recruiting for acting
+A platform for matching between Actor and Casting recruiting for acting works
 
 ## Project Structure
 
